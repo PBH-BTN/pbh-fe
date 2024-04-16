@@ -22,6 +22,7 @@
     "@arco-plugins/vite-vue": "^1.4.5",
     "@rushstack/eslint-patch": "^1.8.0",
     "@tsconfig/node20": "^20.1.4",
+    "@types/mockjs": "^1.0.10",
     "@types/node": "^20.12.5",
     "@vitejs/plugin-vue": "^5.0.4",
     "@vue/eslint-config-prettier": "^9.0.0",
@@ -29,11 +30,14 @@
     "@vue/tsconfig": "^0.5.1",
     "eslint": "^8.57.0",
     "eslint-plugin-vue": "^9.23.0",
+    "mockjs": "^1.1.0",
     "npm-run-all2": "^6.1.2",
     "prettier": "^3.2.5",
     "typescript": "~5.4.0",
     "vite": "^5.2.8",
+    "vite-plugin-mock": "^3.0.1",
     "vite-plugin-vue-devtools": "^7.0.25",
     "vue-tsc": "^2.0.11"
-  }
+  },
+  "packageManager": "pnpm@9.0.0+sha256.bdfc9a7b372b5c462176993e586492603e20da5864d2f8881edc2462482c76fa"
 }

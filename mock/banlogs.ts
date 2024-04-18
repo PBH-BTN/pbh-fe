@@ -10,7 +10,7 @@ const banlogsMockAPI: MockMethod[] = [
       return {
         pageIndex: 0,
         pageSize: 100,
-        result: Array.from({ length: 4 })
+        result: Array.from({ length: 100 })
           .fill(0)
           .map(() => {
             return {

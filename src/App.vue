@@ -11,7 +11,9 @@
     </a-layout>
   </a-layout>
 </template>
-<script></script>
+<script>
+export default {}
+</script>
 <style scoped>
 .layout {
   height: 500px;

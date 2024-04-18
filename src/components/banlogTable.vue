@@ -2,6 +2,7 @@
   <a-table
     :columns="columns"
     :data="list"
+    :loading="loading"
     :pagination="{
       total: totalPage * pageSize,
       current

@@ -43,23 +43,15 @@ import { useAutoUpdate } from '@/stores/autoUpdate'
 import { usePagination } from 'vue-request'
 import { getBanlogs } from '@/service/banlogs'
 
-function formatFileSize(fileSize: number) {
-  let temp
-  if (fileSize < 1024) {
-    return fileSize + 'B'
-  } else if (fileSize < 1024 * 1024) {
-    temp = fileSize / 1024
-    temp = temp.toFixed(2)
-    return temp + 'KB'
-  } else if (fileSize < 1024 * 1024 * 1024) {
-    temp = fileSize / (1024 * 1024)
-    temp = temp.toFixed(2)
-    return temp + 'MB'
-  } else {
-    temp = fileSize / (1024 * 1024 * 1024)
-    temp = temp.toFixed(2)
-    return temp + 'GB'
-  }
+function formatFileSize(bytes: number, decimals = 2) {
+  if (bytes === 0) return '0 Bytes'
+
+  const k = 1024
+  const dm = decimals < 0 ? 0 : decimals
+  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB']
+  const i = Math.floor(Math.log(bytes) / Math.log(k))
+  if (i >= sizes.length) return 'Too large'
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i]
 }
 const autoUpdateState = useAutoUpdate()
 const { data, totalPage, current, loading, pageSize, run, cancel } = usePagination(getBanlogs, {
@@ -94,19 +86,19 @@ watch(autoUpdateState, (state) => {
 
 const columns = [
   {
-    title: 'Ban at',
+    title: '封禁时间',
     dataIndex: 'banAt'
   },
   {
-    title: 'Unban at',
+    title: '解封时间',
     dataIndex: 'unbanAt'
   },
   {
-    title: 'Peer Address',
+    title: 'Peer 地址',
     slotName: 'peerAddress'
   },
   {
-    title: 'PeerId',
+    title: 'Peer Id',
     dataIndex: 'peerId'
   },
   {
@@ -114,21 +106,21 @@ const columns = [
     dataIndex: 'peerClientName'
   },
   {
-    title: 'Peer Status',
+    title: '流量快照',
     slotName: 'peerStatus'
   },
   {
-    title: 'Torrent Name',
+    title: '种子名',
     slotName: 'torrentName',
     ellipsis: true,
     tooltip: true
   },
   {
-    title: 'Torrent Size',
+    title: '大小',
     slotName: 'torrentSize'
   },
   {
-    title: 'Description',
+    title: '描述',
     dataIndex: 'description',
     ellipsis: true,
     tooltip: true

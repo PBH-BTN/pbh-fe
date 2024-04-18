@@ -22,6 +22,9 @@
         <p>{{ record.torrentName }}</p>
       </a-tooltip>
     </template>
+    <template #torrentSize="{ record }">
+      <p>{{ formatFileSize(record.torrentSize) }}</p>
+    </template>
   </a-table>
 </template>
 <script setup lang="ts">
@@ -119,7 +122,7 @@ const columns = [
   },
   {
     title: 'Torrent Size',
-    dataIndex: 'torrentSize'
+    slotName: 'torrentSize'
   },
   {
     title: 'Module',

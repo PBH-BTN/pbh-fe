@@ -11,9 +11,15 @@
   />
 </template>
 <script setup lang="ts">
-import { computed, type Ref } from 'vue'
+import type { banlog } from '@/api/model/banlogs'
+import { computed } from 'vue'
 const props = defineProps<{
-  data: Ref<any>
+  data?: {
+    pageIndex: Number
+    pageSize: Number
+    result: banlog[]
+    total: Number
+  }
   current: number
   totalPage: number
   loading: boolean
@@ -78,5 +84,5 @@ const columns = [
     dataIndex: 'description'
   }
 ]
-const list = computed(() => props.data.value?.result)
+const list = computed(() => props.data?.result)
 </script>

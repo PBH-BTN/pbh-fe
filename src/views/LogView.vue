@@ -1,8 +1,27 @@
 <script setup lang="ts">
 import banlogTable from '../components/banlogTable.vue'
 import { ref } from 'vue'
+import { usePagination } from 'vue-request'
+import { getBanlogs } from '@/service/banlogs'
+
 const lastUpdate = new Date().toLocaleString()
 const autoUpdate = ref(true)
+const { data, totalPage, current, loading, pageSize } = usePagination(getBanlogs, {
+  defaultParams: [
+    {
+      pageIndex: 0,
+      pageSize: 5
+    }
+  ],
+  pagination: {
+    currentKey: 'pageIndex',
+    pageSizeKey: 'pageSize',
+    totalKey: 'total'
+  }
+})
+const changePage = (page: number) => {
+  current.value = page
+}
 </script>
 
 <template>
@@ -14,5 +33,12 @@ const autoUpdate = ref(true)
       <template #unchecked> 自动更新关 </template>
     </a-switch>
   </a-space>
-  <banlogTable />
+  <banlogTable
+    :data="data"
+    :total-page="totalPage"
+    :current="current"
+    :loading="loading"
+    :page-size="pageSize"
+    :change-page="changePage"
+  />
 </template>

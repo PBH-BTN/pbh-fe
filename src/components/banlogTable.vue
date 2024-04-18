@@ -7,14 +7,19 @@
       total: totalPage * pageSize,
       current
     }"
-    @page-change="(page: number) => (current = page)"
+    @page-change="changePage"
   />
 </template>
 <script setup lang="ts">
-import { usePagination } from 'vue-request'
-import { computed } from 'vue'
-import { getBanlogs } from '@/service/banlogs'
-
+import { computed, type Ref } from 'vue'
+const props = defineProps<{
+  data: Ref<any>
+  current: number
+  totalPage: number
+  loading: boolean
+  pageSize: number
+  changePage: (page: number) => void
+}>()
 const columns = [
   {
     title: 'Ban at',
@@ -73,18 +78,5 @@ const columns = [
     dataIndex: 'description'
   }
 ]
-const { data, current, totalPage, loading, pageSize } = usePagination(getBanlogs, {
-  defaultParams: [
-    {
-      pageIndex: 0,
-      pageSize: 5
-    }
-  ],
-  pagination: {
-    currentKey: 'pageIndex',
-    pageSizeKey: 'pageSize',
-    totalKey: 'total'
-  }
-})
-const list = computed(() => data.value?.result)
+const list = computed(() => props.data.value?.result)
 </script>

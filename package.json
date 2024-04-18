@@ -13,8 +13,10 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "normalize.css": "^8.0.1",
     "pinia": "^2.1.7",
     "vue": "^3.4.21",
+    "vue-request": "^2.0.4",
     "vue-router": "^4.3.0"
   },
   "devDependencies": {
@@ -39,5 +41,5 @@
     "vite-plugin-vue-devtools": "^7.0.25",
     "vue-tsc": "^2.0.11"
   },
-  "packageManager": "pnpm@9.0.0+sha256.bdfc9a7b372b5c462176993e586492603e20da5864d2f8881edc2462482c76fa"
+  "packageManager": "pnpm@9.0.1+sha256.46d50ee2afecb42b185ebbd662dc7bdd52ef5be56bf035bb615cab81a75345df"
 }

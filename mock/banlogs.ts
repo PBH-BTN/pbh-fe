@@ -6,11 +6,11 @@ const banlogsMockAPI: MockMethod[] = [
   {
     url: '/api/banlogs',
     method: 'get',
-    response: () => {
+    response: (req) => {
       return {
-        pageIndex: 0,
-        pageSize: 100,
-        result: Array.from({ length: 100 })
+        pageIndex: Number(req.query.pageIndex) || 0,
+        pageSize: Number(req.query.pageSize) || 100,
+        result: Array.from({ length: 4 })
           .fill(0)
           .map(() => {
             return {
@@ -30,7 +30,7 @@ const banlogsMockAPI: MockMethod[] = [
               description: Random.sentence()
             }
           }),
-        total: 4
+        total: 100
       }
     }
   },

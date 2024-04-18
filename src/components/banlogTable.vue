@@ -1,9 +1,19 @@
 <template>
-  <a-table :columns="columns" :data="data" :pagination="pagination" />
+  <a-table
+    :columns="columns"
+    :data="list"
+    :pagination="{
+      total: totalPage * pageSize,
+      current
+    }"
+    @page-change="(page: number) => (current = page)"
+  />
 </template>
 <script setup lang="ts">
-import { useBanLogsStore } from '@/stores/banlogs'
-import { ref } from 'vue'
+import { usePagination } from 'vue-request'
+import { computed } from 'vue'
+import { getBanlogs } from '@/service/banlogs'
+
 const columns = [
   {
     title: 'Ban at',
@@ -62,10 +72,18 @@ const columns = [
     dataIndex: 'description'
   }
 ]
-const banlog = useBanLogsStore()
-await banlog.getBanlogs()
-const data = ref(banlog.banLogsResult?.result)
-const pagination = ref({
-  pageSize: 5
+const { data, current, totalPage, loading, pageSize } = usePagination(getBanlogs, {
+  defaultParams: [
+    {
+      pageIndex: 0,
+      pageSize: 5
+    }
+  ],
+  pagination: {
+    currentKey: 'pageIndex',
+    pageSizeKey: 'pageSize',
+    totalKey: 'total'
+  }
 })
+const list = computed(() => data.value?.result)
 </script>

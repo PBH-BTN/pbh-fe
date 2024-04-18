@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import banlogTable from '../components/banlogTable.vue'
-import { ref, watch } from 'vue'
+import { watch } from 'vue'
+import { useAutoUpdate } from '@/stores/autoUpdate'
 import { usePagination } from 'vue-request'
 import { getBanlogs } from '@/service/banlogs'
 
-const lastUpdate = ref(new Date().toLocaleString())
-const autoUpdate = ref(true)
+const autoUpdateState = useAutoUpdate()
 const { data, totalPage, current, loading, pageSize, run, cancel } = usePagination(getBanlogs, {
   defaultParams: [
     {
@@ -20,15 +20,13 @@ const { data, totalPage, current, loading, pageSize, run, cancel } = usePaginati
   },
   pollingWhenOffline: true,
   pollingInterval: 3000,
-  onSuccess: () => {
-    lastUpdate.value = new Date().toLocaleString()
-  }
+  onSuccess: () => autoUpdateState.setLastUpdate(new Date())
 })
 const changePage = (page: number) => {
   current.value = page
 }
-watch(autoUpdate, (value) => {
-  if (value) {
+watch(autoUpdateState, (state) => {
+  if (state.autoUpdate) {
     run({
       pageIndex: 0,
       pageSize: 5
@@ -41,13 +39,6 @@ watch(autoUpdate, (value) => {
 
 <template>
   <p style="font-size: 1.2em">此页面展示 PeerBanHelper 储存的封禁历史记录信息。</p>
-  <a-space size="large">
-    <p><icon-clock-circle />最后更新于：{{ lastUpdate }}</p>
-    <a-switch v-model="autoUpdate">
-      <template #checked> 自动更新开 </template>
-      <template #unchecked> 自动更新关 </template>
-    </a-switch>
-  </a-space>
   <banlogTable
     :data="data"
     :total-page="totalPage"

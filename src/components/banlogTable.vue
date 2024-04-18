@@ -15,12 +15,16 @@
         {{ record.peerIp }}:{{ record.peerPort }}
       </a-typography-text>
     </template>
-    <template #peerProgress="{ record }">
-      <a-progress :percent="record.peerProgress" />
-    </template>
-    <template #peerSpeed="{ record }">
-      <p>{{ formatFileSize(record.peerUploaded) }}<icon-arrow-up class="green" /></p>
-      <p>{{ formatFileSize(record.peerDownloaded) }}<icon-arrow-down class="red" /></p>
+    <template #peerStatus="{ record }">
+      <a-space>
+        <div>
+          <p>{{ formatFileSize(record.peerUploaded) }}<icon-arrow-up class="green" /></p>
+          <p>{{ formatFileSize(record.peerDownloaded) }}<icon-arrow-down class="red" /></p>
+        </div>
+        <a-tooltip :content="(record.peerProgress * 100).toFixed(2) + '%'">
+          <a-progress :percent="record.peerProgress" size="mini" />
+        </a-tooltip>
+      </a-space>
     </template>
     <template #torrentName="{ record }">
       <a-tooltip :content="record.torrentInfoHash">
@@ -110,12 +114,8 @@ const columns = [
     dataIndex: 'peerClientName'
   },
   {
-    title: 'Peer speed',
-    slotName: 'peerSpeed'
-  },
-  {
-    title: 'Peer Progress',
-    slotName: 'peerProgress'
+    title: 'Peer Status',
+    slotName: 'peerStatus'
   },
   {
     title: 'Torrent Name',

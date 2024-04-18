@@ -4,7 +4,7 @@ import { ref } from 'vue'
 import { usePagination } from 'vue-request'
 import { getBanlogs } from '@/service/banlogs'
 
-const lastUpdate = new Date().toLocaleString()
+const lastUpdate = ref(new Date().toLocaleString())
 const autoUpdate = ref(true)
 const { data, totalPage, current, loading, pageSize } = usePagination(getBanlogs, {
   defaultParams: [
@@ -17,6 +17,11 @@ const { data, totalPage, current, loading, pageSize } = usePagination(getBanlogs
     currentKey: 'pageIndex',
     pageSizeKey: 'pageSize',
     totalKey: 'total'
+  },
+  pollingWhenOffline: true,
+  pollingInterval: autoUpdate.value ? 3000 : 0,
+  onSuccess: () => {
+    lastUpdate.value = new Date().toLocaleString()
   }
 })
 const changePage = (page: number) => {

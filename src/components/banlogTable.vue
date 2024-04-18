@@ -10,6 +10,11 @@
     }"
     @page-change="changePage"
   >
+    <template #peerAddress="{ record }">
+      <a-typography-text copyable code>
+        {{ record.peerIp }}:{{ record.peerPort }}
+      </a-typography-text>
+    </template>
     <template #peerSpeed="{ record }">
       <p>
         {{ formatFileSize(record.peerUploaded) }}<icon-arrow-up class="green" />{{
@@ -93,12 +98,8 @@ const columns = [
     dataIndex: 'unbanAt'
   },
   {
-    title: 'Peer Ip',
-    dataIndex: 'peerIp'
-  },
-  {
-    title: 'Peer Port',
-    dataIndex: 'peerPort'
+    title: 'Peer Address',
+    slotName: 'peerAddress'
   },
   {
     title: 'PeerId',
@@ -118,19 +119,19 @@ const columns = [
   },
   {
     title: 'Torrent Name',
-    slotName: 'torrentName'
+    slotName: 'torrentName',
+    ellipsis: true,
+    tooltip: true
   },
   {
     title: 'Torrent Size',
     slotName: 'torrentSize'
   },
   {
-    title: 'Module',
-    dataIndex: 'module'
-  },
-  {
     title: 'Description',
-    dataIndex: 'description'
+    dataIndex: 'description',
+    ellipsis: true,
+    tooltip: true
   }
 ]
 const list = computed(() => data.value?.result)

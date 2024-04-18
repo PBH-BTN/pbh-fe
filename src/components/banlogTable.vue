@@ -11,21 +11,43 @@
   />
 </template>
 <script setup lang="ts">
-import type { banlog } from '@/api/model/banlogs'
 import { computed } from 'vue'
-const props = defineProps<{
-  data?: {
-    pageIndex: Number
-    pageSize: Number
-    result: banlog[]
-    total: Number
+import { watch } from 'vue'
+import { useAutoUpdate } from '@/stores/autoUpdate'
+import { usePagination } from 'vue-request'
+import { getBanlogs } from '@/service/banlogs'
+
+const autoUpdateState = useAutoUpdate()
+const { data, totalPage, current, loading, pageSize, run, cancel } = usePagination(getBanlogs, {
+  defaultParams: [
+    {
+      pageIndex: 0,
+      pageSize: 5
+    }
+  ],
+  pagination: {
+    currentKey: 'pageIndex',
+    pageSizeKey: 'pageSize',
+    totalKey: 'total'
+  },
+  pollingWhenOffline: true,
+  pollingInterval: 3000,
+  onSuccess: () => autoUpdateState.setLastUpdate(new Date())
+})
+const changePage = (page: number) => {
+  current.value = page
+}
+watch(autoUpdateState, (state) => {
+  if (state.autoUpdate) {
+    run({
+      pageIndex: 0,
+      pageSize: 5
+    })
+  } else {
+    cancel()
   }
-  current: number
-  totalPage: number
-  loading: boolean
-  pageSize: number
-  changePage: (page: number) => void
-}>()
+})
+
 const columns = [
   {
     title: 'Ban at',
@@ -84,5 +106,5 @@ const columns = [
     dataIndex: 'description'
   }
 ]
-const list = computed(() => props.data?.result)
+const list = computed(() => data.value?.result)
 </script>

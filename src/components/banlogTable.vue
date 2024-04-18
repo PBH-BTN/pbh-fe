@@ -1,5 +1,6 @@
 <template>
   <a-table
+    stripe="true"
     :columns="columns"
     :data="list"
     :loading="loading"
@@ -8,7 +9,20 @@
       current
     }"
     @page-change="changePage"
-  />
+  >
+    <template #peerSpeed="{ record }">
+      <p>
+        {{ formatFileSize(record.peerUploaded) }}<icon-arrow-up class="green" />{{
+          formatFileSize(record.peerDownloaded)
+        }}<icon-arrow-down class="red" />
+      </p>
+    </template>
+    <template #torrentName="{ record }">
+      <a-tooltip :content="record.torrentInfoHash">
+        <p>{{ record.torrentName }}</p>
+      </a-tooltip>
+    </template>
+  </a-table>
 </template>
 <script setup lang="ts">
 import { computed } from 'vue'
@@ -17,6 +31,24 @@ import { useAutoUpdate } from '@/stores/autoUpdate'
 import { usePagination } from 'vue-request'
 import { getBanlogs } from '@/service/banlogs'
 
+function formatFileSize(fileSize: number) {
+  let temp
+  if (fileSize < 1024) {
+    return fileSize + 'B'
+  } else if (fileSize < 1024 * 1024) {
+    temp = fileSize / 1024
+    temp = temp.toFixed(2)
+    return temp + 'KB'
+  } else if (fileSize < 1024 * 1024 * 1024) {
+    temp = fileSize / (1024 * 1024)
+    temp = temp.toFixed(2)
+    return temp + 'MB'
+  } else {
+    temp = fileSize / (1024 * 1024 * 1024)
+    temp = temp.toFixed(2)
+    return temp + 'GB'
+  }
+}
 const autoUpdateState = useAutoUpdate()
 const { data, totalPage, current, loading, pageSize, run, cancel } = usePagination(getBanlogs, {
   defaultParams: [
@@ -74,24 +106,16 @@ const columns = [
     dataIndex: 'peerClientName'
   },
   {
-    title: 'Peer Uploaded',
-    dataIndex: 'peerUploaded'
-  },
-  {
-    title: 'Peer Downloaded',
-    dataIndex: 'peerDownloaded'
+    title: 'Peer speed',
+    slotName: 'peerSpeed'
   },
   {
     title: 'Peer Progress',
     dataIndex: 'peerProgress'
   },
   {
-    title: 'Torrent Info Hash',
-    dataIndex: 'torrentInfoHash'
-  },
-  {
     title: 'Torrent Name',
-    dataIndex: 'torrentName'
+    slotName: 'torrentName'
   },
   {
     title: 'Torrent Size',
@@ -108,3 +132,12 @@ const columns = [
 ]
 const list = computed(() => data.value?.result)
 </script>
+
+<style scoped>
+.red {
+  color: red;
+}
+.green {
+  color: green;
+}
+</style>

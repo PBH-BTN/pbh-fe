@@ -9,12 +9,14 @@
         >
           <template #extra>
             <a-space size="large">
-              <p><icon-clock-circle />最后更新于：{{ lastUpdate }}</p>
-              <a-switch :model="autoUpdate" @change="toggleAutoUpdate">
-                <template #checked> 开 </template>
-                <template #unchecked> 关 </template>
-              </a-switch>
-              <p>自动刷新</p>
+              <a-space>
+                <p><icon-clock-circle />最后更新于：{{ lastUpdate }}</p>
+                <a-switch :model="autoUpdate" @change="toggleAutoUpdate">
+                  <template #checked> 开 </template>
+                  <template #unchecked> 关 </template>
+                </a-switch>
+                <p>自动刷新</p>
+              </a-space>
               <a-radio-group type="button" :model-value="currentName" @change="goto">
                 <a-radio v-for="router in routers" :key="router.name" :value="router.name">
                   {{ router.meta?.label }}

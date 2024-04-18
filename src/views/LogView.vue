@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import banlogTable from '../components/banlogTable.vue'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { usePagination } from 'vue-request'
 import { getBanlogs } from '@/service/banlogs'
 
 const lastUpdate = ref(new Date().toLocaleString())
 const autoUpdate = ref(true)
-const { data, totalPage, current, loading, pageSize } = usePagination(getBanlogs, {
+const { data, totalPage, current, loading, pageSize, run, cancel } = usePagination(getBanlogs, {
   defaultParams: [
     {
       pageIndex: 0,
@@ -19,7 +19,7 @@ const { data, totalPage, current, loading, pageSize } = usePagination(getBanlogs
     totalKey: 'total'
   },
   pollingWhenOffline: true,
-  pollingInterval: autoUpdate.value ? 3000 : 0,
+  pollingInterval: 3000,
   onSuccess: () => {
     lastUpdate.value = new Date().toLocaleString()
   }
@@ -27,6 +27,16 @@ const { data, totalPage, current, loading, pageSize } = usePagination(getBanlogs
 const changePage = (page: number) => {
   current.value = page
 }
+watch(autoUpdate, (value) => {
+  if (value) {
+    run({
+      pageIndex: 0,
+      pageSize: 5
+    })
+  } else {
+    cancel()
+  }
+})
 </script>
 
 <template>

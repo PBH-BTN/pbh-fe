@@ -7,7 +7,6 @@ import {
   type RouteRecordRaw
 } from 'vue-router'
 import Dashboard from '../views/DashBoard.vue'
-import LogView from '../views/LogView.vue'
 import { computed } from 'vue'
 
 export const routerOptions: RouteRecordRaw[] = [
@@ -25,7 +24,15 @@ export const routerOptions: RouteRecordRaw[] = [
     meta: {
       label: '封禁日志'
     },
-    component: LogView
+    component: () => import('../views/LogView.vue') // 懒加载
+  },
+  {
+    path: '/max50',
+    name: 'max50',
+    meta: {
+      label: 'TOP 50'
+    },
+    component: () => Dashboard
   },
   {
     path: '/:pathMatch(.*)*', // 404

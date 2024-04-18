@@ -10,8 +10,8 @@
           <template #extra>
             <a-space size="large">
               <a-space>
-                <p><icon-clock-circle />最后更新于：{{ lastUpdate }}</p>
-                <a-switch :model="autoUpdate" @change="toggleAutoUpdate">
+                <p><icon-clock-circle />最后更新于：{{ autoUpdate.lastUpdate }}</p>
+                <a-switch :model="autoUpdate.autoUpdate" @change="autoUpdate.toggleAutoUpdate">
                   <template #checked> 开 </template>
                   <template #unchecked> 关 </template>
                 </a-switch>
@@ -38,7 +38,7 @@ import { watch } from 'vue'
 import { useViewRoute } from './router'
 import { useAutoUpdate } from './stores/autoUpdate'
 const [routers, currentName, goto] = useViewRoute()
-const { lastUpdate, autoUpdate, toggleAutoUpdate } = useAutoUpdate()
+const autoUpdate = useAutoUpdate()
 watch(currentName, (val) => console.log('currentName', val))
 </script>
 <style scoped></style>

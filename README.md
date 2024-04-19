@@ -1,6 +1,6 @@
 # pbh-fe
 
-This template should help get you started developing with Vue 3 in Vite.
+This is the WebUI of the [PeerBanHelper](https://github.com/Ghost-chu/PeerBanHelper)
 
 ## Recommended IDE Setup
 

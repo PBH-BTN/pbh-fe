@@ -1,12 +1,12 @@
-export interface clientStatus {
+export interface ClientStatus {
   name: string
   peers: number
   torrents: number
   endpoint: string
-  status: ClientStatus
+  status: ClientStatusEnum
 }
 
-export enum ClientStatus {
+export enum ClientStatusEnum {
   HEALTHY = 'HEALTHY',
   ERROR = 'ERROR',
   UNKNOWN = 'UNKNOWN'

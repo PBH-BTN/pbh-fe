@@ -1,4 +1,4 @@
-export interface banlog {
+export interface BanLog {
   pageIndex: Number
   pageSize: Number
   result: {

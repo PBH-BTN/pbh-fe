@@ -1,4 +1,5 @@
 <template>
+  <a-typography-title :heading="3">下载器状态</a-typography-title>
   <a-row justify="space-around">
     <!-- 骨架屏 -->
     <a-col v-if="!firstLoad" :span="4">
@@ -25,9 +26,9 @@
           <a-typography-paragraph>
             状态：
             <a-typography-text :type="statusMap.get(client.status)!![0]"
-              ><icon-check-circle-fill v-if="client.status == ClientStatus.HEALTHY" />
-              <icon-close-circle-fill v-if="client.status == ClientStatus.ERROR" />
-              <icon-exclamation-circle-fill v-if="client.status == ClientStatus.UNKNOWN" />{{
+              ><icon-check-circle-fill v-if="client.status == ClientStatusEnum.HEALTHY" />
+              <icon-close-circle-fill v-if="client.status == ClientStatusEnum.ERROR" />
+              <icon-exclamation-circle-fill v-if="client.status == ClientStatusEnum.UNKNOWN" />{{
                 statusMap.get(client.status)!![1]
               }}</a-typography-text
             >
@@ -43,14 +44,14 @@
 </template>
 <script setup lang="ts">
 import { getClientStatus } from '@/service/clientStatus'
-import { ClientStatus } from '@/api/model/clientStatus'
+import { ClientStatusEnum } from '@/api/model/clientStatus'
 import { useAutoUpdate } from '@/stores/autoUpdate'
 import { useRequest } from 'vue-request'
 import { watch, ref } from 'vue'
 const statusMap = new Map([
-  [ClientStatus.HEALTHY, ['success', '正常 - 状态良好']],
-  [ClientStatus.ERROR, ['warning', '错误 - 与客户端通信时出错，请检查日志文件']],
-  [ClientStatus.UNKNOWN, ['danger', '未知 - PeerBanHelper 可能还没有与此客户端通信']]
+  [ClientStatusEnum.HEALTHY, ['success', '正常 - 状态良好']],
+  [ClientStatusEnum.ERROR, ['warning', '错误 - 与客户端通信时出错，请检查日志文件']],
+  [ClientStatusEnum.UNKNOWN, ['danger', '未知 - PeerBanHelper 可能还没有与此客户端通信']]
 ])
 const firstLoad = ref(false)
 const autoUpdateState = useAutoUpdate()

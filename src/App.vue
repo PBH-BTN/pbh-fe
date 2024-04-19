@@ -27,11 +27,14 @@
         </a-page-header>
       </a-layout-header>
       <a-layout style="padding: 0 24px">
-        <a-alert type="warning" closable
-          >请注意，此功能仍在施工中，目前记录和展示的数据较为有限。</a-alert
-        >
-        <a-layout-content><RouterView /></a-layout-content>
-        <!-- <a-layout-footer>Footer</a-layout-footer> -->
+        <a-space direction="vertical" fill>
+          <a-alert type="warning" closable
+            >请注意，此功能仍在施工中，目前记录和展示的数据较为有限。</a-alert
+          >
+          <a-divider />
+          <a-layout-content><RouterView /></a-layout-content>
+          <!-- <a-layout-footer>Footer</a-layout-footer> -->
+        </a-space>
       </a-layout>
     </a-layout>
   </a-layout>

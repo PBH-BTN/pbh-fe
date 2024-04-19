@@ -1,5 +1,6 @@
 <template>
   <a-row justify="space-around">
+    <!-- 骨架屏 -->
     <a-col v-if="!firstLoad" :span="4">
       <a-card :style="{ width: '360px' }" hoverable>
         <a-skeleton :animation="true">
@@ -9,8 +10,10 @@
             <a-skeleton-line />
             <a-skeleton-line />
           </a-space>
-        </a-skeleton> </a-card
-    ></a-col>
+        </a-skeleton>
+      </a-card>
+    </a-col>
+    <!-- client 卡片 -->
     <a-col v-else :span="4" v-for="client in data" :key="client.name">
       <a-card :style="{ width: '360px' }" title="下载器状态" hoverable>
         <a-typography>

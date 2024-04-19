@@ -1,6 +1,6 @@
 <template>
   <a-table
-    stripe="true"
+    :stripe="true"
     :columns="columns"
     :data="list"
     :loading="loading"
@@ -10,6 +10,12 @@
     }"
     @page-change="changePage"
   >
+    <template #banAt="{ record }">
+      <p>{{ new Date(record.banAt).toLocaleString() }}</p>
+    </template>
+    <template #unbanAt="{ record }">
+      <p>{{ record.unbanAt ? new Date(record.unbanAt).toLocaleString() : '未解封' }}</p>
+    </template>
     <template #peerAddress="{ record }">
       <a-typography-text copyable code>
         {{ record.peerIp }}:{{ record.peerPort }}
@@ -26,13 +32,18 @@
         </a-tooltip>
       </a-space>
     </template>
-    <template #torrentName="{ record }">
-      <a-tooltip :content="record.torrentInfoHash">
-        <p>{{ record.torrentName }}</p>
-      </a-tooltip>
+    <template #peerId="{ record }">
+      <p>
+        {{ record.peerId }}
+        <a-tooltip :content="record.peerClientName">
+          <icon-info-circle />
+        </a-tooltip>
+      </p>
     </template>
     <template #torrentSize="{ record }">
-      <p>{{ formatFileSize(record.torrentSize) }}</p>
+      <a-tooltip :content="`Hash: ${record.torrentInfoHash}`">
+        <p>{{ formatFileSize(record.torrentSize) }}</p>
+      </a-tooltip>
     </template>
   </a-table>
 </template>
@@ -87,37 +98,39 @@ watch(autoUpdateState, (state) => {
 const columns = [
   {
     title: '封禁时间',
-    dataIndex: 'banAt'
+    slotName: 'banAt',
+    width: 175
   },
   {
     title: '解封时间',
-    dataIndex: 'unbanAt'
+    slotName: 'unbanAt',
+    width: 175
   },
   {
     title: 'Peer 地址',
-    slotName: 'peerAddress'
+    slotName: 'peerAddress',
+    width: 230
   },
   {
     title: 'Peer Id',
-    dataIndex: 'peerId'
-  },
-  {
-    title: 'Peer Client Name',
-    dataIndex: 'peerClientName'
+    slotName: 'peerId',
+    width: 120
   },
   {
     title: '流量快照',
-    slotName: 'peerStatus'
+    slotName: 'peerStatus',
+    width: 150
   },
   {
     title: '种子名',
-    slotName: 'torrentName',
+    dataIndex: 'torrentName',
     ellipsis: true,
     tooltip: true
   },
   {
     title: '大小',
-    slotName: 'torrentSize'
+    slotName: 'torrentSize',
+    width: 120
   },
   {
     title: '描述',
@@ -126,7 +139,7 @@ const columns = [
     tooltip: true
   }
 ]
-const list = computed(() => data.value?.result)
+const list = computed(() => data.value?.results)
 </script>
 
 <style scoped>

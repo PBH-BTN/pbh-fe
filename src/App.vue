@@ -11,7 +11,7 @@
             <a-space size="large">
               <a-space>
                 <p><icon-clock-circle />最后更新于：{{ autoUpdate.lastUpdate }}</p>
-                <a-switch :model="autoUpdate.autoUpdate" @change="autoUpdate.toggleAutoUpdate">
+                <a-switch v-model="autoUpdate.autoUpdate" @change="autoUpdate.toggleAutoUpdate">
                   <template #checked> 开 </template>
                   <template #unchecked> 关 </template>
                 </a-switch>

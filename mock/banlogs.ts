@@ -6,7 +6,7 @@ const banlogsMockAPI: MockMethod[] = [
   {
     url: '/api/banlogs',
     method: 'get',
-    response: (req) => {
+    response: (req:any) => {
       return {
         pageIndex: Number(req.query.pageIndex) || 0,
         pageSize: Number(req.query.pageSize) || 100,

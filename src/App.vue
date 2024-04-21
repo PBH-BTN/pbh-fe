@@ -1,5 +1,5 @@
 <template>
-  <a-layout class="layout">
+  <a-layout>
     <a-layout>
       <a-layout-header>
         <a-page-header
@@ -33,7 +33,7 @@
           >
           <a-divider />
           <a-layout-content><RouterView /></a-layout-content>
-          <!-- <a-layout-footer>Footer</a-layout-footer> -->
+          <a-layout-footer><pageFooter /></a-layout-footer>
         </a-space>
       </a-layout>
     </a-layout>
@@ -43,6 +43,7 @@
 import { watch } from 'vue'
 import { useViewRoute } from './router'
 import { useAutoUpdate } from './stores/autoUpdate'
+import pageFooter from './components/pageFooter.vue'
 const [routers, currentName, goto] = useViewRoute()
 const autoUpdate = useAutoUpdate()
 watch(currentName, (val) => console.log('currentName', val))

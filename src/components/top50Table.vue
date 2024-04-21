@@ -43,7 +43,8 @@ import { computed, ref, watch, h } from 'vue'
 import { useRequest } from 'vue-request'
 import { IconSearch } from '@arco-design/web-vue/es/icon'
 import type { topBanItem } from '@/api/model/topban'
-
+import { useAutoUpdate } from '@/stores/autoUpdate'
+const autoUpdateState = useAutoUpdate()
 const pageSize = ref(50)
 const columns = [
   {
@@ -70,7 +71,7 @@ const props = defineProps({
 
 const topNumber = computed(() => props.topNumber)
 
-const { data, loading, run, cancel, refresh } = useRequest(getTopBan, {
+const { data, loading, run, cancel } = useRequest(getTopBan, {
   defaultParams: [
     {
       num: topNumber.value
@@ -82,6 +83,15 @@ watch(topNumber, () => {
   run({
     num: topNumber.value
   })
+})
+watch(autoUpdateState, (state) => {
+  if (state.autoUpdate) {
+    run({
+      num: topNumber.value
+    })
+  } else {
+    cancel()
+  }
 })
 </script>
 

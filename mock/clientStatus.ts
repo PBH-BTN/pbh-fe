@@ -1,6 +1,5 @@
 import { MockMethod } from 'vite-plugin-mock'
 import mockjs from 'mockjs'
-const { Random } = mockjs
 
 const ClientStatusMockAPi: MockMethod[] = [
   {
@@ -14,7 +13,7 @@ const ClientStatusMockAPi: MockMethod[] = [
             name: 'qbittorrent',
             peers: 34,
             torrents: 5,
-            endpoint: 'https://nas.gaojianli.me:8443/qbt/api/v2',
+            endpoint: 'https://baidu.com/qbt/api/v2',
             status: 'HEALTHY'
           }
         })

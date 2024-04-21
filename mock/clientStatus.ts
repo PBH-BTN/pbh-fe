@@ -1,5 +1,5 @@
 import { MockMethod } from 'vite-plugin-mock'
-import mockjs from 'mockjs'
+
 
 const ClientStatusMockAPi: MockMethod[] = [
   {

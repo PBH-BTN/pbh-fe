@@ -10,7 +10,7 @@ import { vitePluginForArco } from '@arco-plugins/vite-vue'
 export default defineConfig({
   plugins: [
     vue(),
-    viteMockServe({}),
+    // viteMockServe({}),
     VueDevTools(),
     vitePluginForArco({
       style: 'css'

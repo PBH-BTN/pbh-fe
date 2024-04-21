@@ -27,12 +27,12 @@ export const routerOptions: RouteRecordRaw[] = [
     component: () => import('../views/LogView.vue') // 懒加载
   },
   {
-    path: '/max50',
-    name: 'max50',
+    path: '/top',
+    name: 'top',
     meta: {
-      label: 'TOP 50'
+      label: '最多封禁'
     },
-    component: () => Dashboard
+    component: () => import('../views/TopBanView.vue')
   },
   {
     path: '/:pathMatch(.*)*', // 404

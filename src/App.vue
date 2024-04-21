@@ -33,6 +33,7 @@
           >
           <a-divider />
           <a-layout-content><RouterView /></a-layout-content>
+          <a-divider />
           <a-layout-footer><pageFooter /></a-layout-footer>
         </a-space>
       </a-layout>

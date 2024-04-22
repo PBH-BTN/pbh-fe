@@ -13,11 +13,6 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
-    "normalize.css": "^8.0.1",
-    "pinia": "^2.1.7",
-    "vue": "^3.4.21",
-    "vue-request": "^2.0.4",
-    "vue-router": "^4.3.0",
     "@arco-design/web-vue": "^2.55.1",
     "@arco-plugins/vite-vue": "^1.4.5",
     "@rushstack/eslint-patch": "^1.8.0",
@@ -31,12 +26,19 @@
     "eslint": "^8.57.0",
     "eslint-plugin-vue": "^9.23.0",
     "mockjs": "^1.1.0",
+    "normalize.css": "^8.0.1",
     "npm-run-all2": "^6.1.2",
+    "pinia": "^2.1.7",
+    "pinia-plugin-persistedstate": "^3.2.1",
     "prettier": "^3.2.5",
     "typescript": "~5.4.0",
+    "url-join": "^5.0.0",
     "vite": "^5.2.8",
     "vite-plugin-mock": "^3.0.1",
     "vite-plugin-vue-devtools": "^7.0.25",
+    "vue": "^3.4.21",
+    "vue-request": "^2.0.4",
+    "vue-router": "^4.3.0",
     "vue-tsc": "^2.0.11"
   }
 }

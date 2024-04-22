@@ -56,12 +56,18 @@ importers:
       pinia:
         specifier: ^2.1.7
         version: 2.1.7(typescript@5.4.5)(vue@3.4.22(typescript@5.4.5))
+      pinia-plugin-persistedstate:
+        specifier: ^3.2.1
+        version: 3.2.1(pinia@2.1.7(typescript@5.4.5)(vue@3.4.22(typescript@5.4.5)))
       prettier:
         specifier: ^3.2.5
         version: 3.2.5
       typescript:
         specifier: ~5.4.0
         version: 5.4.5
+      url-join:
+        specifier: ^5.0.0
+        version: 5.0.0
       vite:
         specifier: ^5.2.8
         version: 5.2.9(@types/node@20.12.7)
@@ -1470,6 +1476,11 @@ packages:
     engines: {node: '>=0.10'}
     hasBin: true
 
+  pinia-plugin-persistedstate@3.2.1:
+    resolution: {integrity: sha512-MK++8LRUsGF7r45PjBFES82ISnPzyO6IZx3CH5vyPseFLZCk1g2kgx6l/nW8pEBKxxd4do0P6bJw+mUSZIEZUQ==}
+    peerDependencies:
+      pinia: ^2.0.0
+
   pinia@2.1.7:
     resolution: {integrity: sha512-+C2AHFtcFqjPih0zpYuvof37SFxMQ7OEG2zV9jRI12i9BOy3YQVAHwdKtyyc8pDcDyIc33WCIsZaCFWU7WWxGQ==}
     peerDependencies:
@@ -1681,6 +1692,10 @@ packages:
 
   uri-js@4.4.1:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
+
+  url-join@5.0.0:
+    resolution: {integrity: sha512-n2huDr9h9yzd6exQVnH/jU5mr+Pfx08LRXXZhkLLetAMESRj+anQsTAh940iMrIetKAmry9coFuZQ2jY8/p3WA==}
+    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
 
   util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
@@ -3217,6 +3232,10 @@ snapshots:
 
   pidtree@0.6.0: {}
 
+  pinia-plugin-persistedstate@3.2.1(pinia@2.1.7(typescript@5.4.5)(vue@3.4.22(typescript@5.4.5))):
+    dependencies:
+      pinia: 2.1.7(typescript@5.4.5)(vue@3.4.22(typescript@5.4.5))
+
   pinia@2.1.7(typescript@5.4.5)(vue@3.4.22(typescript@5.4.5)):
     dependencies:
       '@vue/devtools-api': 6.6.1
@@ -3397,6 +3416,8 @@ snapshots:
   uri-js@4.4.1:
     dependencies:
       punycode: 2.3.1
+
+  url-join@5.0.0: {}
 
   util-deprecate@1.0.2: {}
 

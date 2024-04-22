@@ -1,4 +1,6 @@
 import type { BanLog } from '@/api/model/banlogs'
+import { useEndpointStore } from '@/stores/endpoint'
+import urlJoin from 'url-join'
 
 export function getBanlogs(params: { pageIndex: number; pageSize?: number }): Promise<{
   pageIndex: Number
@@ -6,7 +8,9 @@ export function getBanlogs(params: { pageIndex: number; pageSize?: number }): Pr
   results: BanLog[]
   total: Number
 }> {
-  const url = new URL(import.meta.env.VITE_APP_BASE_URL + 'api/banlogs', location.href)
+  const { endpoint } = useEndpointStore()
+
+  const url = new URL(urlJoin(endpoint, 'api/banlogs'), location.href)
   url.searchParams.set('pageIndex', String(params.pageIndex))
   if (params.pageSize) {
     url.searchParams.set('pageSize', String(params.pageSize))

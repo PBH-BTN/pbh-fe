@@ -2,38 +2,48 @@
 
 This is the WebUI of the [PeerBanHelper](https://github.com/Ghost-chu/PeerBanHelper)
 
-## Recommended IDE Setup
+## Feature
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+- [x]Custom Endpoint
+- [x]Ban List
+- [x]Ban Logs
+- [X]Auto Refresh
+- [X]Client Status
+- [X]Max-ban list with search
 
-## Type Support for `.vue` Imports in TS
+## Screenshots
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+![](./images/dashboard.png)
+![](./images/banlist.png)
+![](./images/banlogs.png)
+![](./images/max50ban.png)
 
-## Customize configuration
+## How to contribute
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+This project using Vue 3 + [Arco Design](https://arco.design/vue)
 
 ## Project Setup
 
+You are supposed to use [pnpm](https://pnpm.io/) to manage the dependencies.
+
 ```sh
-npm install
+pnpm install
 ```
 
 ### Compile and Hot-Reload for Development
 
 ```sh
-npm run dev
+pnpm run dev
 ```
 
 ### Type-Check, Compile and Minify for Production
 
 ```sh
-npm run build
+pnpm run build
 ```
 
 ### Lint with [ESLint](https://eslint.org/)
 
 ```sh
-npm run lint
+pnpm run lint
 ```

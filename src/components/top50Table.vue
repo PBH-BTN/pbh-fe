@@ -45,7 +45,7 @@ import { IconSearch } from '@arco-design/web-vue/es/icon'
 import type { topBanItem } from '@/api/model/topban'
 import { useAutoUpdate } from '@/stores/autoUpdate'
 const autoUpdateState = useAutoUpdate()
-const pageSize = ref(50)
+const pageSize = ref(20)
 const columns = [
   {
     title: 'IP地址',

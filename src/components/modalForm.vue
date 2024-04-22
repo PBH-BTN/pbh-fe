@@ -1,5 +1,5 @@
 <template>
-  <a-modal v-model:visible="showModal" @ok="handleOk" @cancel="handleCancel">
+  <a-modal width="auto" v-model:visible="showModal" @ok="handleOk" @cancel="handleCancel">
     <template #title> 设置端点 </template>
     <a-form :model="form">
       <a-form-item field="endpoint" label="Endpoint:" validate-trigger="input">

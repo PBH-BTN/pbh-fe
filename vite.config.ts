@@ -15,7 +15,7 @@ export default defineConfig({
   base: '',
   plugins: [
     vue(),
-    viteMockServe({}),
+    // viteMockServe({}),
     VueDevTools(),
     vitePluginForArco({
       style: 'css'

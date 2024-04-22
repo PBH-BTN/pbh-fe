@@ -1,5 +1,5 @@
 <template>
-  <a-typography-title :heading="3">下载器状态</a-typography-title>
+  <a-typography-title :heading="3">已连接的下载器</a-typography-title>
   <a-row
     justify="start"
     wrap="true"

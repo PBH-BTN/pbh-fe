@@ -4,12 +4,12 @@ This is a alternative WebUI of the [PeerBanHelper](https://github.com/Ghost-chu/
 
 ## Feature
 
-- [x]Custom Endpoint
-- [x]Ban List
-- [x]Ban Logs
-- [X]Auto Refresh
-- [X]Client Status
-- [X]Max-ban list with search
+- [x] Custom Endpoint
+- [x] Ban List
+- [x] Ban Logs
+- [x] Auto Refresh
+- [x] Client Status
+- [x] Max-ban list with search
 
 ## Screenshots
 

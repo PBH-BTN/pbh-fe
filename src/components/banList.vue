@@ -14,16 +14,17 @@
           <a-descriptions :column="{ xs: 1, md: 2, xl: 3 }">
             <template #title>
               <a-typography-paragraph>
-                <a-typography-text bold>
+                <a-typography-text bold copyable>
                   {{ item.banMetadata.peer.address.ip }}:{{ item.banMetadata.peer.address.port }}
                 </a-typography-text>
+                &nbsp;
                 <a-typography-text code>
                   {{ item.banMetadata.peer.clientName }}
                 </a-typography-text>
               </a-typography-paragraph>
             </template>
             <a-descriptions-item label="反向 DNS 解析" :span="1">
-              {{item.banMetadata.reverseLookup}}
+              {{ item.banMetadata.reverseLookup }}
             </a-descriptions-item>
             <a-descriptions-item label="封禁时间" :span="1">
               {{ new Date(item.banMetadata.banAt).toLocaleString('zh-cn') }}

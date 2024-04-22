@@ -8,7 +8,7 @@
           <div>如果你无法访问PBH后端，可以尝试在此设置Endpoint</div>
         </template>
       </a-form-item>
-      <a-form-item field="interval" label="Interval:" validate-trigger="input">
+      <a-form-item field="interval" label="轮询间隔:" validate-trigger="input">
         <a-input-number v-model="form.interval" placeholder="3000" :min="100" />
       </a-form-item>
     </a-form>
@@ -17,7 +17,7 @@
 <script setup lang="ts">
 import { useAutoUpdate } from '@/stores/autoUpdate'
 import { useEndpointStore } from '@/stores/endpoint'
-import { ref, defineExpose } from 'vue'
+import { ref } from 'vue'
 const endPointStore = useEndpointStore()
 const autoUpdateState = useAutoUpdate()
 const showModal = ref(false)

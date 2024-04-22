@@ -54,24 +54,19 @@ import StatisticInfo from './statisticInfo.vue'
 import { useRequest } from 'vue-request'
 import { computed, watch } from 'vue'
 import { useAutoUpdate } from '@/stores/autoUpdate'
+import { useEndpointStore } from '@/stores/endpoint'
 import { getBanList } from '@/service/banList'
 import { formatFileSize } from '@/utils/file'
 
 const autoUpdateState = useAutoUpdate()
-const { data, run, cancel } = useRequest(getBanList, {
-  pollingWhenOffline: true,
-  pollingInterval: 3000,
-  onSuccess: () => {
-    autoUpdateState.setLastUpdate(new Date())
-  }
+const endpointState = useEndpointStore()
+const { data, refresh } = useRequest(getBanList, {
+  pollingInterval: computed(() => autoUpdateState.pollingInterval),
+  onSuccess: autoUpdateState.renewLastUpdate
 })
-watch(autoUpdateState, (state) => {
-  if (state.autoUpdate) {
-    run()
-  } else {
-    cancel()
-  }
-})
+
+watch(() => endpointState.endpoint, refresh, { immediate: true })
+
 const list = computed(() => data.value ?? [])
 </script>
 

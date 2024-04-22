@@ -3,17 +3,24 @@ import { useEndpointStore } from '@/stores/endpoint'
 import urlJoin from 'url-join'
 
 export function getBanlogs(params: { pageIndex: number; pageSize?: number }): Promise<{
-  pageIndex: Number
-  pageSize: Number
+  pageIndex: number
+  pageSize: number
   results: BanLog[]
-  total: Number
+  total: number
 }> {
   const { endpoint } = useEndpointStore()
 
   const url = new URL(urlJoin(endpoint, 'api/banlogs'), location.href)
-  url.searchParams.set('pageIndex', String(params.pageIndex))
+  url.searchParams.set('pageIndex', String(params.pageIndex - 1))
   if (params.pageSize) {
     url.searchParams.set('pageSize', String(params.pageSize))
   }
-  return fetch(url).then((res) => res.json())
+  return fetch(url)
+    .then((res) => res.json())
+    .then((res) => {
+      return {
+        ...res,
+        pageIndex: res.pageIndex + 1
+      }
+    })
 }

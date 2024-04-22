@@ -5,8 +5,7 @@
     :columns="columns"
     :data="data"
     :loading="loading"
-    :page-size="pageSize"
-    :pagination="{ pageSize }"
+    :pagination="{ showPageSize: true }"
   >
     <template
       #name-filter="{ filterValue, setFilterValue, handleFilterConfirm, handleFilterReset }"
@@ -24,28 +23,18 @@
         </a-space>
       </div>
     </template>
-    <template #pagination-left>
-      <a-space>
-        <p>每页数据数</p>
-        <a-select v-model="pageSize" :trigger-props="{ autoFitPopupMinWidth: true }">
-          <a-option :value="10">10</a-option>
-          <a-option :value="20">20</a-option>
-          <a-option :value="50">50</a-option>
-          <a-option :value="100">100</a-option>
-        </a-select>
-      </a-space>
-    </template>
   </a-table>
 </template>
 <script setup lang="ts">
 import { getTopBan } from '@/service/topBan'
-import { computed, ref, watch, h } from 'vue'
+import { computed, watch, h } from 'vue'
 import { useRequest } from 'vue-request'
 import { IconSearch } from '@arco-design/web-vue/es/icon'
 import type { topBanItem } from '@/api/model/topban'
 import { useAutoUpdate } from '@/stores/autoUpdate'
+import { useEndpointStore } from '@/stores/endpoint'
 const autoUpdateState = useAutoUpdate()
-const pageSize = ref(20)
+const endpointState = useEndpointStore()
 const columns = [
   {
     title: 'IP地址',
@@ -71,27 +60,13 @@ const props = defineProps({
 
 const topNumber = computed(() => props.topNumber)
 
-const { data, loading, run, cancel } = useRequest(getTopBan, {
-  defaultParams: [
-    {
-      num: topNumber.value
-    }
-  ]
+const { data, loading, refresh } = useRequest(() => getTopBan({ num: topNumber.value }), {
+  pollingInterval: computed(() => autoUpdateState.pollingInterval),
+  onSuccess: autoUpdateState.renewLastUpdate
 })
 
-watch(topNumber, () => {
-  run({
-    num: topNumber.value
-  })
-})
-watch(autoUpdateState, (state) => {
-  if (state.autoUpdate) {
-    run({
-      num: topNumber.value
-    })
-  } else {
-    cancel()
-  }
+watch([topNumber, () => endpointState.endpoint], () => {
+  refresh()
 })
 </script>
 

@@ -4,5 +4,6 @@ interface ImportMetaEnv {
   // more env variables...
 }
 
+// add by define
 declare const __APP_VERSION__: string
 declare const __APP_HASH__: string

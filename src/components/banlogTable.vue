@@ -3,12 +3,15 @@
     :stripe="true"
     :columns="columns"
     :data="list"
-    :loading="loading"
+    :loading="tableLoading"
     :pagination="{
-      total: totalPage * pageSize,
-      current
+      total,
+      current,
+      pageSize,
+      showPageSize: true
     }"
-    @page-change="changePage"
+    @page-change="changeCurrent"
+    @page-size-change="changePageSize"
   >
     <template #banAt="{ record }">
       <p>{{ new Date(record.banAt).toLocaleString('zh-cn') }}</p>
@@ -48,41 +51,45 @@
   </a-table>
 </template>
 <script setup lang="ts">
-import { computed } from 'vue'
-import { watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useAutoUpdate } from '@/stores/autoUpdate'
+import { useEndpointStore } from '@/stores/endpoint'
 import { usePagination } from 'vue-request'
 import { getBanlogs } from '@/service/banLogs'
 import { formatFileSize } from '@/utils/file'
+const forceLoading = ref(true)
 const autoUpdateState = useAutoUpdate()
-const { data, totalPage, current, loading, pageSize, run, cancel } = usePagination(getBanlogs, {
-  defaultParams: [
-    {
-      pageIndex: 0,
-      pageSize: 5
+const endpointState = useEndpointStore()
+const { data, total, current, loading, pageSize, changeCurrent, changePageSize, refresh } = usePagination(
+  getBanlogs,
+  {
+    defaultParams: [
+      {
+        pageIndex: 1,
+        pageSize: 10
+      }
+    ],
+    pagination: {
+      currentKey: 'pageIndex',
+      pageSizeKey: 'pageSize',
+      totalKey: 'total'
+    },
+    pollingInterval: computed(() => autoUpdateState.pollingInterval),
+    onSuccess: autoUpdateState.renewLastUpdate,
+    onAfter: () => {
+      forceLoading.value = false
     }
-  ],
-  pagination: {
-    currentKey: 'pageIndex',
-    pageSizeKey: 'pageSize',
-    totalKey: 'total'
-  },
-  pollingWhenOffline: true,
-  pollingInterval: 3000,
-  onSuccess: () => autoUpdateState.setLastUpdate(new Date())
-})
-const changePage = (page: number) => {
-  current.value = page
-}
-watch(autoUpdateState, (state) => {
-  if (state.autoUpdate) {
-    run({
-      pageIndex: 0,
-      pageSize: 5
-    })
-  } else {
-    cancel()
   }
+)
+
+watch([pageSize, current], () => {
+  forceLoading.value = true
+})
+
+watch(() => endpointState.endpoint, refresh, { immediate: true })
+
+const tableLoading = computed(() => {
+  return forceLoading.value || loading.value || !list.value
 })
 
 const columns = [

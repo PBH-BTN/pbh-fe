@@ -64,6 +64,20 @@ const StatisticMockAPi: MockMethod[] = [
           }
         })
     }
+  },
+  {
+    url: '/api/version',
+    method: 'get',
+    response: () => {
+      return {
+        version: '3.1.4',
+        nativeImage: true,
+        os: 'Linux',
+        branch: 'master',
+        commit: 'e2979757fa793695eadce3354a579a71840fc7a5',
+        abbrev: 'e297975'
+      }
+    }
   }
 ]
 

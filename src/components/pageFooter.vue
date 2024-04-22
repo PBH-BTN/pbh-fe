@@ -23,10 +23,15 @@
 
 <script setup lang="ts">
 import { getVersion } from '@/service/version'
+import { useEndpointStore } from '@/stores/endpoint'
+import { watch } from 'vue'
 import { useRequest } from 'vue-request'
 const version = __APP_VERSION__
 const hash = __APP_HASH__
-const { data } = useRequest(getVersion)
+const endpointStore = useEndpointStore()
+const { data, refresh } = useRequest(getVersion)
+
+watch(() => endpointStore.endpoint, refresh, { immediate: true })
 </script>
 
 <style scoped>

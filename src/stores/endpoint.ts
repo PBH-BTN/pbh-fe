@@ -1,14 +1,11 @@
-import { ref } from 'vue'
 import { defineStore } from 'pinia'
+import { useStorage } from '@vueuse/core'
 
 export const useEndpointStore = defineStore(
   'endpoint',
   () => {
-    const endpoint = ref(import.meta.env.VITE_APP_BASE_URL ?? '')
-    const setEndpoint = (url: string) => {
-      endpoint.value = url
-    }
-    return { endpoint, setEndpoint }
+    const endpoint = useStorage('endpoint', import.meta.env.VITE_APP_BASE_URL)
+    return { endpoint }
   },
   { persist: true }
 )

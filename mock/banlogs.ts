@@ -6,7 +6,7 @@ const banlogsMockAPI: MockMethod[] = [
   {
     url: '/api/banlogs',
     method: 'get',
-    response: (req:any) => {
+    response: (req) => {
       return {
         pageIndex: Number(req.query.pageIndex) || 0,
         pageSize: Number(req.query.pageSize) || 100,
@@ -37,8 +37,8 @@ const banlogsMockAPI: MockMethod[] = [
   {
     url: '/api/maxbans',
     method: 'get',
-    response: () => {
-      return Array.from({ length: 4 })
+    response: (req) => {
+      return Array.from({ length: Number(req.query.num) || 50 })
         .fill(0)
         .map(() => {
           return {

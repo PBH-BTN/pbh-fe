@@ -11,20 +11,15 @@
             <a-space size="large">
               <a-space>
                 <p><icon-clock-circle />最后更新于：{{ autoUpdate.lastUpdate }}</p>
-                <a-switch v-model="autoUpdate.autoUpdate" @change="autoUpdate.toggleAutoUpdate">
+                <a-switch v-model="autoUpdate.autoUpdate">
                   <template #checked> 开 </template>
                   <template #unchecked> 关 </template>
                 </a-switch>
                 <p>自动刷新</p>
               </a-space>
-              <a-dropdown trigger="hover">
-                <a-button type="text" shape="circle" status="normal">
-                  <icon-settings style="color: black"
-                /></a-button>
-                <template #content>
-                  <a-doption @click="showSettings">设置端点</a-doption>
-                </template>
-              </a-dropdown>
+              <a-button type="text" shape="circle" status="normal" @click="showSettings">
+                <icon-settings style="color: black"
+              /></a-button>
               <a-radio-group type="button" :model-value="currentName" @change="goto">
                 <a-radio v-for="router in routers" :key="router.name" :value="router.name">
                   {{ router.meta?.label }}

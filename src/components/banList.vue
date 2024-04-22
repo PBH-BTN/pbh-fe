@@ -24,10 +24,10 @@
               反向 DNS 解析：{{ item.banMetadata.reverseLookup }}
             </a-typography-paragraph>
             <a-typography-paragraph>
-              封禁时间：{{ new Date(item.banMetadata.banAt).toLocaleString() }}
+              封禁时间：{{ new Date(item.banMetadata.banAt).toLocaleString('zh-cn') }}
             </a-typography-paragraph>
             <a-typography-paragraph>
-              预计解封时间：{{ new Date(item.banMetadata.unbanAt).toLocaleString() }}
+              预计解封时间：{{ new Date(item.banMetadata.unbanAt).toLocaleString('zh-cn') }}
             </a-typography-paragraph>
             <a-typography-paragraph>
               发现位置：{{ item.banMetadata.torrent.name }}

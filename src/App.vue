@@ -17,6 +17,14 @@
                 </a-switch>
                 <p>自动刷新</p>
               </a-space>
+              <a-dropdown trigger="hover">
+                <a-button type="text" shape="circle" status="normal">
+                  <icon-settings style="color: black"
+                /></a-button>
+                <template #content>
+                  <a-doption @click="showSettings">设置端点</a-doption>
+                </template>
+              </a-dropdown>
               <a-radio-group type="button" :model-value="currentName" @change="goto">
                 <a-radio v-for="router in routers" :key="router.name" :value="router.name">
                   {{ router.meta?.label }}
@@ -39,14 +47,20 @@
       </a-layout>
     </a-layout>
   </a-layout>
+  <modalForm ref="modal" />
 </template>
 <script setup lang="ts">
-import { watch } from 'vue'
+import { watch, ref } from 'vue'
 import { useViewRoute } from './router'
 import { useAutoUpdate } from './stores/autoUpdate'
 import pageFooter from './components/pageFooter.vue'
+import modalForm from './components/modalForm.vue'
 const [routers, currentName, goto] = useViewRoute()
+const modal = ref<InstanceType<typeof modalForm>>()
 const autoUpdate = useAutoUpdate()
+const showSettings = () => {
+  modal.value?.showModal()
+}
 watch(currentName, (val) => console.log('currentName', val))
 </script>
 <style scoped></style>

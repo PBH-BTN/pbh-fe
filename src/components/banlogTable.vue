@@ -11,10 +11,10 @@
     @page-change="changePage"
   >
     <template #banAt="{ record }">
-      <p>{{ new Date(record.banAt).toLocaleString() }}</p>
+      <p>{{ new Date(record.banAt).toLocaleString('zh-cn') }}</p>
     </template>
     <template #unbanAt="{ record }">
-      <p>{{ record.unbanAt ? new Date(record.unbanAt).toLocaleString() : '未解封' }}</p>
+      <p>{{ record.unbanAt ? new Date(record.unbanAt).toLocaleString('zh-cn') : '未解封' }}</p>
     </template>
     <template #peerAddress="{ record }">
       <a-typography-text copyable code>

@@ -9,7 +9,7 @@
     ]"
   >
     <!-- 骨架屏 -->
-    <a-col v-if="!data" :xs="24" :sm="12" :md="8" :lg="6" :xl="6" :xxl="4">
+    <a-col v-if="!data" :xs="24" :sm="12" :md="8" :lg="6">
       <a-card hoverable>
         <a-skeleton :animation="true">
           <a-space direction="vertical" :style="{ width: '100%' }" size="large">
@@ -28,8 +28,6 @@
       :sm="12"
       :md="8"
       :lg="6"
-      :xl="6"
-      :xxl="4"
       v-for="client in data"
       :key="client.name"
     >

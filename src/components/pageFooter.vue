@@ -1,22 +1,22 @@
 <template>
   <a-row align="center" justify="center">
     <a-col class="footer">
-      <a-space direction="vertical" fill>
-        <a-typography-text>
-          Backend Version: {{ data?.version }} (
+      <a-descriptions :column="{ xs: 1, md: 3, lg: 4 }">
+        <a-descriptions-item label="Backend Version">
+          {{ data?.version }} (
           <a :href="`https://github.com/Ghost-chu/PeerBanHelper/commit/${data?.commit}`"
             >{{ data?.commit.substring(0, 8) }}
           </a>
           )
-        </a-typography-text>
-        <a-typeography-text>
-          WebUI Version: {{ version }} (
-          <a :href="`https://github.com/Gaojianli/pbh-fe/commit/${hash}`">
+        </a-descriptions-item>
+        <a-descriptions-item label="WebUI Version">
+          {{ version }} (
+            <a :href="`https://github.com/Gaojianli/pbh-fe/commit/${hash}`">
             {{ hash.substring(0, 8) }}
           </a>
           )
-        </a-typeography-text>
-      </a-space>
+        </a-descriptions-item>
+      </a-descriptions>
     </a-col>
   </a-row>
 </template>

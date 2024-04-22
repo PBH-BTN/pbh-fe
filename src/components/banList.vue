@@ -11,38 +11,40 @@
     >
       <template #item="{ item }">
         <a-list-item>
-          <a-typography>
-            <a-typography-paragraph>
-              <a-typography-text bold>
-                {{ item.banMetadata.peer.address.ip }}:{{ item.banMetadata.peer.address.port }}
-              </a-typography-text>
-              <a-typography-text code>
-                {{ item.banMetadata.peer.clientName }}
-              </a-typography-text>
-            </a-typography-paragraph>
-            <a-typography-paragraph>
-              反向 DNS 解析：{{ item.banMetadata.reverseLookup }}
-            </a-typography-paragraph>
-            <a-typography-paragraph>
-              封禁时间：{{ new Date(item.banMetadata.banAt).toLocaleString('zh-cn') }}
-            </a-typography-paragraph>
-            <a-typography-paragraph>
-              预计解封时间：{{ new Date(item.banMetadata.unbanAt).toLocaleString('zh-cn') }}
-            </a-typography-paragraph>
-            <a-typography-paragraph>
-              发现位置：{{ item.banMetadata.torrent.name }}
-            </a-typography-paragraph>
-            <a-typography-paragraph>
-              封禁快照： <icon-arrow-up class="green" />
+          <a-descriptions :column="{ xs: 1, md: 2, xl: 3 }">
+            <template #title>
+              <a-typography-paragraph>
+                <a-typography-text bold>
+                  {{ item.banMetadata.peer.address.ip }}:{{ item.banMetadata.peer.address.port }}
+                </a-typography-text>
+                <a-typography-text code>
+                  {{ item.banMetadata.peer.clientName }}
+                </a-typography-text>
+              </a-typography-paragraph>
+            </template>
+            <a-descriptions-item label="反向 DNS 解析" :span="1">
+              {{item.banMetadata.reverseLookup}}
+            </a-descriptions-item>
+            <a-descriptions-item label="封禁时间" :span="1">
+              {{ new Date(item.banMetadata.banAt).toLocaleString('zh-cn') }}
+            </a-descriptions-item>
+            <a-descriptions-item label="预计解封时间" :span="1">
+              {{ new Date(item.banMetadata.unbanAt).toLocaleString('zh-cn') }}
+            </a-descriptions-item>
+            <a-descriptions-item label="发现位置" :span="2">
+              {{ item.banMetadata.torrent.name }}
+            </a-descriptions-item>
+            <a-descriptions-item label="封禁快照" :span="1">
+              <icon-arrow-up class="green" />
               {{ formatFileSize(item.banMetadata.peer.uploaded) }}
               <icon-arrow-down class="red" />
               {{ formatFileSize(item.banMetadata.peer.downloaded) }}
               - {{ (item.banMetadata.peer.progress * 100).toFixed(2) }}%
-            </a-typography-paragraph>
-            <a-typography-paragraph>
-              封禁原因：{{ item.banMetadata.description }}
-            </a-typography-paragraph>
-          </a-typography>
+            </a-descriptions-item>
+            <a-descriptions-item label="封禁原因" :span="3">
+              {{ item.banMetadata.description }}
+            </a-descriptions-item>
+          </a-descriptions>
         </a-list-item>
       </template>
     </a-list>

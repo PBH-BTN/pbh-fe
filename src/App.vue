@@ -3,7 +3,7 @@
     <a-layout>
       <a-layout-header>
         <a-page-header
-          :style="{ background: 'var(--color-bg-2)' }"
+          :style="{ background: 'var(--color-bg-2)', maxWidth: '1200px', margin: 'auto' }"
           title="PeerBanHelper"
           :show-back="false"
         >
@@ -30,7 +30,7 @@
         </a-page-header>
       </a-layout-header>
       <a-layout style="padding: 0 24px">
-        <a-space direction="vertical" fill>
+        <a-space direction="vertical" fill style="width: 100%; max-width: 1200px; margin: auto">
           <a-alert type="warning" closable
             >请注意，此功能仍在施工中，目前记录和展示的数据较为有限。</a-alert
           >

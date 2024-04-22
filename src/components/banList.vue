@@ -2,10 +2,22 @@
   <a-space direction="vertical" fill>
     <a-typography-title :heading="3">封禁名单</a-typography-title>
     <StatisticInfo />
+    <br />
+    <a-space class="list-header">
+      <a-typography-text>以下是封禁列表（按时间倒序排列）</a-typography-text>
+      <a-input-search
+        :style="{ width: '250px' }"
+        placeholder="搜索 IP 地址"
+        @search="handleSearch"
+        allow-clear
+        search-button
+      />
+    </a-space>
     <a-list
       :virtualListProps="{
         height: 500
       }"
+      ref="banlist"
       max-height="1000"
       :data="list"
     >
@@ -55,18 +67,26 @@
 <script setup lang="ts">
 import StatisticInfo from './statisticInfo.vue'
 import { useRequest } from 'vue-request'
-import { computed, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useAutoUpdate } from '@/stores/autoUpdate'
 import { useEndpointStore } from '@/stores/endpoint'
 import { getBanList } from '@/service/banList'
 import { formatFileSize } from '@/utils/file'
-
+const banlist = ref()
 const autoUpdateState = useAutoUpdate()
 const endpointState = useEndpointStore()
 const { data, refresh } = useRequest(getBanList, {
   pollingInterval: computed(() => autoUpdateState.pollingInterval),
   onSuccess: autoUpdateState.renewLastUpdate
 })
+const handleSearch = (value: string) => {
+  if (value) {
+    const index = data.value?.map((item) => item.address).findIndex((item) => item.includes(value))
+    if (index !== -1) {
+      banlist.value?.scrollIntoView({ index: index, align: 'auto' })
+    }
+  }
+}
 
 watch(() => endpointState.endpoint, refresh, { immediate: true })
 
@@ -79,5 +99,9 @@ const list = computed(() => data.value ?? [])
 }
 .green {
   color: green;
+}
+.list-header {
+  display: flex;
+  justify-content: space-between;
 }
 </style>

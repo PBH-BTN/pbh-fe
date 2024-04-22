@@ -48,7 +48,6 @@
         </a-grid-item>
       </a-grid>
     </a-card>
-    <a-typography-text>以下是封禁列表（按时间倒序排列）</a-typography-text>
   </a-space>
 </template>
 <script setup lang="ts">

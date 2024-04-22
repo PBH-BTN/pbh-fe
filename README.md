@@ -1,6 +1,6 @@
 # pbh-fe
 
-This is the WebUI of the [PeerBanHelper](https://github.com/Ghost-chu/PeerBanHelper)
+This is a alternative WebUI of the [PeerBanHelper](https://github.com/Ghost-chu/PeerBanHelper), based on modern front-end stacks.
 
 ## Feature
 

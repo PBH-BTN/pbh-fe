@@ -1,3 +1,4 @@
+/// <reference types="../node_modules/vite-plugin-mock/dist/types-5af01a9a.d.ts" />
 import { MockMethod } from 'vite-plugin-mock'
 import mockjs from 'mockjs'
 const { Random } = mockjs

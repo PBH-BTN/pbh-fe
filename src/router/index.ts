@@ -44,8 +44,16 @@ export const routerOptions: RouteRecordRaw[] = [
   }
 ]
 
+let basePath = location.pathname
+for (const item of routerOptions) {
+  if (!item.meta?.hidden && basePath.endsWith(item.path)) {
+    basePath = basePath.slice(0, -item.path.length)
+    break
+  }
+}
+
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(basePath),
   routes: routerOptions
 })
 

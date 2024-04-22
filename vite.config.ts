@@ -12,6 +12,7 @@ const exec = promisify(execCallBack)
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: '',
   plugins: [
     vue(),
     viteMockServe({}),

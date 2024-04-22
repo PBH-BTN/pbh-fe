@@ -31,7 +31,6 @@
     "normalize.css": "^8.0.1",
     "npm-run-all2": "^6.1.2",
     "pinia": "^2.1.7",
-    "pinia-plugin-persistedstate": "^3.2.1",
     "prettier": "^3.2.5",
     "typescript": "~5.4.0",
     "url-join": "^5.0.0",

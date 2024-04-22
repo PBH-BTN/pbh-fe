@@ -11,7 +11,7 @@
         </a-descriptions-item>
         <a-descriptions-item label="WebUI Version">
           {{ version }} (
-            <a :href="`https://github.com/Gaojianli/pbh-fe/commit/${hash}`">
+          <a :href="`https://github.com/Gaojianli/pbh-fe/commit/${hash}`">
             {{ hash.substring(0, 8) }}
           </a>
           )

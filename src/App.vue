@@ -21,10 +21,10 @@
             >
               <template #icon><icon-settings /></template>
             </a-button>
-            <a-tooltip :content="theme === 'light' ? '切换到深色主题' : '切换到浅色主题'">
+            <a-tooltip :content="isDark ? '切换到浅色主题' : '切换到深色主题'">
               <a-button class="nav-btn" type="outline" :shape="'circle'" @click="handleToggleTheme">
                 <template #icon>
-                  <icon-moon-fill v-if="theme === 'dark'" />
+                  <icon-moon-fill v-if="isDark" />
                   <icon-sun-fill v-else />
                 </template>
               </a-button>
@@ -59,26 +59,16 @@ import { useAutoUpdate } from './stores/autoUpdate'
 import pageFooter from './components/pageFooter.vue'
 import modalForm from './components/modalForm.vue'
 import { useDark, useToggle } from '@vueuse/core'
-import { useThemeStore } from './stores/theme'
 const [routers, currentName, goto] = useViewRoute()
 const modal = ref<InstanceType<typeof modalForm>>()
 const autoUpdate = useAutoUpdate()
-const themeStore = useThemeStore()
 const isDark = useDark({
   selector: 'body',
   attribute: 'arco-theme',
   valueDark: 'dark',
-  valueLight: 'light',
-  storageKey: 'arco-theme',
-  onChanged(dark: boolean) {
-    // overridden default behavior
-    themeStore.toggleTheme(dark)
-  }
+  valueLight: 'light'
 })
 
-const theme = computed(() => {
-  return themeStore.theme
-})
 const toggleTheme = useToggle(isDark)
 const handleToggleTheme = () => {
   toggleTheme()

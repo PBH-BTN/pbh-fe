@@ -19,6 +19,8 @@
       }"
       ref="banlist"
       max-height="1000"
+      @reach-bottom="loadMore"
+      :scrollbar="false"
       :data="list"
     >
       <template #item="{ item }">
@@ -60,6 +62,10 @@
           </a-descriptions>
         </a-list-item>
       </template>
+      <template #scroll-loading>
+        <a-typography-text v-if="bottom">已经到底啦！</a-typography-text>
+        <a-spin v-else />
+      </template>
     </a-list>
   </a-space>
 </template>
@@ -75,7 +81,13 @@ import { formatFileSize } from '@/utils/file'
 const banlist = ref()
 const autoUpdateState = useAutoUpdate()
 const endpointState = useEndpointStore()
+const bottom = ref(false)
 const { data, refresh } = useRequest(getBanList, {
+  defaultParams: [
+    {
+      limit: 5
+    }
+  ],
   pollingInterval: computed(() => autoUpdateState.pollingInterval),
   onSuccess: autoUpdateState.renewLastUpdate
 })
@@ -85,6 +97,23 @@ const handleSearch = (value: string) => {
     if (index !== -1) {
       banlist.value?.scrollIntoView({ index: index, align: 'auto' })
     }
+  }
+}
+
+const loadMore = async () => {
+  if (data.value) {
+    const lastBanTime = data.value[data.value.length - 1].banMetadata.banAt
+    const newData = await getBanList({
+      limit: 5,
+      lastBanTime: lastBanTime
+    })
+    if (newData.length === 0) {
+      bottom.value = true
+    } else {
+      data.value = data.value.concat(newData)
+    }
+  } else {
+    refresh()
   }
 }
 

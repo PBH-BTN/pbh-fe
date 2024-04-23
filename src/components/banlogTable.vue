@@ -25,7 +25,7 @@
       </a-typography-text>
     </template>
     <template #peerStatus="{ record }">
-      <a-space>
+      <a-space fill style="justify-content: space-between;">
         <div>
           <p>{{ formatFileSize(record.peerUploaded) }}<icon-arrow-up class="green" /></p>
           <p>{{ formatFileSize(record.peerDownloaded) }}<icon-arrow-down class="red" /></p>
@@ -60,9 +60,8 @@ import { formatFileSize } from '@/utils/file'
 const forceLoading = ref(true)
 const autoUpdateState = useAutoUpdate()
 const endpointState = useEndpointStore()
-const { data, total, current, loading, pageSize, changeCurrent, changePageSize, refresh } = usePagination(
-  getBanlogs,
-  {
+const { data, total, current, loading, pageSize, changeCurrent, changePageSize, refresh } =
+  usePagination(getBanlogs, {
     defaultParams: [
       {
         pageIndex: 1,
@@ -79,8 +78,7 @@ const { data, total, current, loading, pageSize, changeCurrent, changePageSize, 
     onAfter: () => {
       forceLoading.value = false
     }
-  }
-)
+  })
 
 watch([pageSize, current], () => {
   forceLoading.value = true
@@ -133,7 +131,7 @@ const columns = [
     title: '描述',
     dataIndex: 'description',
     ellipsis: true,
-    tooltip: true
+    tooltip: true,
   }
 ]
 const list = computed(() => data.value?.results)
@@ -145,5 +143,10 @@ const list = computed(() => data.value?.results)
 }
 .green {
   color: green;
+}
+.arco-pagination {
+  flex-wrap: wrap;
+  gap: 10px 0;
+  justify-content: end;
 }
 </style>

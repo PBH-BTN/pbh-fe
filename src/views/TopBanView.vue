@@ -13,7 +13,7 @@
   </a-typography>
   <a-space fill direction="vertical">
     <a-space>
-      <p>只展示前</p>
+      <a-typography-text>只展示前</a-typography-text>
       <a-select v-model="topNumber" :trigger-props="{ autoFitPopupMinWidth: true }">
         <a-option :value="10">10</a-option>
         <a-option :value="20">20</a-option>
@@ -21,7 +21,7 @@
         <a-option :value="40">40</a-option>
         <a-option :value="50">50</a-option>
       </a-select>
-      <p>个</p>
+      <a-typography-text>个</a-typography-text>
     </a-space>
     <top50Table :top-number="topNumber" />
   </a-space>

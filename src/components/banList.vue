@@ -1,7 +1,6 @@
 <template>
   <a-space direction="vertical" fill>
     <a-typography-title :heading="3">封禁名单</a-typography-title>
-    <StatisticInfo />
     <br />
     <a-space class="list-header">
       <a-typography-text>以下是封禁列表（按时间倒序排列）</a-typography-text>
@@ -65,7 +64,6 @@
 </template>
 
 <script setup lang="ts">
-import StatisticInfo from './statisticInfo.vue'
 import { useRequest } from 'vue-request'
 import { computed, ref, watch } from 'vue'
 import { useAutoUpdate } from '@/stores/autoUpdate'

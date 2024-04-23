@@ -19,6 +19,14 @@ export const routerOptions: RouteRecordRaw[] = [
     component: Dashboard
   },
   {
+    path: '/list',
+    name: 'banlist',
+    meta: {
+      label: '封禁名单'
+    },
+    component: () => import('../views/BanListView.vue')
+  },
+  {
     path: '/log',
     name: 'banlogs',
     meta: {

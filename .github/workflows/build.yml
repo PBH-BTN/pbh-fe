@@ -50,7 +50,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: dist
+          name: dist-${{github.ref_name}}
           path: dist
 
   # deploy:

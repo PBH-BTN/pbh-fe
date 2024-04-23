@@ -70,7 +70,7 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: dist
+          name: dist-maio
           path: ./dist
 
       - name: Deploy to GitHub Pages

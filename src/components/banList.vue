@@ -14,11 +14,11 @@
     </a-space>
     <a-list
       :virtualListProps="{
-        height: 500
+        height: 500,
+        fixedSize: true
       }"
       ref="banlist"
       max-height="1000"
-      :fixedSize="true"
       @reach-bottom="loadMore"
       :scrollbar="false"
       :data="list"

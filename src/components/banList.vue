@@ -17,11 +17,14 @@
         height: 500
       }"
       ref="banlist"
-      max-height="1000"
+      @reach-bottom="loadMore"
+      :scrollbar="false"
       :data="list"
     >
-      <template #item="{ item }">
-        <a-list-item>
+      <template #item="{ item, index }">
+        <a-list-item
+          :style="{ marginBottom: index === list.length - 1 && loadingMore ? '50px' : undefined }"
+        >
           <a-descriptions :column="{ xs: 1, md: 2, xl: 3 }">
             <template #title>
               <a-space wrap>
@@ -58,6 +61,12 @@
           </a-descriptions>
         </a-list-item>
       </template>
+      <template #scroll-loading>
+        <div style="position: absolute; transform: translateY(-50%)" v-if="loadingMore">
+          <a-typography-text v-if="bottom">已经到底啦！</a-typography-text>
+          <a-spin v-else />
+        </div>
+      </template>
     </a-list>
   </a-space>
 </template>
@@ -69,10 +78,49 @@ import { useAutoUpdate } from '@/stores/autoUpdate'
 import { useEndpointStore } from '@/stores/endpoint'
 import { getBanList } from '@/service/banList'
 import { formatFileSize } from '@/utils/file'
+import type { BanList } from '@/api/model/banlist'
 const banlist = ref()
 const autoUpdateState = useAutoUpdate()
 const endpointState = useEndpointStore()
-const { data, refresh } = useRequest(getBanList, {
+const bottom = ref(false)
+const limit = ref(5)
+const step = 5
+const loadingMore = ref(false)
+
+async function getMoreBanList(): Promise<BanList[]> {
+  if (!data.value) {
+    return getBanList({ limit: step })
+  }
+  if (data.value.length > limit.value - step) {
+    // refresh the new data
+    const newData: BanList[] = []
+    let match = false
+    // load more data until the limit or get the same data with the top one
+    while (newData.length < limit.value && !match) {
+      const moreData = await getBanList({
+        limit: step,
+        lastBanTime: newData[newData.length - 1]?.banMetadata.banAt
+      })
+      for (const item of moreData) {
+        if (item.banMetadata.randomId !== data.value[0].banMetadata.randomId) {
+          newData.push(item)
+        } else {
+          match = true
+          break
+        }
+      }
+    }
+    if (match) {
+      limit.value = data.value.length + newData.length
+      return newData.concat(data.value)
+    } else {
+      return newData
+    }
+  }
+  return data.value
+}
+
+const { data, refresh } = useRequest(getMoreBanList, {
   pollingInterval: computed(() => autoUpdateState.pollingInterval),
   onSuccess: autoUpdateState.renewLastUpdate
 })
@@ -85,7 +133,43 @@ const handleSearch = (value: string) => {
   }
 }
 
-watch(() => endpointState.endpoint, refresh, { immediate: true })
+const loadMore = async () => {
+  if (!data.value) return
+  limit.value = data.value.length + step
+  loadingMore.value = true
+  bottom.value = false
+  if (data.value.length <= limit.value) {
+    const newData: BanList[] = []
+    while (newData.length + data.value.length < limit.value) {
+      const moreData = await getBanList({
+        limit: step,
+        lastBanTime: (newData[newData.length - 1] || data.value[data.value.length - 1])?.banMetadata
+          .banAt
+      })
+      if (moreData.length < step) {
+        bottom.value = true
+      }
+      newData.push(...moreData)
+    }
+    data.value = data.value.concat(newData)
+  }
+  setTimeout(
+    () => {
+      loadingMore.value = false
+    },
+    bottom.value ? 1000 : 0
+  )
+}
+
+watch(
+  () => endpointState.endpoint,
+  () => {
+    limit.value = step
+    data.value = undefined
+    refresh()
+  },
+  { immediate: true }
+)
 
 const list = computed(() => data.value ?? [])
 </script>

@@ -9,8 +9,12 @@ export function getStatistic(): Promise<Statistic> {
   return fetch(url).then((res) => res.json())
 }
 
-export function getBanList(): Promise<BanList[]> {
+export function getBanList(params: { limit: number; lastBanTime?: number }): Promise<BanList[]> {
   const { endpoint } = useEndpointStore()
   const url = new URL(urlJoin(endpoint, 'api/banlist'), location.href)
+  url.searchParams.set('limit', String(params.limit))
+  if (params.lastBanTime) {
+    url.searchParams.set('lastBanTime', String(params.lastBanTime))
+  }
   return fetch(url).then((res) => res.json())
 }

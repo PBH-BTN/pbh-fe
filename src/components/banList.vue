@@ -19,6 +19,7 @@
       }"
       ref="banlist"
       max-height="1000"
+      :fixedSize="true"
       @reach-bottom="loadMore"
       :scrollbar="false"
       :data="list"

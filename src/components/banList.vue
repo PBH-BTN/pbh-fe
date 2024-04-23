@@ -21,8 +21,10 @@
       :scrollbar="false"
       :data="list"
     >
-      <template #item="{ item }">
-        <a-list-item>
+      <template #item="{ item, index }">
+        <a-list-item
+          :style="{ marginBottom: index === list.length - 1 && loadingMore ? '50px' : undefined }"
+        >
           <a-descriptions :column="{ xs: 1, md: 2, xl: 3 }">
             <template #title>
               <a-space wrap>
@@ -159,11 +161,15 @@ const loadMore = async () => {
   )
 }
 
-watch(() => endpointState.endpoint, () => {
-  limit.value = step
-  data.value = undefined
-  refresh()
-}, { immediate: true })
+watch(
+  () => endpointState.endpoint,
+  () => {
+    limit.value = step
+    data.value = undefined
+    refresh()
+  },
+  { immediate: true }
+)
 
 const list = computed(() => data.value ?? [])
 </script>

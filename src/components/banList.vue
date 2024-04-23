@@ -2,7 +2,7 @@
   <a-space direction="vertical" fill>
     <a-typography-title :heading="3">封禁名单</a-typography-title>
     <br />
-    <a-space class="list-header">
+    <a-space class="list-header" wrap>
       <a-typography-text>以下是封禁列表（按时间倒序排列）</a-typography-text>
       <a-input-search
         :style="{ width: '250px' }"
@@ -25,15 +25,14 @@
         <a-list-item>
           <a-descriptions :column="{ xs: 1, md: 2, xl: 3 }">
             <template #title>
-              <a-typography-paragraph>
+              <a-space wrap>
                 <a-typography-text bold copyable>
                   {{ item.banMetadata.peer.address.ip }}:{{ item.banMetadata.peer.address.port }}
                 </a-typography-text>
-                &nbsp;
                 <a-typography-text code>
                   {{ item.banMetadata.peer.clientName }}
                 </a-typography-text>
-              </a-typography-paragraph>
+              </a-space>
             </template>
             <a-descriptions-item label="反向 DNS 解析" :span="1">
               {{ item.banMetadata.reverseLookup }}
@@ -169,7 +168,7 @@ watch(() => endpointState.endpoint, () => {
 const list = computed(() => data.value ?? [])
 </script>
 
-<style scoped>
+<style scoped lang="less">
 .red {
   color: red;
 }

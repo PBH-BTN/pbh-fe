@@ -21,6 +21,9 @@
       :scrollbar="false"
       :data="list"
     >
+      <template #empty>
+        <a-empty />
+      </template>
       <template #item="{ item, index }">
         <a-list-item
           :style="{ marginBottom: index === list.length - 1 && loadingMore ? '50px' : undefined }"

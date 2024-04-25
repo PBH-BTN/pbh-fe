@@ -12,6 +12,14 @@
               <template #unchecked> 关 </template>
             </a-switch>
             <a-typography-text>自动刷新</a-typography-text>
+            <a-tooltip :content="isDark ? '切换到浅色主题' : '切换到深色主题'">
+              <a-button class="nav-btn" type="outline" :shape="'circle'" @click="handleToggleTheme">
+                <template #icon>
+                  <icon-moon-fill v-if="isDark" />
+                  <icon-sun-fill v-else />
+                </template>
+              </a-button>
+            </a-tooltip>
             <a-button
               class="nav-btn"
               type="outline"
@@ -21,19 +29,6 @@
             >
               <template #icon><icon-settings /></template>
             </a-button>
-            <a-tooltip :content="isDark ? '切换到浅色主题' : '切换到深色主题'">
-              <a-button class="nav-btn" type="outline" :shape="'circle'" @click="handleToggleTheme">
-                <template #icon>
-                  <icon-moon-fill v-if="isDark" />
-                  <icon-sun-fill v-else />
-                </template>
-              </a-button>
-            </a-tooltip>
-            <a-radio-group type="button" :model-value="currentName" @change="goto">
-              <a-radio v-for="router in routers" :key="router.name" :value="router.name">
-                {{ router.meta?.label }}
-              </a-radio>
-            </a-radio-group>
           </a-space>
         </template>
       </a-page-header>
@@ -43,7 +38,10 @@
         <a-alert type="warning" closable
           >请注意，此功能仍在施工中，目前记录和展示的数据较为有限。</a-alert
         >
-        <a-divider />
+        <a-tabs default-active-key="dashboard" @change="goto" size="large">
+          <a-tab-pane v-for="router in routers" :key="router.name" :title="router.meta?.label">
+          </a-tab-pane>
+        </a-tabs>
         <RouterView />
         <a-divider />
       </a-space>
@@ -76,7 +74,6 @@ const handleToggleTheme = () => {
 const showSettings = () => {
   modal.value?.showModal()
 }
-watch(currentName, (val) => console.log('currentName', val))
 </script>
 <style scoped lang="less">
 .right-side {

@@ -4,6 +4,8 @@
     :data="data"
     size="large"
     :loading="loading"
+    column-resizable
+    filter-icon-align-left
     :pagination="{ showPageSize: true }"
   >
     <template #empty> <a-empty /> </template>
@@ -12,11 +14,19 @@
         {{ record.metadata.rule }}
       </a-typography-text>
     </template>
-    <template #hit-filter="{ handleFilterConfirm, handleFilterReset }">
+    <template #hit-filter="{ filterValue, handleFilterConfirm, handleFilterReset }">
       <div class="search-box">
-        <a-switch
-          @change="(value: boolean) => (value ? handleFilterConfirm(value) : handleFilterReset())"
-        />
+        <a-space>
+          <a-switch
+            v-model="filterValue[0]"
+            checked-value="yes"
+            unchecked-value="no"
+            @change="
+              (value: string) => (value === 'yes' ? handleFilterConfirm() : handleFilterReset())
+            "
+          />
+          <a-typography-text>仅显示命中过的规则</a-typography-text>
+        </a-space>
       </div>
     </template>
   </a-table>
@@ -34,25 +44,29 @@ const { data, refresh, loading } = useRequest(getRuleStatic, {
   pollingInterval: computed(() => autoUpdateState.pollingInterval),
   onSuccess: autoUpdateState.renewLastUpdate
 })
+
 const columns = [
   {
     title: '规则类型',
-    dataIndex: 'type'
+    dataIndex: 'type',
+    width: 600
   },
   {
     title: '规则名称',
-    slotName: 'ruleName'
+    slotName: 'ruleName',
+    width: 300
   },
   {
     title: '运行次数',
-    dataIndex: 'query'
+    dataIndex: 'query',
+    width: 100
   },
   {
     title: '命中次数',
     dataIndex: 'hit',
     filterable: {
-      filter: (value: boolean, record: RuleMetric) => value && record.hit > 0,
-      slotName: '#hit-filter'
+      filter: (value: string, record: RuleMetric) => value[0] === 'yes' && record.hit > 0,
+      slotName: 'hit-filter'
     }
   }
 ]

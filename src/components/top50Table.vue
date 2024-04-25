@@ -1,12 +1,13 @@
 <template>
   <a-table
-    :stripe="true"
-    :sticky-header="true"
+    stripe
+    sticky-header
     :columns="columns"
     :data="data"
+    column-resizable
     :loading="loading"
     :pagination="{ showPageSize: true }"
-    :filter-icon-align-left="true"
+    filter-icon-align-left
   >
     <template #ip-filter="{ filterValue, setFilterValue, handleFilterConfirm, handleFilterReset }">
       <div class="search-box">

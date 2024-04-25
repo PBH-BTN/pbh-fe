@@ -38,7 +38,7 @@
         <a-alert type="warning" closable
           >请注意，此功能仍在施工中，目前记录和展示的数据较为有限。</a-alert
         >
-        <a-tabs default-active-key="dashboard" @change="goto" size="large">
+        <a-tabs :active-key="currentName" @change="goto" size="large">
           <a-tab-pane v-for="router in routers" :key="router.name" :title="router.meta?.label">
           </a-tab-pane>
         </a-tabs>
@@ -57,7 +57,7 @@ import { useAutoUpdate } from './stores/autoUpdate'
 import pageFooter from './components/pageFooter.vue'
 import modalForm from './components/modalForm.vue'
 import { useDark, useToggle } from '@vueuse/core'
-const [routers, , goto] = useViewRoute()
+const [routers, currentName, goto] = useViewRoute()
 const modal = ref<InstanceType<typeof modalForm>>()
 const autoUpdate = useAutoUpdate()
 const isDark = useDark({

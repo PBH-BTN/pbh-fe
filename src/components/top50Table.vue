@@ -1,15 +1,15 @@
 <template>
   <a-table
-    :stripe="true"
-    :sticky-header="true"
+    stripe
+    sticky-header
     :columns="columns"
     :data="data"
+    column-resizable
     :loading="loading"
     :pagination="{ showPageSize: true }"
+    filter-icon-align-left
   >
-    <template
-      #name-filter="{ filterValue, setFilterValue, handleFilterConfirm, handleFilterReset }"
-    >
+    <template #ip-filter="{ filterValue, setFilterValue, handleFilterConfirm, handleFilterReset }">
       <div class="search-box">
         <a-space direction="vertical">
           <a-input-search
@@ -41,7 +41,7 @@ const columns = [
     dataIndex: 'address',
     filterable: {
       filter: (value: string, record: topBanItem) => record.address.includes(value),
-      slotName: 'name-filter',
+      slotName: '#ip-filter',
       icon: () => h(IconSearch)
     }
   },

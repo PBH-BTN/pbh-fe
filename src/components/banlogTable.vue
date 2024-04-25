@@ -10,6 +10,7 @@
       pageSize,
       showPageSize: true
     }"
+    column-resizable
     @page-change="changeCurrent"
     @page-size-change="changePageSize"
   >
@@ -25,7 +26,7 @@
       </a-typography-text>
     </template>
     <template #peerStatus="{ record }">
-      <a-space fill style="justify-content: space-between;">
+      <a-space fill style="justify-content: space-between">
         <div>
           <p>{{ formatFileSize(record.peerUploaded) }}<icon-arrow-up class="green" /></p>
           <p>{{ formatFileSize(record.peerDownloaded) }}<icon-arrow-down class="red" /></p>
@@ -94,12 +95,12 @@ const columns = [
   {
     title: '封禁时间',
     slotName: 'banAt',
-    width: 175
+    width: 180
   },
   {
     title: '解封时间',
     slotName: 'unbanAt',
-    width: 175
+    width: 180
   },
   {
     title: 'Peer 地址',
@@ -131,7 +132,7 @@ const columns = [
     title: '描述',
     dataIndex: 'description',
     ellipsis: true,
-    tooltip: true,
+    tooltip: true
   }
 ]
 const list = computed(() => data.value?.results)

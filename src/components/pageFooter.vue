@@ -3,14 +3,14 @@
     <a-col class="footer">
       <a-descriptions :column="{ xs: 1, md: 3, lg: 4 }">
         <a-descriptions-item label="Backend Version">
-          {{ data?.version }} (<a
+          {{ data?.version }} (<a-link
             :href="`https://github.com/Ghost-chu/PeerBanHelper/commit/${data?.commit}`"
-            >{{ data?.commit.substring(0, 8) }} </a
+            >{{ data?.commit.substring(0, 8) }} </a-link
           >)
         </a-descriptions-item>
         <a-descriptions-item label="WebUI Version">
-          {{ version }} (<a :href="`https://github.com/Gaojianli/pbh-fe/commit/${hash}`">
-            {{ hash.substring(0, 8) }} </a
+          {{ version }} (<a-link :href="`https://github.com/Gaojianli/pbh-fe/commit/${hash}`">
+            {{ hash.substring(0, 8) }} </a-link
           >)
         </a-descriptions-item>
       </a-descriptions>
@@ -35,9 +35,5 @@ watch(() => endpointStore.endpoint, refresh, { immediate: true })
 .footer {
   display: flex;
   justify-content: center;
-}
-a {
-  text-decoration: none;
-  color: var(--color-link-light-4);
 }
 </style>

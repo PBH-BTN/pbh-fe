@@ -38,7 +38,7 @@
         <a-alert type="warning" closable
           >请注意，此功能仍在施工中，目前记录和展示的数据较为有限。</a-alert
         >
-        <a-tabs default-active-key="dashboard" @change="goto" size="large">
+        <a-tabs :active-key="currentName" @change="goto" size="large">
           <a-tab-pane v-for="router in routers" :key="router.name" :title="router.meta?.label">
           </a-tab-pane>
         </a-tabs>
@@ -51,7 +51,7 @@
   <modalForm ref="modal" />
 </template>
 <script setup lang="ts">
-import { watch, ref, computed } from 'vue'
+import { ref } from 'vue'
 import { useViewRoute } from './router'
 import { useAutoUpdate } from './stores/autoUpdate'
 import pageFooter from './components/pageFooter.vue'

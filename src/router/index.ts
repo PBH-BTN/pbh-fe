@@ -43,6 +43,14 @@ export const routerOptions: RouteRecordRaw[] = [
     component: () => import('../views/TopBanView.vue')
   },
   {
+    path: '/metrics',
+    name: 'rule_metrics',
+    meta: {
+      label: '规则统计'
+    },
+    component: () => import('../views/RuleMetrics.vue')
+  },
+  {
     path: '/:pathMatch(.*)*', // 404
     name: 'not-found',
     meta: {

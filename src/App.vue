@@ -51,13 +51,13 @@
   <modalForm ref="modal" />
 </template>
 <script setup lang="ts">
-import { watch, ref, computed } from 'vue'
+import { ref } from 'vue'
 import { useViewRoute } from './router'
 import { useAutoUpdate } from './stores/autoUpdate'
 import pageFooter from './components/pageFooter.vue'
 import modalForm from './components/modalForm.vue'
 import { useDark, useToggle } from '@vueuse/core'
-const [routers, currentName, goto] = useViewRoute()
+const [routers, , goto] = useViewRoute()
 const modal = ref<InstanceType<typeof modalForm>>()
 const autoUpdate = useAutoUpdate()
 const isDark = useDark({

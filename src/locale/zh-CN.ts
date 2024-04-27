@@ -1,5 +1,7 @@
 import settingsLocale from './zh-CN/settings'
 import dashboardPageLocale from '@/views/dashboard/locale/zh-CN'
+import banListPageLocale from '@/views/banlist/locale/zh-CN'
+import banLogPageLocale from '@/views/banlog/locale/zh-CN'
 export default {
   'navbar.action.locale': '切换为中文',
   'navbar.action.autoUpdate': '自动刷新',
@@ -15,5 +17,7 @@ export default {
   'router.ruleMetrics': '规则统计',
 
   ...settingsLocale,
-  ...dashboardPageLocale
+  ...dashboardPageLocale,
+  ...banListPageLocale,
+  ...banLogPageLocale
 }

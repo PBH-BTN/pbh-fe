@@ -15,10 +15,16 @@
     @page-size-change="changePageSize"
   >
     <template #banAt="{ record }">
-      <p>{{ new Date(record.banAt).toLocaleString('zh-cn') }}</p>
+      <p>{{ new Date(record.banAt).toLocaleString(currentLocale) }}</p>
     </template>
     <template #unbanAt="{ record }">
-      <p>{{ record.unbanAt ? new Date(record.unbanAt).toLocaleString('zh-cn') : '未解封' }}</p>
+      <p>
+        {{
+          record.unbanAt
+            ? new Date(record.unbanAt).toLocaleString(currentLocale)
+            : t('page.banlog.banlogTable.notUnbanned')
+        }}
+      </p>
     </template>
     <template #peerAddress="{ record }">
       <a-typography-text copyable code>
@@ -58,9 +64,13 @@ import { useEndpointStore } from '@/stores/endpoint'
 import { usePagination } from 'vue-request'
 import { getBanlogs } from '@/service/banLogs'
 import { formatFileSize } from '@/utils/file'
+import useLocale from '@/stores/locale'
+import { useI18n } from 'vue-i18n'
 const forceLoading = ref(true)
 const autoUpdateState = useAutoUpdate()
 const endpointState = useEndpointStore()
+const { currentLocale } = useLocale()
+const { t } = useI18n()
 const { data, total, current, loading, pageSize, changeCurrent, changePageSize, refresh } =
   usePagination(getBanlogs, {
     defaultParams: [
@@ -93,43 +103,43 @@ const tableLoading = computed(() => {
 
 const columns = [
   {
-    title: '封禁时间',
+    title: t('page.banlog.banlogTable.column.banTime'),
     slotName: 'banAt',
     width: 180
   },
   {
-    title: '解封时间',
+    title: t('page.banlog.banlogTable.column.unbanTime'),
     slotName: 'unbanAt',
     width: 180
   },
   {
-    title: 'Peer 地址',
+    title: t('page.banlog.banlogTable.column.peerAddress'),
     slotName: 'peerAddress',
     width: 230
   },
   {
-    title: 'Peer Id',
+    title: t('page.banlog.banlogTable.column.peerId'),
     slotName: 'peerId',
     width: 120
   },
   {
-    title: '流量快照',
+    title: t('page.banlog.banlogTable.column.trafficSnapshot'),
     slotName: 'peerStatus',
     width: 150
   },
   {
-    title: '种子名',
+    title: t('page.banlog.banlogTable.column.torrentName'),
     dataIndex: 'torrentName',
     ellipsis: true,
     tooltip: true
   },
   {
-    title: '大小',
+    title: t('page.banlog.banlogTable.column.torrentSize'),
     slotName: 'torrentSize',
     width: 120
   },
   {
-    title: '描述',
+    title: t('page.banlog.banlogTable.column.description'),
     dataIndex: 'description',
     ellipsis: true,
     tooltip: true

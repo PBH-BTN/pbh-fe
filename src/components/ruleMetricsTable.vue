@@ -71,7 +71,7 @@ const columns = [
   }
 ]
 
-watch(() => endpointStore.endpoint, refresh, { immediate: true })
+watch(() => endpointStore.endpoint, refresh)
 </script>
 <style scoped>
 .search-box {

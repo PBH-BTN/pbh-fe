@@ -87,7 +87,7 @@ const autoUpdateState = useAutoUpdate()
 const endpointState = useEndpointStore()
 const bottom = ref(false)
 const limit = ref(5)
-const step = 5
+const step = 50
 const loadingMore = ref(false)
 
 async function getMoreBanList(): Promise<BanList[]> {
@@ -143,7 +143,7 @@ const loadMore = async () => {
   bottom.value = false
   if (data.value.length <= limit.value) {
     const newData: BanList[] = []
-    while (newData.length + data.value.length < limit.value) {
+    while (newData.length + data.value.length < limit.value && !bottom.value) {
       const moreData = await getBanList({
         limit: step,
         lastBanTime: (newData[newData.length - 1] || data.value[data.value.length - 1])?.banMetadata
@@ -171,7 +171,6 @@ watch(
     data.value = undefined
     refresh()
   },
-  { immediate: true }
 )
 
 const list = computed(() => data.value ?? [])

@@ -63,5 +63,5 @@ const { data, refresh } = useRequest(getStatistic, {
   onSuccess: autoUpdateState.renewLastUpdate
 })
 
-watch(() => endpointStore.endpoint, refresh, { immediate: true })
+watch(() => endpointStore.endpoint, refresh)
 </script>

@@ -76,5 +76,5 @@ const { data, refresh } = useRequest(getClientStatus, {
   onSuccess: autoUpdateState.renewLastUpdate
 })
 
-watch(() => endpointState.endpoint, refresh, { immediate: true })
+watch(() => endpointState.endpoint, refresh)
 </script>

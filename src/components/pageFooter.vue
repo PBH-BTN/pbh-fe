@@ -28,7 +28,7 @@ const hash = __APP_HASH__
 const endpointStore = useEndpointStore()
 const { data, refresh } = useRequest(getVersion)
 
-watch(() => endpointStore.endpoint, refresh, { immediate: true })
+watch(() => endpointStore.endpoint, refresh)
 </script>
 
 <style scoped>

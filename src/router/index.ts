@@ -6,7 +6,7 @@ import {
   type RouteRecordName,
   type RouteRecordRaw
 } from 'vue-router'
-import Dashboard from '../views/DashBoard.vue'
+import Dashboard from '../views/dashboard/index.vue'
 import { computed } from 'vue'
 
 export const routerOptions: RouteRecordRaw[] = [
@@ -14,7 +14,7 @@ export const routerOptions: RouteRecordRaw[] = [
     path: '/',
     name: 'dashboard',
     meta: {
-      label: '状态'
+      label: 'router.dashboard'
     },
     component: Dashboard
   },
@@ -22,39 +22,40 @@ export const routerOptions: RouteRecordRaw[] = [
     path: '/list',
     name: 'banlist',
     meta: {
-      label: '封禁名单'
+      label: 'router.banlist'
     },
-    component: () => import('../views/BanListView.vue')
+    component: () => import('../views/banlist/index.vue')
   },
   {
     path: '/log',
     name: 'banlogs',
     meta: {
-      label: '封禁日志'
+      label: 'router.banlogs'
     },
-    component: () => import('../views/LogView.vue') // 懒加载
+    component: () => import('../views/banlog/index.vue') // 懒加载
   },
   {
     path: '/top',
     name: 'top',
     meta: {
-      label: '最多封禁'
+      label: 'router.topban'
     },
-    component: () => import('../views/TopBanView.vue')
+    component: () => import('../views/top-ban/index.vue')
   },
   {
     path: '/metrics',
     name: 'rule_metrics',
     meta: {
-      label: '规则统计'
+      label: 'router.ruleMetrics'
     },
-    component: () => import('../views/RuleMetrics.vue')
+    component: () => import('../views/rule-metrics/index.vue')
   },
   {
     path: '/:pathMatch(.*)*', // 404
     name: 'not-found',
     meta: {
-      hidden: true
+      hidden: true,
+      label: '404'
     },
     redirect: { name: 'dashboard' }
   }

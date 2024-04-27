@@ -1,5 +1,7 @@
 <template>
-  <a-typography-title :heading="3">已连接的下载器</a-typography-title>
+  <a-typography-title :heading="3">{{
+    $t('page.dashboard.clientStatus.title')
+  }}</a-typography-title>
   <a-row
     justify="start"
     wrap="true"
@@ -22,16 +24,8 @@
       </a-card>
     </a-col>
     <!-- client 卡片 -->
-    <a-col
-      v-else
-      :xs="24"
-      :sm="12"
-      :md="8"
-      :lg="6"
-      v-for="client in data"
-      :key="client.name"
-    >
-      <a-card title="下载器状态" hoverable>
+    <a-col v-else :xs="24" :sm="12" :md="8" :lg="6" v-for="client in data" :key="client.name">
+      <a-card :title="t('page.dashboard.clientStatus.card.title')" hoverable>
         <a-typography>
           <a-tooltip :content="client.endpoint">
             <a-typography-paragraph style="font-size: 2em">
@@ -39,19 +33,24 @@
             </a-typography-paragraph>
           </a-tooltip>
           <a-typography-paragraph>
-            状态：
-            <a-typography-text :type="statusMap.get(client.status)!![0]"
+            {{ $t('page.dashboard.clientStatus.card.status') }}:
+            <a-typography-text :type="getStatusSafe(client)[0]"
               ><icon-check-circle-fill v-if="client.status == ClientStatusEnum.HEALTHY" />
               <icon-close-circle-fill v-if="client.status == ClientStatusEnum.ERROR" />
-              <icon-exclamation-circle-fill v-if="client.status == ClientStatusEnum.UNKNOWN" />{{
-                statusMap.get(client.status)!![1]
-              }}</a-typography-text
+              <icon-exclamation-circle-fill v-if="client.status == ClientStatusEnum.UNKNOWN" />
+              {{ $t(getStatusSafe(client)[1]) }}</a-typography-text
             >
           </a-typography-paragraph>
 
-          <a-typography-paragraph> 活动种子数: {{ client.torrents }}</a-typography-paragraph>
+          <a-typography-paragraph>
+            {{ $t('page.dashboard.clientStatus.card.status.torrentNumber') }}
+            {{ client.torrents }}</a-typography-paragraph
+          >
 
-          <a-typography-paragraph> 已连接的Peers: {{ client.peers }}</a-typography-paragraph>
+          <a-typography-paragraph>
+            {{ $t('page.dashboard.clientStatus.card.status.peerNumber') }}
+            {{ client.peers }}</a-typography-paragraph
+          >
         </a-typography>
       </a-card>
     </a-col>
@@ -59,16 +58,27 @@
 </template>
 <script setup lang="ts">
 import { getClientStatus } from '@/service/clientStatus'
-import { ClientStatusEnum } from '@/api/model/clientStatus'
+import { ClientStatusEnum, type ClientStatus } from '@/api/model/clientStatus'
 import { useAutoUpdate } from '@/stores/autoUpdate'
 import { useEndpointStore } from '@/stores/endpoint'
 import { useRequest } from 'vue-request'
 import { computed, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 const statusMap = new Map([
-  [ClientStatusEnum.HEALTHY, ['success', '正常 - 状态良好']],
-  [ClientStatusEnum.ERROR, ['warning', '错误 - 与客户端通信时出错，请检查日志文件']],
-  [ClientStatusEnum.UNKNOWN, ['danger', '未知 - PeerBanHelper 可能还没有与此客户端通信']]
+  [ClientStatusEnum.HEALTHY, ['success', 'page.dashboard.clientStatus.card.status.normal']],
+  [ClientStatusEnum.ERROR, ['warning', 'page.dashboard.clientStatus.card.status.error']],
+  [ClientStatusEnum.UNKNOWN, ['danger', 'page.dashboard.clientStatus.card.status.unknown']]
 ])
+const getStatusSafe = (status: ClientStatus | undefined): string[] => {
+  if (status === undefined) {
+    return statusMap.get(ClientStatusEnum.UNKNOWN)!!
+  }
+  if (!statusMap.has(status.status)) {
+    return statusMap.get(ClientStatusEnum.UNKNOWN)!!
+  }
+  return statusMap.get(status.status)!!
+}
 const autoUpdateState = useAutoUpdate()
 const endpointState = useEndpointStore()
 const { data, refresh } = useRequest(getClientStatus, {

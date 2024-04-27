@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import banlogTable from '../components/banlogTable.vue'
+import banlogTable from './components/banlogTable.vue'
 </script>
 
 <template>

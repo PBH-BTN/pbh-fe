@@ -28,7 +28,7 @@
 </template>
 
 <script setup lang="ts">
-import top50Table from '@/components/top50Table.vue'
+import top50Table from './components/top50Table.vue'
 import { ref } from 'vue'
 const topNumber = ref(50)
 </script>

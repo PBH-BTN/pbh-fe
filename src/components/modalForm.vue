@@ -1,14 +1,20 @@
 <template>
-  <a-modal width="auto" v-model:visible="showModal" @ok="handleOk" @cancel="handleCancel">
-    <template #title> 设置 </template>
+  <a-modal :width="800" v-model:visible="showModal" @ok="handleOk" @cancel="handleCancel">
+    <template #title> {{ $t('settings.modal.title') }} </template>
     <a-form :model="form">
-      <a-form-item field="endpoint" label="Endpoint:" validate-trigger="input">
+      <a-form-item
+        field="endpoint"
+        label="Endpoint:"
+        :tooltip="t('settings.modal.endpointTips')"
+        validate-trigger="input"
+      >
         <a-input v-model="form.endpoint" placeholder="http://localhost:8989" allow-clear />
-        <template #extra>
-          <div>如果你无法访问PBH后端，可以尝试在此设置Endpoint</div>
-        </template>
       </a-form-item>
-      <a-form-item field="interval" label="轮询间隔:" validate-trigger="input">
+      <a-form-item
+        field="interval"
+        :label="t('settings.modal.pollInterval')"
+        validate-trigger="input"
+      >
         <a-input-number v-model="form.interval" placeholder="3000" :min="100" />
       </a-form-item>
     </a-form>
@@ -18,6 +24,7 @@
 import { useAutoUpdate } from '@/stores/autoUpdate'
 import { useEndpointStore } from '@/stores/endpoint'
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 const endPointStore = useEndpointStore()
 const autoUpdateState = useAutoUpdate()
 const showModal = ref(false)
@@ -26,6 +33,7 @@ const form = ref({
   interval: autoUpdateState.interval
 })
 
+const { t } = useI18n()
 function initForm() {
   form.value.endpoint = endPointStore.endpoint
   form.value.interval = autoUpdateState.interval

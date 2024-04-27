@@ -85,7 +85,7 @@ watch([pageSize, current], () => {
   forceLoading.value = true
 })
 
-watch(() => endpointState.endpoint, refresh, { immediate: true })
+watch(() => endpointState.endpoint, refresh)
 
 const tableLoading = computed(() => {
   return forceLoading.value || loading.value || !list.value

@@ -46,7 +46,7 @@
         <a-divider />
       </a-space>
     </a-layout-content>
-    <a-layout-footer><pageFooter /></a-layout-footer>
+    <a-layout-footer><pageFooter @fail-api="showSettings"/></a-layout-footer>
   </a-layout>
   <modalForm ref="modal" />
 </template>

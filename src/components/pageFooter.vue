@@ -19,14 +19,27 @@
 </template>
 
 <script setup lang="ts">
-import { getVersion } from '@/service/version'
+import { getVersion, GetVersionError } from '@/service/version'
 import { useEndpointStore } from '@/stores/endpoint'
+import { Message } from '@arco-design/web-vue'
 import { watch } from 'vue'
 import { useRequest } from 'vue-request'
+
+const emit = defineEmits(['fail-api'])
+
 const version = __APP_VERSION__
 const hash = __APP_HASH__
 const endpointStore = useEndpointStore()
-const { data, refresh } = useRequest(getVersion)
+const { data, refresh } = useRequest(getVersion, {
+  onError: (err) => {
+    Message.error(err.message)
+    if (err instanceof GetVersionError) {
+      err.isApiWrong && emit('fail-api')
+    } else {
+      emit('fail-api')
+    }
+  }
+})
 
 watch(() => endpointStore.endpoint, refresh)
 </script>

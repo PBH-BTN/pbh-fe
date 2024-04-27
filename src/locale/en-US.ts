@@ -2,6 +2,7 @@ import settingsLocale from './en-US/settings'
 import dashboardPageLocale from '@/views/dashboard/locale/en-US'
 import banListPageLocale from '@/views/banlist/locale/en-US'
 import banLogPageLocale from '@/views/banlog/locale/en-US'
+import topBanPageLocale from '@/views/top-ban/locale/en-US'
 export default {
   'navbar.action.locale': 'Switch to English',
   'navbar.action.autoUpdate': 'Auto Update',
@@ -20,5 +21,6 @@ export default {
   ...settingsLocale,
   ...dashboardPageLocale,
   ...banListPageLocale,
-  ...banLogPageLocale
+  ...banLogPageLocale,
+  ...topBanPageLocale
 }

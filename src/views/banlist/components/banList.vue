@@ -65,7 +65,7 @@
         </a-list-item>
       </template>
       <template #scroll-loading>
-        <a-empty v-if="list.length === 0" style="height: 500px;" />
+        <a-empty v-if="list.length === 0" style="height: 500px" />
         <div style="position: absolute; transform: translateY(-50%)" v-if="loadingMore">
           <a-typography-text v-if="bottom">{{
             t('page.banlist.banlist.bottomReached')
@@ -130,8 +130,7 @@ async function getMoreBanList(): Promise<BanList[]> {
 const { data, refresh, run } = useRequest(getMoreBanList, {
   pollingInterval: computed(() => autoUpdateState.pollingInterval),
   onSuccess: autoUpdateState.renewLastUpdate,
-  manual: true,
-  cacheKey: () => `${endpointState.endpoint}-moreBanList`
+  manual: true
 })
 const handleSearch = (value: string) => {
   if (value) {

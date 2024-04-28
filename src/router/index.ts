@@ -3,7 +3,6 @@ import {
   createWebHistory,
   useRoute,
   useRouter,
-  type RouteRecordName,
   type RouteRecordRaw
 } from 'vue-router'
 import Dashboard from '../views/dashboard/index.vue'

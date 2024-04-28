@@ -2,7 +2,6 @@ import type { version } from '@/api/model/version'
 import { useEndpointStore } from '@/stores/endpoint'
 import urlJoin from 'url-join'
 import { getCommonHeader } from './utils'
-import { useI18n } from 'vue-i18n'
 
 export class GetVersionError extends Error {
   constructor(

@@ -2,22 +2,23 @@ import 'normalize.css'
 import './assets/main.less'
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-
+import { Message } from '@arco-design/web-vue'
 import App from './App.vue'
 import router from './router'
+import i18n from './locale'
 import { setGlobalOptions } from 'vue-request'
-import { Message } from '@arco-design/web-vue'
 
 const app = createApp(App)
 Message._context = app._context
 
 setGlobalOptions({
-  loadingDelay: 400,
+  loadingDelay: 200,
   loadingKeep: 1000,
   pollingWhenOffline: true
 })
 
 app.use(createPinia())
+app.use(i18n)
 app.use(router)
 
 app.mount('#app')

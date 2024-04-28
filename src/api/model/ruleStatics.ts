@@ -6,3 +6,10 @@ export interface RuleMetric {
     rule: string
   }
 }
+
+export interface GetRuleMetricsResponse {
+  data: RuleMetric[]
+  dict: {
+    [key: string]: string
+  }
+}

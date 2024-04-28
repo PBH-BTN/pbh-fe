@@ -3,18 +3,21 @@ import {
   createWebHistory,
   useRoute,
   useRouter,
-  type RouteRecordName,
   type RouteRecordRaw
 } from 'vue-router'
-import Dashboard from '../views/DashBoard.vue'
+import Dashboard from '../views/dashboard/index.vue'
 import { computed } from 'vue'
+import BanList from '@/views/banlist/index.vue'
+import BanLog from '@/views/banlog/index.vue'
+import TopBan from '@/views/top-ban/index.vue'
+import RuleMetric from '@/views/rule-metrics/index.vue'
 
 export const routerOptions: RouteRecordRaw[] = [
   {
     path: '/',
     name: 'dashboard',
     meta: {
-      label: '状态'
+      label: 'router.dashboard'
     },
     component: Dashboard
   },
@@ -22,39 +25,40 @@ export const routerOptions: RouteRecordRaw[] = [
     path: '/list',
     name: 'banlist',
     meta: {
-      label: '封禁名单'
+      label: 'router.banlist'
     },
-    component: () => import('../views/BanListView.vue')
+    component: BanList
   },
   {
     path: '/log',
     name: 'banlogs',
     meta: {
-      label: '封禁日志'
+      label: 'router.banlogs'
     },
-    component: () => import('../views/LogView.vue') // 懒加载
+    component: BanLog
   },
   {
     path: '/top',
     name: 'top',
     meta: {
-      label: '最多封禁'
+      label: 'router.topban'
     },
-    component: () => import('../views/TopBanView.vue')
+    component: TopBan
   },
   {
     path: '/metrics',
     name: 'rule_metrics',
     meta: {
-      label: '规则统计'
+      label: 'router.ruleMetrics'
     },
-    component: () => import('../views/RuleMetrics.vue')
+    component: RuleMetric
   },
   {
     path: '/:pathMatch(.*)*', // 404
     name: 'not-found',
     meta: {
-      hidden: true
+      hidden: true,
+      label: '404'
     },
     redirect: { name: 'dashboard' }
   }
@@ -78,12 +82,12 @@ export default router
 export function useViewRoute() {
   const router = useRouter()
   const route = useRoute()
-  const goto = (name: RouteRecordName) => {
-    router.replace({ name })
+  const goto = (name: string | number) => {
+    router.replace({ name: `${name}` })
   }
   const routers = computed(() => {
     return routerOptions.filter((item) => !item.meta?.hidden)
   })
-  const currentName = computed(() => route.name)
+  const currentName = computed(() => route.name as string | undefined)
   return [routers, currentName, goto] as const
 }

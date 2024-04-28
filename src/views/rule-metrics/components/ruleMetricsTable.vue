@@ -1,7 +1,7 @@
 <template>
   <a-table
     :columns="columns"
-    :data="data"
+    :data="data?.data"
     size="large"
     :loading="loading"
     column-resizable
@@ -9,6 +9,9 @@
     :pagination="{ showPageSize: true }"
   >
     <template #empty> <a-empty /> </template>
+    <template #type="{ record }">
+      <a-tag :color="getColor(record.type)">{{ data?.dict[record.type] ?? record.type }}</a-tag>
+    </template>
     <template #ruleName="{ record }">
       <a-typography-text code>
         {{ record.metadata.rule }}
@@ -22,10 +25,11 @@
             checked-value="yes"
             unchecked-value="no"
             @change="
-              (value: string) => (value === 'yes' ? handleFilterConfirm() : handleFilterReset())
+              (value: string | number | boolean) =>
+                value === 'yes' ? handleFilterConfirm() : handleFilterReset()
             "
           />
-          <a-typography-text>仅显示命中过的规则</a-typography-text>
+          <a-typography-text>{{ t('page.ruleMetrices.metricsTable.filter') }}</a-typography-text>
         </a-space>
       </div>
     </template>
@@ -38,39 +42,78 @@ import { useEndpointStore } from '@/stores/endpoint'
 import { computed, watch } from 'vue'
 import { getRuleStatic } from '@/service/ruleStatics'
 import type { RuleMetric } from '@/api/model/ruleStatics'
+import { useI18n } from 'vue-i18n'
+import type { TableColumnData } from '@arco-design/web-vue'
 const autoUpdateState = useAutoUpdate()
+const { t } = useI18n()
 const endpointStore = useEndpointStore()
 const { data, refresh, loading } = useRequest(getRuleStatic, {
   pollingInterval: computed(() => autoUpdateState.pollingInterval),
-  onSuccess: autoUpdateState.renewLastUpdate
+  onSuccess: autoUpdateState.renewLastUpdate,
+  cacheKey: () => `${endpointStore.endpoint}-ruleStatic`
 })
 
-const columns = [
+const hashString = (str: string) => {
+  var hash = 0,
+    i,
+    chr
+  if (str.length === 0) return hash
+  for (i = 0; i < str.length; i++) {
+    chr = str.charCodeAt(i)
+    hash = (hash << 5) - hash + chr
+    hash |= 0 // Convert to 32bit integer
+  }
+  return hash
+}
+const getColor = (value: string) => {
+  console.log(data.value?.dict[value])
+  if (!data.value?.dict[value]) {
+    return 'gray'
+  }
+  const hash = Math.abs(hashString(value)) % colorTable.length
+  return colorTable[hash]
+}
+
+const columns: TableColumnData[] = [
   {
-    title: '规则类型',
-    dataIndex: 'type',
-    width: 600
+    title: () => t('page.ruleMetrices.metricsTable.column.type'),
+    slotName: 'type',
+    width: 300
   },
   {
-    title: '规则名称',
+    title: () => t('page.ruleMetrices.metricsTable.column.type'),
     slotName: 'ruleName',
     width: 300
   },
   {
-    title: '运行次数',
+    title: () => t('page.ruleMetrices.metricsTable.column.run'),
     dataIndex: 'query',
-    width: 100
+    width: 300
   },
   {
-    title: '命中次数',
+    title: () => t('page.ruleMetrices.metricsTable.column.hit'),
     dataIndex: 'hit',
     filterable: {
-      filter: (value: string, record: RuleMetric) => value[0] === 'yes' && record.hit > 0,
+      filter: (value, record) => value[0] === 'yes' && (record as RuleMetric).hit > 0,
       slotName: 'hit-filter'
     }
   }
 ]
 
+const colorTable = [
+  'red',
+  'orangered',
+  'orange',
+  'gold',
+  'lime',
+  'green',
+  'cyan',
+  'blue',
+  'arcoblue',
+  'purple',
+  'pinkpurple',
+  'magenta'
+]
 watch(() => endpointStore.endpoint, refresh)
 </script>
 <style scoped>

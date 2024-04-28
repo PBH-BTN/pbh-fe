@@ -1,10 +1,13 @@
-import type { RuleMetric } from '@/api/model/ruleStatics'
+import type { GetRuleMetricsResponse } from '@/api/model/ruleStatics'
 import { useEndpointStore } from '@/stores/endpoint'
 import urlJoin from 'url-join'
+import { getCommonHeader } from './utils'
 
-export function getRuleStatic(): Promise<RuleMetric[]> {
-  const { endpoint } = useEndpointStore()
+export async function getRuleStatic(): Promise<GetRuleMetricsResponse> {
+  const endpointStore = useEndpointStore()
+  await endpointStore.serverAvailable
 
-  const url = new URL(urlJoin(endpoint, 'api/ruleStatistic'), location.href)
-  return fetch(url).then((res) => res.json())
+  const url = new URL(urlJoin(endpointStore.endpoint, 'api/ruleStatistic'), location.href)
+
+  return fetch(url, { headers: getCommonHeader() }).then((res) => res.json())
 }

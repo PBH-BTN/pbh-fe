@@ -3,9 +3,9 @@
     <a-col class="footer">
       <a-descriptions :column="{ xs: 1, md: 3, lg: 4 }">
         <a-descriptions-item label="Backend Version">
-          {{ data?.version }} (<a-link
-            :href="`https://github.com/Ghost-chu/PeerBanHelper/commit/${data?.commit}`"
-            >{{ data?.commit.substring(0, 8) }} </a-link
+          {{ serverVersion?.version }} (<a-link
+            :href="`https://github.com/Ghost-chu/PeerBanHelper/commit/${serverVersion?.commit}`"
+            >{{ serverVersion?.commit.substring(0, 8) }} </a-link
           >)
         </a-descriptions-item>
         <a-descriptions-item label="WebUI Version">
@@ -19,29 +19,13 @@
 </template>
 
 <script setup lang="ts">
-import { getVersion, GetVersionError } from '@/service/version'
 import { useEndpointStore } from '@/stores/endpoint'
-import { Message } from '@arco-design/web-vue'
-import { watch } from 'vue'
-import { useRequest } from 'vue-request'
-
-const emit = defineEmits(['fail-api'])
+import { computed } from 'vue'
 
 const version = __APP_VERSION__
 const hash = __APP_HASH__
 const endpointStore = useEndpointStore()
-const { data, refresh } = useRequest(getVersion, {
-  onError: (err) => {
-    Message.error(err.message)
-    if (err instanceof GetVersionError) {
-      err.isApiWrong && emit('fail-api')
-    } else {
-      emit('fail-api')
-    }
-  }
-})
-
-watch(() => endpointStore.endpoint, refresh)
+const serverVersion = computed(() => endpointStore.serverVersion)
 </script>
 
 <style scoped>

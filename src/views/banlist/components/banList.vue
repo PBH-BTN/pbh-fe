@@ -1,12 +1,12 @@
 <template>
   <a-space direction="vertical" fill>
-    <a-typography-title :heading="3">封禁名单</a-typography-title>
+    <a-typography-title :heading="3">{{ t('page.banlist.banlist') }}</a-typography-title>
     <br />
     <a-space class="list-header" wrap>
-      <a-typography-text>以下是封禁列表（按时间倒序排列）</a-typography-text>
+      <a-typography-text>{{ t('page.banlist.banlist.description') }}</a-typography-text>
       <a-input-search
         :style="{ width: '250px' }"
-        placeholder="搜索 IP 地址"
+        :placeholder="t('page.banlist.banlist.searchPlaceHolder')"
         @search="handleSearch"
         allow-clear
         search-button
@@ -21,9 +21,6 @@
       :scrollbar="false"
       :data="list"
     >
-      <template #empty>
-        <a-empty />
-      </template>
       <template #item="{ item, index }">
         <a-list-item
           :style="{ marginBottom: index === list.length - 1 && loadingMore ? '50px' : undefined }"
@@ -39,34 +36,40 @@
                 </a-typography-text>
               </a-space>
             </template>
-            <a-descriptions-item label="反向 DNS 解析" :span="1">
+            <a-descriptions-item
+              :label="t('page.banlist.banlist.listItem.reserveDNSLookup')"
+              :span="1"
+            >
               {{ item.banMetadata.reverseLookup }}
             </a-descriptions-item>
-            <a-descriptions-item label="封禁时间" :span="1">
-              {{ new Date(item.banMetadata.banAt).toLocaleString('zh-cn') }}
+            <a-descriptions-item :label="t('page.banlist.banlist.listItem.banTime')" :span="1">
+              {{ d(item.banMetadata.banAt, 'long') }}
             </a-descriptions-item>
-            <a-descriptions-item label="预计解封时间" :span="1">
-              {{ new Date(item.banMetadata.unbanAt).toLocaleString('zh-cn') }}
+            <a-descriptions-item :label="t('page.banlist.banlist.listItem.expireTime')" :span="1">
+              {{ d(item.banMetadata.unbanAt, 'long') }}
             </a-descriptions-item>
-            <a-descriptions-item label="发现位置" :span="2">
+            <a-descriptions-item :label="t('page.banlist.banlist.listItem.location')" :span="2">
               {{ item.banMetadata.torrent.name }}
             </a-descriptions-item>
-            <a-descriptions-item label="封禁快照" :span="1">
+            <a-descriptions-item :label="t('page.banlist.banlist.listItem.snapshot')" :span="1">
               <icon-arrow-up class="green" />
               {{ formatFileSize(item.banMetadata.peer.uploaded) }}
               <icon-arrow-down class="red" />
               {{ formatFileSize(item.banMetadata.peer.downloaded) }}
               - {{ (item.banMetadata.peer.progress * 100).toFixed(2) }}%
             </a-descriptions-item>
-            <a-descriptions-item label="封禁原因" :span="3">
+            <a-descriptions-item :label="t('page.banlist.banlist.listItem.reason')" :span="3">
               {{ item.banMetadata.description }}
             </a-descriptions-item>
           </a-descriptions>
         </a-list-item>
       </template>
       <template #scroll-loading>
+        <a-empty v-if="list.length === 0" style="height: 500px" />
         <div style="position: absolute; transform: translateY(-50%)" v-if="loadingMore">
-          <a-typography-text v-if="bottom">已经到底啦！</a-typography-text>
+          <a-typography-text v-if="bottom">{{
+            t('page.banlist.banlist.bottomReached')
+          }}</a-typography-text>
           <a-spin v-else />
         </div>
       </template>
@@ -76,23 +79,27 @@
 
 <script setup lang="ts">
 import { useRequest } from 'vue-request'
-import { computed, ref, watch } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { useAutoUpdate } from '@/stores/autoUpdate'
 import { useEndpointStore } from '@/stores/endpoint'
 import { getBanList } from '@/service/banList'
 import { formatFileSize } from '@/utils/file'
 import type { BanList } from '@/api/model/banlist'
+import { useI18n } from 'vue-i18n'
 const banlist = ref()
 const autoUpdateState = useAutoUpdate()
 const endpointState = useEndpointStore()
 const bottom = ref(false)
 const limit = ref(5)
-const step = 50
+const step = 5
 const loadingMore = ref(false)
+const { t, d } = useI18n()
 
+let firstGet = true
 async function getMoreBanList(): Promise<BanList[]> {
-  if (!data.value) {
-    return getBanList({ limit: step })
+  if (firstGet || !data.value) {
+    firstGet = false
+    return getBanList(step)
   }
   if (data.value.length > limit.value - step) {
     // refresh the new data
@@ -100,10 +107,7 @@ async function getMoreBanList(): Promise<BanList[]> {
     let match = false
     // load more data until the limit or get the same data with the top one
     while (newData.length < limit.value && !match) {
-      const moreData = await getBanList({
-        limit: step,
-        lastBanTime: newData[newData.length - 1]?.banMetadata.banAt
-      })
+      const moreData = await getBanList(step, newData[newData.length - 1]?.banMetadata.banAt)
       for (const item of moreData) {
         if (item.banMetadata.randomId !== data.value[0].banMetadata.randomId) {
           newData.push(item)
@@ -123,9 +127,10 @@ async function getMoreBanList(): Promise<BanList[]> {
   return data.value
 }
 
-const { data, refresh } = useRequest(getMoreBanList, {
+const { data, refresh, run } = useRequest(getMoreBanList, {
   pollingInterval: computed(() => autoUpdateState.pollingInterval),
-  onSuccess: autoUpdateState.renewLastUpdate
+  onSuccess: autoUpdateState.renewLastUpdate,
+  manual: true
 })
 const handleSearch = (value: string) => {
   if (value) {
@@ -144,11 +149,10 @@ const loadMore = async () => {
   if (data.value.length <= limit.value) {
     const newData: BanList[] = []
     while (newData.length + data.value.length < limit.value && !bottom.value) {
-      const moreData = await getBanList({
-        limit: step,
-        lastBanTime: (newData[newData.length - 1] || data.value[data.value.length - 1])?.banMetadata
-          .banAt
-      })
+      const moreData = await getBanList(
+        step,
+        (newData[newData.length - 1] || data.value[data.value.length - 1])?.banMetadata.banAt
+      )
       if (moreData.length < step) {
         bottom.value = true
       }
@@ -170,8 +174,10 @@ watch(
     limit.value = step
     data.value = undefined
     refresh()
-  },
+  }
 )
+
+onMounted(run)
 
 const list = computed(() => data.value ?? [])
 </script>

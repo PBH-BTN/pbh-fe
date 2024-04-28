@@ -14,7 +14,7 @@
         <a-space direction="vertical">
           <a-input-search
             :model-value="filterValue[0]"
-            placeholder="搜索IP地址..."
+            :placeholder="t('page.topban.top50Table.searchPlaceholder')"
             allow-clear
             @search="handleFilterConfirm"
             @clear="handleFilterReset"
@@ -33,20 +33,23 @@ import { IconSearch } from '@arco-design/web-vue/es/icon'
 import type { topBanItem } from '@/api/model/topban'
 import { useAutoUpdate } from '@/stores/autoUpdate'
 import { useEndpointStore } from '@/stores/endpoint'
+import { useI18n } from 'vue-i18n'
+import type { TableColumnData } from '@arco-design/web-vue'
 const autoUpdateState = useAutoUpdate()
 const endpointState = useEndpointStore()
-const columns = [
+const { t } = useI18n()
+const columns: TableColumnData[] = [
   {
-    title: 'IP地址',
+    title: () => t('page.topban.top50Table.column.ipaddress'),
     dataIndex: 'address',
     filterable: {
-      filter: (value: string, record: topBanItem) => record.address.includes(value),
-      slotName: '#ip-filter',
+      filter: (value, record) => (record as topBanItem).address.includes(value[0]),
+      slotName: 'ip-filter',
       icon: () => h(IconSearch)
     }
   },
   {
-    title: '历史封禁次数',
+    title: () => t('page.topban.top50Table.column.historyCount'),
     dataIndex: 'count'
   }
 ]
@@ -60,9 +63,10 @@ const props = defineProps({
 
 const topNumber = computed(() => props.topNumber)
 
-const { data, loading, refresh } = useRequest(() => getTopBan({ num: topNumber.value }), {
+const { data, loading, refresh } = useRequest(() => getTopBan(topNumber.value), {
   pollingInterval: computed(() => autoUpdateState.pollingInterval),
-  onSuccess: autoUpdateState.renewLastUpdate
+  onSuccess: autoUpdateState.renewLastUpdate,
+  cacheKey: () => `${endpointState.endpoint}-topban-${topNumber.value}`
 })
 
 watch([topNumber, () => endpointState.endpoint], () => {

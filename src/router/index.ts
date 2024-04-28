@@ -7,6 +7,10 @@ import {
 } from 'vue-router'
 import Dashboard from '../views/dashboard/index.vue'
 import { computed } from 'vue'
+import BanList from '@/views/banlist/index.vue'
+import BanLog from '@/views/banlog/index.vue'
+import TopBan from '@/views/top-ban/index.vue'
+import RuleMetric from '@/views/rule-metrics/index.vue'
 
 export const routerOptions: RouteRecordRaw[] = [
   {
@@ -23,7 +27,7 @@ export const routerOptions: RouteRecordRaw[] = [
     meta: {
       label: 'router.banlist'
     },
-    component: () => import('../views/banlist/index.vue')
+    component: BanList
   },
   {
     path: '/log',
@@ -31,7 +35,7 @@ export const routerOptions: RouteRecordRaw[] = [
     meta: {
       label: 'router.banlogs'
     },
-    component: () => import('../views/banlog/index.vue') // 懒加载
+    component: BanLog
   },
   {
     path: '/top',
@@ -39,7 +43,7 @@ export const routerOptions: RouteRecordRaw[] = [
     meta: {
       label: 'router.topban'
     },
-    component: () => import('../views/top-ban/index.vue')
+    component: TopBan
   },
   {
     path: '/metrics',
@@ -47,7 +51,7 @@ export const routerOptions: RouteRecordRaw[] = [
     meta: {
       label: 'router.ruleMetrics'
     },
-    component: () => import('../views/rule-metrics/index.vue')
+    component: RuleMetric
   },
   {
     path: '/:pathMatch(.*)*', // 404

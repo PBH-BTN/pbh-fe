@@ -38,8 +38,8 @@
         <a-grid-item class="panel-col" :span="{ xs: 12, sm: 12, md: 6 }">
           <a-statistic
             title="当前处于封禁状态Peer"
-            :value="(data?.peerBanCounter ?? 0) - (data?.peerUnbanCounter ?? 0)"
-            :value-from="(data?.peerBanCounter ?? 0) - (data?.peerUnbanCounter ?? 0)"
+            :value="peerBanStatus"
+            :value-from="peerBanStatus"
             animation
             show-group-separator
           >
@@ -64,4 +64,11 @@ const { data, refresh } = useRequest(getStatistic, {
 })
 
 watch(() => endpointStore.endpoint, refresh)
+
+const peerBanStatus = computed(() => {
+  const banCount = data.value?.peerBanCounter ?? 0
+  const unbanCount = data.value?.peerUnbanCounter ?? 0
+  const calculatedValue = banCount - unbanCount
+  return calculatedValue < 0 ? banCount : calculatedValue
+})
 </script>

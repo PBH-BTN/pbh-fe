@@ -12,7 +12,13 @@
         </a-switch>
         <a-typography-text>{{ t('navbar.action.autoUpdate') }}</a-typography-text>
         <div class="lang-selector">
-          <a-dropdown trigger="click" @select="(lang) => changeLocale(lang as string)">
+          <a-dropdown
+            trigger="click"
+            @select="
+              (lang: string | number | Record<string, any> | undefined) =>
+                changeLocale(lang as string)
+            "
+          >
             <a-tooltip :content="t('settings.language')">
               <a-button class="nav-btn" type="outline" :shape="'circle'">
                 <template #icon>

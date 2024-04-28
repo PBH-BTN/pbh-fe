@@ -24,7 +24,10 @@
             v-model="filterValue[0]"
             checked-value="yes"
             unchecked-value="no"
-            @change="(value) => (value === 'yes' ? handleFilterConfirm() : handleFilterReset())"
+            @change="
+              (value: string | number | boolean) =>
+                value === 'yes' ? handleFilterConfirm() : handleFilterReset()
+            "
           />
           <a-typography-text>{{ t('page.ruleMetrices.metricsTable.filter') }}</a-typography-text>
         </a-space>

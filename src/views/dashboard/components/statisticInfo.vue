@@ -12,7 +12,7 @@
           >
             <template #suffix>
               <a-typography-text
-                >&nbsp;{{ $t('page.dashboard.statics.times') }}
+                >&nbsp;{{ t('page.dashboard.statics.times') }}
               </a-typography-text></template
             >
           </a-statistic>
@@ -26,9 +26,7 @@
             show-group-separator
           >
             <template #suffix
-              ><a-typography-text
-                >&nbsp;{{ $t('page.dashboard.statics.times') }}
-              </a-typography-text>
+              ><a-typography-text>&nbsp;{{ t('page.dashboard.statics.times') }} </a-typography-text>
             </template>
           </a-statistic>
         </a-grid-item>
@@ -41,7 +39,7 @@
             show-group-separator
           >
             <template #suffix>
-              <a-typography-text>&nbsp;{{ $t('page.dashboard.statics.times') }} </a-typography-text>
+              <a-typography-text>&nbsp;{{ t('page.dashboard.statics.times') }} </a-typography-text>
             </template>
           </a-statistic>
         </a-grid-item>
@@ -54,9 +52,7 @@
             show-group-separator
           >
             <template #suffix>
-              <a-typography-text
-                >&nbsp;{{ $t('page.dashboard.statics.number') }}
-              </a-typography-text>
+              <a-typography-text>&nbsp;{{ t('page.dashboard.statics.number') }} </a-typography-text>
             </template>
           </a-statistic>
         </a-grid-item>

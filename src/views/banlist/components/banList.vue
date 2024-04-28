@@ -1,9 +1,9 @@
 <template>
   <a-space direction="vertical" fill>
-    <a-typography-title :heading="3">{{ $t('page.banlist.banlist') }}</a-typography-title>
+    <a-typography-title :heading="3">{{ t('page.banlist.banlist') }}</a-typography-title>
     <br />
     <a-space class="list-header" wrap>
-      <a-typography-text>{{ $t('page.banlist.banlist.description') }}</a-typography-text>
+      <a-typography-text>{{ t('page.banlist.banlist.description') }}</a-typography-text>
       <a-input-search
         :style="{ width: '250px' }"
         :placeholder="t('page.banlist.banlist.searchPlaceHolder')"
@@ -43,10 +43,10 @@
               {{ item.banMetadata.reverseLookup }}
             </a-descriptions-item>
             <a-descriptions-item :label="t('page.banlist.banlist.listItem.banTime')" :span="1">
-              {{ new Date(item.banMetadata.banAt).toLocaleString(currentLocale) }}
+              {{ d(item.banMetadata.banAt, 'long') }}
             </a-descriptions-item>
             <a-descriptions-item :label="t('page.banlist.banlist.listItem.expireTime')" :span="1">
-              {{ new Date(item.banMetadata.unbanAt).toLocaleString(currentLocale) }}
+              {{ d(item.banMetadata.unbanAt, 'long') }}
             </a-descriptions-item>
             <a-descriptions-item :label="t('page.banlist.banlist.listItem.location')" :span="2">
               {{ item.banMetadata.torrent.name }}
@@ -68,7 +68,7 @@
         <a-empty v-if="list.length === 0" />
         <div style="position: absolute; transform: translateY(-50%)" v-if="loadingMore">
           <a-typography-text v-if="bottom">{{
-            $t('page.banlist.banlist.bottomReached')
+            t('page.banlist.banlist.bottomReached')
           }}</a-typography-text>
           <a-spin v-else />
         </div>
@@ -86,7 +86,6 @@ import { getBanList } from '@/service/banList'
 import { formatFileSize } from '@/utils/file'
 import type { BanList } from '@/api/model/banlist'
 import { useI18n } from 'vue-i18n'
-import useLocale from '@/stores/locale'
 const banlist = ref()
 const autoUpdateState = useAutoUpdate()
 const endpointState = useEndpointStore()
@@ -94,8 +93,7 @@ const bottom = ref(false)
 const limit = ref(5)
 const step = 5
 const loadingMore = ref(false)
-const { t } = useI18n()
-const { currentLocale } = useLocale()
+const { t, d } = useI18n()
 
 async function getMoreBanList(): Promise<BanList[]> {
   if (!data.value) {
@@ -178,7 +176,7 @@ watch(
     limit.value = step
     data.value = undefined
     refresh()
-  },
+  }
 )
 
 onMounted(run)

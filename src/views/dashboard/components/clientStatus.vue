@@ -1,7 +1,5 @@
 <template>
-  <a-typography-title :heading="3">{{
-    $t('page.dashboard.clientStatus.title')
-  }}</a-typography-title>
+  <a-typography-title :heading="3">{{ t('page.dashboard.clientStatus.title') }}</a-typography-title>
   <a-row
     justify="start"
     :wrap="true"
@@ -33,22 +31,22 @@
             </a-typography-paragraph>
           </a-tooltip>
           <a-typography-paragraph>
-            {{ $t('page.dashboard.clientStatus.card.status') }}:
+            {{ t('page.dashboard.clientStatus.card.status') }}:
             <a-typography-text :type="getStatusSafe(client)[0]"
               ><icon-check-circle-fill v-if="client.status == ClientStatusEnum.HEALTHY" />
               <icon-close-circle-fill v-if="client.status == ClientStatusEnum.ERROR" />
               <icon-exclamation-circle-fill v-if="client.status == ClientStatusEnum.UNKNOWN" />
-              {{ $t(getStatusSafe(client)[1]) }}</a-typography-text
+              {{ t(getStatusSafe(client)[1]) }}</a-typography-text
             >
           </a-typography-paragraph>
 
           <a-typography-paragraph>
-            {{ $t('page.dashboard.clientStatus.card.status.torrentNumber') }}
+            {{ t('page.dashboard.clientStatus.card.status.torrentNumber') }}
             {{ client.torrents }}</a-typography-paragraph
           >
 
           <a-typography-paragraph>
-            {{ $t('page.dashboard.clientStatus.card.status.peerNumber') }}
+            {{ t('page.dashboard.clientStatus.card.status.peerNumber') }}
             {{ client.peers }}</a-typography-paragraph
           >
         </a-typography>

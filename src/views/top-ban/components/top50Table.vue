@@ -40,7 +40,7 @@ const endpointState = useEndpointStore()
 const { t } = useI18n()
 const columns: TableColumnData[] = [
   {
-    title: t('page.topban.top50Table.column.ipaddress'),
+    title: () => t('page.topban.top50Table.column.ipaddress'),
     dataIndex: 'address',
     filterable: {
       filter: (value, record) => (record as topBanItem).address.includes(value[0]),
@@ -49,7 +49,7 @@ const columns: TableColumnData[] = [
     }
   },
   {
-    title: t('page.topban.top50Table.column.historyCount'),
+    title: () => t('page.topban.top50Table.column.historyCount'),
     dataIndex: 'count'
   }
 ]

@@ -15,15 +15,11 @@
     @page-size-change="changePageSize"
   >
     <template #banAt="{ record }">
-      <p>{{ new Date(record.banAt).toLocaleString(currentLocale) }}</p>
+      <p>{{ d(record.banAt, 'long') }}</p>
     </template>
     <template #unbanAt="{ record }">
       <p>
-        {{
-          record.unbanAt
-            ? new Date(record.unbanAt).toLocaleString(currentLocale)
-            : t('page.banlog.banlogTable.notUnbanned')
-        }}
+        {{ record.unbanAt ? d(record.unbanAt, 'long') : t('page.banlog.banlogTable.notUnbanned') }}
       </p>
     </template>
     <template #peerAddress="{ record }">
@@ -64,13 +60,11 @@ import { useEndpointStore } from '@/stores/endpoint'
 import { usePagination } from 'vue-request'
 import { getBanlogs } from '@/service/banLogs'
 import { formatFileSize } from '@/utils/file'
-import useLocale from '@/stores/locale'
 import { useI18n } from 'vue-i18n'
 const forceLoading = ref(true)
 const autoUpdateState = useAutoUpdate()
 const endpointState = useEndpointStore()
-const { currentLocale } = useLocale()
-const { t } = useI18n()
+const { t, d } = useI18n()
 const { data, total, current, loading, pageSize, changeCurrent, changePageSize, refresh } =
   usePagination(getBanlogs, {
     defaultParams: [
@@ -103,43 +97,43 @@ const tableLoading = computed(() => {
 
 const columns = [
   {
-    title: t('page.banlog.banlogTable.column.banTime'),
+    title: () => t('page.banlog.banlogTable.column.banTime'),
     slotName: 'banAt',
     width: 180
   },
   {
-    title: t('page.banlog.banlogTable.column.unbanTime'),
+    title: () => t('page.banlog.banlogTable.column.unbanTime'),
     slotName: 'unbanAt',
     width: 180
   },
   {
-    title: t('page.banlog.banlogTable.column.peerAddress'),
+    title: () => t('page.banlog.banlogTable.column.peerAddress'),
     slotName: 'peerAddress',
     width: 230
   },
   {
-    title: t('page.banlog.banlogTable.column.peerId'),
+    title: () => t('page.banlog.banlogTable.column.peerId'),
     slotName: 'peerId',
     width: 120
   },
   {
-    title: t('page.banlog.banlogTable.column.trafficSnapshot'),
+    title: () => t('page.banlog.banlogTable.column.trafficSnapshot'),
     slotName: 'peerStatus',
     width: 150
   },
   {
-    title: t('page.banlog.banlogTable.column.torrentName'),
+    title: () => t('page.banlog.banlogTable.column.torrentName'),
     dataIndex: 'torrentName',
     ellipsis: true,
     tooltip: true
   },
   {
-    title: t('page.banlog.banlogTable.column.torrentSize'),
+    title: () => t('page.banlog.banlogTable.column.torrentSize'),
     slotName: 'torrentSize',
     width: 120
   },
   {
-    title: t('page.banlog.banlogTable.column.description'),
+    title: () => t('page.banlog.banlogTable.column.description'),
     dataIndex: 'description',
     ellipsis: true,
     tooltip: true

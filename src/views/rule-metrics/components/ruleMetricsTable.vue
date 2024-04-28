@@ -26,7 +26,7 @@
             unchecked-value="no"
             @change="(value) => (value === 'yes' ? handleFilterConfirm() : handleFilterReset())"
           />
-          <a-typography-text>{{ $t('page.ruleMetrices.metricsTable.filter') }}</a-typography-text>
+          <a-typography-text>{{ t('page.ruleMetrices.metricsTable.filter') }}</a-typography-text>
         </a-space>
       </div>
     </template>
@@ -72,22 +72,22 @@ const getColor = (value: string) => {
 
 const columns: TableColumnData[] = [
   {
-    title: t('page.ruleMetrices.metricsTable.column.type'),
+    title: () => t('page.ruleMetrices.metricsTable.column.type'),
     slotName: 'type',
     width: 300
   },
   {
-    title: t('page.ruleMetrices.metricsTable.column.type'),
+    title: () => t('page.ruleMetrices.metricsTable.column.type'),
     slotName: 'ruleName',
     width: 300
   },
   {
-    title: t('page.ruleMetrices.metricsTable.column.run'),
+    title: () => t('page.ruleMetrices.metricsTable.column.run'),
     dataIndex: 'query',
     width: 300
   },
   {
-    title: t('page.ruleMetrices.metricsTable.column.hit'),
+    title: () => t('page.ruleMetrices.metricsTable.column.hit'),
     dataIndex: 'hit',
     filterable: {
       filter: (value, record) => value[0] === 'yes' && (record as RuleMetric).hit > 0,

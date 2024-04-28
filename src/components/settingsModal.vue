@@ -9,7 +9,7 @@
     :hide-cancel="forceModal"
     :ok-loading="loading"
   >
-    <template #title> {{ $t('settings.modal.title') }} </template>
+    <template #title> {{ t('settings.modal.title') }} </template>
     <a-form :model="form" @submit="handleOk">
       <a-form-item
         field="endpoint"

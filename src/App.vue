@@ -1,12 +1,12 @@
 <template>
-  <a-config-provider :locale="locale">
+  <a-config-provider :locale="ArcoI18nMessages[locale]">
     <a-layout>
       <a-layout-header>
         <pageHeader />
       </a-layout-header>
       <a-layout-content>
         <a-space direction="vertical" fill style="width: 100%; max-width: 1200px; margin: auto">
-          <a-alert type="warning" closable>{{ $t('main.workInProgressTips') }}</a-alert>
+          <a-alert type="warning" closable>{{ t('main.workInProgressTips') }}</a-alert>
           <a-tabs :active-key="currentName" @change="goto" size="large">
             <a-tab-pane
               v-for="router in routers"
@@ -28,19 +28,8 @@ import { useViewRoute } from './router'
 import pageFooter from './components/pageFooter.vue'
 import pageHeader from './components/pageHeader.vue'
 import { useI18n } from 'vue-i18n'
-import zhCN from '@arco-design/web-vue/es/locale/lang/zh-cn'
-import enUS from '@arco-design/web-vue/es/locale/lang/en-us'
-import useLocale from './stores/locale'
-import { computed } from 'vue'
+import { ArcoI18nMessages } from './locale';
 
-const { currentLocale } = useLocale()
-const { t } = useI18n()
+const { t, locale } = useI18n()
 const [routers, currentName, goto] = useViewRoute()
-const locales = new Map([
-  ['zh-CN', zhCN],
-  ['en-US', enUS]
-])
-const locale = computed(() => {
-  return locales.get(currentLocale.value) || zhCN
-})
 </script>

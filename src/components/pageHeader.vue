@@ -3,17 +3,17 @@
     <template #extra>
       <a-space class="right-side" wrap>
         <a-typography-text
-          ><icon-clock-circle /> {{ $t('navbar.action.autoUpdate.lastUpdate')
-          }}{{ autoUpdate.lastUpdate.toLocaleString(currentLocale) }}</a-typography-text
+          ><icon-clock-circle /> {{ t('navbar.action.autoUpdate.lastUpdate')
+          }}{{ d(autoUpdate.lastUpdate, 'longlong') }}</a-typography-text
         >
         <a-switch v-model="autoUpdate.autoUpdate">
-          <template #checked> {{ $t('navbar.action.autoUpdate.on') }} </template>
-          <template #unchecked> {{ $t('navbar.action.autoUpdate.off') }} </template>
+          <template #checked> {{ t('navbar.action.autoUpdate.on') }} </template>
+          <template #unchecked> {{ t('navbar.action.autoUpdate.off') }} </template>
         </a-switch>
-        <a-typography-text>{{ $t('navbar.action.autoUpdate') }}</a-typography-text>
+        <a-typography-text>{{ t('navbar.action.autoUpdate') }}</a-typography-text>
         <div class="lang-selector">
           <a-dropdown trigger="click" @select="(lang) => changeLocale(lang as string)">
-            <a-tooltip :content="$t('settings.language')">
+            <a-tooltip :content="t('settings.language')">
               <a-button class="nav-btn" type="outline" :shape="'circle'">
                 <template #icon>
                   <icon-language />
@@ -23,7 +23,7 @@
             <template #content>
               <a-doption v-for="item in locales" :key="item.value" :value="item.value">
                 <template #icon>
-                  <icon-check v-show="item.value === currentLocale" />
+                  <icon-check v-show="item.value === locale" />
                 </template>
                 {{ item.label }}
               </a-doption>
@@ -31,9 +31,7 @@
           </a-dropdown>
         </div>
         <a-tooltip
-          :content="
-            isDark ? $t('settings.navbar.theme.toDark') : $t('settings.navbar.theme.toLight')
-          "
+          :content="isDark ? t('settings.navbar.theme.toDark') : t('settings.navbar.theme.toLight')"
         >
           <a-button class="nav-btn" type="outline" :shape="'circle'" @click="handleToggleTheme">
             <template #icon>
@@ -62,7 +60,9 @@ import { useDark, useToggle } from '@vueuse/core'
 import { useAutoUpdate } from '@/stores/autoUpdate'
 import useLocale from '@/stores/locale'
 import { LOCALE_OPTIONS } from '@/locale'
-const { changeLocale, currentLocale } = useLocale()
+import { useI18n } from 'vue-i18n'
+const { t, d, locale } = useI18n()
+const { changeLocale } = useLocale()
 const locales = [...LOCALE_OPTIONS]
 const autoUpdate = useAutoUpdate()
 const isDark = useDark({

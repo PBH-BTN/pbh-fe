@@ -1,5 +1,5 @@
-import type { RuleMetric } from '@/api/model/ruleStatics'
+import type { GetRuleMetricsResponse } from '@/api/model/ruleStatics'
 import axios from '@/api/client'
 
-export const getRuleStatic = (): Promise<RuleMetric[]> =>
+export const getRuleStatic = (): Promise<GetRuleMetricsResponse> =>
   axios.get('api/ruleStatistic').then((res) => res.data)

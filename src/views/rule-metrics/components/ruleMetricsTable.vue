@@ -1,7 +1,7 @@
 <template>
   <a-table
     :columns="columns"
-    :data="data"
+    :data="data?.data"
     size="large"
     :loading="loading"
     column-resizable
@@ -9,6 +9,9 @@
     :pagination="{ showPageSize: true }"
   >
     <template #empty> <a-empty /> </template>
+    <template #type="{ record }">
+      <a-typography-text>{{ data?.dict[record.type] ?? record.type }}</a-typography-text>
+    </template>
     <template #ruleName="{ record }">
       <a-typography-text code>
         {{ record.metadata.rule }}
@@ -25,7 +28,7 @@
               (value: string) => (value === 'yes' ? handleFilterConfirm() : handleFilterReset())
             "
           />
-          <a-typography-text>仅显示命中过的规则</a-typography-text>
+          <a-typography-text>{{ $t('page.ruleMetrices.metricsTable.filter') }}</a-typography-text>
         </a-space>
       </div>
     </template>
@@ -38,7 +41,9 @@ import { useEndpointStore } from '@/stores/endpoint'
 import { computed, watch } from 'vue'
 import { getRuleStatic } from '@/service/ruleStatics'
 import type { RuleMetric } from '@/api/model/ruleStatics'
+import { useI18n } from 'vue-i18n'
 const autoUpdateState = useAutoUpdate()
+const { t } = useI18n()
 const endpointStore = useEndpointStore()
 const { data, refresh, loading } = useRequest(getRuleStatic, {
   pollingInterval: computed(() => autoUpdateState.pollingInterval),
@@ -47,22 +52,22 @@ const { data, refresh, loading } = useRequest(getRuleStatic, {
 
 const columns = [
   {
-    title: '规则类型',
-    dataIndex: 'type',
-    width: 600
+    title: t('page.ruleMetrices.metricsTable.column.type'),
+    slotName: 'type',
+    width: 300
   },
   {
-    title: '规则名称',
+    title: t('page.ruleMetrices.metricsTable.column.type'),
     slotName: 'ruleName',
     width: 300
   },
   {
-    title: '运行次数',
+    title: t('page.ruleMetrices.metricsTable.column.run'),
     dataIndex: 'query',
-    width: 100
+    width: 300
   },
   {
-    title: '命中次数',
+    title: t('page.ruleMetrices.metricsTable.column.hit'),
     dataIndex: 'hit',
     filterable: {
       filter: (value: string, record: RuleMetric) => value[0] === 'yes' && record.hit > 0,

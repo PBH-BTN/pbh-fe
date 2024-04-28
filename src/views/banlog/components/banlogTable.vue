@@ -67,18 +67,14 @@ const endpointState = useEndpointStore()
 const { t, d } = useI18n()
 const { data, total, current, loading, pageSize, changeCurrent, changePageSize, refresh } =
   usePagination(getBanlogs, {
-    defaultParams: [
-      {
-        pageIndex: 1,
-        pageSize: 10
-      }
-    ],
+    defaultParams: [1, 10],
     pagination: {
       currentKey: 'pageIndex',
       pageSizeKey: 'pageSize',
       totalKey: 'total'
     },
     pollingInterval: computed(() => autoUpdateState.pollingInterval),
+    cacheKey: (params) => `${endpointState.endpoint}-banlogs-${params?.join('-')}`,
     onSuccess: autoUpdateState.renewLastUpdate,
     onAfter: () => {
       forceLoading.value = false

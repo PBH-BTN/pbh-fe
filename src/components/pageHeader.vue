@@ -51,8 +51,8 @@
         </a-button>
       </a-space>
     </template>
-    <settings-modal ref="settingsModalRef" />
   </a-page-header>
+  <settings-modal ref="settingsModalRef" />
 </template>
 <script setup lang="ts">
 import settingsModal from './settingsModal.vue'

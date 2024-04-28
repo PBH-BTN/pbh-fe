@@ -1,6 +1,6 @@
 <template>
   <a-config-provider :locale="ArcoI18nMessages[locale]">
-    <a-layout>
+    <a-layout style="min-height: 100vh;">
       <a-layout-header>
         <pageHeader />
       </a-layout-header>

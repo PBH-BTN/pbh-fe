@@ -81,7 +81,8 @@ const autoUpdateState = useAutoUpdate()
 const endpointState = useEndpointStore()
 const { data, refresh } = useRequest(getClientStatus, {
   pollingInterval: computed(() => autoUpdateState.pollingInterval),
-  onSuccess: autoUpdateState.renewLastUpdate
+  onSuccess: autoUpdateState.renewLastUpdate,
+  cacheKey: () => `${endpointState.endpoint}-clientStatus`
 })
 
 watch(() => endpointState.endpoint, refresh)

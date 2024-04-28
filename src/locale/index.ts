@@ -57,11 +57,11 @@ const i18n = createI18n({
       ...datetimeFormat,
       long: {
         ...datetimeFormat['long'],
-        hour12: true
+        weekday: undefined
       },
       longlong: {
         ...datetimeFormat['longlong'],
-        hour12: true
+        weekday: undefined
       }
     }
   }

@@ -46,7 +46,8 @@ const { t } = useI18n()
 const endpointStore = useEndpointStore()
 const { data, refresh, loading } = useRequest(getRuleStatic, {
   pollingInterval: computed(() => autoUpdateState.pollingInterval),
-  onSuccess: autoUpdateState.renewLastUpdate
+  onSuccess: autoUpdateState.renewLastUpdate,
+  cacheKey: () => `${endpointStore.endpoint}-ruleStatic`
 })
 
 const hashString = (str: string) => {

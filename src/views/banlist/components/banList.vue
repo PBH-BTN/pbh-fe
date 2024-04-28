@@ -65,7 +65,7 @@
         </a-list-item>
       </template>
       <template #scroll-loading>
-        <a-empty v-if="list.length === 0" />
+        <a-empty v-if="list.length === 0" style="height: 500px;" />
         <div style="position: absolute; transform: translateY(-50%)" v-if="loadingMore">
           <a-typography-text v-if="bottom">{{
             t('page.banlist.banlist.bottomReached')
@@ -95,9 +95,11 @@ const step = 5
 const loadingMore = ref(false)
 const { t, d } = useI18n()
 
+let firstGet = true
 async function getMoreBanList(): Promise<BanList[]> {
-  if (!data.value) {
-    return getBanList({ limit: step })
+  if (firstGet || !data.value) {
+    firstGet = false
+    return getBanList(step)
   }
   if (data.value.length > limit.value - step) {
     // refresh the new data
@@ -105,10 +107,7 @@ async function getMoreBanList(): Promise<BanList[]> {
     let match = false
     // load more data until the limit or get the same data with the top one
     while (newData.length < limit.value && !match) {
-      const moreData = await getBanList({
-        limit: step,
-        lastBanTime: newData[newData.length - 1]?.banMetadata.banAt
-      })
+      const moreData = await getBanList(step, newData[newData.length - 1]?.banMetadata.banAt)
       for (const item of moreData) {
         if (item.banMetadata.randomId !== data.value[0].banMetadata.randomId) {
           newData.push(item)
@@ -131,7 +130,8 @@ async function getMoreBanList(): Promise<BanList[]> {
 const { data, refresh, run } = useRequest(getMoreBanList, {
   pollingInterval: computed(() => autoUpdateState.pollingInterval),
   onSuccess: autoUpdateState.renewLastUpdate,
-  manual: true
+  manual: true,
+  cacheKey: () => `${endpointState.endpoint}-moreBanList`
 })
 const handleSearch = (value: string) => {
   if (value) {
@@ -150,11 +150,10 @@ const loadMore = async () => {
   if (data.value.length <= limit.value) {
     const newData: BanList[] = []
     while (newData.length + data.value.length < limit.value && !bottom.value) {
-      const moreData = await getBanList({
-        limit: step,
-        lastBanTime: (newData[newData.length - 1] || data.value[data.value.length - 1])?.banMetadata
-          .banAt
-      })
+      const moreData = await getBanList(
+        step,
+        (newData[newData.length - 1] || data.value[data.value.length - 1])?.banMetadata.banAt
+      )
       if (moreData.length < step) {
         bottom.value = true
       }

@@ -72,7 +72,8 @@ const autoUpdateState = useAutoUpdate()
 const endpointStore = useEndpointStore()
 const { data, refresh } = useRequest(getStatistic, {
   pollingInterval: computed(() => autoUpdateState.pollingInterval),
-  onSuccess: autoUpdateState.renewLastUpdate
+  onSuccess: autoUpdateState.renewLastUpdate,
+  cacheKey: () => `${endpointStore.endpoint}-statistic`
 })
 
 watch(() => endpointStore.endpoint, refresh)

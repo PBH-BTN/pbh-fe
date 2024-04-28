@@ -63,9 +63,10 @@ const props = defineProps({
 
 const topNumber = computed(() => props.topNumber)
 
-const { data, loading, refresh } = useRequest(() => getTopBan({ num: topNumber.value }), {
+const { data, loading, refresh } = useRequest(() => getTopBan(topNumber.value), {
   pollingInterval: computed(() => autoUpdateState.pollingInterval),
-  onSuccess: autoUpdateState.renewLastUpdate
+  onSuccess: autoUpdateState.renewLastUpdate,
+  cacheKey: () => `${endpointState.endpoint}-topban-${topNumber.value}`
 })
 
 watch([topNumber, () => endpointState.endpoint], () => {

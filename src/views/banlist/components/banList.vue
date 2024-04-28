@@ -21,9 +21,6 @@
       :scrollbar="false"
       :data="list"
     >
-      <template #empty>
-        <a-empty />
-      </template>
       <template #item="{ item, index }">
         <a-list-item
           :style="{ marginBottom: index === list.length - 1 && loadingMore ? '50px' : undefined }"
@@ -68,6 +65,7 @@
         </a-list-item>
       </template>
       <template #scroll-loading>
+        <a-empty v-if="list.length === 0" />
         <div style="position: absolute; transform: translateY(-50%)" v-if="loadingMore">
           <a-typography-text v-if="bottom">{{
             $t('page.banlist.banlist.bottomReached')

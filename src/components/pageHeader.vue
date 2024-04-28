@@ -12,15 +12,18 @@
         </a-switch>
         <a-typography-text>{{ $t('navbar.action.autoUpdate') }}</a-typography-text>
         <div class="lang-selector">
-          <a-tooltip :content="$t('settings.language')">
-            <a-button class="nav-btn" type="outline" :shape="'circle'" @click="setDropDownVisible">
-              <template #icon>
-                <icon-language />
-              </template>
-            </a-button>
-          </a-tooltip>
           <a-dropdown trigger="click" @select="changeLocale">
-            <div ref="triggerBtn" class="trigger-btn"></div>
+            <a-tooltip :content="$t('settings.language')">
+              <a-button
+                class="nav-btn"
+                type="outline"
+                :shape="'circle'"
+              >
+                <template #icon>
+                  <icon-language />
+                </template>
+              </a-button>
+            </a-tooltip>
             <template #content>
               <a-doption v-for="item in locales" :key="item.value" :value="item.value">
                 <template #icon>
@@ -102,15 +105,6 @@ const checkBackendVaild = async () => {
     })
 }
 checkBackendVaild()
-const triggerBtn = ref()
-const setDropDownVisible = () => {
-  const event = new MouseEvent('click', {
-    view: window,
-    bubbles: true,
-    cancelable: true
-  })
-  triggerBtn.value.dispatchEvent(event)
-}
 </script>
 <style scoped lang="less">
 .arco-layout {
@@ -149,11 +143,6 @@ const setDropDownVisible = () => {
   list-style: none;
   :deep(.locale-select) {
     border-radius: 20px;
-  }
-  .lang-selector {
-    display: flex;
-    align-items: center;
-    padding: 0 10px;
   }
 
   a {

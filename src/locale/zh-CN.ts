@@ -8,8 +8,6 @@ import serviceLocale from '@/service/locale/zh-CN'
 export default {
   'navbar.action.locale': '切换为中文',
   'navbar.action.autoUpdate': '自动刷新',
-  'navbar.action.autoUpdate.on': '开',
-  'navbar.action.autoUpdate.off': '关',
   'navbar.action.autoUpdate.lastUpdate': '最后更新于：',
   'main.workInProgressTips': '请注意，此功能仍在施工中，目前记录和展示的数据较为有限。',
 

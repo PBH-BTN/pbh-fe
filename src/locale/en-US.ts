@@ -8,8 +8,6 @@ import serviceLocale from '@/service/locale/en-US'
 export default {
   'navbar.action.locale': 'Switch to English',
   'navbar.action.autoUpdate': 'Auto Update',
-  'navbar.action.autoUpdate.on': 'On',
-  'navbar.action.autoUpdate.off': 'Off',
   'navbar.action.autoUpdate.lastUpdate': 'Last updated at: ',
   'main.workInProgressTips':
     'This feature is still working in progress, and the data currently recorded and displayed is relatively limited',

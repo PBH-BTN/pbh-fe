@@ -6,10 +6,7 @@
           ><icon-clock-circle /> {{ t('navbar.action.autoUpdate.lastUpdate')
           }}{{ d(autoUpdate.lastUpdate, 'longlong') }}</a-typography-text
         >
-        <a-switch v-model="autoUpdate.autoUpdate">
-          <template #checked> {{ t('navbar.action.autoUpdate.on') }} </template>
-          <template #unchecked> {{ t('navbar.action.autoUpdate.off') }} </template>
-        </a-switch>
+        <a-switch v-model="autoUpdate.autoUpdate" />
         <a-typography-text>{{ t('navbar.action.autoUpdate') }}</a-typography-text>
         <div class="lang-selector">
           <a-dropdown

@@ -10,7 +10,7 @@
   >
     <template #empty> <a-empty /> </template>
     <template #type="{ record }">
-      <a-typography-text>{{ data?.dict[record.type] ?? record.type }}</a-typography-text>
+      <a-tag :color="getColor(record.type)">{{ data?.dict[record.type] ?? record.type }}</a-tag>
     </template>
     <template #ruleName="{ record }">
       <a-typography-text code>
@@ -50,6 +50,27 @@ const { data, refresh, loading } = useRequest(getRuleStatic, {
   onSuccess: autoUpdateState.renewLastUpdate
 })
 
+const hashString = (str: string) => {
+  var hash = 0,
+    i,
+    chr
+  if (str.length === 0) return hash
+  for (i = 0; i < str.length; i++) {
+    chr = str.charCodeAt(i)
+    hash = (hash << 5) - hash + chr
+    hash |= 0 // Convert to 32bit integer
+  }
+  return hash
+}
+const getColor = (value: string) => {
+  console.log(data.value?.dict[value])
+  if (!data.value?.dict[value]) {
+    return 'gray'
+  }
+  const hash = Math.abs(hashString(value)) % colorTable.length
+  return colorTable[hash]
+}
+
 const columns = [
   {
     title: t('page.ruleMetrices.metricsTable.column.type'),
@@ -77,6 +98,21 @@ const columns = [
 ]
 
 watch(() => endpointStore.endpoint, refresh, { immediate: true })
+
+const colorTable = [
+  'red',
+  'orangered',
+  'orange',
+  'gold',
+  'lime',
+  'green',
+  'cyan',
+  'blue',
+  'arcoblue',
+  'purple',
+  'pinkpurple',
+  'magenta'
+]
 </script>
 <style scoped>
 .search-box {

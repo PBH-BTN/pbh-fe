@@ -5,5 +5,6 @@ export default {
   'settings.modal.title': 'Settings',
   'settings.modal.endpointTips':
     "If you can't access the backend of the PBH, you can try to set the Endpoint here",
-  'settings.modal.pollInterval': 'Polling interval:'
+  'settings.modal.pollInterval': 'Polling interval:',
+  'settings.endpoint.error': 'Cannot connect to the backend, please check the Endpoint settings'
 }

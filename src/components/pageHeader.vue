@@ -55,7 +55,7 @@
       </a-space>
     </template>
   </a-page-header>
-  <modalForm ref="modal" />
+  <modalForm ref="modal" :check-connection="checkBackendVaild" />
 </template>
 <script setup lang="ts">
 import { ref } from 'vue'
@@ -64,10 +64,14 @@ import { useAutoUpdate } from '@/stores/autoUpdate'
 import modalForm from './modalForm.vue'
 import useLocale from '@/stores/locale'
 import { LOCALE_OPTIONS } from '@/locale'
+import axios, { AxiosError } from 'axios'
+import { useEndpointStore } from '@/stores/endpoint'
+import { Message } from '@arco-design/web-vue'
+import { useI18n } from 'vue-i18n'
 const { changeLocale, currentLocale } = useLocale()
 const locales = [...LOCALE_OPTIONS]
 const modal = ref<InstanceType<typeof modalForm>>()
-
+const { t } = useI18n()
 const autoUpdate = useAutoUpdate()
 const isDark = useDark({
   selector: 'body',
@@ -82,6 +86,22 @@ const handleToggleTheme = () => {
 const showSettings = () => {
   modal.value?.showModal()
 }
+const endpointStore = useEndpointStore()
+const checkBackendVaild = async () => {
+  await axios
+    .get('/api/version', {
+      baseURL: endpointStore.endpoint,
+      timeout: 1000
+    })
+    .catch((err: AxiosError) => {
+      Message.error(`${t('settings.endpoint.error')},error:${err.message}`)
+      autoUpdate.autoUpdate = false
+      modal.value?.setForce(true)
+      showSettings()
+      return err
+    })
+}
+checkBackendVaild()
 const triggerBtn = ref()
 const setDropDownVisible = () => {
   const event = new MouseEvent('click', {

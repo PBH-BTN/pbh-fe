@@ -1,11 +1,5 @@
 import type { topBanItem } from '@/api/model/topban'
-import { useEndpointStore } from '@/stores/endpoint'
-import urlJoin from 'url-join'
+import axios from '@/api/client'
 
-export function getTopBan(params: { num: number }): Promise<topBanItem[]> {
-  const { endpoint } = useEndpointStore()
-
-  const url = new URL(urlJoin(endpoint, 'api/maxbans'), location.href)
-  url.searchParams.set('num', String(params.num))
-  return fetch(url).then((res) => res.json())
-}
+export const getTopBan = (params: { num: number }): Promise<topBanItem[]> =>
+  axios.get('api/maxbans', { params: { num: params.num } }).then((res) => res.data)

@@ -1,10 +1,5 @@
 import type { version } from '@/api/model/version'
-import { useEndpointStore } from '@/stores/endpoint'
-import urlJoin from 'url-join'
 
-export function getVersion(): Promise<version> {
-  const { endpoint } = useEndpointStore()
+import axios from '@/api/client'
 
-  const url = new URL(urlJoin(endpoint, 'api/version'), location.href)
-  return fetch(url).then((res) => res.json())
-}
+export const getVersion = (): Promise<version> => axios.get('api/version').then((res) => res.data)

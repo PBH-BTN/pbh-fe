@@ -1,5 +1,12 @@
 <template>
-  <a-modal :width="800" v-model:visible="showModal" @ok="handleOk" @cancel="handleCancel">
+  <a-modal
+    :width="800"
+    v-model:visible="showModal"
+    @ok="handleOk"
+    @cancel="handleCancel"
+    :closable="!forceModal"
+    :hide-cancel="forceModal"
+  >
     <template #title> {{ $t('settings.modal.title') }} </template>
     <a-form :model="form">
       <a-form-item
@@ -28,6 +35,8 @@ import { useI18n } from 'vue-i18n'
 const endPointStore = useEndpointStore()
 const autoUpdateState = useAutoUpdate()
 const showModal = ref(false)
+const forceModal = ref(false)
+
 const form = ref({
   endpoint: endPointStore.endpoint,
   interval: autoUpdateState.interval
@@ -38,17 +47,31 @@ function initForm() {
   form.value.endpoint = endPointStore.endpoint
   form.value.interval = autoUpdateState.interval
 }
+const setForce = (value: boolean) => {
+  forceModal.value = value
+}
+const props = defineProps<{ checkConnection: () => Promise<void> }>()
 
 defineExpose({
   showModal: () => {
     showModal.value = true
     initForm()
-  }
+  },
+  setForce
 })
 const handleOk = () => {
-  endPointStore.endpoint = form.value.endpoint
+  endPointStore.setEndpoint(form.value.endpoint)
   autoUpdateState.interval = form.value.interval
-  showModal.value = false
+  props
+    .checkConnection()
+    .then(() => {
+      showModal.value = false
+      setForce(false)
+    })
+    .catch(() => {
+      showModal.value = true
+      setForce(true)
+    })
 }
 const handleCancel = () => {
   showModal.value = false

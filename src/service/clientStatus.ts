@@ -1,10 +1,9 @@
 import type { ClientStatus } from '@/api/model/clientStatus'
-import { useEndpointStore } from '@/stores/endpoint'
-import urlJoin from 'url-join'
+import type { Statistic } from '@/api/model/statistic'
+import axios from '@/api/client'
 
-export function getClientStatus(): Promise<ClientStatus[]> {
-  const { endpoint } = useEndpointStore()
+export const getClientStatus = (): Promise<ClientStatus[]> =>
+  axios.get('api/clientStatus').then((res) => res.data)
 
-  const url = new URL(urlJoin(endpoint, 'api/clientStatus'), location.href)
-  return fetch(url).then((res) => res.json())
-}
+export const getStatistic = (): Promise<Statistic> =>
+  axios.get('api/statistic').then((res) => res.data)

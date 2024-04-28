@@ -68,7 +68,7 @@
 import { useRequest } from 'vue-request'
 import { useAutoUpdate } from '@/stores/autoUpdate'
 import { useEndpointStore } from '@/stores/endpoint'
-import { getStatistic } from '@/service/banList'
+import { getStatistic } from '@/service/clientStatus'
 import { computed, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n()

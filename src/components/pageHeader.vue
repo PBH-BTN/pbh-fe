@@ -12,13 +12,9 @@
         </a-switch>
         <a-typography-text>{{ $t('navbar.action.autoUpdate') }}</a-typography-text>
         <div class="lang-selector">
-          <a-dropdown trigger="click" @select="changeLocale">
+          <a-dropdown trigger="click" @select="(lang) => changeLocale(lang as string)">
             <a-tooltip :content="$t('settings.language')">
-              <a-button
-                class="nav-btn"
-                type="outline"
-                :shape="'circle'"
-              >
+              <a-button class="nav-btn" type="outline" :shape="'circle'">
                 <template #icon>
                   <icon-language />
                 </template>
@@ -51,30 +47,23 @@
           type="outline"
           shape="circle"
           status="normal"
-          @click="showSettings"
+          @click="emit('showSettings')"
         >
           <template #icon><icon-settings /></template>
         </a-button>
       </a-space>
     </template>
+    <settings-modal ref="settingsModalRef" />
   </a-page-header>
-  <modalForm ref="modal" :check-connection="checkBackendVaild" />
 </template>
 <script setup lang="ts">
-import { ref } from 'vue'
+import settingsModal from './settingsModal.vue'
 import { useDark, useToggle } from '@vueuse/core'
 import { useAutoUpdate } from '@/stores/autoUpdate'
-import modalForm from './modalForm.vue'
 import useLocale from '@/stores/locale'
 import { LOCALE_OPTIONS } from '@/locale'
-import axios, { AxiosError } from 'axios'
-import { useEndpointStore } from '@/stores/endpoint'
-import { Message } from '@arco-design/web-vue'
-import { useI18n } from 'vue-i18n'
 const { changeLocale, currentLocale } = useLocale()
 const locales = [...LOCALE_OPTIONS]
-const modal = ref<InstanceType<typeof modalForm>>()
-const { t } = useI18n()
 const autoUpdate = useAutoUpdate()
 const isDark = useDark({
   selector: 'body',
@@ -86,25 +75,7 @@ const toggleTheme = useToggle(isDark)
 const handleToggleTheme = () => {
   toggleTheme()
 }
-const showSettings = () => {
-  modal.value?.showModal()
-}
-const endpointStore = useEndpointStore()
-const checkBackendVaild = async () => {
-  await axios
-    .get('/api/version', {
-      baseURL: endpointStore.endpoint,
-      timeout: 1000
-    })
-    .catch((err: AxiosError) => {
-      Message.error(`${t('settings.endpoint.error')},error:${err.message}`)
-      autoUpdate.autoUpdate = false
-      modal.value?.setForce(true)
-      showSettings()
-      return err
-    })
-}
-checkBackendVaild()
+const emit = defineEmits(['showSettings'])
 </script>
 <style scoped lang="less">
 .arco-layout {
@@ -172,3 +143,4 @@ checkBackendVaild()
   }
 }
 </style>
+./.vue

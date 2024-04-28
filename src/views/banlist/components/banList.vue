@@ -79,7 +79,7 @@
 
 <script setup lang="ts">
 import { useRequest } from 'vue-request'
-import { computed, ref, watch } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { useAutoUpdate } from '@/stores/autoUpdate'
 import { useEndpointStore } from '@/stores/endpoint'
 import { getBanList } from '@/service/banList'
@@ -130,9 +130,10 @@ async function getMoreBanList(): Promise<BanList[]> {
   return data.value
 }
 
-const { data, refresh } = useRequest(getMoreBanList, {
+const { data, refresh, run } = useRequest(getMoreBanList, {
   pollingInterval: computed(() => autoUpdateState.pollingInterval),
-  onSuccess: autoUpdateState.renewLastUpdate
+  onSuccess: autoUpdateState.renewLastUpdate,
+  manual: true
 })
 const handleSearch = (value: string) => {
   if (value) {
@@ -150,7 +151,7 @@ const loadMore = async () => {
   bottom.value = false
   if (data.value.length <= limit.value) {
     const newData: BanList[] = []
-    while (newData.length + data.value.length < limit.value) {
+    while (newData.length + data.value.length < limit.value && !bottom.value) {
       const moreData = await getBanList({
         limit: step,
         lastBanTime: (newData[newData.length - 1] || data.value[data.value.length - 1])?.banMetadata
@@ -178,8 +179,9 @@ watch(
     data.value = undefined
     refresh()
   },
-  { immediate: true }
 )
+
+onMounted(run)
 
 const list = computed(() => data.value ?? [])
 </script>

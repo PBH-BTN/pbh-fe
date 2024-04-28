@@ -4,7 +4,7 @@
   }}</a-typography-title>
   <a-row
     justify="start"
-    wrap="true"
+    :wrap="true"
     :gutter="[
       { xs: 8, sm: 8, md: 8, lg: 24, xl: 32 },
       { xs: 8, sm: 8, md: 8, lg: 24, xl: 32 }
@@ -86,5 +86,5 @@ const { data, refresh } = useRequest(getClientStatus, {
   onSuccess: autoUpdateState.renewLastUpdate
 })
 
-watch(() => endpointState.endpoint, refresh, { immediate: true })
+watch(() => endpointState.endpoint, refresh)
 </script>

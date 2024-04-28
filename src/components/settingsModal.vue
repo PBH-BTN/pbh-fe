@@ -5,10 +5,12 @@
     @ok="handleOk"
     @cancel="handleCancel"
     :closable="!forceModal"
+    :maskClosable="!forceModal"
     :hide-cancel="forceModal"
+    :ok-loading="loading"
   >
     <template #title> {{ $t('settings.modal.title') }} </template>
-    <a-form :model="form">
+    <a-form :model="form" @submit="handleOk">
       <a-form-item
         field="endpoint"
         label="Endpoint:"
@@ -30,12 +32,14 @@
 <script setup lang="ts">
 import { useAutoUpdate } from '@/stores/autoUpdate'
 import { useEndpointStore } from '@/stores/endpoint'
-import { ref } from 'vue'
+import { Message } from '@arco-design/web-vue'
+import { computed, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 const endPointStore = useEndpointStore()
 const autoUpdateState = useAutoUpdate()
 const showModal = ref(false)
-const forceModal = ref(false)
+const loading = computed(() => endPointStore.loading)
+const forceModal = computed(() => !!endPointStore.error)
 
 const form = ref({
   endpoint: endPointStore.endpoint,
@@ -47,32 +51,34 @@ function initForm() {
   form.value.endpoint = endPointStore.endpoint
   form.value.interval = autoUpdateState.interval
 }
-const setForce = (value: boolean) => {
-  forceModal.value = value
-}
-const props = defineProps<{ checkConnection: () => Promise<void> }>()
 
 defineExpose({
   showModal: () => {
     showModal.value = true
     initForm()
-  },
-  setForce
+  }
 })
 const handleOk = () => {
-  endPointStore.setEndpoint(form.value.endpoint)
+  if (loading.value) return
   autoUpdateState.interval = form.value.interval
-  props
-    .checkConnection()
-    .then(() => {
-      showModal.value = false
-      setForce(false)
-    })
-    .catch(() => {
-      showModal.value = true
-      setForce(true)
-    })
+  endPointStore.setEndpoint(form.value.endpoint).then(() => {
+    showModal.value = false
+  })
 }
+
+watch(
+  () => endPointStore.error,
+  (error) => {
+    if (error) {
+      Message.error(`${t('settings.endpoint.error')},error:${error}`)
+      if (!showModal.value) {
+        showModal.value = true
+        initForm()
+      }
+    }
+  },
+  { immediate: true }
+)
 const handleCancel = () => {
   showModal.value = false
   initForm()

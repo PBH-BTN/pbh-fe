@@ -34,15 +34,16 @@ import type { topBanItem } from '@/api/model/topban'
 import { useAutoUpdate } from '@/stores/autoUpdate'
 import { useEndpointStore } from '@/stores/endpoint'
 import { useI18n } from 'vue-i18n'
+import type { TableColumnData } from '@arco-design/web-vue'
 const autoUpdateState = useAutoUpdate()
 const endpointState = useEndpointStore()
 const { t } = useI18n()
-const columns = [
+const columns: TableColumnData[] = [
   {
     title: t('page.topban.top50Table.column.ipaddress'),
     dataIndex: 'address',
     filterable: {
-      filter: (value: string, record: topBanItem) => record.address.includes(value),
+      filter: (value, record) => (record as topBanItem).address.includes(value[0]),
       slotName: 'ip-filter',
       icon: () => h(IconSearch)
     }

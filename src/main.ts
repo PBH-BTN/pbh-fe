@@ -9,8 +9,8 @@ import i18n from './locale'
 import { setGlobalOptions } from 'vue-request'
 
 const app = createApp(App)
-
 Message._context = app._context
+
 setGlobalOptions({
   loadingDelay: 400,
   loadingKeep: 1000,

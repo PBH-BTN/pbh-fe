@@ -79,12 +79,12 @@ export default router
 export function useViewRoute() {
   const router = useRouter()
   const route = useRoute()
-  const goto = (name: RouteRecordName) => {
-    router.replace({ name })
+  const goto = (name: string | number) => {
+    router.replace({ name: `${name}` })
   }
   const routers = computed(() => {
     return routerOptions.filter((item) => !item.meta?.hidden)
   })
-  const currentName = computed(() => route.name)
+  const currentName = computed(() => route.name as string | undefined)
   return [routers, currentName, goto] as const
 }

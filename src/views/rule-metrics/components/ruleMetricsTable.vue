@@ -24,9 +24,7 @@
             v-model="filterValue[0]"
             checked-value="yes"
             unchecked-value="no"
-            @change="
-              (value: string) => (value === 'yes' ? handleFilterConfirm() : handleFilterReset())
-            "
+            @change="(value) => (value === 'yes' ? handleFilterConfirm() : handleFilterReset())"
           />
           <a-typography-text>{{ $t('page.ruleMetrices.metricsTable.filter') }}</a-typography-text>
         </a-space>
@@ -42,6 +40,7 @@ import { computed, watch } from 'vue'
 import { getRuleStatic } from '@/service/ruleStatics'
 import type { RuleMetric } from '@/api/model/ruleStatics'
 import { useI18n } from 'vue-i18n'
+import type { TableColumnData } from '@arco-design/web-vue'
 const autoUpdateState = useAutoUpdate()
 const { t } = useI18n()
 const endpointStore = useEndpointStore()
@@ -71,7 +70,7 @@ const getColor = (value: string) => {
   return colorTable[hash]
 }
 
-const columns = [
+const columns: TableColumnData[] = [
   {
     title: t('page.ruleMetrices.metricsTable.column.type'),
     slotName: 'type',
@@ -91,13 +90,11 @@ const columns = [
     title: t('page.ruleMetrices.metricsTable.column.hit'),
     dataIndex: 'hit',
     filterable: {
-      filter: (value: string, record: RuleMetric) => value[0] === 'yes' && record.hit > 0,
+      filter: (value, record) => value[0] === 'yes' && (record as RuleMetric).hit > 0,
       slotName: 'hit-filter'
     }
   }
 ]
-
-watch(() => endpointStore.endpoint, refresh, { immediate: true })
 
 const colorTable = [
   'red',
@@ -113,6 +110,7 @@ const colorTable = [
   'pinkpurple',
   'magenta'
 ]
+watch(() => endpointStore.endpoint, refresh)
 </script>
 <style scoped>
 .search-box {

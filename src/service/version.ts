@@ -1,6 +1,8 @@
 import type { version } from '@/api/model/version'
 import { useEndpointStore } from '@/stores/endpoint'
 import urlJoin from 'url-join'
+import { getCommonHeader } from './utils'
+import { useI18n } from 'vue-i18n'
 
 export class GetVersionError extends Error {
   constructor(
@@ -14,19 +16,19 @@ export class GetVersionError extends Error {
 export function getVersion(endpoint = useEndpointStore().endpoint): Promise<version> {
   const url = new URL(urlJoin(endpoint, 'api/version'), location.href)
   return (
-    fetch(url)
+    fetch(url, { headers: getCommonHeader() })
       .catch(() => {
-        throw new GetVersionError('网络故障，无法发起请求', false)
+        throw new GetVersionError('service.version.networkError', false)
       })
       .then((res) =>
         res.json().catch(() => {
-          throw new GetVersionError('无法解析接口返回数据，请检查服务地址是否正确')
+          throw new GetVersionError('service.version.parseError')
         })
       )
       // 后续可以添加后端版本的校验和提醒
       .then((res: version) => {
         if (!res.version) {
-          throw new GetVersionError('后端接口响应格式错误，请检查后端版本')
+          throw new GetVersionError('service.version.formatError')
         }
         return res
       })

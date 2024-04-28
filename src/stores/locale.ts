@@ -9,7 +9,6 @@ export default function useLocale() {
       return
     }
     i18.locale.value = value
-    localStorage.setItem('pbh-locale', value)
     document.querySelector('html')?.setAttribute('lang', value)
     Message.success(i18.t('navbar.action.locale'))
   }

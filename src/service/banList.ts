@@ -1,12 +1,21 @@
 import type { BanList } from '@/api/model/banlist'
-import axios from '@/api/client'
+import { useEndpointStore } from '@/stores/endpoint'
+import urlJoin from 'url-join'
+import { getCommonHeader } from './utils'
 
-export const getBanList = (params: { limit: number; lastBanTime?: number }): Promise<BanList[]> =>
-  axios
-    .get('api/banlist', {
-      params: {
-        limit: params.limit,
-        lastBanTime: params.lastBanTime
-      }
-    })
-    .then((res) => res.data)
+export async function getBanList(params: {
+  limit: number
+  lastBanTime?: number
+}): Promise<BanList[]> {
+  const endpointStore = useEndpointStore()
+  await endpointStore.serverAvailable
+
+  const url = new URL(urlJoin(endpointStore.endpoint, 'api/banlist'), location.href)
+  url.searchParams.set('limit', String(params.limit))
+  if (params.lastBanTime) {
+    url.searchParams.set('lastBanTime', String(params.lastBanTime))
+  }
+  return fetch(url, {
+    headers: getCommonHeader()
+  }).then((res) => res.json())
+}

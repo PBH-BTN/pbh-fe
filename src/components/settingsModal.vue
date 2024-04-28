@@ -2,7 +2,7 @@
   <a-modal
     :width="800"
     v-model:visible="showModal"
-    @ok="handleOk"
+    @before-ok="handleOk"
     @cancel="handleCancel"
     :closable="!forceModal"
     :maskClosable="!forceModal"
@@ -30,6 +30,7 @@
   </a-modal>
 </template>
 <script setup lang="ts">
+import { GetVersionError } from '@/service/version'
 import { useAutoUpdate } from '@/stores/autoUpdate'
 import { useEndpointStore } from '@/stores/endpoint'
 import { Message } from '@arco-design/web-vue'
@@ -61,15 +62,19 @@ defineExpose({
 const handleOk = () => {
   if (loading.value) return
   autoUpdateState.interval = form.value.interval
-  endPointStore.setEndpoint(form.value.endpoint).then(() => {
-    showModal.value = false
-  })
+  return endPointStore.setEndpoint(form.value.endpoint)
 }
 
 watch(
   () => endPointStore.error,
   (error) => {
-    if (error) {
+    if (error instanceof GetVersionError) {
+      Message.error(t(error.message))
+      if (!showModal.value && error.isApiWrong) {
+        showModal.value = true
+        initForm()
+      }
+    } else if (error) {
       Message.error(`${t('settings.endpoint.error')},error:${error}`)
       if (!showModal.value) {
         showModal.value = true

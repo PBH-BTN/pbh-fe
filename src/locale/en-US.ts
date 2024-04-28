@@ -4,6 +4,7 @@ import banListPageLocale from '@/views/banlist/locale/en-US'
 import banLogPageLocale from '@/views/banlog/locale/en-US'
 import topBanPageLocale from '@/views/top-ban/locale/en-US'
 import ruleMetricsLocale from '@/views/rule-metrics/locale/en-US'
+import serviceLocale from '@/service/locale/en-US'
 export default {
   'navbar.action.locale': 'Switch to English',
   'navbar.action.autoUpdate': 'Auto Update',
@@ -24,5 +25,6 @@ export default {
   ...banListPageLocale,
   ...banLogPageLocale,
   ...topBanPageLocale,
-  ...ruleMetricsLocale
+  ...ruleMetricsLocale,
+  ...serviceLocale
 }

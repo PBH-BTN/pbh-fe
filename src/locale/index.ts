@@ -10,7 +10,7 @@ export const LOCALE_OPTIONS = [
   { label: 'English', value: 'en-US' }
 ]
 
-function getNavigatorLanguage() {
+export function getNavigatorLanguage() {
   const lang = navigator.language
   if (lang.includes('zh')) {
     return 'zh-CN'

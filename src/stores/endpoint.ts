@@ -25,12 +25,13 @@ export const useEndpointStore = defineStore('endpoint', () => {
     try {
       serverVersion.value = await getVersion(value)
       serverAvailable.value.resolve()
+      error.value = null
       status.value = 'pass'
       return true
     } catch (err) {
       error.value = err as Error
       status.value = 'fail'
-      throw err
+      return false
     }
   }
   // init
@@ -40,7 +41,7 @@ export const useEndpointStore = defineStore('endpoint', () => {
     serverAvailable: readonly(serverAvailable),
     serverVersion: readonly(serverVersion),
     loading: computed(() => status.value === 'checking'),
-    error: computed(() => (status.value === 'fail' ? error.value : null)),
+    error: readonly(error),
     setEndpoint
   }
 })

@@ -4,6 +4,7 @@ import banListPageLocale from '@/views/banlist/locale/zh-CN'
 import banLogPageLocale from '@/views/banlog/locale/zh-CN'
 import topBanPageLocale from '@/views/top-ban/locale/zh-CN'
 import ruleMetricsLocale from '@/views/rule-metrics/locale/zh-CN'
+import serviceLocale from '@/service/locale/zh-CN'
 export default {
   'navbar.action.locale': '切换为中文',
   'navbar.action.autoUpdate': '自动刷新',
@@ -23,5 +24,6 @@ export default {
   ...banListPageLocale,
   ...banLogPageLocale,
   ...topBanPageLocale,
-  ...ruleMetricsLocale
+  ...ruleMetricsLocale,
+  ...serviceLocale
 }

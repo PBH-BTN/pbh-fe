@@ -45,7 +45,7 @@
           type="outline"
           shape="circle"
           status="normal"
-          @click="emit('showSettings')"
+          @click="settingsModalRef?.showModal"
         >
           <template #icon><icon-settings /></template>
         </a-button>
@@ -61,6 +61,7 @@ import { useAutoUpdate } from '@/stores/autoUpdate'
 import useLocale from '@/stores/locale'
 import { LOCALE_OPTIONS } from '@/locale'
 import { useI18n } from 'vue-i18n'
+import { ref } from 'vue'
 const { t, d, locale } = useI18n()
 const { changeLocale } = useLocale()
 const locales = [...LOCALE_OPTIONS]
@@ -71,11 +72,11 @@ const isDark = useDark({
   valueDark: 'dark',
   valueLight: 'light'
 })
+const settingsModalRef = ref<InstanceType<typeof settingsModal>>()
 const toggleTheme = useToggle(isDark)
 const handleToggleTheme = () => {
   toggleTheme()
 }
-const emit = defineEmits(['showSettings'])
 </script>
 <style scoped lang="less">
 .arco-layout {

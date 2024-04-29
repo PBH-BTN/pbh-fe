@@ -28,7 +28,9 @@
         :label="t('settings.modal.pollInterval')"
         validate-trigger="input"
       >
-        <a-input-number v-model="form.interval" placeholder="3000" :min="100" />
+        <a-input-number v-model="form.interval" placeholder="3000" :min="100" hide-button>
+          <template #suffix> ms </template>
+        </a-input-number>
       </a-form-item>
     </a-form>
   </a-modal>

@@ -115,7 +115,6 @@ const handleToggleTheme = () => {
 
 .right-side {
   display: flex;
-  padding-right: 20px;
   list-style: none;
   :deep(.locale-select) {
     border-radius: 20px;
@@ -148,4 +147,3 @@ const handleToggleTheme = () => {
   }
 }
 </style>
-./.vue

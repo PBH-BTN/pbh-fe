@@ -14,6 +14,8 @@
       :model="form"
       @submit="handleOk"
       :layout="(['vertical', 'horizontal'] as const)[formLayout]"
+      :label-col-props="{ span: 6 }"
+      :wrapper-col-props="{ span: 18 }"
     >
       <a-form-item
         field="endpoint"
@@ -98,7 +100,7 @@ const handleCancel = () => {
 
 const formLayout = useResponsiveState(
   ref({
-    xs: 0,
+    sm: 0,
     md: 1
   }),
   1

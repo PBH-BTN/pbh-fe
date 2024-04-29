@@ -73,7 +73,8 @@ const isDark = useDark({
   selector: 'body',
   attribute: 'arco-theme',
   valueDark: 'dark',
-  valueLight: 'light'
+  valueLight: 'light',
+  storageKey: null
 })
 const settingsModalRef = ref<InstanceType<typeof settingsModal>>()
 const toggleTheme = useToggle(isDark)
@@ -114,7 +115,6 @@ const handleToggleTheme = () => {
 
 .right-side {
   display: flex;
-  padding-right: 20px;
   list-style: none;
   :deep(.locale-select) {
     border-radius: 20px;
@@ -147,4 +147,3 @@ const handleToggleTheme = () => {
   }
 }
 </style>
-./.vue

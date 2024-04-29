@@ -1,6 +1,6 @@
 <template>
   <a-modal
-    :width="800"
+    :modal-style="{ 'max-width': '80vw' }"
     v-model:visible="showModal"
     @before-ok="handleOk"
     @cancel="handleCancel"
@@ -10,7 +10,13 @@
     :ok-loading="loading"
   >
     <template #title> {{ t('settings.modal.title') }} </template>
-    <a-form :model="form" @submit="handleOk">
+    <a-form
+      :model="form"
+      @submit="handleOk"
+      :layout="(['vertical', 'horizontal'] as const)[formLayout]"
+      :label-col-props="{ span: 6 }"
+      :wrapper-col-props="{ span: 18 }"
+    >
       <a-form-item
         field="endpoint"
         label="Endpoint:"
@@ -24,7 +30,9 @@
         :label="t('settings.modal.pollInterval')"
         validate-trigger="input"
       >
-        <a-input-number v-model="form.interval" placeholder="3000" :min="100" />
+        <a-input-number v-model="form.interval" placeholder="3000" :min="100" hide-button>
+          <template #suffix> ms </template>
+        </a-input-number>
       </a-form-item>
     </a-form>
   </a-modal>
@@ -34,6 +42,7 @@ import { GetVersionError } from '@/service/version'
 import { useAutoUpdate } from '@/stores/autoUpdate'
 import { useEndpointStore } from '@/stores/endpoint'
 import { Message } from '@arco-design/web-vue'
+import { useResponsiveState } from '@arco-design/web-vue/es/grid/hook/use-responsive-state'
 import { computed, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 const endPointStore = useEndpointStore()
@@ -88,4 +97,12 @@ const handleCancel = () => {
   showModal.value = false
   initForm()
 }
+
+const formLayout = useResponsiveState(
+  ref({
+    sm: 0,
+    md: 1
+  }),
+  1
+)
 </script>

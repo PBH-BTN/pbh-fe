@@ -28,7 +28,6 @@ const datetimeFormat = {
     year: 'numeric',
     month: 'short',
     day: 'numeric',
-    weekday: 'short',
     hour: 'numeric',
     minute: 'numeric'
   },
@@ -36,7 +35,6 @@ const datetimeFormat = {
     year: 'numeric',
     month: 'short',
     day: 'numeric',
-    weekday: 'short',
     hour: 'numeric',
     minute: 'numeric',
     second: 'numeric'
@@ -53,17 +51,7 @@ const i18n = createI18n({
   },
   datetimeFormats: {
     'en-US': datetimeFormat,
-    'zh-CN': {
-      ...datetimeFormat,
-      long: {
-        ...datetimeFormat['long'],
-        weekday: undefined
-      },
-      longlong: {
-        ...datetimeFormat['longlong'],
-        weekday: undefined
-      }
-    }
+    'zh-CN': datetimeFormat
   }
 })
 

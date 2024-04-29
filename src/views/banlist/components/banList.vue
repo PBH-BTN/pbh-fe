@@ -14,7 +14,7 @@
     </a-space>
     <a-list
       :virtualListProps="{
-        height: 500
+        height: virtualListHeight
       }"
       ref="banlist"
       @reach-bottom="loadMore"
@@ -25,7 +25,10 @@
         <a-list-item
           :style="{ marginBottom: index === list.length - 1 && loadingMore ? '50px' : undefined }"
         >
-          <a-descriptions :column="{ xs: 1, md: 2, xl: 3 }">
+          <a-descriptions
+            :column="{ xs: 1, md: 2, xl: 3 }"
+            :layout="(['inline-vertical', 'horizontal'] as const)[descriptionLayout]"
+          >
             <template #title>
               <a-space wrap>
                 <a-typography-text bold copyable>
@@ -65,7 +68,7 @@
         </a-list-item>
       </template>
       <template #scroll-loading>
-        <a-empty v-if="list.length === 0" style="height: 500px" />
+        <a-empty v-if="list.length === 0" :style="{ height: `${virtualListHeight}px` }" />
         <div style="position: absolute; transform: translateY(-50%)" v-if="loadingMore">
           <a-typography-text v-if="bottom">{{
             t('page.banlist.banlist.bottomReached')
@@ -86,6 +89,9 @@ import { getBanList } from '@/service/banList'
 import { formatFileSize } from '@/utils/file'
 import type { BanList } from '@/api/model/banlist'
 import { useI18n } from 'vue-i18n'
+import { useResponsiveState } from '@arco-design/web-vue/es/grid/hook/use-responsive-state'
+import { useWindowSize } from '@vueuse/core'
+const { height } = useWindowSize()
 const banlist = ref()
 const autoUpdateState = useAutoUpdate()
 const endpointState = useEndpointStore()
@@ -180,6 +186,23 @@ watch(
 onMounted(run)
 
 const list = computed(() => data.value ?? [])
+
+const descriptionLayout = useResponsiveState(
+  ref({
+    xs: 0,
+    md: 1
+  }),
+  1
+)
+const virtualListMaxHeight = useResponsiveState(
+  ref({
+    xs: 1500,
+    md: 1000,
+    xl: 800
+  }),
+  800
+)
+const virtualListHeight = computed(() => Math.min(virtualListMaxHeight.value, height.value - 200))
 </script>
 
 <style scoped lang="less">

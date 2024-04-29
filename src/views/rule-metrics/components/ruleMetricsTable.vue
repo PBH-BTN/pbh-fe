@@ -78,17 +78,17 @@ const columns: TableColumnData[] = [
   {
     title: () => t('page.ruleMetrices.metricsTable.column.type'),
     slotName: 'type',
-    width: 300
+    width: 200
   },
   {
     title: () => t('page.ruleMetrices.metricsTable.column.type'),
     slotName: 'ruleName',
-    width: 300
+    width: 200
   },
   {
     title: () => t('page.ruleMetrices.metricsTable.column.run'),
     dataIndex: 'query',
-    width: 300
+    width: 200
   },
   {
     title: () => t('page.ruleMetrices.metricsTable.column.hit'),
@@ -96,7 +96,8 @@ const columns: TableColumnData[] = [
     filterable: {
       filter: (value, record) => value[0] === 'yes' && (record as RuleMetric).hit > 0,
       slotName: 'hit-filter'
-    }
+    },
+    width: 200
   }
 ]
 

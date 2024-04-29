@@ -12,7 +12,7 @@ const app = createApp(App)
 Message._context = app._context
 
 setGlobalOptions({
-  loadingDelay: 200,
+  loadingDelay: 400,
   loadingKeep: 1000,
   pollingWhenOffline: true
 })

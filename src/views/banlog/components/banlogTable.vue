@@ -11,16 +11,21 @@
       showPageSize: true
     }"
     column-resizable
+    size="medium"
     @page-change="changeCurrent"
     @page-size-change="changePageSize"
+    class="banlog-table"
   >
     <template #banAt="{ record }">
-      <p>{{ d(record.banAt, 'long') }}</p>
-    </template>
-    <template #unbanAt="{ record }">
-      <p>
-        {{ record.unbanAt ? d(record.unbanAt, 'long') : t('page.banlog.banlogTable.notUnbanned') }}
-      </p>
+      <a-space fill direction="vertical">
+        <a-typography-text><icon-stop /> {{ d(record.banAt, 'long') }}</a-typography-text>
+        <a-typography-text
+          ><icon-clock-circle />
+          {{
+            record.unbanAt ? d(record.unbanAt, 'long') : t('page.banlog.banlogTable.notUnbanned')
+          }}</a-typography-text
+        >
+      </a-space>
     </template>
     <template #peerAddress="{ record }">
       <a-typography-text copyable code>
@@ -29,10 +34,16 @@
     </template>
     <template #peerStatus="{ record }">
       <a-space fill style="justify-content: space-between">
-        <div>
-          <p>{{ formatFileSize(record.peerUploaded) }}<icon-arrow-up class="green" /></p>
-          <p>{{ formatFileSize(record.peerDownloaded) }}<icon-arrow-down class="red" /></p>
-        </div>
+        <a-space fill direction="vertical">
+          <a-typography-text
+            ><icon-arrow-up class="green" />
+            {{ formatFileSize(record.peerUploaded) }}</a-typography-text
+          >
+          <a-typography-text
+            ><icon-arrow-down class="red" />
+            {{ formatFileSize(record.peerDownloaded) }}</a-typography-text
+          >
+        </a-space>
         <a-tooltip :content="(record.peerProgress * 100).toFixed(2) + '%'">
           <a-progress :percent="record.peerProgress" size="mini" />
         </a-tooltip>
@@ -67,14 +78,20 @@ const endpointState = useEndpointStore()
 const { t, d } = useI18n()
 const { data, total, current, loading, pageSize, changeCurrent, changePageSize, refresh } =
   usePagination(getBanlogs, {
-    defaultParams: [1, 10],
+    defaultParams: [
+      {
+        pageIndex: 1,
+        pageSize: 10
+      }
+    ],
     pagination: {
       currentKey: 'pageIndex',
       pageSizeKey: 'pageSize',
       totalKey: 'total'
     },
     pollingInterval: computed(() => autoUpdateState.pollingInterval),
-    cacheKey: (params) => `${endpointState.endpoint}-banlogs-${params?.join('-')}`,
+    cacheKey: (params) =>
+      `${endpointState.endpoint}-banlogs-${params?.[0].pageIndex || 1}-${params?.[0].pageSize || 10}`,
     onSuccess: autoUpdateState.renewLastUpdate,
     onAfter: () => {
       forceLoading.value = false
@@ -93,14 +110,12 @@ const tableLoading = computed(() => {
 
 const columns = [
   {
-    title: () => t('page.banlog.banlogTable.column.banTime'),
+    title: () =>
+      t('page.banlog.banlogTable.column.banTime') +
+      '/' +
+      t('page.banlog.banlogTable.column.unbanTime'),
     slotName: 'banAt',
-    width: 180
-  },
-  {
-    title: () => t('page.banlog.banlogTable.column.unbanTime'),
-    slotName: 'unbanAt',
-    width: 180
+    width: 210
   },
   {
     title: () => t('page.banlog.banlogTable.column.peerAddress'),
@@ -140,14 +155,9 @@ const list = computed(() => data.value?.results)
 
 <style scoped>
 .red {
-  color: red;
+  color: rgb(var(--red-5));
 }
 .green {
-  color: green;
-}
-.arco-pagination {
-  flex-wrap: wrap;
-  gap: 10px 0;
-  justify-content: end;
+  color: rgb(var(--green-5));
 }
 </style>

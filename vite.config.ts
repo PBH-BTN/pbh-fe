@@ -30,5 +30,14 @@ export default defineConfig({
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          arco: ['@arco-design/web-vue']
+        }
+      }
+    }
   }
 })

@@ -5,8 +5,8 @@
         <a-grid-item class="panel-col" :span="{ xs: 12, sm: 12, md: 6 }">
           <a-statistic
             :title="t('page.dashboard.statics.checked')"
-            :value="data?.checkCounter"
-            :value-from="data?.checkCounter"
+            :value="current?.checkCounter"
+            :value-from="previous.checkCounter"
             animation
             show-group-separator
           >
@@ -20,8 +20,8 @@
         <a-grid-item class="panel-col" :span="{ xs: 12, sm: 12, md: 6 }">
           <a-statistic
             :title="t('page.dashboard.statics.banPeer')"
-            :value="data?.peerBanCounter"
-            :value-from="data?.peerBanCounter"
+            :value="current?.peerBanCounter"
+            :value-from="previous.peerBanCounter"
             animation
             show-group-separator
           >
@@ -33,8 +33,8 @@
         <a-grid-item class="panel-col" :span="{ xs: 12, sm: 12, md: 6 }">
           <a-statistic
             :title="t('page.dashboard.statics.unbanPeer')"
-            :value="data?.peerUnbanCounter"
-            :value-from="data?.peerUnbanCounter"
+            :value="current?.peerUnbanCounter"
+            :value-from="previous.peerUnbanCounter"
             animation
             show-group-separator
           >
@@ -46,8 +46,8 @@
         <a-grid-item class="panel-col" :span="{ xs: 12, sm: 12, md: 6 }">
           <a-statistic
             :title="t('page.dashboard.statics.currentBan')"
-            :value="data?.banlistCounter"
-            :value-from="data?.banlistCounter"
+            :value="current?.banlistCounter"
+            :value-from="previous.banlistCounter"
             animation
             show-group-separator
           >
@@ -65,14 +65,27 @@ import { useRequest } from 'vue-request'
 import { useAutoUpdate } from '@/stores/autoUpdate'
 import { useEndpointStore } from '@/stores/endpoint'
 import { getStatistic } from '@/service/clientStatus'
-import { computed, watch } from 'vue'
+import type { Statistic } from '@/api/model/statistic'
+import { computed, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { isEqual } from 'lodash'
 const { t } = useI18n()
 const autoUpdateState = useAutoUpdate()
 const endpointStore = useEndpointStore()
-const { data, refresh } = useRequest(getStatistic, {
+const previous = ref<Statistic>({
+  checkCounter: 0,
+  peerBanCounter: 0,
+  peerUnbanCounter: 0,
+  banlistCounter: 0
+})
+const current = ref<Statistic>(previous.value)
+const { refresh } = useRequest(getStatistic, {
   pollingInterval: computed(() => autoUpdateState.pollingInterval),
-  onSuccess: autoUpdateState.renewLastUpdate,
+  onSuccess: (data) => {
+    if (!isEqual(data, current.value)) previous.value = current.value
+    current.value = data
+    autoUpdateState.renewLastUpdate()
+  },
   cacheKey: () => `${endpointStore.endpoint}-statistic`
 })
 

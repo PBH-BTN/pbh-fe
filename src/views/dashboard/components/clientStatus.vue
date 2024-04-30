@@ -63,20 +63,14 @@ import { useRequest } from 'vue-request'
 import { computed, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
-const statusMap = new Map([
-  [ClientStatusEnum.HEALTHY, ['success', 'page.dashboard.clientStatus.card.status.normal']],
-  [ClientStatusEnum.ERROR, ['warning', 'page.dashboard.clientStatus.card.status.error']],
-  [ClientStatusEnum.UNKNOWN, ['danger', 'page.dashboard.clientStatus.card.status.unknown']]
-])
-const getStatusSafe = (status: ClientStatus | undefined): string[] => {
-  if (status === undefined) {
-    return statusMap.get(ClientStatusEnum.UNKNOWN)!!
-  }
-  if (!statusMap.has(status.status)) {
-    return statusMap.get(ClientStatusEnum.UNKNOWN)!!
-  }
-  return statusMap.get(status.status)!!
+const statusMap: Record<ClientStatusEnum, [string, string]> = {
+  [ClientStatusEnum.HEALTHY]: ['success', 'page.dashboard.clientStatus.card.status.normal'],
+  [ClientStatusEnum.ERROR]: ['warning', 'page.dashboard.clientStatus.card.status.error'],
+  [ClientStatusEnum.UNKNOWN]: ['danger', 'page.dashboard.clientStatus.card.status.unknown']
 }
+const getStatusSafe = (status: ClientStatus | undefined): string[] =>
+  statusMap[status?.status ?? ClientStatusEnum.UNKNOWN] ?? statusMap[ClientStatusEnum.UNKNOWN]
+
 const autoUpdateState = useAutoUpdate()
 const endpointState = useEndpointStore()
 const { data, refresh } = useRequest(getClientStatus, {

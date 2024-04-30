@@ -35,7 +35,8 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          arco: ['@arco-design/web-vue']
+          libs: ['pinia', 'vue-request', 'vue-i18n', 'vue-router', 'vue', '@vueuse/core'],
+          arcoDesign: ['@arco-design/web-vue']
         }
       }
     }

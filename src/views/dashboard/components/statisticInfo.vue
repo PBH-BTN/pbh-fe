@@ -82,8 +82,11 @@ const current = ref<Statistic>(previous.value)
 const { refresh } = useRequest(getStatistic, {
   pollingInterval: computed(() => autoUpdateState.pollingInterval),
   onSuccess: (data) => {
-    if (!isEqual(data, current.value)) previous.value = current.value
-    current.value = data
+    const tempPrevious = current.value
+    current.value = data // 先刷新
+    setTimeout(() => {
+      if (!isEqual(data, current.value)) previous.value = tempPrevious // 异步更新previous
+    })
     autoUpdateState.renewLastUpdate()
   },
   cacheKey: () => `${endpointStore.endpoint}-statistic`

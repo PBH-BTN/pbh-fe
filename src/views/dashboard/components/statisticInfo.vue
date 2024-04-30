@@ -84,9 +84,7 @@ const { refresh } = useRequest(getStatistic, {
   onSuccess: (data) => {
     const tempPrevious = current.value
     current.value = data // 先刷新
-    setTimeout(() => {
-      if (!isEqual(data, current.value)) previous.value = tempPrevious // 异步更新previous
-    })
+    if (!isEqual(data, tempPrevious)) previous.value = tempPrevious
     autoUpdateState.renewLastUpdate()
   },
   cacheKey: () => `${endpointStore.endpoint}-statistic`

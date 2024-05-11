@@ -22,6 +22,7 @@
     "@vitejs/plugin-vue": "^5.0.4",
     "@vue/eslint-config-prettier": "^9.0.0",
     "@vue/eslint-config-typescript": "^13.0.0",
+    "vue3-country-flag-icon": "0.2.0",
     "@vue/tsconfig": "^0.5.1",
     "@vueuse/core": "^10.9.0",
     "eslint": "^8.57.0",

@@ -31,6 +31,10 @@
             </a-typography-paragraph>
           </a-tooltip>
           <a-typography-paragraph>
+            {{ t('page.dashboard.clientStatus.card.type') }}:
+            <a-typography-text code>{{ client.type }}</a-typography-text>
+          </a-typography-paragraph>
+          <a-typography-paragraph>
             {{ t('page.dashboard.clientStatus.card.status') }}:
             <a-typography-text :type="getStatusSafe(client)[0]"
               ><icon-check-circle-fill v-if="client.status == ClientStatusEnum.HEALTHY" />

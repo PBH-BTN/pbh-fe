@@ -5,8 +5,10 @@ export default {
   'page.banlist.banlist.listItem.reserveDNSLookup': 'Reverse DNS Lookup',
   'page.banlist.banlist.listItem.banTime': 'Ban Time',
   'page.banlist.banlist.listItem.expireTime': 'Estimated Unban Time',
-  'page.banlist.banlist.listItem.location': 'Location',
+  'page.banlist.banlist.listItem.location': 'Torrent',
   'page.banlist.banlist.listItem.snapshot': 'Snapshot',
   'page.banlist.banlist.listItem.reason': 'Ban Reason',
+  'page.banlist.banlist.listItem.geo': 'Geo Location',
+  'page.banlist.banlist.listItem.asn': 'ASN',
   'page.banlist.banlist.bottomReached': 'No more data!'
 }

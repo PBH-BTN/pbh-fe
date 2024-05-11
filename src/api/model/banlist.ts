@@ -12,6 +12,8 @@ export interface BanMetadata {
   peer: Peer
   description: string
   reverseLookup: string
+  geo?: GeoLocation
+  asn?: ASN
 }
 
 export interface Torrent {
@@ -33,4 +35,19 @@ export interface Peer {
 export interface Address {
   port: number
   ip: string
+}
+
+export interface GeoLocation {
+  iso: string
+  countryRegion: string
+  city: string
+  latitude: number
+  longitude: number
+  accuracyRadius: number
+}
+
+export interface ASN {
+  asn: number
+  asOrganization: string
+  asNetwork: string
 }

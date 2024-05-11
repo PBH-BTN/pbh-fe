@@ -10,7 +10,7 @@
   >
     <template #empty> <a-empty /> </template>
     <template #type="{ record }">
-      <a-tag :color="getColor(record.type)">{{ data?.dict[record.type] ?? record.type }}</a-tag>
+      <a-tag :color="getTagColor(record.type)">{{ data?.dict[record.type] ?? record.type }}</a-tag>
     </template>
     <template #ruleName="{ record }">
       <a-typography-text code>
@@ -44,6 +44,7 @@ import { getRuleStatic } from '@/service/ruleStatics'
 import type { RuleMetric } from '@/api/model/ruleStatics'
 import { useI18n } from 'vue-i18n'
 import type { TableColumnData } from '@arco-design/web-vue'
+import { getColor } from '@/utils/color'
 const autoUpdateState = useAutoUpdate()
 const { t } = useI18n()
 const endpointStore = useEndpointStore()
@@ -53,25 +54,11 @@ const { data, refresh, loading } = useRequest(getRuleStatic, {
   cacheKey: () => `${endpointStore.endpoint}-ruleStatic`
 })
 
-const hashString = (str: string) => {
-  var hash = 0,
-    i,
-    chr
-  if (str.length === 0) return hash
-  for (i = 0; i < str.length; i++) {
-    chr = str.charCodeAt(i)
-    hash = (hash << 5) - hash + chr
-    hash |= 0 // Convert to 32bit integer
-  }
-  return hash
-}
-const getColor = (value: string) => {
-  console.log(data.value?.dict[value])
+const getTagColor = (value: string): string => {
   if (!data.value?.dict[value]) {
     return 'gray'
   }
-  const hash = Math.abs(hashString(value)) % colorTable.length
-  return colorTable[hash]
+  return getColor(value)
 }
 
 const columns: TableColumnData[] = [
@@ -101,20 +88,6 @@ const columns: TableColumnData[] = [
   }
 ]
 
-const colorTable = [
-  'red',
-  'orangered',
-  'orange',
-  'gold',
-  'lime',
-  'green',
-  'cyan',
-  'blue',
-  'arcoblue',
-  'purple',
-  'pinkpurple',
-  'magenta'
-]
 watch(() => endpointStore.endpoint, refresh)
 </script>
 <style scoped>

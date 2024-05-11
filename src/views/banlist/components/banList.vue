@@ -40,6 +40,7 @@
               </a-space>
             </template>
             <a-descriptions-item
+              v-if="item.banMetadata.reverseLookup !== 'N/A'"
               :label="t('page.banlist.banlist.listItem.reserveDNSLookup')"
               :span="1"
             >
@@ -63,6 +64,34 @@
             </a-descriptions-item>
             <a-descriptions-item :label="t('page.banlist.banlist.listItem.reason')" :span="3">
               {{ item.banMetadata.description }}
+            </a-descriptions-item>
+            <a-descriptions-item
+              v-if="item.banMetadata.geo"
+              :label="t('page.banlist.banlist.listItem.geo')"
+              :span="1"
+            >
+              <CountryFlag :iso="item.banMetadata.geo?.iso" mode="squared" />
+              {{ `${item.banMetadata.geo?.countryRegion} ${item.banMetadata.geo?.city ?? ''}` }}
+              <a-tooltip
+                :content="`${item.banMetadata.geo?.latitude},${item.banMetadata.geo?.longitude}`"
+              >
+                <icon-location />
+              </a-tooltip>
+            </a-descriptions-item>
+            <a-descriptions-item
+              v-if="item.banMetadata.asn"
+              :label="t('page.banlist.banlist.listItem.asn')"
+              :span="2"
+            >
+              <a-space>
+                <a-typography-text> {{ item.banMetadata.asn?.asOrganization }}</a-typography-text>
+                <a-tag :color="getColor(item.banMetadata.asn?.asn.toString())">{{
+                  item.banMetadata.asn?.asn
+                }}</a-tag>
+                <a-tooltip :content="item.banMetadata.asn?.asNetwork">
+                  <icon-info-circle />
+                </a-tooltip>
+              </a-space>
             </a-descriptions-item>
           </a-descriptions>
         </a-list-item>
@@ -91,6 +120,9 @@ import type { BanList } from '@/api/model/banlist'
 import { useI18n } from 'vue-i18n'
 import { useResponsiveState } from '@arco-design/web-vue/es/grid/hook/use-responsive-state'
 import { useWindowSize } from '@vueuse/core'
+import { getColor } from '@/utils/color'
+import CountryFlag from 'vue3-country-flag-icon'
+import 'vue3-country-flag-icon/dist/CountryFlag.css' // import stylesheet
 const { height } = useWindowSize()
 const banlist = ref()
 const autoUpdateState = useAutoUpdate()

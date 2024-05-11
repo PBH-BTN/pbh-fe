@@ -16,13 +16,9 @@
     "@arco-design/web-vue": "^2.55.1",
     "@arco-plugins/vite-vue": "^1.4.5",
     "@rushstack/eslint-patch": "^1.8.0",
-    "@tsconfig/node20": "^20.1.4",
-    "@types/mockjs": "^1.0.10",
-    "@types/node": "^20.12.5",
     "@vitejs/plugin-vue": "^5.0.4",
     "@vue/eslint-config-prettier": "^9.0.0",
     "@vue/eslint-config-typescript": "^13.0.0",
-    "vue3-country-flag-icon": "0.1.2",
     "@vue/tsconfig": "^0.5.1",
     "@vueuse/core": "^10.9.0",
     "eslint": "^8.57.0",
@@ -43,9 +39,13 @@
     "vue-i18n": "^9.13.1",
     "vue-request": "^2.0.4",
     "vue-router": "^4.3.0",
-    "vue-tsc": "^2.0.11"
+    "vue-tsc": "^2.0.11",
+    "vue3-country-flag-icon-fix": "^0.2.2"
   },
   "devDependencies": {
-    "@types/lodash": "^4.17.0"
+    "@tsconfig/node20": "^20.1.4",
+    "@types/lodash": "^4.17.0",
+    "@types/mockjs": "^1.0.10",
+    "@types/node": "^20.12.5"
   }
 }

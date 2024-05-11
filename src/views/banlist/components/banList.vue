@@ -121,8 +121,8 @@ import { useI18n } from 'vue-i18n'
 import { useResponsiveState } from '@arco-design/web-vue/es/grid/hook/use-responsive-state'
 import { useWindowSize } from '@vueuse/core'
 import { getColor } from '@/utils/color'
-import CountryFlag from 'vue3-country-flag-icon'
-import 'vue3-country-flag-icon/dist/CountryFlag.css' // import stylesheet
+import CountryFlag from 'vue3-country-flag-icon-fix'
+import 'vue3-country-flag-icon-fix/dist/CountryFlag.css' // import stylesheet
 const { height } = useWindowSize()
 const banlist = ref()
 const autoUpdateState = useAutoUpdate()

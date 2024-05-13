@@ -25,11 +25,20 @@
     <a-col v-else :xs="24" :sm="12" :md="8" :lg="6" v-for="client in data" :key="client.name">
       <a-card :title="t('page.dashboard.clientStatus.card.title')" hoverable>
         <a-typography>
-          <a-tooltip :content="client.endpoint">
-            <a-typography-paragraph style="font-size: 2em">
-              <b>{{ client.name }}</b>
-            </a-typography-paragraph>
-          </a-tooltip>
+          <a-typography-title>
+            {{ client.name }}
+          </a-typography-title>
+          <a-typography-paragraph>
+            <a-space>
+              <a-typography-text>
+                {{ t('page.dashboard.clientStatus.card.type') }}:</a-typography-text
+              >
+              <a-typography-text code>{{ client.type }}</a-typography-text>
+              <a-tooltip :content="client.endpoint">
+                <icon-info-circle />
+              </a-tooltip>
+            </a-space>
+          </a-typography-paragraph>
           <a-typography-paragraph>
             {{ t('page.dashboard.clientStatus.card.status') }}:
             <a-typography-text :type="getStatusSafe(client)[0]"
@@ -81,3 +90,8 @@ const { data, refresh } = useRequest(getClientStatus, {
 
 watch(() => endpointState.endpoint, refresh)
 </script>
+<style scoped>
+h1 {
+  margin-top: 0;
+}
+</style>

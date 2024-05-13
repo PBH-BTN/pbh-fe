@@ -3,6 +3,7 @@ export default {
   'page.dashboard.clientStatus.title': 'Connected Downloaders',
   'page.dashboard.clientStatus.card.title': 'Downloader Status',
   'page.dashboard.clientStatus.card.status': 'Status',
+  'page.dashboard.clientStatus.card.type': 'Type',
   'page.dashboard.clientStatus.card.status.normal': 'Normal - Status is good',
   'page.dashboard.clientStatus.card.status.error':
     'Error - Error occurred when communicating with the client, please check the log file',

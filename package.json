@@ -15,10 +15,8 @@
   "dependencies": {
     "@arco-design/web-vue": "^2.55.1",
     "@arco-plugins/vite-vue": "^1.4.5",
+    "@dzangolab/flag-icon-css": "^3.4.5",
     "@rushstack/eslint-patch": "^1.8.0",
-    "@tsconfig/node20": "^20.1.4",
-    "@types/mockjs": "^1.0.10",
-    "@types/node": "^20.12.5",
     "@vitejs/plugin-vue": "^5.0.4",
     "@vue/eslint-config-prettier": "^9.0.0",
     "@vue/eslint-config-typescript": "^13.0.0",
@@ -45,6 +43,9 @@
     "vue-tsc": "^2.0.11"
   },
   "devDependencies": {
-    "@types/lodash": "^4.17.0"
+    "@tsconfig/node20": "^20.1.4",
+    "@types/lodash": "^4.17.0",
+    "@types/mockjs": "^1.0.10",
+    "@types/node": "^20.12.5"
   }
 }

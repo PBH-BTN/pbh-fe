@@ -14,18 +14,12 @@ importers:
       '@arco-plugins/vite-vue':
         specifier: ^1.4.5
         version: 1.4.5
+      '@dzangolab/flag-icon-css':
+        specifier: ^3.4.5
+        version: 3.4.5
       '@rushstack/eslint-patch':
         specifier: ^1.8.0
         version: 1.10.2
-      '@tsconfig/node20':
-        specifier: ^20.1.4
-        version: 20.1.4
-      '@types/mockjs':
-        specifier: ^1.0.10
-        version: 1.0.10
-      '@types/node':
-        specifier: ^20.12.5
-        version: 20.12.7
       '@vitejs/plugin-vue':
         specifier: ^5.0.4
         version: 5.0.4(vite@5.2.9(@types/node@20.12.7)(less@4.2.0))(vue@3.4.22(typescript@5.4.5))
@@ -99,9 +93,18 @@ importers:
         specifier: ^2.0.11
         version: 2.0.13(typescript@5.4.5)
     devDependencies:
+      '@tsconfig/node20':
+        specifier: ^20.1.4
+        version: 20.1.4
       '@types/lodash':
         specifier: ^4.17.0
         version: 4.17.0
+      '@types/mockjs':
+        specifier: ^1.0.10
+        version: 1.0.10
+      '@types/node':
+        specifier: ^20.12.5
+        version: 20.12.7
 
 packages:
 
@@ -290,6 +293,9 @@ packages:
   '@babel/types@7.24.0':
     resolution: {integrity: sha512-+j7a5c253RfKh8iABBhywc8NSfP5LURe7Uh4qpsh6jc+aLJguvmIUBdjSdEMQv2bENrCR5MfRdjGo7vzS/ob7w==}
     engines: {node: '>=6.9.0'}
+
+  '@dzangolab/flag-icon-css@3.4.5':
+    resolution: {integrity: sha512-XqVAi0O/KITtznpMK5TP4D+rWfwst5lrsbPbes5c5SPMGjwK7fuvlTdEmG2XUrxzYqDTIPshywyzdVYKooGdGA==}
 
   '@esbuild/aix-ppc64@0.20.2':
     resolution: {integrity: sha512-D+EBOJHXdNZcLJRBkhENNG8Wji2kgc9AZ9KiPr1JuZjsNtyHzrsfLRrY0tk2H2aoFu6RANO1y1iPPUCDYWkb5g==}
@@ -2185,6 +2191,8 @@ snapshots:
       '@babel/helper-string-parser': 7.24.1
       '@babel/helper-validator-identifier': 7.22.20
       to-fast-properties: 2.0.0
+
+  '@dzangolab/flag-icon-css@3.4.5': {}
 
   '@esbuild/aix-ppc64@0.20.2':
     optional: true

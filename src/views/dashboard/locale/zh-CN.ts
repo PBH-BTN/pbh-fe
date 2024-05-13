@@ -3,6 +3,7 @@ export default {
   'page.dashboard.clientStatus.title': '已连接的下载器',
   'page.dashboard.clientStatus.card.title': '下载器状态',
   'page.dashboard.clientStatus.card.status': '状态',
+  'page.dashboard.clientStatus.card.type': '类型',
   'page.dashboard.clientStatus.card.status.normal': '正常 - 状态良好',
   'page.dashboard.clientStatus.card.status.error': '错误 - 与客户端通信时出错，请检查日志文件',
   'page.dashboard.clientStatus.card.status.unknown':

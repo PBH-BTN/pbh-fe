@@ -25,46 +25,7 @@
         <a-list-item
           :style="{ marginBottom: index === list.length - 1 && loadingMore ? '50px' : undefined }"
         >
-          <a-descriptions
-            :column="{ xs: 1, md: 2, xl: 3 }"
-            :layout="(['inline-vertical', 'horizontal'] as const)[descriptionLayout]"
-          >
-            <template #title>
-              <a-space wrap>
-                <a-typography-text bold copyable>
-                  {{ item.banMetadata.peer.address.ip }}:{{ item.banMetadata.peer.address.port }}
-                </a-typography-text>
-                <a-typography-text code>
-                  {{ item.banMetadata.peer.clientName }}
-                </a-typography-text>
-              </a-space>
-            </template>
-            <a-descriptions-item
-              :label="t('page.banlist.banlist.listItem.reserveDNSLookup')"
-              :span="1"
-            >
-              {{ item.banMetadata.reverseLookup }}
-            </a-descriptions-item>
-            <a-descriptions-item :label="t('page.banlist.banlist.listItem.banTime')" :span="1">
-              {{ d(item.banMetadata.banAt, 'long') }}
-            </a-descriptions-item>
-            <a-descriptions-item :label="t('page.banlist.banlist.listItem.expireTime')" :span="1">
-              {{ d(item.banMetadata.unbanAt, 'long') }}
-            </a-descriptions-item>
-            <a-descriptions-item :label="t('page.banlist.banlist.listItem.location')" :span="2">
-              {{ item.banMetadata.torrent.name }}
-            </a-descriptions-item>
-            <a-descriptions-item :label="t('page.banlist.banlist.listItem.snapshot')" :span="1">
-              <icon-arrow-up class="green" />
-              {{ formatFileSize(item.banMetadata.peer.uploaded) }}
-              <icon-arrow-down class="red" />
-              {{ formatFileSize(item.banMetadata.peer.downloaded) }}
-              - {{ (item.banMetadata.peer.progress * 100).toFixed(2) }}%
-            </a-descriptions-item>
-            <a-descriptions-item :label="t('page.banlist.banlist.listItem.reason')" :span="3">
-              {{ item.banMetadata.description }}
-            </a-descriptions-item>
-          </a-descriptions>
+          <banListItem :item="item" />
         </a-list-item>
       </template>
       <template #scroll-loading>
@@ -86,11 +47,12 @@ import { computed, onMounted, ref, watch } from 'vue'
 import { useAutoUpdate } from '@/stores/autoUpdate'
 import { useEndpointStore } from '@/stores/endpoint'
 import { getBanList } from '@/service/banList'
-import { formatFileSize } from '@/utils/file'
 import type { BanList } from '@/api/model/banlist'
 import { useI18n } from 'vue-i18n'
 import { useResponsiveState } from '@arco-design/web-vue/es/grid/hook/use-responsive-state'
 import { useWindowSize } from '@vueuse/core'
+import banListItem from './banListItem.vue'
+
 const { height } = useWindowSize()
 const banlist = ref()
 const autoUpdateState = useAutoUpdate()
@@ -99,7 +61,7 @@ const bottom = ref(false)
 const limit = ref(5)
 const step = 5
 const loadingMore = ref(false)
-const { t, d } = useI18n()
+const { t } = useI18n()
 
 let firstGet = true
 async function getMoreBanList(): Promise<BanList[]> {
@@ -187,13 +149,6 @@ onMounted(run)
 
 const list = computed(() => data.value ?? [])
 
-const descriptionLayout = useResponsiveState(
-  ref({
-    xs: 0,
-    md: 1
-  }),
-  1
-)
 const virtualListMaxHeight = useResponsiveState(
   ref({
     xs: 1500,
@@ -206,14 +161,12 @@ const virtualListHeight = computed(() => Math.min(virtualListMaxHeight.value, he
 </script>
 
 <style scoped lang="less">
-.red {
-  color: red;
-}
-.green {
-  color: green;
-}
 .list-header {
   display: flex;
   justify-content: space-between;
+}
+a {
+  color: var(--color-text-1);
+  text-decoration: none;
 }
 </style>

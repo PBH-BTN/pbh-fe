@@ -74,6 +74,7 @@
               {{ `${item.banMetadata.geo?.countryRegion} ${item.banMetadata.geo?.city ?? ''}` }}
               <a-link
                 :href="`https://uri.amap.com/marker?position=${item.banMetadata.geo?.longitude},${item.banMetadata.geo?.latitude}`"
+                :hoverable="false"
               >
                 <icon-location />
               </a-link>
@@ -91,6 +92,7 @@
                 <a-tooltip :content="item.banMetadata.asn?.asNetwork">
                   <a-link
                     :href="`https://2ip.io/analytics/asn-list/?asnId=${item.banMetadata.asn?.asn}`"
+                    :hoverable="false"
                   >
                     <icon-info-circle />
                   </a-link>

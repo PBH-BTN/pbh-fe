@@ -68,15 +68,15 @@
             <a-descriptions-item
               v-if="item.banMetadata.geo"
               :label="t('page.banlist.banlist.listItem.geo')"
-              :span="1"
+              :span="2"
             >
               <CountryFlag :iso="item.banMetadata.geo?.iso" mode="squared" />
               {{ `${item.banMetadata.geo?.countryRegion} ${item.banMetadata.geo?.city ?? ''}` }}
-              <a-tooltip
-                :content="`${item.banMetadata.geo?.latitude},${item.banMetadata.geo?.longitude}`"
+              <a-link
+                :href="`https://uri.amap.com/marker?position=${item.banMetadata.geo?.longitude},${item.banMetadata.geo?.latitude}`"
               >
                 <icon-location />
-              </a-tooltip>
+              </a-link>
             </a-descriptions-item>
             <a-descriptions-item
               v-if="item.banMetadata.asn"
@@ -89,7 +89,11 @@
                   item.banMetadata.asn?.asn
                 }}</a-tag>
                 <a-tooltip :content="item.banMetadata.asn?.asNetwork">
-                  <icon-info-circle />
+                  <a-link
+                    :href="`https://2ip.io/analytics/asn-list/?asnId=${item.banMetadata.asn?.asn}`"
+                  >
+                    <icon-info-circle />
+                  </a-link>
                 </a-tooltip>
               </a-space>
             </a-descriptions-item>
@@ -121,8 +125,7 @@ import { useI18n } from 'vue-i18n'
 import { useResponsiveState } from '@arco-design/web-vue/es/grid/hook/use-responsive-state'
 import { useWindowSize } from '@vueuse/core'
 import { getColor } from '@/utils/color'
-import CountryFlag from 'vue3-country-flag-icon-fix'
-import 'vue3-country-flag-icon-fix/dist/CountryFlag.css' // import stylesheet
+import CountryFlag from './countryFlag.vue'
 const { height } = useWindowSize()
 const banlist = ref()
 const autoUpdateState = useAutoUpdate()
@@ -247,5 +250,9 @@ const virtualListHeight = computed(() => Math.min(virtualListMaxHeight.value, he
 .list-header {
   display: flex;
   justify-content: space-between;
+}
+a {
+  color: var(--color-text-1);
+  text-decoration: none;
 }
 </style>

@@ -34,7 +34,7 @@
           </a-dropdown>
         </div>
         <a-tooltip
-          :content="isDark ? t('settings.navbar.theme.toDark') : t('settings.navbar.theme.toLight')"
+          :content="isDark ? t('settings.navbar.theme.toLight') : t('settings.navbar.theme.toDark')"
         >
           <a-button class="nav-btn" type="outline" :shape="'circle'" @click="handleToggleTheme">
             <template #icon>

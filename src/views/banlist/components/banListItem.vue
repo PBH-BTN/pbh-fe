@@ -1,6 +1,7 @@
 <template>
   <a-descriptions
-    :column="{ xs: 1, md: 2, xl: 3 }"
+    :column="{ xs: 3, md: 6, xl: 12 }"
+    size="medium"
     :layout="(['inline-vertical', 'horizontal'] as const)[descriptionLayout]"
   >
     <template #title>
@@ -13,38 +14,31 @@
         </a-typography-text>
       </a-space>
     </template>
-    <a-descriptions-item
-      v-if="item.banMetadata.reverseLookup !== 'N/A'"
-      :label="t('page.banlist.banlist.listItem.reserveDNSLookup')"
-      :span="1"
-    >
-      {{ item.banMetadata.reverseLookup }}
-    </a-descriptions-item>
-    <a-descriptions-item :label="t('page.banlist.banlist.listItem.banTime')" :span="1">
+    <a-descriptions-item :label="t('page.banlist.banlist.listItem.banTime')" :span="4">
       {{ d(item.banMetadata.banAt, 'long') }}
     </a-descriptions-item>
-    <a-descriptions-item :label="t('page.banlist.banlist.listItem.expireTime')" :span="1">
+    <a-descriptions-item :label="t('page.banlist.banlist.listItem.expireTime')" :span="4">
       {{ d(item.banMetadata.unbanAt, 'long') }}
     </a-descriptions-item>
-    <a-descriptions-item :label="t('page.banlist.banlist.listItem.location')" :span="2">
-      <a-typography-text :ellipsis="{ showTooltip: true }">
-        {{ item.banMetadata.torrent.name }}</a-typography-text
-      >
-    </a-descriptions-item>
-    <a-descriptions-item :label="t('page.banlist.banlist.listItem.snapshot')" :span="1">
+    <a-descriptions-item :label="t('page.banlist.banlist.listItem.snapshot')" :span="4">
       <icon-arrow-up class="green" />
       {{ formatFileSize(item.banMetadata.peer.uploaded) }}
       <icon-arrow-down class="red" />
       {{ formatFileSize(item.banMetadata.peer.downloaded) }}
       - {{ (item.banMetadata.peer.progress * 100).toFixed(2) }}%
     </a-descriptions-item>
-    <a-descriptions-item :label="t('page.banlist.banlist.listItem.reason')" :span="3">
+    <a-descriptions-item :label="t('page.banlist.banlist.listItem.location')" :span="12">
+      <a-typography-text style="margin-bottom: 0" :ellipsis="{ showTooltip: true }">
+        {{ item.banMetadata.torrent.name }}</a-typography-text
+      >
+    </a-descriptions-item>
+    <a-descriptions-item :label="t('page.banlist.banlist.listItem.reason')" :span="12">
       {{ item.banMetadata.description }}
     </a-descriptions-item>
     <a-descriptions-item
       v-if="item.banMetadata.geo"
       :label="t('page.banlist.banlist.listItem.geo')"
-      :span="2"
+      :span="4"
     >
       <CountryFlag :iso="item.banMetadata.geo?.iso" mode="squared" />
       {{ `${item.banMetadata.geo?.countryRegion} ${item.banMetadata.geo?.city ?? ''}` }}
@@ -58,14 +52,16 @@
     <a-descriptions-item
       v-if="item.banMetadata.asn"
       :label="t('page.banlist.banlist.listItem.asn')"
-      :span="2"
+      :span="4"
     >
       <a-space>
         <a-typography-text> {{ item.banMetadata.asn?.asOrganization }}</a-typography-text>
         <a-tag :color="getColor(item.banMetadata.asn?.asn.toString())">{{
           item.banMetadata.asn?.asn
         }}</a-tag>
-        <a-tooltip :content="item.banMetadata.asn?.asNetwork">
+        <a-tooltip
+          :content="t('page.banlist.banlist.listItem.asn.subnet') + item.banMetadata.asn?.asNetwork"
+        >
           <a-link
             :href="`https://2ip.io/analytics/asn-list/?asnId=${item.banMetadata.asn?.asn}`"
             :hoverable="false"
@@ -74,6 +70,13 @@
           </a-link>
         </a-tooltip>
       </a-space>
+    </a-descriptions-item>
+    <a-descriptions-item
+      v-if="item.banMetadata.reverseLookup !== 'N/A'"
+      :label="t('page.banlist.banlist.listItem.reserveDNSLookup')"
+      :span="4"
+    >
+      {{ item.banMetadata.reverseLookup }}
     </a-descriptions-item>
   </a-descriptions>
 </template>
@@ -105,5 +108,9 @@ const descriptionLayout = useResponsiveState(
 }
 .green {
   color: green;
+}
+a {
+  color: var(--color-text-1);
+  text-decoration: none;
 }
 </style>

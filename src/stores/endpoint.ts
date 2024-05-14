@@ -1,8 +1,10 @@
 import { defineStore } from 'pinia'
 import { useStorage } from '@vueuse/core'
-import { getVersion } from '@/service/version'
+import { getLatestVersion, getVersion } from '@/service/version'
 import { computed, readonly, ref } from 'vue'
-import type { version } from '@/api/model/version'
+import type { release, version } from '@/api/model/version'
+import { Message } from '@arco-design/web-vue'
+import { useI18n } from 'vue-i18n'
 
 function newPromiseLock<T>() {
   let resolve!: (value: T | PromiseLike<T>) => void
@@ -12,10 +14,13 @@ function newPromiseLock<T>() {
 
 export const useEndpointStore = defineStore('endpoint', () => {
   const endpoint = useStorage('endpoint', import.meta.env.VITE_APP_BASE_URL)
+  const accessToken = useStorage('accessToken', '')
+  const latestVersion = ref<release>()
   const serverAvailable = ref(newPromiseLock<void>())
   const serverVersion = ref<version | null>()
   const status = ref<'checking' | 'pass' | 'fail'>('checking')
   const error = ref<Error | null>(null)
+  const checkUpgradeError = ref<Error | null>(null)
   const setEndpoint = async (value: string) => {
     status.value = 'checking'
     endpoint.value = value
@@ -34,14 +39,33 @@ export const useEndpointStore = defineStore('endpoint', () => {
       return false
     }
   }
+  const setAccessToken = async (value: string) => {
+    accessToken.value = value
+    try {
+      const latestRelease = await getLatestVersion()
+      latestVersion.value = {
+        tagName: latestRelease.tag_name,
+        url: latestRelease.html_url
+      }
+    } catch (err) {
+      checkUpgradeError.value = err as Error
+      console.error('Failed to get version:', err)
+    }
+  }
   // init
   setEndpoint(endpoint.value)
+
+  setTimeout(async () => setAccessToken(accessToken.value), 3000)
   return {
     endpoint: readonly(endpoint),
     serverAvailable: readonly(serverAvailable),
     serverVersion: readonly(serverVersion),
     loading: computed(() => status.value === 'checking'),
     error: readonly(error),
-    setEndpoint
+    checkUpgradeError: readonly(checkUpgradeError),
+    accessToken,
+    latestVersion: readonly(latestVersion),
+    setEndpoint,
+    setAccessToken
   }
 })

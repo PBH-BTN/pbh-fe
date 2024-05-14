@@ -2,7 +2,7 @@ import type { version } from '@/api/model/version'
 import { useEndpointStore } from '@/stores/endpoint'
 import urlJoin from 'url-join'
 import { getCommonHeader } from './utils'
-
+import { Octokit } from '@octokit/core'
 export class GetVersionError extends Error {
   constructor(
     message: string,
@@ -10,6 +10,19 @@ export class GetVersionError extends Error {
   ) {
     super(message)
   }
+}
+
+export function getLatestVersion(token = useEndpointStore().accessToken) {
+  const octokit = new Octokit({ auth: token })
+  return octokit
+    .request('GET /repos/{owner}/{repo}/releases/latest', {
+      owner: 'PBH-BTN',
+      repo: 'PeerBanHelper',
+      headers: {
+        'X-GitHub-Api-Version': '2022-11-28'
+      }
+    })
+    .then((res) => res.data)
 }
 
 export function getVersion(endpoint = useEndpointStore().endpoint): Promise<version> {

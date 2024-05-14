@@ -34,6 +34,17 @@
           <template #suffix> ms </template>
         </a-input-number>
       </a-form-item>
+      <a-form-item field="accessToken" label="Access Token:" validate-trigger="input">
+        <template #extra>
+          <div>
+            {{ t('settings.modal.accessTokenTips1') }}
+            <a href="https://github.com/settings/tokens">{{
+              t('settings.modal.accessTokenTips2')
+            }}</a>
+          </div>
+        </template>
+        <a-input v-model="form.accessToken" allow-clear />
+      </a-form-item>
     </a-form>
   </a-modal>
 </template>
@@ -53,7 +64,8 @@ const forceModal = computed(() => !!endPointStore.error)
 
 const form = ref({
   endpoint: endPointStore.endpoint,
-  interval: autoUpdateState.interval
+  interval: autoUpdateState.interval,
+  accessToken: endPointStore.accessToken
 })
 
 const { t } = useI18n()
@@ -71,6 +83,7 @@ defineExpose({
 const handleOk = () => {
   if (loading.value) return
   autoUpdateState.interval = form.value.interval
+  endPointStore.setAccessToken(form.value.accessToken)
   return endPointStore.setEndpoint(form.value.endpoint)
 }
 
@@ -106,3 +119,9 @@ const formLayout = useResponsiveState(
   1
 )
 </script>
+
+<style scoped>
+a {
+  text-decoration: none;
+}
+</style>

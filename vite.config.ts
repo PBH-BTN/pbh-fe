@@ -1,6 +1,7 @@
 import { fileURLToPath, URL } from 'node:url'
 
 import { defineConfig } from 'vite'
+import { analyzer } from 'vite-bundle-analyzer'
 import vue from '@vitejs/plugin-vue'
 import VueDevTools from 'vite-plugin-vue-devtools'
 import { vitePluginForArco } from '@arco-plugins/vite-vue'
@@ -8,6 +9,8 @@ import { promisify } from 'node:util'
 import { exec as execCallBack } from 'node:child_process'
 
 const exec = promisify(execCallBack)
+
+const isAnalyze = process.env.ANALYZE === 'true'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -18,7 +21,8 @@ export default defineConfig({
     VueDevTools(),
     vitePluginForArco({
       style: 'css'
-    })
+    }),
+    ...(isAnalyze ? [analyzer()] : [])
   ],
   define: {
     __APP_VERSION__: JSON.stringify(process.env.npm_package_version),
@@ -35,7 +39,7 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          libs: ['pinia', 'vue-request', 'vue-i18n', 'vue-router', 'vue', '@vueuse/core'],
+          libs: ['pinia', 'vue-request', 'vue-i18n', 'vue-router', 'vue', '@vueuse/core', 'lodash'],
           arcoDesign: ['@arco-design/web-vue']
         }
       }

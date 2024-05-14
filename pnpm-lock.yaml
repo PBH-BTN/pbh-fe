@@ -111,6 +111,9 @@ importers:
       '@types/node':
         specifier: ^20.12.5
         version: 20.12.7
+      vite-bundle-analyzer:
+        specifier: ^0.9.4
+        version: 0.9.4
 
 packages:
 
@@ -1747,6 +1750,10 @@ packages:
     resolution: {integrity: sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==}
     engines: {node: '>=0.10.0'}
 
+  source-map@0.7.4:
+    resolution: {integrity: sha512-l3BikUxvPOcn5E74dZiq5BGsTb5yEwhaTSzccU6t4sDOH8NWJCstKO5QT2CvtFoK6F0saL7p9xHAqHOlCPJygA==}
+    engines: {node: '>= 8'}
+
   speakingurl@14.0.1:
     resolution: {integrity: sha512-1POYv7uv2gXoyGFpBCmpDVSNV74IfsWlDW216UPjbWufNf+bSU6GdbDsxdcxtfwb4xlI3yxzOTKClUosxARYrQ==}
     engines: {node: '>=0.10.0'}
@@ -1852,6 +1859,9 @@ packages:
   utils-merge@1.0.1:
     resolution: {integrity: sha512-pMZTvIkT1d+TFGvDOqodOclx0QWkkgi6Tdoa8gC8ffGAAqz9pzPTZWAybbsHHoED/ztMtkv/VoYTYyShUn81hA==}
     engines: {node: '>= 0.4.0'}
+
+  vite-bundle-analyzer@0.9.4:
+    resolution: {integrity: sha512-a/w4ShKQEbTe7wllLXI+3D8ELgRv7iHDuWEPaXokA+FhWBXJCdtOZYIvLzvnn8vxHf+7pm1c23AeGyW/0Ge0Yw==}
 
   vite-hot-client@0.2.3:
     resolution: {integrity: sha512-rOGAV7rUlUHX89fP2p2v0A2WWvV3QMX2UYq0fRqsWSvFvev4atHWqjwGoKaZT1VTKyLGk533ecu3eyd0o59CAg==}
@@ -3650,6 +3660,8 @@ snapshots:
   source-map@0.6.1:
     optional: true
 
+  source-map@0.7.4: {}
+
   speakingurl@14.0.1: {}
 
   statuses@1.5.0: {}
@@ -3724,6 +3736,11 @@ snapshots:
   util-deprecate@1.0.2: {}
 
   utils-merge@1.0.1: {}
+
+  vite-bundle-analyzer@0.9.4:
+    dependencies:
+      picocolors: 1.0.0
+      source-map: 0.7.4
 
   vite-hot-client@0.2.3(vite@5.2.9(@types/node@20.12.7)(less@4.2.0)):
     dependencies:

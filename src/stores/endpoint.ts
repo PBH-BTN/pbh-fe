@@ -63,7 +63,7 @@ export const useEndpointStore = defineStore('endpoint', () => {
     loading: computed(() => status.value === 'checking'),
     error: readonly(error),
     checkUpgradeError: readonly(checkUpgradeError),
-    accessToken,
+    accessToken: readonly(accessToken),
     latestVersion: readonly(latestVersion),
     setEndpoint,
     setAccessToken

@@ -36,12 +36,7 @@
       </a-form-item>
       <a-form-item field="accessToken" label="Access Token:" validate-trigger="input">
         <template #extra>
-          <div>
-            {{ t('settings.modal.accessTokenTips1') }}
-            <a href="https://github.com/settings/tokens">{{
-              t('settings.modal.accessTokenTips2')
-            }}</a>
-          </div>
+          <div v-html="t('settings.modal.accessTokenTips')" />
         </template>
         <a-input v-model="form.accessToken" allow-clear />
       </a-form-item>

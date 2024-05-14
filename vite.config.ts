@@ -1,7 +1,7 @@
 import { fileURLToPath, URL } from 'node:url'
 
 import { defineConfig } from 'vite'
-import { analyzer } from "vite-bundle-analyzer";
+import { analyzer } from 'vite-bundle-analyzer'
 import vue from '@vitejs/plugin-vue'
 import VueDevTools from 'vite-plugin-vue-devtools'
 import { vitePluginForArco } from '@arco-plugins/vite-vue'
@@ -39,7 +39,7 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          libs: ['pinia', 'vue-request', 'vue-i18n', 'vue-router', 'vue', '@vueuse/core'],
+          libs: ['pinia', 'vue-request', 'vue-i18n', 'vue-router', 'vue', '@vueuse/core', 'lodash'],
           arcoDesign: ['@arco-design/web-vue']
         }
       }

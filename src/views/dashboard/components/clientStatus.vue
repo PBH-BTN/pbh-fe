@@ -23,7 +23,7 @@
     </a-col>
     <!-- client 卡片 -->
     <a-col v-else :xs="24" :sm="12" :md="8" :lg="6" v-for="client in data" :key="client.name">
-      <a-card :title="t('page.dashboard.clientStatus.card.title')" hoverable>
+      <a-card :title="t('page.dashboard.clientStatus.card.title')" hoverable style="height: 290px">
         <a-typography>
           <a-typography-title>
             {{ client.name }}
@@ -49,12 +49,12 @@
             </a-typography-text>
           </a-typography-paragraph>
 
-          <a-typography-paragraph>
+          <a-typography-paragraph v-if="client.status === ClientStatusEnum.HEALTHY">
             {{ t('page.dashboard.clientStatus.card.status.torrentNumber') }}
             {{ client.torrents }}</a-typography-paragraph
           >
 
-          <a-typography-paragraph>
+          <a-typography-paragraph v-if="client.status === ClientStatusEnum.HEALTHY">
             {{ t('page.dashboard.clientStatus.card.status.peerNumber') }}
             {{ client.peers }}</a-typography-paragraph
           >

@@ -41,12 +41,12 @@
           </a-typography-paragraph>
           <a-typography-paragraph>
             {{ t('page.dashboard.clientStatus.card.status') }}:
-            <a-typography-text :type="getStatusSafe(client)[0]"
-              ><icon-check-circle-fill v-if="client.status == ClientStatusEnum.HEALTHY" />
+            <a-typography-text :type="getStatusSafe(client)[0]">
+              <icon-check-circle-fill v-if="client.status == ClientStatusEnum.HEALTHY" />
               <icon-close-circle-fill v-if="client.status == ClientStatusEnum.ERROR" />
               <icon-exclamation-circle-fill v-if="client.status == ClientStatusEnum.UNKNOWN" />
-              {{ t(getStatusSafe(client)[1]) }}</a-typography-text
-            >
+              {{ t(getStatusSafe(client)[1]) }}
+            </a-typography-text>
           </a-typography-paragraph>
 
           <a-typography-paragraph>

@@ -7,7 +7,7 @@ export async function getRuleStatic(): Promise<GetRuleMetricsResponse> {
   const endpointStore = useEndpointStore()
   await endpointStore.serverAvailable
 
-  const url = new URL(urlJoin(endpointStore.endpoint, 'api/ruleStatistic'), location.href)
+  const url = new URL(urlJoin(endpointStore.endpoint, 'api/statistic/rules'), location.href)
 
   return fetch(url, { headers: getCommonHeader() }).then((res) => res.json())
 }

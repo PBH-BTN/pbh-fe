@@ -26,7 +26,7 @@ export function getLatestVersion(token = useEndpointStore().accessToken) {
 }
 
 export function getVersion(endpoint = useEndpointStore().endpoint): Promise<version> {
-  const url = new URL(urlJoin(endpoint, 'api/version'), location.href)
+  const url = new URL(urlJoin(endpoint, '/api/metadata/manifest'), location.href)
   return (
     fetch(url, { headers: getCommonHeader() })
       .catch(() => {

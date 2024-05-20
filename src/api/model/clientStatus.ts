@@ -1,10 +1,7 @@
 export interface ClientStatus {
-  name: string
-  peers: number
-  torrents: number
-  endpoint: string
-  status: ClientStatusEnum
-  type: ClientTypeEnum
+  activePeers: number
+  activeTorrents: number
+  lastStatus: ClientStatusEnum
 }
 
 export enum ClientStatusEnum {
@@ -16,4 +13,10 @@ export enum ClientStatusEnum {
 export enum ClientTypeEnum {
   qBittorrent = 'qBittorrent',
   Transmission = 'Transmission'
+}
+
+export interface Downloader {
+  name: string
+  endpoint: string
+  type: ClientStatusEnum
 }

@@ -7,7 +7,7 @@ export async function getBanList(limit: number, lastBanTime?: number): Promise<B
   const endpointStore = useEndpointStore()
   await endpointStore.serverAvailable
 
-  const url = new URL(urlJoin(endpointStore.endpoint, 'api/banlist'), location.href)
+  const url = new URL(urlJoin(endpointStore.endpoint, 'api/bans'), location.href)
   url.searchParams.set('limit', String(limit))
   if (lastBanTime) {
     url.searchParams.set('lastBanTime', String(lastBanTime))

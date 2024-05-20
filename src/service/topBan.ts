@@ -7,7 +7,7 @@ export async function getTopBan(num: number): Promise<topBanItem[]> {
   const endpointStore = useEndpointStore()
   await endpointStore.serverAvailable
 
-  const url = new URL(urlJoin(endpointStore.endpoint, 'api/maxbans'), location.href)
+  const url = new URL(urlJoin(endpointStore.endpoint, 'api/bans/ranks'), location.href)
   url.searchParams.set('num', String(num))
   return fetch(url, { headers: getCommonHeader() }).then((res) => res.json())
 }

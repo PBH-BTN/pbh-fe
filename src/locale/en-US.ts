@@ -5,6 +5,7 @@ import banLogPageLocale from '@/views/banlog/locale/en-US'
 import topBanPageLocale from '@/views/top-ban/locale/en-US'
 import ruleMetricsLocale from '@/views/rule-metrics/locale/en-US'
 import serviceLocale from '@/service/locale/en-US'
+import loginLocale from '@/views/login/locale/en-US'
 export default {
   'navbar.action.locale': 'Switch to English',
   'navbar.action.autoUpdate': 'Auto Update',
@@ -12,6 +13,7 @@ export default {
   'main.workInProgressTips':
     'This feature is still working in progress, and the data currently recorded and displayed is relatively limited',
 
+  'router.login': 'Login',
   'router.dashboard': 'Status',
   'router.banlist': 'Ban List',
   'router.banlogs': 'Ban Logs',
@@ -24,5 +26,6 @@ export default {
   ...banLogPageLocale,
   ...topBanPageLocale,
   ...ruleMetricsLocale,
-  ...serviceLocale
+  ...serviceLocale,
+  ...loginLocale
 }

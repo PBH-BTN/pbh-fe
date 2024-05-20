@@ -42,21 +42,21 @@
           <a-typography-paragraph>
             {{ t('page.dashboard.clientStatus.card.status') }}:
             <a-typography-text :type="getStatusSafe(client)[0]">
-              <icon-check-circle-fill v-if="client.status == ClientStatusEnum.HEALTHY" />
-              <icon-close-circle-fill v-if="client.status == ClientStatusEnum.ERROR" />
-              <icon-exclamation-circle-fill v-if="client.status == ClientStatusEnum.UNKNOWN" />
+              <icon-check-circle-fill v-if="client.lastStatus == ClientStatusEnum.HEALTHY" />
+              <icon-close-circle-fill v-if="client.lastStatus == ClientStatusEnum.ERROR" />
+              <icon-exclamation-circle-fill v-if="client.lastStatus == ClientStatusEnum.UNKNOWN" />
               {{ t(getStatusSafe(client)[1]) }}
             </a-typography-text>
           </a-typography-paragraph>
 
-          <a-typography-paragraph v-if="client.status === ClientStatusEnum.HEALTHY">
+          <a-typography-paragraph v-if="client.lastStatus === ClientStatusEnum.HEALTHY">
             {{ t('page.dashboard.clientStatus.card.status.torrentNumber') }}
-            {{ client.torrents }}</a-typography-paragraph
+            {{ client.activeTorrents }}</a-typography-paragraph
           >
 
-          <a-typography-paragraph v-if="client.status === ClientStatusEnum.HEALTHY">
+          <a-typography-paragraph v-if="client.lastStatus === ClientStatusEnum.HEALTHY">
             {{ t('page.dashboard.clientStatus.card.status.peerNumber') }}
-            {{ client.peers }}</a-typography-paragraph
+            {{ client.activePeers }}</a-typography-paragraph
           >
         </a-typography>
       </a-card>
@@ -64,28 +64,36 @@
   </a-row>
 </template>
 <script setup lang="ts">
-import { getClientStatus } from '@/service/clientStatus'
+import { getClientStatus, getDownloaders } from '@/service/downloaders'
 import { ClientStatusEnum, type ClientStatus } from '@/api/model/clientStatus'
 import { useAutoUpdate } from '@/stores/autoUpdate'
 import { useEndpointStore } from '@/stores/endpoint'
 import { useRequest } from 'vue-request'
 import { computed, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useDownloader } from '@/stores/downloader'
 const { t } = useI18n()
 const statusMap: Record<ClientStatusEnum, [string, string]> = {
   [ClientStatusEnum.HEALTHY]: ['success', 'page.dashboard.clientStatus.card.status.normal'],
   [ClientStatusEnum.ERROR]: ['warning', 'page.dashboard.clientStatus.card.status.error'],
   [ClientStatusEnum.UNKNOWN]: ['danger', 'page.dashboard.clientStatus.card.status.unknown']
 }
+const downloaderStore = useDownloader()
+
 const getStatusSafe = (status: ClientStatus | undefined): string[] =>
-  statusMap[status?.status ?? ClientStatusEnum.UNKNOWN] ?? statusMap[ClientStatusEnum.UNKNOWN]
+  statusMap[status?.lastStatus ?? ClientStatusEnum.UNKNOWN] ?? statusMap[ClientStatusEnum.UNKNOWN]
 
 const autoUpdateState = useAutoUpdate()
 const endpointState = useEndpointStore()
+const downloader = useRequest(getDownloaders, {
+  onSuccess: downloaderStore.updateDownloaders,
+  cacheKey: () => `${endpointState.endpoint}-downloader`
+})
 const { data, refresh } = useRequest(getClientStatus, {
   pollingInterval: computed(() => autoUpdateState.pollingInterval),
   onSuccess: autoUpdateState.renewLastUpdate,
-  cacheKey: () => `${endpointState.endpoint}-clientStatus`
+  cacheKey: () => `${endpointState.endpoint}-clientStatus`,
+  ready: () => !downloader.loading.value
 })
 
 watch(() => endpointState.endpoint, refresh)

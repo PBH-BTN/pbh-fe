@@ -4,6 +4,8 @@ This is a ~alternative~ WebUI of the [PeerBanHelper](https://github.com/Ghost-ch
 
 Quick preview: https://pbh.u2b.eu
 
+API Doc: https://apifox.com/apidoc/shared-b24f42a4-67f5-402a-900d-9fad3ae9917b
+
 ## Feature
 
 - [x] Custom Endpoint

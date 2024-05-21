@@ -23,7 +23,7 @@ export const routerOptions: RouteRecordRaw[] = [
     component: Login
   },
   {
-    path: '/',
+    path: '/dashboard',
     name: 'dashboard',
     meta: {
       label: 'router.dashboard'
@@ -69,7 +69,7 @@ export const routerOptions: RouteRecordRaw[] = [
       hidden: true,
       label: '404'
     },
-    redirect: { name: 'dashboard' }
+    redirect: { name: 'login' }
   }
 ]
 

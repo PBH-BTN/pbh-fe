@@ -5,5 +5,6 @@ export default {
   'login.form.rememberPassword': 'Remember token',
   'login.form.forgetPassword': 'Forget token',
   'login.form.password.errMsg': 'Please enter the management token',
+  'login.form.login.failed': 'Login Failed:',
   'login.form.login': 'Login'
 }

@@ -3,8 +3,6 @@ import { useStorage } from '@vueuse/core'
 import { getLatestVersion, getVersion } from '@/service/version'
 import { computed, readonly, ref } from 'vue'
 import type { release, version } from '@/api/model/version'
-import { Message } from '@arco-design/web-vue'
-import { useI18n } from 'vue-i18n'
 
 function newPromiseLock<T>() {
   let resolve!: (value: T | PromiseLike<T>) => void
@@ -52,6 +50,11 @@ export const useEndpointStore = defineStore('endpoint', () => {
       console.error('Failed to get version:', err)
     }
   }
+
+  const authToken = ref<string>()
+  const setAuthToken = (token: string) => {
+    authToken.value = token
+  }
   // init
   setEndpoint(endpoint.value)
 
@@ -66,6 +69,8 @@ export const useEndpointStore = defineStore('endpoint', () => {
     accessToken: readonly(accessToken),
     latestVersion: readonly(latestVersion),
     setEndpoint,
-    setAccessToken
+    setAccessToken,
+    authToken: readonly(authToken),
+    setAuthToken
   }
 })

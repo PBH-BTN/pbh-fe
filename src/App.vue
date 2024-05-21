@@ -7,7 +7,9 @@
       <a-layout-content>
         <a-space direction="vertical" fill style="width: 100%; max-width: 1200px; margin: auto">
           <!-- <a-alert type="warning" closable>{{ t('main.workInProgressTips') }}</a-alert> -->
+          <router-view v-if="currentName === 'login'" />
           <a-tabs
+            v-else
             :active-key="currentName"
             @change="goto"
             size="large"
@@ -16,7 +18,7 @@
             :lazy-load="true"
           >
             <a-tab-pane
-              v-for="router in routers"
+              v-for="router in routers.filter((r) => r.name != 'login')"
               :key="router.name"
               :title="t(String(router.meta?.label))"
             >

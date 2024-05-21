@@ -17,6 +17,7 @@ export async function getBanlogs(params: { pageIndex: number; pageSize?: number 
   if (params.pageSize) {
     url.searchParams.set('pageSize', String(params.pageSize))
   }
+
   return fetch(url, { headers: getCommonHeader() })
     .then((res) => res.json())
     .then((res) => {

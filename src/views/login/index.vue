@@ -34,7 +34,10 @@
           >
             {{ $t('login.form.rememberPassword') }}
           </a-checkbox>
-          <a-link>{{ $t('login.form.forgetPassword') }}</a-link>
+          <a-link
+            href="https://github.com/PBH-BTN/PeerBanHelper/wiki/%E5%A6%82%E4%BD%95%E9%87%8D%E7%BD%AEToken"
+            >{{ $t('login.form.forgetPassword') }}</a-link
+          >
         </div>
         <a-button type="primary" html-type="submit" long :loading="loading">
           {{ $t('login.form.login') }}
@@ -46,15 +49,16 @@
 
 <script lang="ts" setup>
 import { useStorage } from '@vueuse/core'
-import { ref, reactive } from 'vue'
+import { ref, reactive, computed } from 'vue'
 import { type ValidatedError } from '@arco-design/web-vue/es/form/interface'
 import { Message } from '@arco-design/web-vue'
 import { useI18n } from 'vue-i18n'
 import { login } from '@/service/login'
 import { useViewRoute } from '@/router'
+import { useEndpointStore } from '@/stores/endpoint'
 
+const endpointStore = useEndpointStore()
 const { t } = useI18n()
-const errorMessage = ref('')
 const loading = ref(false)
 const [, , goto] = useViewRoute()
 const loginConfig = useStorage('login-config', {
@@ -65,6 +69,10 @@ const userInfo = reactive({ token: loginConfig.value.token })
 const setRememberPassword = (value: boolean) => {
   loginConfig.value.rememberPassword = value
 }
+const loginError = ref<Error>()
+const errorMessage = computed(() =>
+  loginError.value ? `${t('login.form.login.failed')}  ${loginError.value.message}` : ''
+)
 const handleSubmit = async ({
   errors,
   values
@@ -79,13 +87,14 @@ const handleSubmit = async ({
   }
   try {
     await login(userInfo.token)
+    endpointStore.setAuthToken(userInfo.token)
     goto('dashboard')
     Message.success(t('login.form.login.success'))
     const { rememberPassword } = loginConfig.value
     const { token } = values
     loginConfig.value.token = rememberPassword ? token : ''
   } catch (err) {
-    errorMessage.value = (err as Error).message
+    loginError.value = err as Error
   } finally {
     loading.value = false
   }

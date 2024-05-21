@@ -1,5 +1,4 @@
 import type { Downloader } from '@/api/model/clientStatus'
-import { getDownloaders } from '@/service/downloaders'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 

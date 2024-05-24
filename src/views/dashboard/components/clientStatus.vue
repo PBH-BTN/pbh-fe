@@ -9,7 +9,7 @@
     ]"
   >
     <!-- 骨架屏 -->
-    <a-col v-if="!data" :xs="24" :sm="12" :md="8" :lg="6">
+    <a-col v-if="!data || data?.length === 0" :xs="24" :sm="12" :md="8" :lg="6">
       <a-card hoverable>
         <a-skeleton :animation="true">
           <a-space direction="vertical" :style="{ width: '100%' }" size="large">

@@ -4,7 +4,7 @@ import { getLatestVersion, getVersion } from '@/service/version'
 import { computed, readonly, ref } from 'vue'
 import type { release, version } from '@/api/model/version'
 import { IncorrectTokenError, login } from '@/service/login'
-import semverLtr from 'semver/ranges/ltr'
+import { compare } from 'compare-versions'
 
 function newPromiseLock<T>() {
   let resolve!: (value: T | PromiseLike<T>) => void
@@ -32,7 +32,7 @@ export const useEndpointStore = defineStore('endpoint', () => {
   const checkUpgradeError = ref<Error | null>(null)
 
   const setAuthToken = async (token: string | null, rememberPassword = false) => {
-    if (serverVersion.value && semverLtr(serverVersion.value.version, '4.0.0')) {
+    if (serverVersion.value && compare(serverVersion.value.version, '4.0.0', '>=')) {
       // The old server does not support login
       return
     }
@@ -46,7 +46,7 @@ export const useEndpointStore = defineStore('endpoint', () => {
     const isChecking = status.value === 'checking'
     if (!isChecking) {
       pushLock()
-    };
+    }
     try {
       await login(token)
       if (!isChecking) {

@@ -6,8 +6,6 @@
       </a-layout-header>
       <a-layout-content>
         <a-space direction="vertical" fill style="width: 100%; max-width: 1200px; margin: auto">
-          <!-- <a-alert type="warning" closable>{{ t('main.workInProgressTips') }}</a-alert> -->
-          <!-- <router-view v-if="currentName === 'login'" /> -->
           <Login v-if="status === 'needLogin'" />
           <a-tabs
             v-else

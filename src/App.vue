@@ -4,14 +4,11 @@
       <a-layout-header>
         <pageHeader />
       </a-layout-header>
-      <a-layout-content>
-        <Login style="width: 100%; max-width: 1200px; margin: auto" v-if="status === 'needLogin'" />
-        <a-space
-          v-else
-          direction="vertical"
-          fill
-          style="width: 100%; max-width: 1200px; margin: auto"
-        >
+      <a-layout-content v-if="status === 'needLogin'" class="login-page">
+        <Login style="width: 100%; max-width: 1200px; margin: auto" />
+      </a-layout-content>
+      <a-layout-content v-else>
+        <a-space direction="vertical" fill style="width: 100%; max-width: 1200px; margin: auto">
           <a-tabs
             :active-key="currentName"
             @change="goto"
@@ -51,3 +48,19 @@ const status = computed(() => endPointStore.status)
 const { t, locale } = useI18n()
 const [routers, currentName, goto] = useViewRoute()
 </script>
+
+<style scoped lang="less">
+.login-page {
+  display: flex;
+  flex-direction: column;
+  &::after,
+  &::before {
+    content: '';
+    display: block;
+    flex: 1;
+  }
+  &::before {
+    flex: 0.4;
+  }
+}
+</style>

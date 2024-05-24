@@ -9,5 +9,5 @@ export async function getRuleStatic(): Promise<GetRuleMetricsResponse> {
 
   const url = new URL(urlJoin(endpointStore.endpoint, 'api/statistic/rules'), location.href)
 
-  return fetch(url, { headers: getCommonHeader() }).then((res) => res.json())
+  return fetch(url, { headers: getCommonHeader() }).then((res) => { endpointStore.assertResponseLogin(res); return res.json() })
 }

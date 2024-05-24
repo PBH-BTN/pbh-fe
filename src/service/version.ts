@@ -4,11 +4,16 @@ import urlJoin from 'url-join'
 import { getCommonHeader } from './utils'
 import { Octokit } from '@octokit/core'
 export class GetVersionError extends Error {
+  name = 'GetVersionError' as const
   constructor(
     message: string,
     public isApiWrong = true
   ) {
     super(message)
+  }
+
+  static is(err: unknown): err is GetVersionError {
+    return (err as Error)?.name === GetVersionError.name
   }
 }
 

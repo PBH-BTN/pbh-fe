@@ -7,7 +7,8 @@
       <a-layout-content>
         <a-space direction="vertical" fill style="width: 100%; max-width: 1200px; margin: auto">
           <!-- <a-alert type="warning" closable>{{ t('main.workInProgressTips') }}</a-alert> -->
-          <router-view v-if="currentName === 'login'" />
+          <!-- <router-view v-if="currentName === 'login'" /> -->
+          <Login v-if="status === 'needLogin'" />
           <a-tabs
             v-else
             :active-key="currentName"
@@ -18,7 +19,7 @@
             :lazy-load="true"
           >
             <a-tab-pane
-              v-for="router in routers.filter((r) => r.name != 'login')"
+              v-for="router in routers"
               :key="router.name"
               :title="t(String(router.meta?.label))"
             >
@@ -38,6 +39,12 @@ import pageFooter from './components/pageFooter.vue'
 import pageHeader from './components/pageHeader.vue'
 import { useI18n } from 'vue-i18n'
 import { ArcoI18nMessages } from './locale'
+import { useEndpointStore } from './stores/endpoint'
+import { computed } from 'vue'
+import Login from '@/views/login/index.vue'
+
+const endPointStore = useEndpointStore()
+const status = computed(() => endPointStore.status)
 
 const { t, locale } = useI18n()
 const [routers, currentName, goto] = useViewRoute()

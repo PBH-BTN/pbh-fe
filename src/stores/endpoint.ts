@@ -32,15 +32,12 @@ export const useEndpointStore = defineStore('endpoint', () => {
   const checkUpgradeError = ref<Error | null>(null)
 
   const setAuthToken = async (token: string | null, rememberPassword = false) => {
-    if (serverVersion.value && compare(serverVersion.value.version, '4.0.0', '>=')) {
+    if (serverVersion.value && compare(serverVersion.value.version, '4.0.0', '<')) {
       // The old server does not support login
       return
     }
-    if (!token) {
-      throw new IncorrectTokenError()
-    }
-    authToken.value = token
-    if (rememberPassword) {
+    if (token) authToken.value = token
+    if (token && rememberPassword) {
       storageAuthToken.value = token
     }
     const isChecking = status.value === 'checking'
@@ -48,7 +45,8 @@ export const useEndpointStore = defineStore('endpoint', () => {
       pushLock()
     }
     try {
-      await login(token)
+      if (token) await login(token)
+      else throw new IncorrectTokenError()
       if (!isChecking) {
         serverAvailable.value.resolve()
         error.value = null
@@ -121,7 +119,7 @@ export const useEndpointStore = defineStore('endpoint', () => {
     authToken: readonly(authToken),
     setAuthToken,
     assertResponseLogin: (res: Response) => {
-      if (res.status === 401) {
+      if (res.status === 403) {
         setAuthToken(null)
         throw new IncorrectTokenError()
       }

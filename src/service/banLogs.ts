@@ -21,6 +21,7 @@ export async function getBanlogs(params: { pageIndex: number; pageSize?: number 
   return fetch(url, { headers: getCommonHeader() })
     .then((res) => res.json())
     .then((res) => {
+      endpointStore.assertResponseLogin(res)
       return {
         ...res,
         pageIndex: res.pageIndex + 1

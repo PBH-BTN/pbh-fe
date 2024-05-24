@@ -11,17 +11,8 @@ import BanList from '@/views/banlist/index.vue'
 import BanLog from '@/views/banlog/index.vue'
 import TopBan from '@/views/top-ban/index.vue'
 import RuleMetric from '@/views/rule-metrics/index.vue'
-import Login from '@/views/login/index.vue'
 
 export const routerOptions: RouteRecordRaw[] = [
-  {
-    path: '/login',
-    name: 'login',
-    meta: {
-      label: 'router.login'
-    },
-    component: Login
-  },
   {
     path: '/dashboard',
     name: 'dashboard',
@@ -69,7 +60,7 @@ export const routerOptions: RouteRecordRaw[] = [
       hidden: true,
       label: '404'
     },
-    redirect: { name: 'login' }
+    redirect: { name: 'dashboard' }
   }
 ]
 

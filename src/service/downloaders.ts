@@ -16,7 +16,7 @@ export async function getClientStatus() {
         location.href
       )
       return fetch(url, { headers: getCommonHeader() })
-        .then((res) => res.json())
+        .then((res) => { endpointStore.assertResponseLogin(res); return res.json() })
         .then((s: ClientStatus) => ({
           ...downloader,
           ...s
@@ -30,7 +30,7 @@ export async function getStatistic(): Promise<Statistic> {
   await endpointStore.serverAvailable
 
   const url = new URL(urlJoin(endpointStore.endpoint, '/api/statistic/counter'), location.href)
-  return fetch(url, { headers: getCommonHeader() }).then((res) => res.json())
+  return fetch(url, { headers: getCommonHeader() }).then((res) => { endpointStore.assertResponseLogin(res); return res.json() })
 }
 
 export async function getDownloaders(): Promise<Downloader[]> {
@@ -38,5 +38,5 @@ export async function getDownloaders(): Promise<Downloader[]> {
   await endpointStore.serverAvailable
 
   const url = new URL(urlJoin(endpointStore.endpoint, '/api/downloaders'), location.href)
-  return fetch(url, { headers: getCommonHeader() }).then((res) => res.json())
+  return fetch(url, { headers: getCommonHeader() }).then((res) => { endpointStore.assertResponseLogin(res); return res.json() })
 }

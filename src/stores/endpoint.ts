@@ -3,6 +3,8 @@ import { useStorage } from '@vueuse/core'
 import { getLatestVersion, getVersion } from '@/service/version'
 import { computed, readonly, ref } from 'vue'
 import type { release, version } from '@/api/model/version'
+import { IncorrectTokenError, login } from '@/service/login'
+import semverLtr from 'semver/ranges/ltr'
 
 function newPromiseLock<T>() {
   let resolve!: (value: T | PromiseLike<T>) => void
@@ -13,27 +15,77 @@ function newPromiseLock<T>() {
 export const useEndpointStore = defineStore('endpoint', () => {
   const endpoint = useStorage('endpoint', import.meta.env.VITE_APP_BASE_URL)
   const accessToken = useStorage('accessToken', '')
+  const storageAuthToken = useStorage('authToken', '', undefined, { writeDefaults: false })
+  const authToken = ref<string>(storageAuthToken.value)
+
   const latestVersion = ref<release>()
   const serverAvailable = ref(newPromiseLock<void>())
+  const pushLock = () => {
+    const lock = newPromiseLock<void>()
+    serverAvailable.value.resolve(lock)
+    serverAvailable.value = lock
+    return lock
+  }
   const serverVersion = ref<version | null>()
-  const status = ref<'checking' | 'pass' | 'fail'>('checking')
+  const status = ref<'checking' | 'needLogin' | 'pass' | 'fail'>('checking')
   const error = ref<Error | null>(null)
   const checkUpgradeError = ref<Error | null>(null)
+
+  const setAuthToken = async (token: string | null, rememberPassword = false) => {
+    if (serverVersion.value && semverLtr(serverVersion.value.version, '4.0.0')) {
+      // The old server does not support login
+      return
+    }
+    if (!token) {
+      throw new IncorrectTokenError()
+    }
+    authToken.value = token
+    if (rememberPassword) {
+      storageAuthToken.value = token
+    }
+    const isChecking = status.value === 'checking'
+    if (!isChecking) {
+      pushLock()
+    };
+    try {
+      await login(token)
+      if (!isChecking) {
+        serverAvailable.value.resolve()
+        error.value = null
+        status.value = 'pass'
+      }
+    } catch (err) {
+      if (!isChecking) {
+        error.value = err as Error
+        if (IncorrectTokenError.is(err)) {
+          status.value = 'needLogin'
+        }
+      }
+      throw err
+    }
+  }
+
   const setEndpoint = async (value: string) => {
     status.value = 'checking'
     endpoint.value = value
-    const newVersion = newPromiseLock<void>()
-    serverAvailable.value.resolve(newVersion)
-    serverAvailable.value = newVersion
+    pushLock()
     try {
       serverVersion.value = await getVersion(value)
+      try {
+        await setAuthToken(authToken.value)
+      } catch (err) {
+        if (IncorrectTokenError.is(err)) {
+          status.value = 'needLogin'
+        }
+        throw err
+      }
       serverAvailable.value.resolve()
       error.value = null
       status.value = 'pass'
       return true
     } catch (err) {
       error.value = err as Error
-      status.value = 'fail'
+      if (status.value === 'checking') status.value = 'fail'
       return false
     }
   }
@@ -50,11 +102,6 @@ export const useEndpointStore = defineStore('endpoint', () => {
       console.error('Failed to get version:', err)
     }
   }
-
-  const authToken = ref<string>()
-  const setAuthToken = (token: string) => {
-    authToken.value = token
-  }
   // init
   setEndpoint(endpoint.value)
 
@@ -64,6 +111,7 @@ export const useEndpointStore = defineStore('endpoint', () => {
     serverAvailable: readonly(serverAvailable),
     serverVersion: readonly(serverVersion),
     loading: computed(() => status.value === 'checking'),
+    status: readonly(status),
     error: readonly(error),
     checkUpgradeError: readonly(checkUpgradeError),
     accessToken: readonly(accessToken),
@@ -71,6 +119,12 @@ export const useEndpointStore = defineStore('endpoint', () => {
     setEndpoint,
     setAccessToken,
     authToken: readonly(authToken),
-    setAuthToken
+    setAuthToken,
+    assertResponseLogin: (res: Response) => {
+      if (res.status === 401) {
+        setAuthToken(null)
+        throw new IncorrectTokenError()
+      }
+    }
   }
 })

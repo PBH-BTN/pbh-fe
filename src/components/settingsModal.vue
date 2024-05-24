@@ -44,6 +44,7 @@
   </a-modal>
 </template>
 <script setup lang="ts">
+import { IncorrectTokenError } from '@/service/login'
 import { GetVersionError } from '@/service/version'
 import { useAutoUpdate } from '@/stores/autoUpdate'
 import { useEndpointStore } from '@/stores/endpoint'
@@ -55,7 +56,7 @@ const endPointStore = useEndpointStore()
 const autoUpdateState = useAutoUpdate()
 const showModal = ref(false)
 const loading = computed(() => endPointStore.loading)
-const forceModal = computed(() => !!endPointStore.error)
+const forceModal = computed(() => endPointStore.status === 'fail')
 
 const form = ref({
   endpoint: endPointStore.endpoint,
@@ -85,7 +86,9 @@ const handleOk = () => {
 watch(
   () => endPointStore.error,
   (error) => {
-    if (error instanceof GetVersionError) {
+    if (IncorrectTokenError.is(error)) {
+      handleCancel()
+    } else if (GetVersionError.is(error)) {
       Message.error(t(error.message))
       if (!showModal.value && error.isApiWrong) {
         showModal.value = true

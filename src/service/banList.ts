@@ -14,5 +14,5 @@ export async function getBanList(limit: number, lastBanTime?: number): Promise<B
   }
   return fetch(url, {
     headers: getCommonHeader()
-  }).then((res) => res.json())
+  }).then((res) => { endpointStore.assertResponseLogin(res); return res.json() })
 }

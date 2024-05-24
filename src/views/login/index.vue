@@ -1,138 +1,91 @@
 <template>
-  <div class="login-form-wrapper">
-    <div class="login-form-title">{{ $t('login.form.title') }}</div>
-    <div class="login-form-error-msg">{{ errorMessage }}</div>
-    <a-form
-      ref="loginForm"
-      :model="userInfo"
-      class="login-form"
-      layout="vertical"
-      @submit="handleSubmit"
-    >
-      <a-form-item
-        field="token"
-        :rules="[{ required: true, message: $t('login.form.password.errMsg') }]"
-        :validate-trigger="['change', 'input']"
-        hide-label
-      >
-        <a-input-password
-          v-model="userInfo.token"
-          :placeholder="$t('login.form.password.placeholder')"
-          allow-clear
+  <a-row justify="center">
+    <a-col :xs="24" :sm="20" :md="16" :lg="12" :xl="8">
+      <a-space direction="vertical" fill>
+        <a-typography-title :heading="3">{{ $t('login.form.title') }}</a-typography-title>
+        <a-form
+          ref="loginForm"
+          :model="loginConfig"
+          class="login-form"
+          layout="vertical"
+          @submit="handleSubmit"
         >
-          <template #prefix>
-            <icon-lock />
-          </template>
-        </a-input-password>
-      </a-form-item>
-      <a-space :size="16" direction="vertical">
-        <div class="login-form-password-actions">
-          <a-checkbox
-            checked="rememberPassword"
-            :model-value="loginConfig.rememberPassword"
-            @change="setRememberPassword as any"
+          <a-form-item
+            field="token"
+            :rules="[{ required: true, message: $t('login.form.password.errMsg') }]"
+            :validate-trigger="['change', 'input']"
+            hide-label
           >
-            {{ $t('login.form.rememberPassword') }}
-          </a-checkbox>
-          <a-link
-            href="https://github.com/PBH-BTN/PeerBanHelper/wiki/%E5%A6%82%E4%BD%95%E9%87%8D%E7%BD%AEToken"
-            >{{ $t('login.form.forgetPassword') }}</a-link
-          >
-        </div>
-        <a-button type="primary" html-type="submit" long :loading="loading">
-          {{ $t('login.form.login') }}
-        </a-button>
+            <a-input-password
+              v-model="loginConfig.token"
+              :placeholder="$t('login.form.password.placeholder')"
+              allow-clear
+            >
+              <template #prefix>
+                <icon-lock />
+              </template>
+            </a-input-password>
+          </a-form-item>
+          <a-form-item field="rememberPassword" class="login-form-password-actions">
+            <a-checkbox checked="rememberPassword" :model-value="loginConfig.rememberPassword">
+              {{ $t('login.form.rememberPassword') }}
+            </a-checkbox>
+            <a-link
+              :style="{ marginLeft: 'auto' }"
+              href="https://github.com/PBH-BTN/PeerBanHelper/wiki/%E5%A6%82%E4%BD%95%E9%87%8D%E7%BD%AEToken"
+            >
+              {{ $t('login.form.forgetPassword') }}
+            </a-link>
+          </a-form-item>
+          <a-button type="primary" html-type="submit" long :loading="loading">
+            {{ $t('login.form.login') }}
+          </a-button>
+        </a-form>
       </a-space>
-    </a-form>
-  </div>
+    </a-col>
+  </a-row>
 </template>
 
 <script lang="ts" setup>
-import { useStorage } from '@vueuse/core'
-import { ref, reactive, computed } from 'vue'
-import { type ValidatedError } from '@arco-design/web-vue/es/form/interface'
-import { Message } from '@arco-design/web-vue'
+import { ref, type UnwrapRef } from 'vue'
+import { Message, type FormInstance } from '@arco-design/web-vue'
 import { useI18n } from 'vue-i18n'
-import { login } from '@/service/login'
-import { useViewRoute } from '@/router'
 import { useEndpointStore } from '@/stores/endpoint'
 
 const endpointStore = useEndpointStore()
 const { t } = useI18n()
 const loading = ref(false)
-const [, , goto] = useViewRoute()
-const loginConfig = useStorage('login-config', {
+const loginConfig = ref({
   rememberPassword: true,
-  token: ''
+  token: endpointStore.authToken
 })
-const userInfo = reactive({ token: loginConfig.value.token })
-const setRememberPassword = (value: boolean) => {
-  loginConfig.value.rememberPassword = value
-}
-const loginError = ref<Error>()
-const errorMessage = computed(() =>
-  loginError.value ? `${t('login.form.login.failed')}  ${loginError.value.message}` : ''
-)
-const handleSubmit = async ({
-  errors,
-  values
-}: {
-  errors: Record<string, ValidatedError> | undefined
-  values: Record<string, any>
-}) => {
-  if (loading.value) return
-  if (errors) {
-    console.log(errors)
+const loginForm = ref<FormInstance>()
+const handleSubmit: FormInstance['onSubmit'] = async ({ errors, values }) => {
+  const errorFields = errors ? Object.keys(errors) : []
+  if (errorFields.length > 0) {
+    loginForm.value?.scrollToField(errorFields[0])
     return
   }
+  const { token, rememberPassword } = values as UnwrapRef<typeof loginConfig>
+  if (loading.value) return
+  loading.value = true
+  loginForm.value?.setFields({
+    token: { status: 'validating', message: '' }
+  })
   try {
-    await login(userInfo.token)
-    endpointStore.setAuthToken(userInfo.token)
-    goto('dashboard')
+    await endpointStore.setAuthToken(token, rememberPassword)
     Message.success(t('login.form.login.success'))
-    const { rememberPassword } = loginConfig.value
-    const { token } = values
-    loginConfig.value.token = rememberPassword ? token : ''
   } catch (err) {
-    loginError.value = err as Error
+    loginForm.value?.setFields({
+      token: {
+        status: 'error',
+        message: `${t('login.form.login.failed')}  ${(err as Error).message}`
+      }
+    })
   } finally {
     loading.value = false
   }
 }
 </script>
 
-<style lang="less" scoped>
-.login-form {
-  &-wrapper {
-    width: 320px;
-  }
-
-  &-title {
-    color: var(--color-text-1);
-    font-weight: 500;
-    font-size: 24px;
-    line-height: 32px;
-  }
-
-  &-sub-title {
-    color: var(--color-text-3);
-    font-size: 16px;
-    line-height: 24px;
-  }
-
-  &-error-msg {
-    height: 32px;
-    color: rgb(var(--red-6));
-    line-height: 32px;
-  }
-
-  &-password-actions {
-    display: flex;
-    justify-content: space-between;
-  }
-
-  &-register-btn {
-    color: var(--color-text-3) !important;
-  }
-}
-</style>
+<style lang="less" scoped></style>

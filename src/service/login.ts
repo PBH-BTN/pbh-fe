@@ -3,7 +3,8 @@ import urlJoin from 'url-join'
 import { getCommonHeader } from './utils'
 
 export class IncorrectTokenError extends Error {
-  name = "IncorrectTokenError" as const
+  static name = "IncorrectTokenError" as const
+  name = IncorrectTokenError.name
 
   static is(err: unknown): err is IncorrectTokenError {
     return (err as Error)?.name === IncorrectTokenError.name

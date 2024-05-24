@@ -4,7 +4,8 @@ import urlJoin from 'url-join'
 import { getCommonHeader } from './utils'
 import { Octokit } from '@octokit/core'
 export class GetVersionError extends Error {
-  name = 'GetVersionError' as const
+  static name = 'GetVersionError' as const
+  name = GetVersionError.name
   constructor(
     message: string,
     public isApiWrong = true

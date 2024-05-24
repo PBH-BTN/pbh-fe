@@ -5,10 +5,14 @@
         <pageHeader />
       </a-layout-header>
       <a-layout-content>
-        <a-space direction="vertical" fill style="width: 100%; max-width: 1200px; margin: auto">
-          <Login v-if="status === 'needLogin'" />
+        <Login style="width: 100%; max-width: 1200px; margin: auto" v-if="status === 'needLogin'" />
+        <a-space
+          v-else
+          direction="vertical"
+          fill
+          style="width: 100%; max-width: 1200px; margin: auto"
+        >
           <a-tabs
-            v-else
             :active-key="currentName"
             @change="goto"
             size="large"

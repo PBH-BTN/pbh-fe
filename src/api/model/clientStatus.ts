@@ -20,3 +20,10 @@ export interface Downloader {
   endpoint: string
   type: ClientStatusEnum
 }
+
+export interface Torrent {
+  id: string
+  size: number
+  name: string
+  hash: string
+}

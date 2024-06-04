@@ -14,6 +14,7 @@
         <a-skeleton :animation="true">
           <a-space direction="vertical" :style="{ width: '100%' }" size="large">
             <a-skeleton-line />
+            <a-divider margin="10px" />
             <a-skeleton-line />
             <a-skeleton-line />
             <a-skeleton-line />
@@ -23,11 +24,12 @@
     </a-col>
     <!-- client 卡片 -->
     <a-col v-else :xs="24" :sm="12" :md="8" :lg="6" v-for="client in data" :key="client.name">
-      <a-card :title="t('page.dashboard.clientStatus.card.title')" hoverable style="height: 290px">
+      <a-card hoverable>
         <a-typography>
-          <a-typography-title>
+          <a-typography-title :style="{ marginBottom: '0px' }">
             {{ client.name }}
           </a-typography-title>
+          <a-divider margin="10px" />
           <a-typography-paragraph>
             <a-space>
               <a-typography-text>
@@ -58,7 +60,10 @@
             </a-tooltip>
           </a-typography-paragraph>
 
-          <a-typography-paragraph v-if="client.lastStatus === ClientStatusEnum.HEALTHY">
+          <a-typography-paragraph
+            v-if="client.lastStatus === ClientStatusEnum.HEALTHY"
+            :style="{ marginBottom: '0px' }"
+          >
             {{ t('page.dashboard.clientStatus.card.status.peerNumber') }}
             {{ client.activePeers }}</a-typography-paragraph
           >

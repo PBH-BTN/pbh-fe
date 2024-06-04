@@ -2,9 +2,9 @@ name: NodeJS Build
 
 on:
   push:
-    branches: ['miao']
+    branches: ["miao"]
   pull_request:
-    branches: ['miao']
+    branches: ["miao"]
 
 jobs:
   build:
@@ -43,6 +43,9 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install
+
+      - name: Lint
+        run: pnpm run lint
 
       - name: Build
         run: pnpm run build

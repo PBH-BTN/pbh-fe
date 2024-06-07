@@ -1,8 +1,8 @@
-import type { version } from '@/api/model/version'
 import { useEndpointStore } from '@/stores/endpoint'
 import urlJoin from 'url-join'
 import { getCommonHeader } from './utils'
 import { Octokit } from '@octokit/core'
+import type { mainfest } from '@/api/model/manifest'
 export class GetVersionError extends Error {
   static name = 'GetVersionError' as const
   name = GetVersionError.name
@@ -31,7 +31,7 @@ export function getLatestVersion(token = useEndpointStore().accessToken) {
     .then((res) => res.data)
 }
 
-export function getVersion(endpoint = useEndpointStore().endpoint): Promise<version> {
+export function getVersion(endpoint = useEndpointStore().endpoint): Promise<mainfest> {
   const url = new URL(urlJoin(endpoint, '/api/metadata/manifest'), location.href)
   return (
     fetch(url, { headers: getCommonHeader(false) })
@@ -44,8 +44,8 @@ export function getVersion(endpoint = useEndpointStore().endpoint): Promise<vers
         })
       )
       // 后续可以添加后端版本的校验和提醒
-      .then((res: version) => {
-        if (!res.version) {
+      .then((res: mainfest) => {
+        if (!res) {
           throw new GetVersionError('service.version.formatError')
         }
         return res

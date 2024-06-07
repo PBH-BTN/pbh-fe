@@ -2,9 +2,10 @@ import { defineStore } from 'pinia'
 import { useStorage } from '@vueuse/core'
 import { getLatestVersion, getVersion } from '@/service/version'
 import { computed, readonly, ref } from 'vue'
-import type { release, version } from '@/api/model/version'
+import type { release } from '@/api/model/manifest'
 import { IncorrectTokenError, login } from '@/service/login'
 import { compare } from 'compare-versions'
+import type { mainfest } from '@/api/model/manifest'
 
 function newPromiseLock<T>() {
   let resolve!: (value: T | PromiseLike<T>) => void
@@ -26,13 +27,13 @@ export const useEndpointStore = defineStore('endpoint', () => {
     serverAvailable.value = lock
     return lock
   }
-  const serverVersion = ref<version | null>()
+  const serverManifest = ref<mainfest | null>()
   const status = ref<'checking' | 'needLogin' | 'pass' | 'fail'>('checking')
   const error = ref<Error | null>(null)
   const checkUpgradeError = ref<Error | null>(null)
 
   const setAuthToken = async (token: string | null, rememberPassword = false) => {
-    if (serverVersion.value && compare(serverVersion.value.version, '4.0.0', '<')) {
+    if (serverManifest.value && compare(serverManifest.value.version.version, '4.0.0', '<')) {
       // The old server does not support login
       return
     }
@@ -68,7 +69,7 @@ export const useEndpointStore = defineStore('endpoint', () => {
     endpoint.value = value
     pushLock()
     try {
-      serverVersion.value = await getVersion(value)
+      serverManifest.value = await getVersion(value)
       try {
         await setAuthToken(authToken.value)
       } catch (err) {
@@ -107,7 +108,7 @@ export const useEndpointStore = defineStore('endpoint', () => {
   return {
     endpoint: readonly(endpoint),
     serverAvailable: readonly(serverAvailable),
-    serverVersion: readonly(serverVersion),
+    serverManifest: readonly(serverManifest),
     loading: computed(() => status.value === 'checking'),
     status: readonly(status),
     error: readonly(error),

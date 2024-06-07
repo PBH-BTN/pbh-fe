@@ -43,12 +43,12 @@ const { t } = useI18n()
 const version = __APP_VERSION__
 const hash = __APP_HASH__
 const endpointStore = useEndpointStore()
-const serverVersion = computed(() => endpointStore.serverVersion)
+const serverVersion = computed(() => endpointStore.serverManifest?.version)
 const latestVersion = computed(() => endpointStore.latestVersion)
 const hasNewVersion = computed(() => {
   return compare(
     endpointStore.latestVersion?.tagName ?? '1.0',
-    endpointStore.serverVersion?.version ?? '1.0',
+    endpointStore.serverManifest?.version.version ?? '1.0',
     '>'
   )
 })

@@ -50,11 +50,15 @@
               {{ t(getStatusSafe(client)[1]) }}
             </a-typography-text>
           </a-typography-paragraph>
-
           <a-typography-paragraph v-if="client.lastStatus === ClientStatusEnum.HEALTHY">
             {{ t('page.dashboard.clientStatus.card.status.torrentNumber') }}
-            {{ client.activeTorrents }}</a-typography-paragraph
-          >
+            {{ client.activeTorrents }}
+            <a-tooltip :content="t('page.dashboard.torrentList.tips')">
+              <button @click="() => torrentList?.showModal(client.name)">
+                <icon-eye />
+              </button>
+            </a-tooltip>
+          </a-typography-paragraph>
 
           <a-typography-paragraph
             v-if="client.lastStatus === ClientStatusEnum.HEALTHY"
@@ -67,6 +71,7 @@
       </a-card>
     </a-col>
   </a-row>
+  <TorrentListModal ref="torrentList" />
 </template>
 <script setup lang="ts">
 import { getClientStatus, getDownloaders } from '@/service/downloaders'
@@ -74,9 +79,10 @@ import { ClientStatusEnum, type ClientStatus } from '@/api/model/clientStatus'
 import { useAutoUpdate } from '@/stores/autoUpdate'
 import { useEndpointStore } from '@/stores/endpoint'
 import { useRequest } from 'vue-request'
-import { computed, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useDownloader } from '@/stores/downloader'
+import TorrentListModal from './torrentListModal.vue'
 const { t } = useI18n()
 const statusMap: Record<ClientStatusEnum, [string, string]> = {
   [ClientStatusEnum.HEALTHY]: ['success', 'page.dashboard.clientStatus.card.status.normal'],
@@ -102,9 +108,19 @@ const { data, refresh } = useRequest(getClientStatus, {
 })
 
 watch(() => endpointState.endpoint, refresh)
+
+const torrentList = ref<InstanceType<typeof TorrentListModal>>()
 </script>
 <style scoped>
 h1 {
   margin-top: 0;
+}
+button {
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  cursor: pointer;
 }
 </style>

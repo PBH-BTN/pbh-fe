@@ -2,6 +2,7 @@
   <a-typography-title :heading="3">{{ t('page.dashboard.clientStatus.title') }}</a-typography-title>
   <a-row
     justify="start"
+    align="stretch"
     :wrap="true"
     :gutter="[
       { xs: 8, sm: 8, md: 8, lg: 24, xl: 32 },
@@ -10,65 +11,89 @@
   >
     <!-- 骨架屏 -->
     <a-col v-if="!data || data?.length === 0" :xs="24" :sm="12" :md="8" :lg="6">
-      <a-card hoverable>
-        <a-skeleton :animation="true">
-          <a-space direction="vertical" :style="{ width: '100%' }" size="large">
-            <a-skeleton-line />
-            <a-divider margin="10px" />
-            <a-skeleton-line />
-            <a-skeleton-line />
-            <a-skeleton-line />
-          </a-space>
-        </a-skeleton>
-      </a-card>
+      <div class="card-wrap">
+        <a-card hoverable>
+          <template #title>
+            <a-skeleton :animation="true">
+              <a-space direction="vertical" :style="{ width: '100%' }" :size="0">
+                <a-skeleton-line :line-height="44" :line-spacing="0" />
+              </a-space>
+            </a-skeleton>
+          </template>
+          <a-skeleton :animation="true">
+            <a-space direction="vertical" :style="{ width: '100%' }" :size="0">
+              <a-skeleton-line
+                :rows="4"
+                :line-height="22"
+                :line-spacing="14"
+                :widths="['60%', '70%', '50%', '60%']"
+              />
+            </a-space>
+          </a-skeleton>
+        </a-card>
+      </div>
     </a-col>
     <!-- client 卡片 -->
     <a-col v-else :xs="24" :sm="12" :md="8" :lg="6" v-for="client in data" :key="client.name">
-      <a-card hoverable>
-        <a-typography>
-          <a-typography-title :style="{ marginBottom: '0px' }">
-            {{ client.name }}
-          </a-typography-title>
-          <a-divider margin="10px" />
-          <a-typography-paragraph>
-            <a-space>
-              <a-typography-text>
-                {{ t('page.dashboard.clientStatus.card.type') }}:</a-typography-text
-              >
-              <a-typography-text code>{{ client.type }}</a-typography-text>
-              <a-tooltip :content="client.endpoint">
-                <icon-info-circle />
-              </a-tooltip>
-            </a-space>
-          </a-typography-paragraph>
-          <a-typography-paragraph>
-            {{ t('page.dashboard.clientStatus.card.status') }}:
-            <a-typography-text :type="getStatusSafe(client)[0]">
-              <icon-check-circle-fill v-if="client.lastStatus == ClientStatusEnum.HEALTHY" />
-              <icon-close-circle-fill v-if="client.lastStatus == ClientStatusEnum.ERROR" />
-              <icon-exclamation-circle-fill v-if="client.lastStatus == ClientStatusEnum.UNKNOWN" />
-              {{ t(getStatusSafe(client)[1]) }}
-            </a-typography-text>
-          </a-typography-paragraph>
-          <a-typography-paragraph v-if="client.lastStatus === ClientStatusEnum.HEALTHY">
-            {{ t('page.dashboard.clientStatus.card.status.torrentNumber') }}
-            {{ client.activeTorrents }}
-            <a-tooltip :content="t('page.dashboard.torrentList.tips')">
-              <button @click="() => torrentList?.showModal(client.name)">
-                <icon-eye />
-              </button>
-            </a-tooltip>
-          </a-typography-paragraph>
+      <div class="card-wrap">
+        <a-card hoverable>
+          <template #title>
+            <a-typography-title
+              :style="{ marginBottom: '0px' }"
+              :ellipsis="{
+                rows: 2,
+                showTooltip: true
+              }"
+            >
+              {{ client.name }}
+            </a-typography-title>
+          </template>
+          <a-descriptions :column="1" layout="inline-horizontal">
+            <a-descriptions-item>
+              <template #label>{{ t('page.dashboard.clientStatus.card.type') }}</template>
+              <a-space>
+                <a-tag bordered>{{ client.type }}</a-tag>
+                <a-tooltip :content="client.endpoint">
+                  <icon-info-circle size="large" />
+                </a-tooltip>
+              </a-space>
+            </a-descriptions-item>
 
-          <a-typography-paragraph
-            v-if="client.lastStatus === ClientStatusEnum.HEALTHY"
-            :style="{ marginBottom: '0px' }"
-          >
-            {{ t('page.dashboard.clientStatus.card.status.peerNumber') }}
-            {{ client.activePeers }}</a-typography-paragraph
-          >
-        </a-typography>
-      </a-card>
+            <a-descriptions-item>
+              <template #label>{{ t('page.dashboard.clientStatus.card.status') }}</template>
+              <a-typography-text :type="getStatusSafe(client)[0]">
+                <icon-check-circle-fill v-if="client.lastStatus == ClientStatusEnum.HEALTHY" />
+                <icon-close-circle-fill v-if="client.lastStatus == ClientStatusEnum.ERROR" />
+                <icon-exclamation-circle-fill
+                  v-if="client.lastStatus == ClientStatusEnum.UNKNOWN"
+                />
+                {{ t(getStatusSafe(client)[1]) }}
+              </a-typography-text>
+            </a-descriptions-item>
+
+            <a-descriptions-item v-if="client.lastStatus == ClientStatusEnum.HEALTHY">
+              <template #label>{{
+                t('page.dashboard.clientStatus.card.status.torrentNumber')
+              }}</template>
+              <a-space>
+                <a-tag color="arcoblue" bordered>{{ client.activeTorrents }}</a-tag>
+                <a-tooltip :content="t('page.dashboard.torrentList.tips')">
+                  <button @click="() => torrentList?.showModal(client.name)">
+                    <icon-eye size="large" />
+                  </button>
+                </a-tooltip>
+              </a-space>
+            </a-descriptions-item>
+
+            <a-descriptions-item v-if="client.lastStatus == ClientStatusEnum.HEALTHY">
+              <template #label>{{
+                t('page.dashboard.clientStatus.card.status.peerNumber')
+              }}</template>
+              <a-tag color="arcoblue" bordered>{{ client.activePeers }}</a-tag>
+            </a-descriptions-item>
+          </a-descriptions>
+        </a-card>
+      </div>
     </a-col>
   </a-row>
   <TorrentListModal ref="torrentList" />
@@ -111,7 +136,7 @@ watch(() => endpointState.endpoint, refresh)
 
 const torrentList = ref<InstanceType<typeof TorrentListModal>>()
 </script>
-<style scoped>
+<style scoped lang="less">
 h1 {
   margin-top: 0;
 }
@@ -122,5 +147,33 @@ button {
   outline: none;
   background-color: transparent;
   cursor: pointer;
+}
+.card-wrap {
+  height: 100%;
+  ::v-deep(.arco-card) {
+    height: 100%;
+    .arco-card-header {
+      height: auto;
+    }
+    & .arco-card-body {
+      .arco-descriptions {
+        .arco-descriptions-body {
+          .arco-descriptions-table {
+            .arco-descriptions-row {
+              .arco-descriptions-item {
+                padding-bottom: 14px;
+                & .arco-descriptions-item-label {
+                  padding-right: 10px;
+                }
+              }
+              &:last-child .arco-descriptions-item {
+                padding-bottom: 0px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
 </style>

@@ -78,9 +78,16 @@
               <a-space>
                 <a-tag color="arcoblue" bordered>{{ client.activeTorrents }}</a-tag>
                 <a-tooltip :content="t('page.dashboard.torrentList.tips')">
-                  <button @click="() => torrentList?.showModal(client.name)">
-                    <icon-eye size="large" />
-                  </button>
+                  <a-button
+                    @click="() => torrentList?.showModal(client.name)"
+                    shape="circle"
+                    type="text"
+                    size="mini"
+                  >
+                    <template #icon>
+                      <icon-eye size="large" />
+                    </template>
+                  </a-button>
                 </a-tooltip>
               </a-space>
             </a-descriptions-item>
@@ -155,15 +162,24 @@ button {
     .arco-card-header {
       height: auto;
     }
-    & .arco-card-body {
+    .arco-card-body {
       .arco-descriptions {
         .arco-descriptions-body {
           .arco-descriptions-table {
             .arco-descriptions-row {
               .arco-descriptions-item {
                 padding-bottom: 14px;
-                & .arco-descriptions-item-label {
+                .arco-descriptions-item-label {
                   padding-right: 10px;
+                }
+                .arco-descriptions-item-value {
+                  .arco-space {
+                    .arco-space-item {
+                      .arco-btn-text {
+                        color: var(--color-text-1);
+                      }
+                    }
+                  }
                 }
               }
               &:last-child .arco-descriptions-item {

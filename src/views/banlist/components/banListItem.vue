@@ -97,10 +97,9 @@ defineProps<{
 }>()
 const descriptionLayout = useResponsiveState(
   ref({
-    xs: 0,
     md: 1
   }),
-  1
+  0
 )
 </script>
 

@@ -111,10 +111,9 @@ const handleCancel = () => {
 
 const formLayout = useResponsiveState(
   ref({
-    sm: 0,
     md: 1
   }),
-  1
+  0
 )
 </script>
 

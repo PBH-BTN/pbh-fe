@@ -9,8 +9,8 @@ export default {
     'Error - Error occurred when communicating with the client, please check the log file',
   'page.dashboard.clientStatus.card.status.unknown':
     'Unknown - PeerBanHelper may not have communicated with this client yet',
-  'page.dashboard.clientStatus.card.status.torrentNumber': 'Active Torrents:',
-  'page.dashboard.clientStatus.card.status.peerNumber': 'Connected Peers:',
+  'page.dashboard.clientStatus.card.status.torrentNumber': 'Active Torrents',
+  'page.dashboard.clientStatus.card.status.peerNumber': 'Connected Peers',
   'page.dashboard.statics.currentStatus': 'Current Status',
   'page.dashboard.statics.checked': 'Total checked',
   'page.dashboard.statics.times': 'times',

@@ -1,7 +1,12 @@
 <template>
   <a-modal hide-cancel closable v-model:visible="visible" @ok="handleOk" draggable width="auto">
     <template #title> {{ t('page.dashboard.torrentList.title') }} </template>
-    <a-table :columns="columns" :data="data" :loading="loading" :pagination="{ pageSize: 5 }">
+    <a-table
+      :columns="columns"
+      :data="data"
+      :loading="loading"
+      :pagination="{ pageSize: 5, baseSize: 4, bufferSize: 1 }"
+    >
       <template #name="{ record }">
         <a-typography-text bold style="margin-bottom: 0" :ellipsis="{ showTooltip: true }">
           {{ record.name }}

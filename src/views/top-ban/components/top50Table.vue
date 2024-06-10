@@ -6,7 +6,7 @@
     :data="data"
     column-resizable
     :loading="loading"
-    :pagination="{ showPageSize: true }"
+    :pagination="{ showPageSize: true, baseSize: 4, bufferSize: 1 }"
     filter-icon-align-left
   >
     <template #ip-filter="{ filterValue, setFilterValue, handleFilterConfirm, handleFilterReset }">

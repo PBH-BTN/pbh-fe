@@ -8,7 +8,9 @@
       total,
       current,
       pageSize,
-      showPageSize: true
+      showPageSize: true,
+      baseSize:4,
+      bufferSize:1
     }"
     column-resizable
     size="medium"

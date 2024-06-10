@@ -8,8 +8,8 @@ export default {
   'page.dashboard.clientStatus.card.status.error': '错误 - 与客户端通信时出错，请检查日志文件',
   'page.dashboard.clientStatus.card.status.unknown':
     '未知 - PeerBanHelper 可能还没有与此客户端通信',
-  'page.dashboard.clientStatus.card.status.torrentNumber': '活动种子数:',
-  'page.dashboard.clientStatus.card.status.peerNumber': '已连接的Peers:',
+  'page.dashboard.clientStatus.card.status.torrentNumber': '活动种子数',
+  'page.dashboard.clientStatus.card.status.peerNumber': '已连接的Peers',
   'page.dashboard.statics.currentStatus': '当前状态',
   'page.dashboard.statics.checked': '共检查',
   'page.dashboard.statics.times': '次',

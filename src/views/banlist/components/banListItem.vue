@@ -33,7 +33,9 @@
       >
     </a-descriptions-item>
     <a-descriptions-item :label="t('page.banlist.banlist.listItem.reason')" :span="12">
-      {{ item.banMetadata.description }}
+      <a-typography-text style="margin-bottom: 0">
+        {{ item.banMetadata.description }}
+      </a-typography-text>
     </a-descriptions-item>
     <a-descriptions-item
       v-if="item.banMetadata.geo"

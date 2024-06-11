@@ -60,19 +60,19 @@
               </template>
             </a-button>
           </a-tooltip>
-          <a-tooltip :content="t('page.ruleSubscribe.column.actions.update')" position="top" mini>
-            <AsyncMethod
-              once
-              :async-fn="() => handleRefresh(record.ruleId)"
-              v-slot="{ run, loading }"
-            >
+          <AsyncMethod
+            once
+            :async-fn="() => handleRefresh(record.ruleId)"
+            v-slot="{ run, loading }"
+          >
+            <a-tooltip :content="t('page.ruleSubscribe.column.actions.update')" position="top" mini>
               <a-button class="edit-btn" shape="circle" type="text" @click="run">
                 <template #icon>
                   <icon-refresh :spin="loading" />
                 </template>
               </a-button>
-            </AsyncMethod>
-          </a-tooltip>
+            </a-tooltip>
+          </AsyncMethod>
           <a-popconfirm
             :content="t('page.ruleSubscribe.column.deleteConfirm')"
             type="warning"

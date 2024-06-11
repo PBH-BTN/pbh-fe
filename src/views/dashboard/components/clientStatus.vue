@@ -10,7 +10,7 @@
     ]"
   >
     <!-- 骨架屏 -->
-    <a-col v-if="!data || data?.length === 0" :xs="24" :sm="12" :md="8" :lg="6">
+    <a-col v-if="!data || data?.length === 0 || loading" :xs="24" :sm="12" :md="8" :lg="6">
       <div class="card-wrap">
         <a-card hoverable>
           <template #title>
@@ -128,15 +128,17 @@ const getStatusSafe = (status: ClientStatus | undefined): string[] =>
 
 const autoUpdateState = useAutoUpdate()
 const endpointState = useEndpointStore()
-const downloader = useRequest(getDownloaders, {
-  onSuccess: downloaderStore.updateDownloaders,
+useRequest(getDownloaders, {
+  onSuccess: (data) => {
+    downloaderStore.updateDownloaders(data)
+    run()
+  },
   cacheKey: () => `${endpointState.endpoint}-downloader`
 })
-const { data, refresh } = useRequest(getClientStatus, {
+const { data, run, refresh } = useRequest(getClientStatus, {
   pollingInterval: computed(() => autoUpdateState.pollingInterval),
   onSuccess: autoUpdateState.renewLastUpdate,
-  cacheKey: () => `${endpointState.endpoint}-clientStatus`,
-  ready: () => !downloader.loading.value
+  cacheKey: () => `${endpointState.endpoint}-clientStatus`
 })
 
 watch(() => endpointState.endpoint, refresh)

@@ -15,9 +15,5 @@ export default {
   'page.ruleSubscribe.editModal.form.name.required': '请输入规则名称',
   'page.ruleSubscribe.addRule': '新增订阅',
   'page.ruleSubscribe.column.rulesCount': '规则数量',
-  'page.ruleSubscribe.column.deleteConfirm': '确定删除这条规则吗？',
-
-  'page.ruleSubscribe.notEnable': '规则订阅功能未启用',
-  'page.ruleSubscribe.notEnable.tips': '请在配置文件中开启相关功能',
-  'page.ruleSubscribe.notEnable.viewDoc': '查看文档'
+  'page.ruleSubscribe.column.deleteConfirm': '确定删除这条规则吗？'
 }

@@ -1,18 +1,14 @@
 <template>
   <a-space direction="vertical" fill>
-    <a-typography-text style="font-size: 1.2em">
-      {{ $t('page.ruleSubscribe.description') }}
-    </a-typography-text>
     <a-space class="align-right" fill>
       <a-button type="primary" @click="handleAdd">
         {{ $t('page.ruleSubscribe.addRule') }}
       </a-button>
       <a-button :loading="updateAllLoading" @click="handleUpdateAll">
         <template #icon> <icon-refresh /> </template>
-        {{ t('page.ruleSubscribe.updateAll') }}</a-button
-      >
+        {{ t('page.ruleSubscribe.updateAll') }}
+      </a-button>
     </a-space>
-
     <a-table stripe :columns="columns" :data="data?.data" :loading="loading">
       <template #ruleId="{ record }">
         <a-tag :color="getColor(record.ruleId)">{{ record.ruleId }}</a-tag>
@@ -184,6 +180,12 @@ const handleUpdateAll = async () => {
   refresh()
   updateAllLoading.value = false
 }
+
+defineExpose({
+  handleAdd,
+  handleUpdateAll,
+  updateAllLoading
+})
 </script>
 <style scoped>
 .edit-btn {

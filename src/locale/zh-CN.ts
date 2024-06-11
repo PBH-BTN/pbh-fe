@@ -21,6 +21,10 @@ export default {
   'router.ruleMetrics': '规则统计',
   'router.ruleSubscribe': '规则订阅',
 
+  'router.moduleNotEnable': '{moduleName}功能未启用',
+  'router.moduleNotEnable.tips': '请在配置文件中开启相关功能',
+  'router.moduleNotEnable.viewDoc': '查看文档',
+
   ...settingsLocale,
   ...dashboardPageLocale,
   ...banListPageLocale,

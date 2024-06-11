@@ -2,12 +2,14 @@
   <a-page-header title="PeerBanHelper" :show-back="false">
     <template #extra>
       <a-space class="right-side" wrap>
-        <a-typography-text
-          ><icon-clock-circle /> {{ t('navbar.action.autoUpdate.lastUpdate')
-          }}{{ d(autoUpdate.lastUpdate, 'longlong') }}</a-typography-text
-        >
-        <a-switch v-model="autoUpdate.autoUpdate" />
-        <a-typography-text>{{ t('navbar.action.autoUpdate') }}</a-typography-text>
+        <template v-if="!disableAutoUpdate">
+          <a-typography-text
+            ><icon-clock-circle /> {{ t('navbar.action.autoUpdate.lastUpdate')
+            }}{{ d(autoUpdate.lastUpdate, 'longlong') }}</a-typography-text
+          >
+          <a-switch v-model="autoUpdate.autoUpdate" />
+          <a-typography-text>{{ t('navbar.action.autoUpdate') }}</a-typography-text>
+        </template>
         <div class="lang-selector">
           <a-dropdown
             trigger="click"
@@ -64,7 +66,7 @@ import { useAutoUpdate } from '@/stores/autoUpdate'
 import useLocale from '@/stores/locale'
 import { LOCALE_OPTIONS } from '@/locale'
 import { useI18n } from 'vue-i18n'
-import { ref } from 'vue'
+import { ref, defineProps, computed } from 'vue'
 const { t, d, locale } = useI18n()
 const { changeLocale } = useLocale()
 const locales = [...LOCALE_OPTIONS]
@@ -81,6 +83,15 @@ const toggleTheme = useToggle(isDark)
 const handleToggleTheme = () => {
   toggleTheme()
 }
+
+const props = defineProps({
+  disableAutoUpdate: {
+    type: Boolean,
+    default: false
+  }
+})
+
+const disableAutoUpdate = computed(() => props.disableAutoUpdate)
 </script>
 <style scoped lang="less">
 .arco-layout {

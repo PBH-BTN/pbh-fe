@@ -61,16 +61,17 @@
             </a-button>
           </a-tooltip>
           <a-tooltip :content="t('page.ruleSubscribe.column.actions.update')" position="top" mini>
-            <a-button
-              class="edit-btn"
-              shape="circle"
-              type="text"
-              @click="async () => handleRefresh(record.ruleId)"
+            <AsyncMethod
+              once
+              :async-fn="() => handleRefresh(record.ruleId)"
+              v-slot="{ run, loading }"
             >
-              <template #icon>
-                <icon-refresh :spin="RefreshingStatusMap[record.ruleId]" />
-              </template>
-            </a-button>
+              <a-button class="edit-btn" shape="circle" type="text" @click="run">
+                <template #icon>
+                  <icon-refresh :spin="loading" />
+                </template>
+              </a-button>
+            </AsyncMethod>
           </a-tooltip>
           <a-popconfirm
             :content="t('page.ruleSubscribe.column.deleteConfirm')"
@@ -104,8 +105,8 @@ import { useI18n } from 'vue-i18n'
 import { getColor } from '@/utils/color'
 import { Message } from '@arco-design/web-vue'
 import { ref } from 'vue'
+import AsyncMethod from '@/components/asyncMethod.vue'
 const { t, d } = useI18n()
-const RefreshingStatusMap = ref<Record<string, boolean>>({})
 const { data, loading, refresh } = useRequest(getRuleList, {})
 const editModal = ref<InstanceType<typeof editRuleModal>>()
 const columns = [
@@ -145,18 +146,15 @@ const handleEdit = (record: ruleBrief) => {
 const handleAdd = () => {
   editModal.value?.showModal(true, () => refresh())
 }
-const handleRefresh = (ruleId: string) => {
-  RefreshingStatusMap.value[ruleId] = true
+const handleRefresh = (ruleId: string) =>
   RefreshRule(ruleId).then((result) => {
     if (!result.success) {
       Message.error(result.message)
     } else {
       Message.info(result.message)
     }
-    RefreshingStatusMap.value[ruleId] = false
     refresh()
   })
-}
 const handleDelete = async (ruleId: string) => {
   const result = await DeleteRule(ruleId)
   if (!result.success) {
@@ -180,12 +178,6 @@ const handleUpdateAll = async () => {
   refresh()
   updateAllLoading.value = false
 }
-
-defineExpose({
-  handleAdd,
-  handleUpdateAll,
-  updateAllLoading
-})
 </script>
 <style scoped>
 .edit-btn {

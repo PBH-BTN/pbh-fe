@@ -18,7 +18,14 @@
         <a-input v-model="form.ruleName" allow-clear />
       </a-form-item>
       <a-form-item field="subUrl" label="URL">
-        <a-input v-model="form.subUrl" allow-clear />
+        <a-textarea
+          v-model="form.subUrl"
+          allow-clear
+          :auto-size="{
+            minRows: 2,
+            maxRows: 5
+          }"
+        />
       </a-form-item>
     </a-form>
   </a-modal>

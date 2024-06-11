@@ -20,7 +20,7 @@ export default {
   'router.banlogs': 'Ban Logs',
   'router.topban': 'Top Bans',
   'router.ruleMetrics': 'Rule Metrics',
-  'router.ruleSubscribe': 'Rule Subscribe',
+  'router.ruleSubscribe': 'Rule Subscription',
 
   'router.moduleNotEnable': '{moduleName} is not enabled',
   'router.moduleNotEnable.tips': 'Please enable the feature in the configuration file',

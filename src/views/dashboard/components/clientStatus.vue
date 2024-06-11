@@ -10,7 +10,7 @@
     ]"
   >
     <!-- 骨架屏 -->
-    <a-col v-if="!data || data?.length === 0 || loading" :xs="24" :sm="12" :md="8" :lg="6">
+    <a-col v-if="!data || data?.length === 0" :xs="24" :sm="12" :md="8" :lg="6">
       <div class="card-wrap">
         <a-card hoverable>
           <template #title>

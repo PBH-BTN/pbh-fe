@@ -11,6 +11,7 @@ import BanList from '@/views/banlist/index.vue'
 import BanLog from '@/views/banlog/index.vue'
 import TopBan from '@/views/top-ban/index.vue'
 import RuleMetric from '@/views/rule-metrics/index.vue'
+import RuleSbuscribe from '@/views/rule-subscribe/index.vue'
 
 export const routerOptions: RouteRecordRaw[] = [
   {
@@ -52,6 +53,14 @@ export const routerOptions: RouteRecordRaw[] = [
       label: 'router.ruleMetrics'
     },
     component: RuleMetric
+  },
+  {
+    path: '/subscribe',
+    name: 'rule_subscribe',
+    meta: {
+      label: 'router.ruleSubscribe'
+    },
+    component: RuleSbuscribe
   },
   {
     path: '/:pathMatch(.*)*', // 404

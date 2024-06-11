@@ -6,7 +6,7 @@
     :loading="loading"
     column-resizable
     filter-icon-align-left
-    :pagination="{ showPageSize: true }"
+    :pagination="{ showPageSize: true, baseSize: 4, bufferSize: 1 }"
   >
     <template #empty> <a-empty /> </template>
     <template #type="{ record }">

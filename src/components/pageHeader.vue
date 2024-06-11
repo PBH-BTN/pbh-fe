@@ -66,7 +66,7 @@ import { useAutoUpdate } from '@/stores/autoUpdate'
 import useLocale from '@/stores/locale'
 import { LOCALE_OPTIONS } from '@/locale'
 import { useI18n } from 'vue-i18n'
-import { ref, defineProps, computed } from 'vue'
+import { ref, computed } from 'vue'
 const { t, d, locale } = useI18n()
 const { changeLocale } = useLocale()
 const locales = [...LOCALE_OPTIONS]

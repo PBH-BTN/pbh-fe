@@ -68,7 +68,7 @@ const columns: TableColumnData[] = [
     width: 200
   },
   {
-    title: () => t('page.ruleMetrices.metricsTable.column.type'),
+    title: () => t('page.ruleMetrices.metricsTable.column.content'),
     slotName: 'ruleName',
     width: 200
   },

@@ -14,6 +14,7 @@ API Doc: https://apifox.com/apidoc/shared-b24f42a4-67f5-402a-900d-9fad3ae9917b
 - [x] Auto Refresh
 - [x] Client Status
 - [x] Max-ban list with search
+- [x] Manage rule subscription
 
 ## Screenshots
 

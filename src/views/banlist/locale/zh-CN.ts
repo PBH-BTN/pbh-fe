@@ -11,5 +11,6 @@ export default {
   'page.banlist.banlist.listItem.geo': '地理位置',
   'page.banlist.banlist.listItem.asn': 'ASN',
   'page.banlist.banlist.listItem.asn.subnet': '子网：',
+  'page.banlist.banlist.listItem.empty': '空',
   'page.banlist.banlist.bottomReached': '已经到底啦！'
 }

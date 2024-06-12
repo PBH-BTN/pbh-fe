@@ -3,29 +3,18 @@ import type { Statistic } from '@/api/model/statistic'
 import { useEndpointStore } from '@/stores/endpoint'
 import urlJoin from 'url-join'
 import { getCommonHeader } from './utils'
-import { useDownloader } from '@/stores/downloader'
 
-export async function getClientStatus() {
+export async function getClientStatus(name: string): Promise<ClientStatus> {
   const endpointStore = useEndpointStore()
   await endpointStore.serverAvailable
-  const { downloaders } = useDownloader()
-  return Promise.all(
-    downloaders.map((downloader) => {
-      const url = new URL(
-        urlJoin(endpointStore.endpoint, `api/downloaders/${downloader.name}/status`),
-        location.href
-      )
-      return fetch(url, { headers: getCommonHeader() })
-        .then((res) => {
-          endpointStore.assertResponseLogin(res)
-          return res.json()
-        })
-        .then((s: ClientStatus) => ({
-          ...downloader,
-          ...s
-        }))
-    })
+  const url = new URL(
+    urlJoin(endpointStore.endpoint, `api/downloaders/${name}/status`),
+    location.href
   )
+  return fetch(url, { headers: getCommonHeader() }).then((res) => {
+    endpointStore.assertResponseLogin(res)
+    return res.json()
+  })
 }
 
 export async function getStatistic(): Promise<Statistic> {

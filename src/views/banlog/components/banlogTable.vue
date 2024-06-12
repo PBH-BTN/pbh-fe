@@ -9,8 +9,8 @@
       current,
       pageSize,
       showPageSize: true,
-      baseSize:4,
-      bufferSize:1
+      baseSize: 4,
+      bufferSize: 1
     }"
     column-resizable
     size="medium"
@@ -53,8 +53,12 @@
     </template>
     <template #peerId="{ record }">
       <p>
-        {{ record.peerId }}
-        <a-tooltip :content="record.peerClientName">
+        {{ record.peerId ? record.peerId : t('page.banlist.banlist.listItem.empty') }}
+        <a-tooltip
+          :content="
+            record.peerClientName ? record.peerClientNam : t('page.banlist.banlist.listItem.empty')
+          "
+        >
           <icon-info-circle />
         </a-tooltip>
       </p>

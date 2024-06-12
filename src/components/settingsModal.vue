@@ -45,7 +45,7 @@
 </template>
 <script setup lang="ts">
 import { IncorrectTokenError } from '@/service/login'
-import { GetVersionError } from '@/service/version'
+import { GetManifestError } from '@/service/version'
 import { useAutoUpdate } from '@/stores/autoUpdate'
 import { useEndpointStore } from '@/stores/endpoint'
 import { Message } from '@arco-design/web-vue'
@@ -88,7 +88,7 @@ watch(
   (error) => {
     if (IncorrectTokenError.is(error)) {
       handleCancel()
-    } else if (GetVersionError.is(error)) {
+    } else if (GetManifestError.is(error)) {
       Message.error(t(error.message))
       if (!showModal.value && error.isApiWrong) {
         showModal.value = true
@@ -111,10 +111,9 @@ const handleCancel = () => {
 
 const formLayout = useResponsiveState(
   ref({
-    sm: 0,
     md: 1
   }),
-  1
+  0
 )
 </script>
 

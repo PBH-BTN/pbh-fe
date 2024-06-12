@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { useStorage } from '@vueuse/core'
-import { getLatestVersion, getVersion } from '@/service/version'
-import { computed, readonly, ref } from 'vue'
+import { getLatestVersion, getManifest } from '@/service/version'
+import { computed, readonly, ref, type DeepReadonly } from 'vue'
 import type { release } from '@/api/model/manifest'
 import { IncorrectTokenError, login } from '@/service/login'
 import { compare } from 'compare-versions'
@@ -11,6 +11,14 @@ function newPromiseLock<T>() {
   let resolve!: (value: T | PromiseLike<T>) => void
   const p = new Promise<T>((res) => (resolve = res))
   return Object.assign(p, { resolve })
+}
+
+export function isModuleEnable(
+  mainfest: DeepReadonly<mainfest> | undefined | null,
+  moduleName: string
+) {
+  if (!mainfest) return null
+  return mainfest.modules.some((module) => module.className === moduleName)
 }
 
 export const useEndpointStore = defineStore('endpoint', () => {
@@ -69,7 +77,7 @@ export const useEndpointStore = defineStore('endpoint', () => {
     endpoint.value = value
     pushLock()
     try {
-      serverManifest.value = await getVersion(value)
+      serverManifest.value = await getManifest(value)
       try {
         await setAuthToken(authToken.value)
       } catch (err) {

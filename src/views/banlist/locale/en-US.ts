@@ -11,5 +11,6 @@ export default {
   'page.banlist.banlist.listItem.geo': 'Geo Location',
   'page.banlist.banlist.listItem.asn': 'ASN',
   'page.banlist.banlist.listItem.asn.subnet': 'ASN Subnet: ',
+  'page.banlist.banlist.listItem.empty': 'Empty',
   'page.banlist.banlist.bottomReached': 'No more data!'
 }

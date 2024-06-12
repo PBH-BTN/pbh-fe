@@ -10,7 +10,11 @@
           {{ item.banMetadata.peer.address.ip }}:{{ item.banMetadata.peer.address.port }}
         </a-typography-text>
         <a-typography-text code>
-          {{ item.banMetadata.peer.clientName }}
+          {{
+            item.banMetadata.peer.clientName
+              ? item.banMetadata.peer.clientName
+              : t('page.banlist.banlist.listItem.empty')
+          }}
         </a-typography-text>
       </a-space>
     </template>

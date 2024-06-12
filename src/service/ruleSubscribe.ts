@@ -24,20 +24,14 @@ export async function ToggleRuleEnable(
   await endpointStore.serverAvailable
 
   const url = new URL(urlJoin(endpointStore.endpoint, `api/sub/rule/${ruleId}`), location.href)
-  const formData = new FormData()
-  formData.append('enabled', enable.toString())
   return fetch(url, {
     headers: getCommonHeader(),
     method: 'PATCH',
-    body: formData
+    body: JSON.stringify({ enabled: enable })
+  }).then((res) => {
+    endpointStore.assertResponseLogin(res)
+    return res.json()
   })
-    .then((res) => {
-      endpointStore.assertResponseLogin(res)
-      return res.json()
-    })
-    .catch((e: Error) => {
-      console.log(e)
-    })
 }
 
 export async function UpdateRuleItem({
@@ -53,13 +47,10 @@ export async function UpdateRuleItem({
   await endpointStore.serverAvailable
 
   const url = new URL(urlJoin(endpointStore.endpoint, `/api/sub/rule/${ruleId}`), location.href)
-  const formData = new FormData()
-  formData.append('ruleName', ruleName)
-  formData.append('subUrl', subUrl)
   return fetch(url, {
     headers: getCommonHeader(),
     method: 'POST',
-    body: formData
+    body: JSON.stringify({ ruleName, subUrl, enabled: false })
   }).then((res) => {
     endpointStore.assertResponseLogin(res)
     return res.json()
@@ -79,14 +70,10 @@ export async function AddRuleItem({
   await endpointStore.serverAvailable
 
   const url = new URL(urlJoin(endpointStore.endpoint, `api/sub/rule`), location.href)
-  const formData = new FormData()
-  formData.append('ruleId', ruleId)
-  formData.append('ruleName', ruleName)
-  formData.append('subUrl', subUrl)
   return fetch(url, {
     headers: getCommonHeader(),
     method: 'PUT',
-    body: formData
+    body: JSON.stringify({ ruleId, ruleName, subUrl, enabled: false })
   }).then((res) => {
     endpointStore.assertResponseLogin(res)
     return res.json()
@@ -130,7 +117,7 @@ export async function UpdateAll() {
 
   const url = new URL(urlJoin(endpointStore.endpoint, `/api/sub/rules/update`), location.href)
   return fetch(url, {
-    headers: getCommonHeader(),
+    headers: { ...getCommonHeader(), 'X-Audit': 'Rule deletion' },
     method: 'POST'
   }).then((res) => {
     endpointStore.assertResponseLogin(res)

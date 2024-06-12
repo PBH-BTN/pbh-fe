@@ -124,3 +124,31 @@ export async function UpdateAll() {
     return res.json()
   })
 }
+
+export async function GetCheckInvervalSettings(): Promise<CommonResponse<number>> {
+  const endpointStore = useEndpointStore()
+  await endpointStore.serverAvailable
+
+  const url = new URL(urlJoin(endpointStore.endpoint, 'api/sub/interval'), location.href)
+
+  return fetch(url, { headers: getCommonHeader() }).then((res) => {
+    endpointStore.assertResponseLogin(res)
+    return res.json()
+  })
+}
+
+export async function SetCheckInterval(interval: number): Promise<CommonResponseWithoutData> {
+  const endpointStore = useEndpointStore()
+  await endpointStore.serverAvailable
+
+  const url = new URL(urlJoin(endpointStore.endpoint, 'api/sub/interval'), location.href)
+
+  return fetch(url, {
+    headers: getCommonHeader(),
+    method: 'PATCH',
+    body: JSON.stringify({ checkInterval: interval })
+  }).then((res) => {
+    endpointStore.assertResponseLogin(res)
+    return res.json()
+  })
+}

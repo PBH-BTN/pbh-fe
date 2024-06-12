@@ -1,6 +1,7 @@
 export default {
   'page.ruleSubscribe.description': '你可以在此处管理订阅的在线规则',
   'page.ruleSubscribe.updateAll': '更新全部',
+  'page.ruleSubscribe.settingsTips': '自动更新设置',
   'page.ruleSubscribe.column.ruleName': '规则名称',
   'page.ruleSubscribe.column.lastUpdated': '最后更新',
   'page.ruleSubscribe.column.notUpdated': '无',
@@ -15,5 +16,7 @@ export default {
   'page.ruleSubscribe.editModal.form.name.required': '请输入规则名称',
   'page.ruleSubscribe.addRule': '新增订阅',
   'page.ruleSubscribe.column.rulesCount': '规则数量',
-  'page.ruleSubscribe.column.deleteConfirm': '确定删除这条规则吗？'
+  'page.ruleSubscribe.column.deleteConfirm': '确定删除这条规则吗？',
+  'page.ruleSubscribe.settingsModal.title': '订阅设置',
+  'page.ruleSubscribe.settingsModal.checkInterval': '更新间隔'
 }

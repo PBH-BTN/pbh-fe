@@ -4,10 +4,19 @@
       <a-button type="primary" @click="handleAdd">
         {{ $t('page.ruleSubscribe.addRule') }}
       </a-button>
-      <a-button :loading="updateAllLoading" @click="handleUpdateAll">
-        <template #icon> <icon-refresh /> </template>
-        {{ t('page.ruleSubscribe.updateAll') }}
-      </a-button>
+      <a-button-group>
+        <a-button :loading="updateAllLoading" @click="handleUpdateAll">
+          <template #icon> <icon-refresh /> </template>
+          {{ t('page.ruleSubscribe.updateAll') }}
+        </a-button>
+        <a-tooltip :content="t('page.ruleSubscribe.settingsTips')">
+          <a-button @click="settingsModal?.showModal">
+            <template #icon>
+              <icon-settings />
+            </template>
+          </a-button>
+        </a-tooltip>
+      </a-button-group>
     </a-space>
     <a-table stripe :columns="columns" :data="data?.data" :loading="loading">
       <template #ruleId="{ record }">
@@ -87,7 +96,8 @@
         </a-space>
       </template>
     </a-table>
-    <editRuleModal ref="editModal" />
+    <EditRuleModal ref="editModal" />
+    <SettingsModal ref="settingsModal" />
   </a-space>
 </template>
 <script setup lang="ts">
@@ -99,16 +109,18 @@ import {
   UpdateAll
 } from '@/service/ruleSubscribe'
 import type { ruleBrief } from '@/api/model/ruleSubscribe'
-import editRuleModal from './editRuleItemModal.vue'
 import { useRequest } from 'vue-request'
 import { useI18n } from 'vue-i18n'
 import { getColor } from '@/utils/color'
 import { Message } from '@arco-design/web-vue'
 import { ref } from 'vue'
 import AsyncMethod from '@/components/asyncMethod.vue'
+import EditRuleModal from './editRuleItemModal.vue'
+import SettingsModal from './settingsModal.vue'
 const { t, d } = useI18n()
 const { data, loading, refresh } = useRequest(getRuleList, {})
-const editModal = ref<InstanceType<typeof editRuleModal>>()
+const editModal = ref<InstanceType<typeof EditRuleModal>>()
+const settingsModal = ref<InstanceType<typeof SettingsModal>>()
 const columns = [
   {
     title: () => t('page.ruleSubscribe.column.status'),

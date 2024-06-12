@@ -3,6 +3,7 @@ export default {
   'page.ruleSubscribe.addRule': 'Add Subscription',
   'page.ruleSubscribe.updateAll': 'Update all',
   'page.ruleSubscribe.settingsTips': 'Auto update settings',
+  'page.ruleSubscribe.updateLog': 'Update Log',
   'page.ruleSubscribe.column.ruleName': 'Rule Name',
   'page.ruleSubscribe.column.lastUpdated': 'Last Updated',
   'page.ruleSubscribe.column.notUpdated': 'Never',
@@ -18,5 +19,8 @@ export default {
   'page.ruleSubscribe.column.rulesCount': 'Rules',
   'page.ruleSubscribe.column.deleteConfirm': 'Are you sure you want to delete?',
   'page.ruleSubscribe.settingsModal.title': 'Subscribe Settings',
-  'page.ruleSubscribe.settingsModal.checkInterval': 'Update Interval'
+  'page.ruleSubscribe.settingsModal.checkInterval': 'Update Interval',
+  'page.ruleSubscribe.updateLog.updateTime': 'Update at',
+  'page.ruleSubscribe.updateLog.ruleCount': 'Rules Count',
+  'page.ruleSubscribe.updateLog.updateType': 'Type'
 }

@@ -2,6 +2,9 @@
   <a-space direction="vertical" fill>
     <a-space class="align-right" fill>
       <a-button type="primary" @click="handleAdd">
+        <template #icon>
+          <icon-plus-circle />
+        </template>
         {{ $t('page.ruleSubscribe.addRule') }}
       </a-button>
       <a-button-group>
@@ -13,6 +16,13 @@
           <a-button @click="settingsModal?.showModal">
             <template #icon>
               <icon-settings />
+            </template>
+          </a-button>
+        </a-tooltip>
+        <a-tooltip :content="t('page.ruleSubscribe.updateLog')">
+          <a-button @click="updateLog?.showModal">
+            <template #icon>
+              <icon-history />
             </template>
           </a-button>
         </a-tooltip>
@@ -98,6 +108,7 @@
     </a-table>
     <EditRuleModal ref="editModal" />
     <SettingsModal ref="settingsModal" />
+    <UpdateLog ref="updateLog" />
   </a-space>
 </template>
 <script setup lang="ts">
@@ -117,10 +128,12 @@ import { ref } from 'vue'
 import AsyncMethod from '@/components/asyncMethod.vue'
 import EditRuleModal from './editRuleItemModal.vue'
 import SettingsModal from './settingsModal.vue'
+import UpdateLog from './logModal.vue'
 const { t, d } = useI18n()
 const { data, loading, refresh } = useRequest(getRuleList, {})
 const editModal = ref<InstanceType<typeof EditRuleModal>>()
 const settingsModal = ref<InstanceType<typeof SettingsModal>>()
+const updateLog = ref<InstanceType<typeof UpdateLog>>()
 const columns = [
   {
     title: () => t('page.ruleSubscribe.column.status'),

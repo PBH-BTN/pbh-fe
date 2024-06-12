@@ -6,3 +6,10 @@ export interface ruleBrief {
   ruleName: string
   subUrl: string
 }
+
+export interface updateLog {
+  count: number
+  ruleId: string
+  updateTime: number
+  updateType: string
+}

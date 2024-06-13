@@ -50,7 +50,7 @@ export async function UpdateRuleItem({
   return fetch(url, {
     headers: getCommonHeader(),
     method: 'POST',
-    body: JSON.stringify({ ruleName, subUrl, enabled: false })
+    body: JSON.stringify({ ruleName, subUrl })
   }).then((res) => {
     endpointStore.assertResponseLogin(res)
     return res.json()
@@ -73,7 +73,7 @@ export async function AddRuleItem({
   return fetch(url, {
     headers: getCommonHeader(),
     method: 'PUT',
-    body: JSON.stringify({ ruleId, ruleName, subUrl, enabled: false })
+    body: JSON.stringify({ ruleId, ruleName, subUrl })
   }).then((res) => {
     endpointStore.assertResponseLogin(res)
     return res.json()

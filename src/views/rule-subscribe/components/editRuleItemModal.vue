@@ -21,6 +21,7 @@
         <a-textarea
           v-model="form.subUrl"
           allow-clear
+          @change="handleUrlChange"
           :auto-size="{
             minRows: 2,
             maxRows: 5
@@ -36,6 +37,7 @@ import { useI18n } from 'vue-i18n'
 import { reactive, ref } from 'vue'
 import { Message, type FieldRule, type Form } from '@arco-design/web-vue'
 import { AddRuleItem, UpdateRuleItem } from '@/service/ruleSubscribe'
+import path from 'path'
 const { t } = useI18n()
 const showModal = ref(false)
 const newItem = ref(false)
@@ -108,6 +110,17 @@ const handleBeforeOk = async () => {
     }
     if (callbackFn) callbackFn(form)
     return true
+  }
+}
+const handleUrlChange = (value: string) => {
+  if (!form.ruleName) {
+    try {
+      const url = new URL(value)
+      const fileName = path.parse(url.pathname).name
+      form.ruleName = fileName
+    } catch (_) {
+      // ignore
+    }
   }
 }
 </script>

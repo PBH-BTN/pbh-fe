@@ -7,6 +7,7 @@ import VueDevTools from 'vite-plugin-vue-devtools'
 import { vitePluginForArco } from '@arco-plugins/vite-vue'
 import { promisify } from 'node:util'
 import { exec as execCallBack } from 'node:child_process'
+import { nodePolyfills } from 'vite-plugin-node-polyfills'
 
 const exec = promisify(execCallBack)
 
@@ -22,6 +23,7 @@ export default defineConfig({
     vitePluginForArco({
       style: 'css'
     }),
+    nodePolyfills({ include: ['path'] }),
     ...(isAnalyze ? [analyzer()] : [])
   ],
   define: {

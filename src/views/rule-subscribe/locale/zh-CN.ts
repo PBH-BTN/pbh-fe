@@ -22,5 +22,8 @@ export default {
   'page.ruleSubscribe.settingsModal.checkInterval': '更新间隔',
   'page.ruleSubscribe.updateLog.updateTime': '更新时间',
   'page.ruleSubscribe.updateLog.ruleCount': '规则数量',
-  'page.ruleSubscribe.updateLog.updateType': '更新类型'
+  'page.ruleSubscribe.updateLog.updateType': '更新类型',
+  'page.ruleSubscribe.updateLog.updateType.auto': '自动更新',
+  'page.ruleSubscribe.updateLog.updateType.manual': '手动更新',
+  'page.ruleSubscribe.updateLog.updateType.unknown': '未知'
 }

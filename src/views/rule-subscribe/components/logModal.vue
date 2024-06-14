@@ -29,9 +29,14 @@
         <a-typography-text>{{ d(record.updateTime, 'long') }}</a-typography-text>
       </template>
       <template #updateType="{ record }">
-        <a-tag :color="record.updateType === '手动更新' ? 'green' : 'blue'">{{
-          record.updateType
-        }}</a-tag>
+        <a-tag :color="record.updateType === updateType.MANUAL ? 'green' : 'blue'">
+          {{
+            t(
+              updateTypeMap[record.updateType as updateType] ??
+                'page.ruleSubscribe.updateLog.updateType.unknown'
+            )
+          }}
+        </a-tag>
       </template>
     </a-table>
   </a-modal>
@@ -42,7 +47,7 @@ import { computed, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { usePagination } from 'vue-request'
 import { getColor } from '@/utils/color'
-
+import { updateType } from '@/api/model/ruleSubscribe'
 const { t, d } = useI18n()
 const showModal = ref(false)
 defineExpose({
@@ -70,6 +75,11 @@ const columns = [
   }
 ]
 const forceLoading = ref(true)
+
+const updateTypeMap = {
+  [updateType.MANUAL]: 'page.ruleSubscribe.updateLog.updateType.manual',
+  [updateType.AUTO]: 'page.ruleSubscribe.updateLog.updateType.auto'
+}
 
 const tableLoading = computed(() => {
   return forceLoading.value || loading.value || !list.value

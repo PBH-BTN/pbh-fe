@@ -7,9 +7,14 @@ export interface ruleBrief {
   subUrl: string
 }
 
+export enum updateType {
+  AUTO = 'AUTO',
+  MANUAL = 'MANUAL'
+}
+
 export interface updateLog {
   count: number
   ruleId: string
   updateTime: number
-  updateType: string
+  updateType: updateType
 }

@@ -22,5 +22,8 @@ export default {
   'page.ruleSubscribe.settingsModal.checkInterval': 'Update Interval',
   'page.ruleSubscribe.updateLog.updateTime': 'Update at',
   'page.ruleSubscribe.updateLog.ruleCount': 'Rules Count',
-  'page.ruleSubscribe.updateLog.updateType': 'Type'
+  'page.ruleSubscribe.updateLog.updateType': 'Type',
+  'page.ruleSubscribe.updateLog.updateType.auto': 'Auto',
+  'page.ruleSubscribe.updateLog.updateType.manual': 'Manual',
+  'page.ruleSubscribe.updateLog.updateType.unknown': 'Unknown'
 }

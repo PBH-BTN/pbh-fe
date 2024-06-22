@@ -56,7 +56,7 @@
         {{ record.peerId ? record.peerId : t('page.banlist.banlist.listItem.empty') }}
         <a-tooltip
           :content="
-            record.peerClientName ? record.peerClientNam : t('page.banlist.banlist.listItem.empty')
+            record.peerClientName ? record.peerClientName : t('page.banlist.banlist.listItem.empty')
           "
         >
           <icon-info-circle />

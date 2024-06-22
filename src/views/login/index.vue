@@ -47,11 +47,11 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, type UnwrapRef } from 'vue'
+import { onMounted, ref, type UnwrapRef } from 'vue'
 import { Message, type FormInstance } from '@arco-design/web-vue'
 import { useI18n } from 'vue-i18n'
 import { useEndpointStore } from '@/stores/endpoint'
-
+import { useRoute } from 'vue-router'
 const endpointStore = useEndpointStore()
 const { t } = useI18n()
 const loading = ref(false)
@@ -59,6 +59,7 @@ const loginConfig = ref({
   rememberPassword: true,
   token: endpointStore.authToken
 })
+
 const loginForm = ref<FormInstance>()
 const handleSubmit: FormInstance['onSubmit'] = async ({ errors, values }) => {
   const errorFields = errors ? Object.keys(errors) : []
@@ -86,6 +87,18 @@ const handleSubmit: FormInstance['onSubmit'] = async ({ errors, values }) => {
     loading.value = false
   }
 }
+
+const { query } = useRoute()
+onMounted(() => {
+  if (query.token) {
+    loginConfig.value.token = query.token as string
+    loginForm.value?.$emit(
+      'submit',
+      { values: loginConfig.value, errors: undefined },
+      new Event('submit')
+    )
+  }
+})
 </script>
 
 <style lang="less" scoped></style>

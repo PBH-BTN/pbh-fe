@@ -14,7 +14,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
-    "@arco-design/web-vue": "^2.55.1",
+    "@arco-design/web-vue": "^2.55.3",
     "@arco-plugins/vite-vue": "^1.4.5",
     "@dzangolab/flag-icon-css": "^3.4.5",
     "@octokit/core": "^6.1.2",

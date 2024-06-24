@@ -5,6 +5,7 @@
       newItem ? t('page.dashboard.editModal.title.new') : t('page.dashboard.editModal.title.edit')
     "
     unmountOnClose
+    @cancel="() => resetFields()"
     @before-ok="handleBeforeOk"
   >
     <a-form ref="formRef" :model="form" auto-label-width>
@@ -29,7 +30,7 @@
         <a-form-item field="config.username" :label="t('page.dashboard.editModal.label.username')">
           <a-input v-model="form.config.username" allow-clear></a-input>
         </a-form-item>
-        <a-form-item field="config.username" :label="t('page.dashboard.editModal.label.password')">
+        <a-form-item field="config.password" :label="t('page.dashboard.editModal.label.password')">
           <a-input-password v-model="form.config.password" allow-clear></a-input-password>
         </a-form-item>
         <a-form-item>
@@ -37,13 +38,74 @@
             {{ t('page.dashboard.editModal.label.useBasicAuth') }}</a-checkbox
           >
         </a-form-item>
-        <a-form-item :content-flex="false">
+        <a-form-item v-if="useBasicAuth" :content-flex="false">
           <a-form-item field="config.basicAuth.user" label="User">
             <a-input v-model="form.config.basicAuth.user" />
           </a-form-item>
           <a-form-item field="config.basicAuth.pass" label="Pass">
             <a-input v-model="form.config.basicAuth.pass" />
           </a-form-item>
+        </a-form-item>
+        <a-form-item
+          field="config.httpVersion"
+          :label="t('page.dashboard.editModal.label.httpVersion')"
+        >
+          <a-radio-group v-model="form.config.httpVersion">
+            <a-radio value="HTTP_1_1">1.1</a-radio>
+            <a-radio value="HTTP_2_0">2.0</a-radio>
+          </a-radio-group>
+          <template #extra
+            >{{ t('page.dashboard.editModal.label.httpVersion.description') }}
+          </template>
+        </a-form-item>
+        <a-form-item
+          field="config.incrementBan"
+          :label="t('page.dashboard.editModal.label.incrementBan')"
+        >
+          <a-switch v-model="form.config.incrementBan" />
+          <template #extra>
+            {{ t('page.dashboard.editModal.label.incrementBan.description') }}</template
+          >
+        </a-form-item>
+        <a-form-item
+          field="config.verifySsl"
+          :label="t('page.dashboard.editModal.label.verifySsl')"
+        >
+          <a-switch v-model="form.config.verifySsl" />
+        </a-form-item>
+      </div>
+      <!-- Transmission config block -->
+      <div v-else-if="form.config.type === ClientTypeEnum.Transmission">
+        <a-form-item
+          field="config.endpoint"
+          :label="t('page.dashboard.editModal.label.endpoint')"
+          :rules="[{ required: true, type: 'url' }]"
+        >
+          <a-input v-model="form.config.endpoint" allow-clear></a-input>
+        </a-form-item>
+        <a-form-item field="config.username" :label="t('page.dashboard.editModal.label.username')">
+          <a-input v-model="form.config.username" allow-clear></a-input>
+        </a-form-item>
+        <a-form-item field="config.password" :label="t('page.dashboard.editModal.label.password')">
+          <a-input-password v-model="form.config.password" allow-clear></a-input-password>
+        </a-form-item>
+        <a-form-item field="config.rpcUrl" label="RPC URL">
+          <a-input v-model="form.config.rpcUrl" allow-clear></a-input>
+        </a-form-item>
+        <a-form-item
+          field="config.incrementBan"
+          :label="t('page.dashboard.editModal.label.incrementBan')"
+        >
+          <a-switch v-model="form.config.incrementBan" />
+          <template #extra>
+            {{ t('page.dashboard.editModal.label.incrementBan.description') }}</template
+          >
+        </a-form-item>
+        <a-form-item
+          field="config.verifySsl"
+          :label="t('page.dashboard.editModal.label.verifySsl')"
+        >
+          <a-switch v-model="form.config.verifySsl" />
         </a-form-item>
       </div>
     </a-form>
@@ -60,7 +122,20 @@ const newItem = ref(false)
 const useBasicAuth = ref(false)
 const form = reactive({
   name: '',
-  config: {} as downloaderConfig
+  config: {
+    type: ClientTypeEnum.Unknown,
+    endpoint: '',
+    username: '',
+    password: '',
+    basicAuth: {
+      user: '',
+      pass: ''
+    },
+    httpVersion: 'HTTP_2_0',
+    incrementBan: false,
+    verifySsl: true,
+    rpcUrl: ''
+  } as downloaderConfig
 })
 let callbackFn: ((record: Partial<downloaderConfig>) => void) | undefined
 defineExpose({
@@ -79,6 +154,23 @@ const handleBeforeOk = async () => {
   const validateError = await formRef.value?.validate()
   if (validateError) {
     return false
+  }
+}
+const resetFields = () => {
+  form.name = ''
+  form.config = {
+    type: ClientTypeEnum.Unknown,
+    endpoint: '',
+    username: '',
+    password: '',
+    basicAuth: {
+      user: '',
+      pass: ''
+    },
+    httpVersion: 'HTTP_2_0',
+    incrementBan: false,
+    verifySsl: true,
+    rpcUrl: ''
   }
 }
 </script>

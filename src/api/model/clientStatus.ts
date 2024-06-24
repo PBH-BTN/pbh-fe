@@ -13,7 +13,8 @@ export enum ClientStatusEnum {
 
 export enum ClientTypeEnum {
   qBittorrent = 'qBittorrent',
-  Transmission = 'Transmission'
+  Transmission = 'Transmission',
+  Unknown = 'Unknown'
 }
 
 export interface Downloader {
@@ -29,7 +30,7 @@ export interface Torrent {
   hash: string
 }
 
-export type downloaderConfig = qBittorrentConfig | transmissionConfig
+export type downloaderConfig = qBittorrentConfig & transmissionConfig
 
 export interface qBittorrentConfig {
   type: ClientTypeEnum

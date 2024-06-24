@@ -31,5 +31,12 @@ export default {
   'page.dashboard.editModal.label.endpoint': 'Endpoint',
   'page.dashboard.editModal.label.username': 'Username',
   'page.dashboard.editModal.label.password': 'Password',
-  'page.dashboard.editModal.label.useBasicAuth': 'Use HTTP Basic Auth'
+  'page.dashboard.editModal.label.useBasicAuth': 'Use HTTP Basic Auth',
+  'page.dashboard.editModal.label.httpVersion': 'HTTP Version',
+  'page.dashboard.editModal.label.httpVersion.description':
+    '2.0 is faster, which 1.1 is more compatible',
+  'page.dashboard.editModal.label.incrementBan': 'Incremental Ban',
+  'page.dashboard.editModal.label.incrementBan.description':
+    'Helps to alleviate the downloader pressure when saving the ban list, but may cause the inability to ban Peers on some downloaders',
+  'page.dashboard.editModal.label.verifySsl': 'Verify SSL'
 }

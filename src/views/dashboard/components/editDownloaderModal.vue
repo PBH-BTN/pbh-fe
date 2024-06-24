@@ -148,7 +148,7 @@ const handleBeforeOk = async () => {
     const result = newItem.value
       ? await CreateDownloader(form)
       : await UpdateDownloader(oldName.value, form)
-    if (result.code === 201) {
+    if (result.code === 201 || result.code === 200) {
       Message.success(result.message)
       emits('changed')
       return true

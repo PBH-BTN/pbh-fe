@@ -93,15 +93,6 @@
           <a-input v-model="form.config.rpcUrl" allow-clear></a-input>
         </a-form-item>
         <a-form-item
-          field="config.incrementBan"
-          :label="t('page.dashboard.editModal.label.incrementBan')"
-        >
-          <a-switch v-model="form.config.incrementBan" />
-          <template #extra>
-            {{ t('page.dashboard.editModal.label.incrementBan.description') }}</template
-          >
-        </a-form-item>
-        <a-form-item
           field="config.verifySsl"
           :label="t('page.dashboard.editModal.label.verifySsl')"
         >
@@ -122,20 +113,7 @@ const newItem = ref(false)
 const useBasicAuth = ref(false)
 const form = reactive({
   name: '',
-  config: {
-    type: ClientTypeEnum.Unknown,
-    endpoint: '',
-    username: '',
-    password: '',
-    basicAuth: {
-      user: '',
-      pass: ''
-    },
-    httpVersion: 'HTTP_2_0',
-    incrementBan: false,
-    verifySsl: true,
-    rpcUrl: ''
-  } as downloaderConfig
+  config: {} as downloaderConfig
 })
 let callbackFn: ((record: Partial<downloaderConfig>) => void) | undefined
 defineExpose({
@@ -158,19 +136,6 @@ const handleBeforeOk = async () => {
 }
 const resetFields = () => {
   form.name = ''
-  form.config = {
-    type: ClientTypeEnum.Unknown,
-    endpoint: '',
-    username: '',
-    password: '',
-    basicAuth: {
-      user: '',
-      pass: ''
-    },
-    httpVersion: 'HTTP_2_0',
-    incrementBan: false,
-    verifySsl: true,
-    rpcUrl: ''
-  }
+  form.config = {} as downloaderConfig
 }
 </script>

@@ -30,10 +30,10 @@ export interface Torrent {
   hash: string
 }
 
-export type downloaderConfig = qBittorrentConfig & transmissionConfig
+export type downloaderConfig = qBittorrentConfig | transmissionConfig
 
 export interface qBittorrentConfig {
-  type: ClientTypeEnum
+  type: ClientTypeEnum.qBittorrent
   endpoint: string
   username: string
   password: string
@@ -49,7 +49,7 @@ interface BasicAuth {
 }
 
 export interface transmissionConfig {
-  type: ClientTypeEnum
+  type: ClientTypeEnum.Transmission
   endpoint: string
   username: string
   password: string

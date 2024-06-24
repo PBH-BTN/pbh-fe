@@ -4,7 +4,7 @@
     <a-button
       class="add-btn"
       type="outline"
-      :shape="'circle'"
+      shape="circle"
       @click="() => editDownloaderModal?.showModal(true)"
     >
       <template #icon>

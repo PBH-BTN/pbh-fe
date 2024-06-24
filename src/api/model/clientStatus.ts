@@ -12,8 +12,8 @@ export enum ClientStatusEnum {
 }
 
 export enum ClientTypeEnum {
-  qBittorrent = 'qBittorrent',
-  Transmission = 'Transmission',
+  qBittorrent = 'qbittorrent',
+  Transmission = 'transmission',
   Unknown = 'Unknown'
 }
 

@@ -49,7 +49,7 @@
             :beforeChange="
               async (newStatus: string | number | boolean) => {
                 const result = await ToggleRuleEnable(record.ruleId, newStatus as boolean)
-                if (!result.success) {
+                if (result.code !== 200) {
                   Message.error(result.message)
                   return false
                 }
@@ -173,7 +173,7 @@ const handleAdd = () => {
 }
 const handleRefresh = (ruleId: string) =>
   RefreshRule(ruleId).then((result) => {
-    if (!result.success) {
+    if (result.code !== 200) {
       Message.error(result.message)
     } else {
       Message.info(result.message)
@@ -182,7 +182,7 @@ const handleRefresh = (ruleId: string) =>
   })
 const handleDelete = async (ruleId: string) => {
   const result = await DeleteRule(ruleId)
-  if (!result.success) {
+  if (result.code !== 200) {
     Message.error(result.message)
   } else {
     Message.success(result.message)
@@ -195,7 +195,7 @@ const updateAllLoading = ref(false)
 const handleUpdateAll = async () => {
   updateAllLoading.value = true
   const result = await UpdateAll()
-  if (!result.success) {
+  if (result.code !== 200) {
     Message.error(result.message)
   } else {
     Message.success(result.message)

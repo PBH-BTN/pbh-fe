@@ -43,7 +43,7 @@
             <a-input v-model="form.config.basicAuth.user" />
           </a-form-item>
           <a-form-item field="config.basicAuth.pass" label="Pass">
-            <a-input v-model="form.config.basicAuth.pass" />
+            <a-input-password v-model="form.config.basicAuth.pass" />
           </a-form-item>
         </a-form-item>
         <a-form-item
@@ -60,6 +60,7 @@
         </a-form-item>
         <a-form-item
           field="config.incrementBan"
+          default-checked
           :label="t('page.dashboard.editModal.label.incrementBan')"
         >
           <a-switch v-model="form.config.incrementBan" />
@@ -69,6 +70,7 @@
         </a-form-item>
         <a-form-item
           field="config.verifySsl"
+          default-checked
           :label="t('page.dashboard.editModal.label.verifySsl')"
         >
           <a-switch v-model="form.config.verifySsl" />
@@ -94,6 +96,7 @@
         </a-form-item>
         <a-form-item
           field="config.verifySsl"
+          default-checked
           :label="t('page.dashboard.editModal.label.verifySsl')"
         >
           <a-switch v-model="form.config.verifySsl" />
@@ -105,37 +108,74 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
 import { reactive, ref } from 'vue'
-import { Message, type FieldRule, type Form } from '@arco-design/web-vue'
+import { Message, type Form } from '@arco-design/web-vue'
 import { ClientTypeEnum, type downloaderConfig } from '@/api/model/clientStatus'
+import { CreateDownloader, TestDownloaderConfig, UpdateDownloader } from '@/service/downloaders'
 const { t } = useI18n()
 const showModal = ref(false)
 const newItem = ref(false)
 const useBasicAuth = ref(false)
 const form = reactive({
   name: '',
-  config: {} as downloaderConfig
+  config: { basicAuth: {}, verifySsl: true, httpVersion: 'HTTP_1_1' } as downloaderConfig
 })
-let callbackFn: ((record: Partial<downloaderConfig>) => void) | undefined
 defineExpose({
-  showModal: (
-    isNewItem: boolean,
-    finishedCallback?: (record: Partial<downloaderConfig>) => void,
-    name?: string
-  ) => {
+  showModal: (isNewItem: boolean, currentConfig?: { name: string; config: downloaderConfig }) => {
     newItem.value = isNewItem
-    callbackFn = finishedCallback
+    if (!isNewItem && currentConfig) {
+      form.name = currentConfig.name
+      form.config = currentConfig.config
+    }
     showModal.value = true
   }
 })
+
+const emits = defineEmits<{
+  (e: 'downloader-changed'): void
+}>()
+
 const formRef = ref<InstanceType<typeof Form>>()
 const handleBeforeOk = async () => {
   const validateError = await formRef.value?.validate()
   if (validateError) {
     return false
   }
+  try {
+    const testResult = await TestDownloaderConfig(form)
+    if (!testResult.valid) {
+      Message.error(testResult.message)
+      return false
+    }
+    if (newItem.value) {
+      // CreateDownloader
+      const createResult = await CreateDownloader(form)
+      if (createResult.code === 201) {
+        Message.success(createResult.message)
+        emits('downloader-changed')
+        return true
+      } else {
+        Message.error(createResult.message)
+        return false
+      }
+    } else {
+      // UpdateDownloader
+      const updateResult = await UpdateDownloader(form)
+      if (updateResult.code === 200) {
+        Message.success(updateResult.message)
+        emits('downloader-changed')
+        return true
+      } else {
+        Message.error(updateResult.message)
+        return false
+      }
+    }
+  } catch (e: any) {
+    Message.error(e.message)
+    return false
+  }
 }
 const resetFields = () => {
-  form.name = ''
-  form.config = {} as downloaderConfig
+  formRef.value?.resetFields()
+  form.config = { basicAuth: {}, verifySsl: true, httpVersion: 'HTTP_1_1' } as downloaderConfig
 }
 </script>

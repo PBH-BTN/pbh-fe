@@ -91,7 +91,7 @@ useRequest(GetCheckInvervalSettings, {
 
 const handleBeforeOk = async () => {
   const result = await SetCheckInterval(form.checkInterval)
-  if (result.success) {
+  if (result.code === 200) {
     Message.success(result.message)
     return true
   }

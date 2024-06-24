@@ -66,11 +66,30 @@ export async function CreateDownloader(
   await endpointStore.serverAvailable
   const url = new URL(urlJoin(endpointStore.endpoint, `/api/downloaders`), location.href)
   return fetch(url, { method: 'PUT', headers: getCommonHeader(), body: JSON.stringify(req) }).then(
-    (res) => {
+    async (res) => {
       endpointStore.assertResponseLogin(res)
       return res.json()
     }
   )
+}
+
+export async function UpdateDownloader(
+  req: CreateDownloadRequest
+): Promise<CommonResponseWithoutData> {
+  const endpointStore = useEndpointStore()
+  await endpointStore.serverAvailable
+  const url = new URL(
+    urlJoin(endpointStore.endpoint, `/api/downloaders/${req.name}`),
+    location.href
+  )
+  return fetch(url, {
+    method: 'PATCH',
+    headers: getCommonHeader(),
+    body: JSON.stringify(req)
+  }).then(async (res) => {
+    endpointStore.assertResponseLogin(res)
+    return res.json()
+  })
 }
 
 export async function TestDownloaderConfig(
@@ -85,4 +104,14 @@ export async function TestDownloaderConfig(
       return res.json()
     }
   )
+}
+
+export async function DeleteDownloader(name: string): Promise<CommonResponseWithoutData> {
+  const endpointStore = useEndpointStore()
+  await endpointStore.serverAvailable
+  const url = new URL(urlJoin(endpointStore.endpoint, `/api/downloaders/${name}`), location.href)
+  return fetch(url, { method: 'DELETE', headers: getCommonHeader() }).then((res) => {
+    endpointStore.assertResponseLogin(res)
+    return res.json()
+  })
 }

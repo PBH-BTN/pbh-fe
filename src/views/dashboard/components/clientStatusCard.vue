@@ -15,7 +15,7 @@
         <a-popconfirm
           :content="t('page.ruleSubscribe.column.deleteConfirm')"
           type="warning"
-          @before-ok="() => handleDelete(downloader)"
+          @before-ok="handleDelete"
         >
           <a-button class="edit-btn" status="danger" shape="circle" type="text">
             <template #icon>
@@ -155,15 +155,19 @@ const { data: client } = useRequest(getClientStatus, {
   }
 })
 
-const handleDelete = async (downloader: Downloader) => {
-  const result = await DeleteDownloader(downloader.name)
-  if (result.code !== 200) {
-    Message.error(result.message)
+const handleDelete = async () => {
+  try {
+    const result = await DeleteDownloader(downloader.value.name)
+    if (result.code !== 200) {
+      throw new Error(result.message)
+    } else {
+      Message.success(result.message)
+      emits('downloader-deleted')
+      return true
+    }
+  } catch (e: any) {
+    Message.error(e.message)
     return false
-  } else {
-    Message.success(result.message)
-    emits('downloader-deleted')
-    return true
   }
 }
 </script>

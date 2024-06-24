@@ -144,32 +144,16 @@ const handleBeforeOk = async () => {
   }
   try {
     const testResult = await TestDownloaderConfig(form)
-    if (!testResult.valid) {
-      Message.error(testResult.message)
-      return false
-    }
-    if (newItem.value) {
-      // CreateDownloader
-      const createResult = await CreateDownloader(form)
-      if (createResult.code === 201) {
-        Message.success(createResult.message)
-        emits('changed')
-        return true
-      } else {
-        Message.error(createResult.message)
-        return false
-      }
+    if (!testResult.valid) throw new Error(testResult.message)
+    const result = newItem.value
+      ? await CreateDownloader(form)
+      : await UpdateDownloader(oldName.value, form)
+    if (result.code === 201) {
+      Message.success(result.message)
+      emits('changed')
+      return true
     } else {
-      // UpdateDownloader
-      const updateResult = await UpdateDownloader(oldName.value, form)
-      if (updateResult.code === 200) {
-        Message.success(updateResult.message)
-        emits('changed')
-        return true
-      } else {
-        Message.error(updateResult.message)
-        return false
-      }
+      throw new Error(result.message)
     }
   } catch (e: any) {
     Message.error(e.message)

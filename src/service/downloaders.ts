@@ -74,14 +74,12 @@ export async function CreateDownloader(
 }
 
 export async function UpdateDownloader(
+  target: string,
   req: CreateDownloadRequest
 ): Promise<CommonResponseWithoutData> {
   const endpointStore = useEndpointStore()
   await endpointStore.serverAvailable
-  const url = new URL(
-    urlJoin(endpointStore.endpoint, `/api/downloaders/${req.name}`),
-    location.href
-  )
+  const url = new URL(urlJoin(endpointStore.endpoint, `/api/downloaders/${target}`), location.href)
   return fetch(url, {
     method: 'PATCH',
     headers: getCommonHeader(),

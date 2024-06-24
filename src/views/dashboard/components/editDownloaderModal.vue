@@ -11,8 +11,8 @@
     <a-form ref="formRef" :model="form" auto-label-width>
       <a-form-item field="config.type" :label="t('page.dashboard.editModal.label.type')" required>
         <a-radio-group v-model="form.config.type">
-          <a-radio value="qBittorrent">qBittorrent</a-radio>
-          <a-radio value="Transmission">Transmission</a-radio>
+          <a-radio :value="ClientTypeEnum.qBittorrent">qBittorrent</a-radio>
+          <a-radio :value="ClientTypeEnum.Transmission">Transmission</a-radio>
         </a-radio-group>
       </a-form-item>
       <a-form-item field="name" :label="t('page.dashboard.editModal.label.name')" required>
@@ -119,11 +119,13 @@ const form = reactive({
   name: '',
   config: { basicAuth: {}, verifySsl: true, httpVersion: 'HTTP_1_1' } as downloaderConfig
 })
+const oldName = ref('')
 defineExpose({
   showModal: (isNewItem: boolean, currentConfig?: { name: string; config: downloaderConfig }) => {
     newItem.value = isNewItem
     if (!isNewItem && currentConfig) {
       form.name = currentConfig.name
+      oldName.value = currentConfig.name
       form.config = currentConfig.config
     }
     showModal.value = true
@@ -159,7 +161,7 @@ const handleBeforeOk = async () => {
       }
     } else {
       // UpdateDownloader
-      const updateResult = await UpdateDownloader(form)
+      const updateResult = await UpdateDownloader(oldName.value, form)
       if (updateResult.code === 200) {
         Message.success(updateResult.message)
         emits('changed')

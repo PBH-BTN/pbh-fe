@@ -2,6 +2,7 @@ export interface ClientStatus {
   activePeers: number
   activeTorrents: number
   lastStatus: ClientStatusEnum
+  config: downloaderConfig
 }
 
 export enum ClientStatusEnum {
@@ -26,4 +27,42 @@ export interface Torrent {
   size: number
   name: string
   hash: string
+}
+
+export type downloaderConfig = qBittorrentConfig | transmissionConfig
+
+export interface qBittorrentConfig {
+  type: ClientTypeEnum
+  endpoint: string
+  username: string
+  password: string
+  basicAuth: BasicAuth
+  httpVersion: string
+  incrementBan: boolean
+  verifySsl: boolean
+}
+
+interface BasicAuth {
+  user: string
+  pass: string
+}
+
+export interface transmissionConfig {
+  type: ClientTypeEnum
+  endpoint: string
+  username: string
+  password: string
+  httpVersion: string
+  verifySsl: boolean
+  rpcUrl: string
+}
+
+export interface CreateDownloadRequest {
+  name: string
+  config: downloaderConfig
+}
+
+export interface TestDownloaderResponse {
+  valid: boolean
+  message: string
 }

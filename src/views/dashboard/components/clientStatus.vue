@@ -1,5 +1,18 @@
 <template>
-  <a-typography-title :heading="3">{{ t('page.dashboard.clientStatus.title') }}</a-typography-title>
+  <a-typography-title :heading="3"
+    >{{ t('page.dashboard.clientStatus.title') }}
+    <a-button
+      class="add-btn"
+      type="outline"
+      :shape="'circle'"
+      @click="() => editDownloaderModal?.showModal(true)"
+    >
+      <template #icon>
+        <icon-plus />
+      </template>
+    </a-button>
+  </a-typography-title>
+
   <a-row
     justify="start"
     align="stretch"
@@ -40,6 +53,7 @@
     </a-col>
   </a-row>
   <TorrentListModal ref="torrentList" />
+  <EditDownloaderModal ref="editDownloaderModal" />
 </template>
 <script setup lang="ts">
 import { useEndpointStore } from '@/stores/endpoint'
@@ -47,6 +61,7 @@ import { computed, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import TorrentListModal from './torrentListModal.vue'
 import ClientStatusCard from './clientStatusCard.vue'
+import EditDownloaderModal from './editDownloaderModal.vue'
 import { useAutoUpdate } from '@/stores/autoUpdate'
 import { useRequest } from 'vue-request'
 import { getDownloaders } from '@/service/downloaders'
@@ -61,4 +76,12 @@ const { data, refresh, loading } = useRequest(getDownloaders, {
 watch(() => endpointState.endpoint, refresh)
 
 const torrentList = ref<InstanceType<typeof TorrentListModal>>()
+const editDownloaderModal = ref<InstanceType<typeof EditDownloaderModal>>()
 </script>
+<style scoped lang="less">
+.add-btn {
+  border-color: rgb(var(--gray-2));
+  color: rgb(var(--gray-8));
+  font-size: 16px;
+}
+</style>

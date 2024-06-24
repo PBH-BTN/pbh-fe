@@ -22,5 +22,13 @@ export default {
   'page.dashboard.torrentList.column.name': '名称',
   'page.dashboard.torrentList.column.size': '大小',
   'page.dashboard.torrentList.column.hash': 'Hash',
-  'page.dashboard.torrentList.column.progress': '进度'
+  'page.dashboard.torrentList.column.progress': '进度',
+  'page.dashboard.editModal.title.new': '新建下载器',
+  'page.dashboard.editModal.title.edit': '编辑下载器',
+  'page.dashboard.editModal.label.type': '类型',
+  'page.dashboard.editModal.label.name': '名称',
+  'page.dashboard.editModal.label.endpoint': '地址',
+  'page.dashboard.editModal.label.username': '用户名',
+  'page.dashboard.editModal.label.password': '密码',
+  'page.dashboard.editModal.label.useBasicAuth': '使用 Basic Auth'
 }

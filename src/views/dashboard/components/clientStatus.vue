@@ -49,13 +49,13 @@
       <ClientStatusCard
         :downloader="client"
         @torrent-view-click="() => torrentList?.showModal(client.name)"
-        @downloader-delete="refresh"
+        @downloader-deleted="refresh"
         @edit-click="(e) => editDownloaderModal?.showModal(false, e)"
       />
     </a-col>
   </a-row>
   <TorrentListModal ref="torrentList" />
-  <EditDownloaderModal ref="editDownloaderModal" @downloader-changed="refresh" />
+  <EditDownloaderModal ref="editDownloaderModal" @changed="refresh" />
 </template>
 <script setup lang="ts">
 import { useEndpointStore } from '@/stores/endpoint'

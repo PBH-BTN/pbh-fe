@@ -1,5 +1,5 @@
 <template>
-  <a-card hoverable style="height: 100%" :header-style="{ height: 'auto' }">
+  <a-card hoverable style="height: 100%" :header-style="{ height: 'auto' }" class="card">
     <template #extra>
       <a-space v-if="client" size="mini">
         <a-button
@@ -76,7 +76,7 @@
         :label="t('page.dashboard.clientStatus.card.status.torrentNumber')"
       >
         <a-space>
-          <a-tag color="arcoblue" bordered>{{ client.activeTorrents }}</a-tag>
+          <a-typography-text>{{ client.activeTorrents }}</a-typography-text>
           <a-tooltip :content="t('page.dashboard.torrentList.tips')">
             <a-button
               @click="() => emits('torrent-view-click', downloader.name)"
@@ -96,7 +96,7 @@
         v-if="client.lastStatus == ClientStatusEnum.HEALTHY"
         :label="t('page.dashboard.clientStatus.card.status.peerNumber')"
       >
-        <a-tag color="arcoblue" bordered>{{ client.activePeers }}</a-tag>
+        <a-typography-text>{{ client.activePeers }}</a-typography-text>
       </a-descriptions-item>
     </a-descriptions>
   </a-card>
@@ -127,7 +127,7 @@ const props = defineProps<{
 
 const emits = defineEmits<{
   (e: 'torrent-view-click', name: string): void
-  (e: 'downloader-delete'): void
+  (e: 'downloader-deleted'): void
   (
     e: 'edit-click',
     downloader: {
@@ -162,7 +162,7 @@ const handleDelete = async (downloader: Downloader) => {
     return false
   } else {
     Message.success(result.message)
-    emits('downloader-delete')
+    emits('downloader-deleted')
     return true
   }
 }
@@ -176,8 +176,19 @@ const handleDelete = async (downloader: Downloader) => {
     }
   }
 }
-.edit-btn {
-  color: rgb(var(--gray-8));
-  font-size: 16px;
+@fade-in-duration: 0.3s;
+.card {
+  .edit-btn {
+    color: rgb(var(--gray-8));
+    font-size: 16px;
+    opacity: 0;
+    transition: opacity @fade-in-duration ease-out;
+  }
+  &:hover {
+    .edit-btn {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
 }
 </style>

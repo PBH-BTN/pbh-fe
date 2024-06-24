@@ -131,7 +131,7 @@ defineExpose({
 })
 
 const emits = defineEmits<{
-  (e: 'downloader-changed'): void
+  (e: 'changed'): void
 }>()
 
 const formRef = ref<InstanceType<typeof Form>>()
@@ -151,7 +151,7 @@ const handleBeforeOk = async () => {
       const createResult = await CreateDownloader(form)
       if (createResult.code === 201) {
         Message.success(createResult.message)
-        emits('downloader-changed')
+        emits('changed')
         return true
       } else {
         Message.error(createResult.message)
@@ -162,7 +162,7 @@ const handleBeforeOk = async () => {
       const updateResult = await UpdateDownloader(form)
       if (updateResult.code === 200) {
         Message.success(updateResult.message)
-        emits('downloader-changed')
+        emits('changed')
         return true
       } else {
         Message.error(updateResult.message)

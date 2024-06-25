@@ -4,11 +4,14 @@ export default {
   'page.dashboard.clientStatus.card.title': 'Downloader Status',
   'page.dashboard.clientStatus.card.status': 'Status',
   'page.dashboard.clientStatus.card.type': 'Type',
-  'page.dashboard.clientStatus.card.status.normal': 'Normal - Status is good',
-  'page.dashboard.clientStatus.card.status.error':
-    'Error - Error occurred when communicating with the client, please check the log file',
-  'page.dashboard.clientStatus.card.status.unknown':
-    'Unknown - PeerBanHelper may not have communicated with this client yet',
+  'page.dashboard.clientStatus.card.status.normal': 'Normal',
+  'page.dashboard.clientStatus.card.status.normal.info': 'Status is good',
+  'page.dashboard.clientStatus.card.status.error': 'Error',
+  'page.dashboard.clientStatus.card.status.error.info':
+    'Error occurred when communicating with the client, please check the log file',
+  'page.dashboard.clientStatus.card.status.unknown': 'Unknown',
+  'page.dashboard.clientStatus.card.status.unknown.info':
+    'PeerBanHelper may not have communicated with this client yet',
   'page.dashboard.clientStatus.card.status.torrentNumber': 'Active Torrents',
   'page.dashboard.clientStatus.card.status.peerNumber': 'Connected Peers',
   'page.dashboard.statics.currentStatus': 'Current Status',

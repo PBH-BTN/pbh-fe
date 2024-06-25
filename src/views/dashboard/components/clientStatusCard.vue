@@ -64,12 +64,14 @@
       </a-descriptions-item>
 
       <a-descriptions-item :label="t('page.dashboard.clientStatus.card.status')">
-        <a-typography-text :type="getStatusSafe(client)[0]">
-          <icon-check-circle-fill v-if="client.lastStatus == ClientStatusEnum.HEALTHY" />
-          <icon-close-circle-fill v-if="client.lastStatus == ClientStatusEnum.ERROR" />
-          <icon-exclamation-circle-fill v-if="client.lastStatus == ClientStatusEnum.UNKNOWN" />
-          {{ t(getStatusSafe(client)[1]) }}
-        </a-typography-text>
+        <a-tooltip :content="t(getStatusSafe(client)[1] + '.info')">
+          <a-typography-text :type="getStatusSafe(client)[0]">
+            <icon-check-circle-fill v-if="client.lastStatus == ClientStatusEnum.HEALTHY" />
+            <icon-close-circle-fill v-if="client.lastStatus == ClientStatusEnum.ERROR" />
+            <icon-exclamation-circle-fill v-if="client.lastStatus == ClientStatusEnum.UNKNOWN" />
+            {{ t(getStatusSafe(client)[1]) }}
+          </a-typography-text>
+        </a-tooltip>
       </a-descriptions-item>
 
       <a-descriptions-item

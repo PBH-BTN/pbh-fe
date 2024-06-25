@@ -32,6 +32,7 @@
           rows: 2,
           showTooltip: true
         }"
+        :heading="3"
       >
         {{ downloader.name }}
       </a-typography-title>

@@ -1,5 +1,14 @@
 <template>
-  <a-page-header title="PeerBanHelper" :show-back="false">
+  <a-page-header :show-back="false">
+    <template #title>
+      <a-space size="mini">
+        <img v-if="isDark" src="@/assets/logo-dark.png" alt="logo" class="logo" />
+        <img v-else src="@/assets/logo.png" alt="logo" class="logo" />
+        <a-typography-title style="margin-top: 0%; margin-bottom: 0%"
+          >PeerBanHelper</a-typography-title
+        >
+      </a-space>
+    </template>
     <template #extra>
       <a-space class="right-side" wrap>
         <template v-if="!disableAutoUpdate">
@@ -118,6 +127,12 @@ const disableAutoUpdate = computed(() => props.disableAutoUpdate)
   display: flex;
   align-items: center;
   padding-left: 20px;
+}
+
+.logo {
+  width: 50px;
+  height: 50px;
+  margin-right: 0px;
 }
 
 .center-side {

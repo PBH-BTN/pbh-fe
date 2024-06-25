@@ -1,7 +1,7 @@
 export interface CommonResponse<T> {
   data: T
   message: string
-  success: boolean
+  code: number
 }
 
 export interface Pagination<T> {
@@ -14,5 +14,5 @@ export interface Pagination<T> {
 export type CommonResponseWithPage<T> = CommonResponse<Pagination<T>>
 export interface CommonResponseWithoutData {
   message: string
-  success: boolean
+  code: number
 }

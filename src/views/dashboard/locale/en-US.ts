@@ -23,5 +23,20 @@ export default {
   'page.dashboard.torrentList.column.name': 'Name',
   'page.dashboard.torrentList.column.size': 'Size',
   'page.dashboard.torrentList.column.hash': 'Hash',
-  'page.dashboard.torrentList.column.progress': 'Progress'
+  'page.dashboard.torrentList.column.progress': 'Progress',
+  'page.dashboard.editModal.title.new': 'New Downloader',
+  'page.dashboard.editModal.title.edit': 'Edit Downloader',
+  'page.dashboard.editModal.label.type': 'Type',
+  'page.dashboard.editModal.label.name': 'Name',
+  'page.dashboard.editModal.label.endpoint': 'Endpoint',
+  'page.dashboard.editModal.label.username': 'Username',
+  'page.dashboard.editModal.label.password': 'Password',
+  'page.dashboard.editModal.label.useBasicAuth': 'Use HTTP Basic Auth',
+  'page.dashboard.editModal.label.httpVersion': 'HTTP Version',
+  'page.dashboard.editModal.label.httpVersion.description':
+    '2.0 is faster, which 1.1 is more compatible',
+  'page.dashboard.editModal.label.incrementBan': 'Incremental Ban',
+  'page.dashboard.editModal.label.incrementBan.description':
+    'Helps to alleviate the downloader pressure when saving the ban list, but may cause the inability to ban Peers on some downloaders',
+  'page.dashboard.editModal.label.verifySsl': 'Verify SSL'
 }

@@ -95,7 +95,7 @@ const handleBeforeOk = async () => {
   if (!newItem.value) {
     // edit
     const result = await UpdateRuleItem(form)
-    if (!result.success) {
+    if (result.code !== 200) {
       Message.error(result.message)
       return true
     }
@@ -104,7 +104,7 @@ const handleBeforeOk = async () => {
   } else {
     // new rule item
     const result = await AddRuleItem(form)
-    if (!result.success) {
+    if (result.code !== 201) {
       Message.error(result.message)
       return true
     }

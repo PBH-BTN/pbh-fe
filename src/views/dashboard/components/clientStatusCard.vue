@@ -1,5 +1,30 @@
 <template>
-  <a-card hoverable style="height: 100%" :header-style="{ height: 'auto' }">
+  <a-card hoverable style="height: 100%" :header-style="{ height: 'auto' }" class="card">
+    <template #extra>
+      <a-space v-if="client" size="mini">
+        <a-button
+          class="edit-btn"
+          shape="circle"
+          type="text"
+          @click="() => emits('edit-click', { name: downloader.name, config: client?.config!! })"
+        >
+          <template #icon>
+            <icon-edit />
+          </template>
+        </a-button>
+        <a-popconfirm
+          :content="t('page.ruleSubscribe.column.deleteConfirm')"
+          type="warning"
+          @before-ok="handleDelete"
+        >
+          <a-button class="edit-btn" status="danger" shape="circle" type="text">
+            <template #icon>
+              <icon-delete />
+            </template>
+          </a-button>
+        </a-popconfirm>
+      </a-space>
+    </template>
     <template #title>
       <a-typography-title
         :style="{ margin: '0px' }"
@@ -51,7 +76,7 @@
         :label="t('page.dashboard.clientStatus.card.status.torrentNumber')"
       >
         <a-space>
-          <a-tag color="arcoblue" bordered>{{ client.activeTorrents }}</a-tag>
+          <a-typography-text>{{ client.activeTorrents }}</a-typography-text>
           <a-tooltip :content="t('page.dashboard.torrentList.tips')">
             <a-button
               @click="() => emits('torrent-view-click', downloader.name)"
@@ -71,19 +96,25 @@
         v-if="client.lastStatus == ClientStatusEnum.HEALTHY"
         :label="t('page.dashboard.clientStatus.card.status.peerNumber')"
       >
-        <a-tag color="arcoblue" bordered>{{ client.activePeers }}</a-tag>
+        <a-typography-text>{{ client.activePeers }}</a-typography-text>
       </a-descriptions-item>
     </a-descriptions>
   </a-card>
 </template>
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
-import { ClientStatusEnum, type ClientStatus, type Downloader } from '@/api/model/clientStatus'
+import {
+  ClientStatusEnum,
+  type ClientStatus,
+  type Downloader,
+  type downloaderConfig
+} from '@/api/model/clientStatus'
 import { useRequest } from 'vue-request'
-import { getClientStatus } from '@/service/downloaders'
+import { DeleteDownloader, getClientStatus } from '@/service/downloaders'
 import { computed } from 'vue'
 import { useAutoUpdate } from '@/stores/autoUpdate'
 import { useEndpointStore } from '@/stores/endpoint'
+import { Message } from '@arco-design/web-vue'
 const { t } = useI18n()
 const statusMap: Record<ClientStatusEnum, [string, string]> = {
   [ClientStatusEnum.HEALTHY]: ['success', 'page.dashboard.clientStatus.card.status.normal'],
@@ -96,6 +127,14 @@ const props = defineProps<{
 
 const emits = defineEmits<{
   (e: 'torrent-view-click', name: string): void
+  (e: 'downloader-deleted'): void
+  (
+    e: 'edit-click',
+    downloader: {
+      name: string
+      config: downloaderConfig
+    }
+  ): void
 }>()
 
 const downloader = computed(() => props.downloader)
@@ -115,6 +154,22 @@ const { data: client } = useRequest(getClientStatus, {
     autoUpdateState.renewLastUpdate()
   }
 })
+
+const handleDelete = async () => {
+  try {
+    const result = await DeleteDownloader(downloader.value.name)
+    if (result.code !== 200) {
+      throw new Error(result.message)
+    } else {
+      Message.success(result.message)
+      emits('downloader-deleted')
+      return true
+    }
+  } catch (e: any) {
+    Message.error(e.message)
+    return false
+  }
+}
 </script>
 
 <style scoped lang="less">
@@ -124,5 +179,14 @@ const { data: client } = useRequest(getClientStatus, {
       padding-bottom: 14px;
     }
   }
+}
+.edit-btn {
+  color: rgb(var(--gray-8));
+  font-size: 16px;
+  opacity: 0;
+}
+.card:hover .edit-btn {
+  opacity: 1;
+  visibility: visible;
 }
 </style>

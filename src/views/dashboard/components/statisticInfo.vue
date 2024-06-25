@@ -1,6 +1,6 @@
 <template>
   <a-space direction="vertical" fill>
-    <a-card :title="t('page.dashboard.statics.currentStatus')">
+    <a-card :title="t('page.dashboard.statics.currentStatus')" hoverable>
       <a-grid :cols="24" :row-gap="16" class="panel">
         <a-grid-item class="panel-col" :span="{ xs: 12, sm: 12, md: 6 }">
           <a-statistic

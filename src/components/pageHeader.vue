@@ -1,13 +1,15 @@
 <template>
   <a-page-header :show-back="false">
     <template #title>
-      <a-space size="mini">
-        <img v-if="isDark" src="@/assets/logo-dark.png" alt="logo" class="logo" />
-        <img v-else src="@/assets/logo.png" alt="logo" class="logo" />
-        <a-typography-title style="margin-top: 0%; margin-bottom: 0%"
-          >PeerBanHelper</a-typography-title
-        >
-      </a-space>
+      <a href="https://github.com/PBH-BTN/PeerBanHelper">
+        <a-space size="mini">
+          <img v-if="isDark" src="@/assets/logo-dark.png" alt="logo" class="logo" />
+          <img v-else src="@/assets/logo.png" alt="logo" class="logo" />
+          <a-typography-title style="margin-top: 0%; margin-bottom: 0%"
+            >PeerBanHelper</a-typography-title
+          >
+        </a-space>
+      </a>
     </template>
     <template #extra>
       <a-space class="right-side" wrap>

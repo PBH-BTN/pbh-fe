@@ -127,6 +127,13 @@ defineExpose({
       form.name = currentConfig.name
       oldName.value = currentConfig.name
       form.config = currentConfig.config
+      if (form.config.type === ClientTypeEnum.qBittorrent) {
+        useBasicAuth.value = form.config.basicAuth.pass !== '' || form.config.basicAuth.user !== ''
+      }
+    } else {
+      form.name = ''
+      form.config = { basicAuth: {}, verifySsl: true, httpVersion: 'HTTP_1_1' } as downloaderConfig
+      useBasicAuth.value = false
     }
     showModal.value = true
   }

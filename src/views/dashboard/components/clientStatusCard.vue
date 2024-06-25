@@ -180,19 +180,13 @@ const handleDelete = async () => {
     }
   }
 }
-@fade-in-duration: 0.3s;
-.card {
-  .edit-btn {
-    color: rgb(var(--gray-8));
-    font-size: 16px;
-    opacity: 0;
-    transition: opacity @fade-in-duration ease-out;
-  }
-  &:hover {
-    .edit-btn {
-      opacity: 1;
-      visibility: visible;
-    }
-  }
+.edit-btn {
+  color: rgb(var(--gray-8));
+  font-size: 16px;
+  opacity: 0;
+}
+.card:hover .edit-btn {
+  opacity: 1;
+  visibility: visible;
 }
 </style>

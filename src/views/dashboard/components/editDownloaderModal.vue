@@ -15,10 +15,15 @@
           <a-radio :value="ClientTypeEnum.Transmission">Transmission</a-radio>
           <a-radio :value="ClientTypeEnum.BiglyBT">BiglyBT</a-radio>
         </a-radio-group>
-        <template #extra v-if="form.config.type === ClientTypeEnum.BiglyBT"
-          >Please install plugin
-          <a href="https://github.com/PBH-BTN/PBH-Adapter-BiglyBT">first</a></template
-        >
+        <template #extra v-if="form.config.type === ClientTypeEnum.BiglyBT">
+          <i18n-t keypath="page.dashboard.editModal.biglybt">
+            <template v-slot:url>
+              <a href="https://github.com/PBH-BTN/PBH-Adapter-BiglyBT">{{
+                t('page.dashboard.editModal.biglybt.url')
+              }}</a>
+            </template>
+          </i18n-t>
+        </template>
       </a-form-item>
       <a-form-item field="name" :label="t('page.dashboard.editModal.label.name')" required>
         <a-input v-model="form.name" allow-clear />
@@ -221,3 +226,8 @@ const resetFields = () => {
   form.config = { basicAuth: {}, verifySsl: true, httpVersion: 'HTTP_1_1' } as downloaderConfig
 }
 </script>
+<style scoped>
+a {
+  text-decoration: none;
+}
+</style>

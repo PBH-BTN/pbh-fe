@@ -14,6 +14,7 @@ export enum ClientStatusEnum {
 export enum ClientTypeEnum {
   qBittorrent = 'qbittorrent',
   Transmission = 'transmission',
+  BiglyBT = 'biglybt',
   Unknown = 'Unknown'
 }
 
@@ -30,7 +31,7 @@ export interface Torrent {
   hash: string
 }
 
-export type downloaderConfig = qBittorrentConfig | transmissionConfig
+export type downloaderConfig = qBittorrentConfig | transmissionConfig | biglybtConfig
 
 export interface qBittorrentConfig {
   type: ClientTypeEnum.qBittorrent
@@ -56,6 +57,14 @@ export interface transmissionConfig {
   httpVersion: string
   verifySsl: boolean
   rpcUrl: string
+}
+
+export interface biglybtConfig {
+  type: ClientTypeEnum.BiglyBT
+  endpoint: string
+  token: string
+  httpVersion: string
+  verifySsl: boolean
 }
 
 export interface CreateDownloadRequest {

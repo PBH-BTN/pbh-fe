@@ -13,7 +13,12 @@
         <a-radio-group v-model="form.config.type">
           <a-radio :value="ClientTypeEnum.qBittorrent">qBittorrent</a-radio>
           <a-radio :value="ClientTypeEnum.Transmission">Transmission</a-radio>
+          <a-radio :value="ClientTypeEnum.BiglyBT">BiglyBT</a-radio>
         </a-radio-group>
+        <template #extra v-if="form.config.type === ClientTypeEnum.BiglyBT"
+          >Please install plugin
+          <a href="https://github.com/PBH-BTN/PBH-Adapter-BiglyBT">first</a></template
+        >
       </a-form-item>
       <a-form-item field="name" :label="t('page.dashboard.editModal.label.name')" required>
         <a-input v-model="form.name" allow-clear />
@@ -93,6 +98,50 @@
         </a-form-item>
         <a-form-item field="config.rpcUrl" label="RPC URL">
           <a-input v-model="form.config.rpcUrl" allow-clear></a-input>
+        </a-form-item>
+        <a-form-item
+          field="config.httpVersion"
+          :label="t('page.dashboard.editModal.label.httpVersion')"
+        >
+          <a-radio-group v-model="form.config.httpVersion">
+            <a-radio value="HTTP_1_1">1.1</a-radio>
+            <a-radio value="HTTP_2_0">2.0</a-radio>
+          </a-radio-group>
+          <template #extra
+            >{{ t('page.dashboard.editModal.label.httpVersion.description') }}
+          </template>
+        </a-form-item>
+        <a-form-item
+          field="config.verifySsl"
+          default-checked
+          :label="t('page.dashboard.editModal.label.verifySsl')"
+        >
+          <a-switch v-model="form.config.verifySsl" />
+        </a-form-item>
+      </div>
+      <!-- BiglyBT config block -->
+      <div v-else-if="form.config.type === ClientTypeEnum.BiglyBT">
+        <a-form-item
+          field="config.endpoint"
+          :label="t('page.dashboard.editModal.label.endpoint')"
+          :rules="[{ required: true, type: 'url' }]"
+        >
+          <a-input v-model="form.config.endpoint" allow-clear></a-input>
+        </a-form-item>
+        <a-form-item field="config.token" label="Token" required>
+          <a-input v-model="form.config.token" allow-clear></a-input>
+        </a-form-item>
+        <a-form-item
+          field="config.httpVersion"
+          :label="t('page.dashboard.editModal.label.httpVersion')"
+        >
+          <a-radio-group v-model="form.config.httpVersion">
+            <a-radio value="HTTP_1_1">1.1</a-radio>
+            <a-radio value="HTTP_2_0">2.0</a-radio>
+          </a-radio-group>
+          <template #extra
+            >{{ t('page.dashboard.editModal.label.httpVersion.description') }}
+          </template>
         </a-form-item>
         <a-form-item
           field="config.verifySsl"

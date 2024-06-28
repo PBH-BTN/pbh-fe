@@ -9,13 +9,21 @@
         <a-typography-text bold copyable>
           {{ item.banMetadata.peer.address.ip }}:{{ item.banMetadata.peer.address.port }}
         </a-typography-text>
-        <a-typography-text code>
-          {{
-            item.banMetadata.peer.clientName
-              ? item.banMetadata.peer.clientName
+        <a-tooltip
+          :content="
+            item.banMetadata.peer.id
+              ? item.banMetadata.peer.id
               : t('page.banlist.banlist.listItem.empty')
-          }}
-        </a-typography-text>
+          "
+        >
+          <a-typography-text code>
+            {{
+              item.banMetadata.peer.clientName
+                ? item.banMetadata.peer.clientName
+                : t('page.banlist.banlist.listItem.empty')
+            }}
+          </a-typography-text>
+        </a-tooltip>
       </a-space>
     </template>
     <a-descriptions-item :label="t('page.banlist.banlist.listItem.banTime')" :span="4">
@@ -111,9 +119,11 @@ const descriptionLayout = useResponsiveState(
 .red {
   color: red;
 }
+
 .green {
   color: green;
 }
+
 a {
   color: var(--color-text-1);
   text-decoration: none;

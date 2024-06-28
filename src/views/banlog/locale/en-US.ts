@@ -8,5 +8,14 @@ export default {
   'page.banlog.banlogTable.column.trafficSnapshot': 'Traffic Snapshot',
   'page.banlog.banlogTable.column.torrentName': 'Torrent Name',
   'page.banlog.banlogTable.column.torrentSize': 'Size',
-  'page.banlog.banlogTable.column.description': 'Description'
+  'page.banlog.banlogTable.column.description': 'Description',
+  'page.banlog.radio.viewMode': 'View Mode',
+  'page.banlog.radio.table': 'Table',
+  'page.banlog.radio.charts': 'Charts',
+  'page.banlog.charts.options.more': 'More Options',
+  'page.banlog.charts.options.thresold': 'Only show data above 1%',
+  'page.banlog.charts.options.field': 'Field',
+  'page.banlog.charts.options.field.peerId': 'Peer ID',
+  'page.banlog.charts.options.field.torrentName': 'Torrent Name',
+  'page.banlog.charts.options.field.module': 'Module'
 }

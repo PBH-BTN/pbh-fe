@@ -30,7 +30,7 @@
       <a-form-item field="name" :label="t('page.dashboard.editModal.label.name')" required>
         <a-input v-model="form.name" allow-clear />
       </a-form-item>
-      <component :is="formMap[form.config.type]" v-model="form.config" />
+      <component :is="formMap[form.config.type] as any" v-model="form.config" />
     </a-form>
   </a-modal>
 </template>

@@ -102,7 +102,7 @@
         <a-form-item field="config.password" :label="t('page.dashboard.editModal.label.password')">
           <a-input-password v-model="form.config.password" allow-clear></a-input-password>
         </a-form-item>
-        <a-form-item field="config.rpcUrl" label="RPC URL">
+        <a-form-item field="config.rpcUrl" label="RPC URL" required>
           <a-input v-model="form.config.rpcUrl" allow-clear></a-input>
         </a-form-item>
         <a-form-item
@@ -173,8 +173,8 @@
         >
           <a-input v-model="form.config.password" allow-clear></a-input>
         </a-form-item>
-        <a-form-item field="config.rpcUrl" label="RPC URL">
-          <a-input v-model="form.config.rpcUrl" allow-clear default-value="/json"></a-input>
+        <a-form-item field="config.rpcUrl" label="RPC URL" required>
+          <a-input v-model="form.config.rpcUrl" allow-clear></a-input>
         </a-form-item>
         <a-form-item
           field="config.incrementBan"

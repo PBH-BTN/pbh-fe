@@ -1,6 +1,7 @@
 <template>
   <a-modal
     v-model:visible="showModal"
+    :mask-closable="false"
     :title="
       newItem ? t('page.dashboard.editModal.title.new') : t('page.dashboard.editModal.title.edit')
     "
@@ -103,7 +104,11 @@
           <a-input-password v-model="form.config.password" allow-clear></a-input-password>
         </a-form-item>
         <a-form-item field="config.rpcUrl" label="RPC URL" required>
-          <a-input v-model="form.config.rpcUrl" allow-clear></a-input>
+          <a-input
+            v-model="form.config.rpcUrl"
+            allow-clear
+            placeholder="/transmission/rpc"
+          ></a-input>
         </a-form-item>
         <a-form-item
           field="config.httpVersion"
@@ -174,7 +179,7 @@
           <a-input v-model="form.config.password" allow-clear></a-input>
         </a-form-item>
         <a-form-item field="config.rpcUrl" label="RPC URL" required>
-          <a-input v-model="form.config.rpcUrl" allow-clear></a-input>
+          <a-input v-model="form.config.rpcUrl" allow-clear placeholder="/json"></a-input>
         </a-form-item>
         <a-form-item
           field="config.incrementBan"

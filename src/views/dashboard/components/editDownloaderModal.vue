@@ -14,6 +14,7 @@
           <a-radio :value="ClientTypeEnum.qBittorrent">qBittorrent</a-radio>
           <a-radio :value="ClientTypeEnum.Transmission">Transmission</a-radio>
           <a-radio :value="ClientTypeEnum.BiglyBT">BiglyBT</a-radio>
+          <a-radio :value="ClientTypeEnum.Deluge">Deluge</a-radio>
         </a-radio-group>
         <template #extra v-if="form.config.type === ClientTypeEnum.BiglyBT">
           <i18n-t keypath="page.dashboard.editModal.biglybt">
@@ -135,6 +136,55 @@
         </a-form-item>
         <a-form-item field="config.token" label="Token" required>
           <a-input v-model="form.config.token" allow-clear></a-input>
+        </a-form-item>
+        <a-form-item
+          field="config.httpVersion"
+          :label="t('page.dashboard.editModal.label.httpVersion')"
+        >
+          <a-radio-group v-model="form.config.httpVersion">
+            <a-radio value="HTTP_1_1">1.1</a-radio>
+            <a-radio value="HTTP_2_0">2.0</a-radio>
+          </a-radio-group>
+          <template #extra
+            >{{ t('page.dashboard.editModal.label.httpVersion.description') }}
+          </template>
+        </a-form-item>
+        <a-form-item
+          field="config.verifySsl"
+          default-checked
+          :label="t('page.dashboard.editModal.label.verifySsl')"
+        >
+          <a-switch v-model="form.config.verifySsl" />
+        </a-form-item>
+      </div>
+      <!-- Deluge config block -->
+      <div v-else-if="form.config.type === ClientTypeEnum.Deluge">
+        <a-form-item
+          field="config.endpoint"
+          :label="t('page.dashboard.editModal.label.endpoint')"
+          :rules="[{ required: true, type: 'url' }]"
+        >
+          <a-input v-model="form.config.endpoint" allow-clear></a-input>
+        </a-form-item>
+        <a-form-item
+          field="config.password"
+          :label="t('page.dashboard.editModal.label.password')"
+          required
+        >
+          <a-input v-model="form.config.password" allow-clear></a-input>
+        </a-form-item>
+        <a-form-item field="config.rpcUrl" label="RPC URL">
+          <a-input v-model="form.config.rpcUrl" allow-clear default-value="/json"></a-input>
+        </a-form-item>
+        <a-form-item
+          field="config.incrementBan"
+          default-checked
+          :label="t('page.dashboard.editModal.label.incrementBan')"
+        >
+          <a-switch v-model="form.config.incrementBan" />
+          <template #extra>
+            {{ t('page.dashboard.editModal.label.incrementBan.description') }}</template
+          >
         </a-form-item>
         <a-form-item
           field="config.httpVersion"

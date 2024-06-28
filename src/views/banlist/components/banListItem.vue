@@ -1,21 +1,21 @@
 <template>
-  <a-descriptions
-    :column="{ xs: 3, md: 6, xl: 12 }"
-    size="medium"
-    :layout="(['inline-vertical', 'horizontal'] as const)[descriptionLayout]"
-  >
+  <a-descriptions :column="{ xs: 3, md: 6, xl: 12 }" size="medium"
+    :layout="(['inline-vertical', 'horizontal'] as const)[descriptionLayout]">
     <template #title>
       <a-space wrap>
         <a-typography-text bold copyable>
           {{ item.banMetadata.peer.address.ip }}:{{ item.banMetadata.peer.address.port }}
         </a-typography-text>
-        <a-typography-text code>
-          {{
-            item.banMetadata.peer.clientName
-              ? item.banMetadata.peer.clientName
-              : t('page.banlist.banlist.listItem.empty')
-          }}
-        </a-typography-text>
+        <a-tooltip :content="item.banMetadata.peer.id ? item.banMetadata.peer.id : t('page.banlist.banlist.listItem.empty')
+          ">
+          <a-typography-text code>
+            {{
+              item.banMetadata.peer.clientName
+                ? item.banMetadata.peer.clientName
+                : t('page.banlist.banlist.listItem.empty')
+            }}
+          </a-typography-text>
+        </a-tooltip>
       </a-space>
     </template>
     <a-descriptions-item :label="t('page.banlist.banlist.listItem.banTime')" :span="4">
@@ -33,55 +33,37 @@
     </a-descriptions-item>
     <a-descriptions-item :label="t('page.banlist.banlist.listItem.location')" :span="12">
       <a-typography-text style="margin-bottom: 0" :ellipsis="{ showTooltip: true }">
-        {{ item.banMetadata.torrent.name }}</a-typography-text
-      >
+        {{ item.banMetadata.torrent.name }}</a-typography-text>
     </a-descriptions-item>
     <a-descriptions-item :label="t('page.banlist.banlist.listItem.reason')" :span="12">
       <a-typography-text style="margin-bottom: 0">
         {{ item.banMetadata.description }}
       </a-typography-text>
     </a-descriptions-item>
-    <a-descriptions-item
-      v-if="item.banMetadata.geo"
-      :label="t('page.banlist.banlist.listItem.geo')"
-      :span="4"
-    >
+    <a-descriptions-item v-if="item.banMetadata.geo" :label="t('page.banlist.banlist.listItem.geo')" :span="4">
       <CountryFlag :iso="item.banMetadata.geo?.iso" mode="squared" />
       {{ `${item.banMetadata.geo?.countryRegion} ${item.banMetadata.geo?.city ?? ''}` }}
       <a-link
         :href="`https://uri.amap.com/marker?position=${item.banMetadata.geo?.longitude},${item.banMetadata.geo?.latitude}`"
-        :hoverable="false"
-      >
+        :hoverable="false">
         <icon-location />
       </a-link>
     </a-descriptions-item>
-    <a-descriptions-item
-      v-if="item.banMetadata.asn"
-      :label="t('page.banlist.banlist.listItem.asn')"
-      :span="4"
-    >
+    <a-descriptions-item v-if="item.banMetadata.asn" :label="t('page.banlist.banlist.listItem.asn')" :span="4">
       <a-space>
         <a-typography-text> {{ item.banMetadata.asn?.asOrganization }}</a-typography-text>
         <a-tag :color="getColor(item.banMetadata.asn?.asn.toString())">{{
           item.banMetadata.asn?.asn
         }}</a-tag>
-        <a-tooltip
-          :content="t('page.banlist.banlist.listItem.asn.subnet') + item.banMetadata.asn?.asNetwork"
-        >
-          <a-link
-            :href="`https://2ip.io/analytics/asn-list/?asnId=${item.banMetadata.asn?.asn}`"
-            :hoverable="false"
-          >
+        <a-tooltip :content="t('page.banlist.banlist.listItem.asn.subnet') + item.banMetadata.asn?.asNetwork">
+          <a-link :href="`https://2ip.io/analytics/asn-list/?asnId=${item.banMetadata.asn?.asn}`" :hoverable="false">
             <icon-info-circle />
           </a-link>
         </a-tooltip>
       </a-space>
     </a-descriptions-item>
-    <a-descriptions-item
-      v-if="item.banMetadata.reverseLookup !== 'N/A'"
-      :label="t('page.banlist.banlist.listItem.reserveDNSLookup')"
-      :span="4"
-    >
+    <a-descriptions-item v-if="item.banMetadata.reverseLookup !== 'N/A'"
+      :label="t('page.banlist.banlist.listItem.reserveDNSLookup')" :span="4">
       {{ item.banMetadata.reverseLookup }}
     </a-descriptions-item>
   </a-descriptions>
@@ -111,9 +93,11 @@ const descriptionLayout = useResponsiveState(
 .red {
   color: red;
 }
+
 .green {
   color: green;
 }
+
 a {
   color: var(--color-text-1);
   text-decoration: none;

@@ -1,6 +1,7 @@
 <template>
   <a-modal
     v-model:visible="showModal"
+    :mask-closable="false"
     :title="
       newItem ? t('page.dashboard.editModal.title.new') : t('page.dashboard.editModal.title.edit')
     "
@@ -14,6 +15,7 @@
           <a-radio :value="ClientTypeEnum.qBittorrent">qBittorrent</a-radio>
           <a-radio :value="ClientTypeEnum.Transmission">Transmission</a-radio>
           <a-radio :value="ClientTypeEnum.BiglyBT">BiglyBT</a-radio>
+          <a-radio :value="ClientTypeEnum.Deluge">Deluge</a-radio>
         </a-radio-group>
         <template #extra v-if="form.config.type === ClientTypeEnum.BiglyBT">
           <i18n-t keypath="page.dashboard.editModal.biglybt">
@@ -28,147 +30,32 @@
       <a-form-item field="name" :label="t('page.dashboard.editModal.label.name')" required>
         <a-input v-model="form.name" allow-clear />
       </a-form-item>
-      <!-- qBittorrent config block -->
-      <div v-if="form.config.type === ClientTypeEnum.qBittorrent">
-        <a-form-item
-          field="config.endpoint"
-          :label="t('page.dashboard.editModal.label.endpoint')"
-          :rules="[{ required: true, type: 'url' }]"
-        >
-          <a-input v-model="form.config.endpoint" allow-clear></a-input>
-        </a-form-item>
-        <a-form-item field="config.username" :label="t('page.dashboard.editModal.label.username')">
-          <a-input v-model="form.config.username" allow-clear></a-input>
-        </a-form-item>
-        <a-form-item field="config.password" :label="t('page.dashboard.editModal.label.password')">
-          <a-input-password v-model="form.config.password" allow-clear></a-input-password>
-        </a-form-item>
-        <a-form-item>
-          <a-checkbox v-model="useBasicAuth">
-            {{ t('page.dashboard.editModal.label.useBasicAuth') }}</a-checkbox
-          >
-        </a-form-item>
-        <a-form-item v-if="useBasicAuth" :content-flex="false">
-          <a-form-item field="config.basicAuth.user" label="User">
-            <a-input v-model="form.config.basicAuth.user" />
-          </a-form-item>
-          <a-form-item field="config.basicAuth.pass" label="Pass">
-            <a-input-password v-model="form.config.basicAuth.pass" />
-          </a-form-item>
-        </a-form-item>
-        <a-form-item
-          field="config.httpVersion"
-          :label="t('page.dashboard.editModal.label.httpVersion')"
-        >
-          <a-radio-group v-model="form.config.httpVersion">
-            <a-radio value="HTTP_1_1">1.1</a-radio>
-            <a-radio value="HTTP_2_0">2.0</a-radio>
-          </a-radio-group>
-          <template #extra
-            >{{ t('page.dashboard.editModal.label.httpVersion.description') }}
-          </template>
-        </a-form-item>
-        <a-form-item
-          field="config.incrementBan"
-          default-checked
-          :label="t('page.dashboard.editModal.label.incrementBan')"
-        >
-          <a-switch v-model="form.config.incrementBan" />
-          <template #extra>
-            {{ t('page.dashboard.editModal.label.incrementBan.description') }}</template
-          >
-        </a-form-item>
-        <a-form-item
-          field="config.verifySsl"
-          default-checked
-          :label="t('page.dashboard.editModal.label.verifySsl')"
-        >
-          <a-switch v-model="form.config.verifySsl" />
-        </a-form-item>
-      </div>
-      <!-- Transmission config block -->
-      <div v-else-if="form.config.type === ClientTypeEnum.Transmission">
-        <a-form-item
-          field="config.endpoint"
-          :label="t('page.dashboard.editModal.label.endpoint')"
-          :rules="[{ required: true, type: 'url' }]"
-        >
-          <a-input v-model="form.config.endpoint" allow-clear></a-input>
-        </a-form-item>
-        <a-form-item field="config.username" :label="t('page.dashboard.editModal.label.username')">
-          <a-input v-model="form.config.username" allow-clear></a-input>
-        </a-form-item>
-        <a-form-item field="config.password" :label="t('page.dashboard.editModal.label.password')">
-          <a-input-password v-model="form.config.password" allow-clear></a-input-password>
-        </a-form-item>
-        <a-form-item field="config.rpcUrl" label="RPC URL">
-          <a-input v-model="form.config.rpcUrl" allow-clear></a-input>
-        </a-form-item>
-        <a-form-item
-          field="config.httpVersion"
-          :label="t('page.dashboard.editModal.label.httpVersion')"
-        >
-          <a-radio-group v-model="form.config.httpVersion">
-            <a-radio value="HTTP_1_1">1.1</a-radio>
-            <a-radio value="HTTP_2_0">2.0</a-radio>
-          </a-radio-group>
-          <template #extra
-            >{{ t('page.dashboard.editModal.label.httpVersion.description') }}
-          </template>
-        </a-form-item>
-        <a-form-item
-          field="config.verifySsl"
-          default-checked
-          :label="t('page.dashboard.editModal.label.verifySsl')"
-        >
-          <a-switch v-model="form.config.verifySsl" />
-        </a-form-item>
-      </div>
-      <!-- BiglyBT config block -->
-      <div v-else-if="form.config.type === ClientTypeEnum.BiglyBT">
-        <a-form-item
-          field="config.endpoint"
-          :label="t('page.dashboard.editModal.label.endpoint')"
-          :rules="[{ required: true, type: 'url' }]"
-        >
-          <a-input v-model="form.config.endpoint" allow-clear></a-input>
-        </a-form-item>
-        <a-form-item field="config.token" label="Token" required>
-          <a-input v-model="form.config.token" allow-clear></a-input>
-        </a-form-item>
-        <a-form-item
-          field="config.httpVersion"
-          :label="t('page.dashboard.editModal.label.httpVersion')"
-        >
-          <a-radio-group v-model="form.config.httpVersion">
-            <a-radio value="HTTP_1_1">1.1</a-radio>
-            <a-radio value="HTTP_2_0">2.0</a-radio>
-          </a-radio-group>
-          <template #extra
-            >{{ t('page.dashboard.editModal.label.httpVersion.description') }}
-          </template>
-        </a-form-item>
-        <a-form-item
-          field="config.verifySsl"
-          default-checked
-          :label="t('page.dashboard.editModal.label.verifySsl')"
-        >
-          <a-switch v-model="form.config.verifySsl" />
-        </a-form-item>
-      </div>
+      <component :is="formMap[form.config.type] as any" v-model="form.config" />
     </a-form>
   </a-modal>
 </template>
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
-import { reactive, ref } from 'vue'
+import { defineAsyncComponent, reactive, ref } from 'vue'
 import { Message, type Form } from '@arco-design/web-vue'
 import { ClientTypeEnum, type downloaderConfig } from '@/api/model/clientStatus'
 import { CreateDownloader, TestDownloaderConfig, UpdateDownloader } from '@/service/downloaders'
+const qbittorrentForm = defineAsyncComponent(() => import('./forms/qbittorrent.vue'))
+const transmissionForm = defineAsyncComponent(() => import('./forms/transmission.vue'))
+const biglybtForm = defineAsyncComponent(() => import('./forms/biglybt.vue'))
+const delugeForm = defineAsyncComponent(() => import('./forms/deluge.vue'))
+
 const { t } = useI18n()
 const showModal = ref(false)
 const newItem = ref(false)
-const useBasicAuth = ref(false)
+
+const formMap = {
+  [ClientTypeEnum.qBittorrent]: qbittorrentForm,
+  [ClientTypeEnum.Transmission]: transmissionForm,
+  [ClientTypeEnum.BiglyBT]: biglybtForm,
+  [ClientTypeEnum.Deluge]: delugeForm
+}
+
 const form = reactive({
   name: '',
   config: { basicAuth: {}, verifySsl: true, httpVersion: 'HTTP_1_1' } as downloaderConfig
@@ -181,13 +68,9 @@ defineExpose({
       form.name = currentConfig.name
       oldName.value = currentConfig.name
       form.config = currentConfig.config
-      if (form.config.type === ClientTypeEnum.qBittorrent) {
-        useBasicAuth.value = form.config.basicAuth.pass !== '' || form.config.basicAuth.user !== ''
-      }
     } else {
       form.name = ''
       form.config = { basicAuth: {}, verifySsl: true, httpVersion: 'HTTP_1_1' } as downloaderConfig
-      useBasicAuth.value = false
     }
     showModal.value = true
   }

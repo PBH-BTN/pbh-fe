@@ -54,7 +54,7 @@
       :label="t('page.banlist.banlist.listItem.geo')"
       :span="4"
     >
-      <CountryFlag :iso="item.banMetadata.geo?.iso" mode="squared" />
+      <CountryFlag :iso="item.banMetadata.geo?.iso" />
       {{ `${item.banMetadata.geo?.countryRegion} ${item.banMetadata.geo?.city ?? ''}` }}
       <a-link
         :href="`https://uri.amap.com/marker?position=${item.banMetadata.geo?.longitude},${item.banMetadata.geo?.latitude}`"

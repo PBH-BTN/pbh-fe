@@ -12,6 +12,10 @@ export default {
   'navbar.action.autoUpdate': '自动刷新',
   'navbar.action.autoUpdate.lastUpdate': '最后更新于：',
   'main.workInProgressTips': '请注意，此功能仍在施工中，目前记录和展示的数据较为有限。',
+  'footer.newVersion': '发现新版本！',
+  'footer.newVersion.body': '{version} 已发布，点击查看',
+  'footer.newVersionTips': '有新版本 {version} 可用，点击查看',
+  'footer.newVersion.updateNow': '立即更新',
 
   'router.login': '登录',
   'router.dashboard': '状态',

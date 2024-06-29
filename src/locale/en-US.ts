@@ -13,6 +13,10 @@ export default {
   'navbar.action.autoUpdate.lastUpdate': 'Last updated at: ',
   'main.workInProgressTips':
     'This feature is still working in progress, and the data currently recorded and displayed is relatively limited',
+  'footer.newVersion': 'New Version Found!',
+  'footer.newVersion.body': '{version} is available, click to view',
+  'footer.newVersionTips': 'New version {version} is available, click to view',
+  'footer.newVersion.updateNow': 'Update Now',
 
   'router.login': 'Login',
   'router.dashboard': 'Status',

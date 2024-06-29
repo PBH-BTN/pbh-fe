@@ -43,7 +43,6 @@ import { Button, Message, Notification } from '@arco-design/web-vue'
 import { computed, h, watch } from 'vue'
 import { compare } from 'compare-versions'
 import { useI18n } from 'vue-i18n'
-import { title } from 'process'
 const { t } = useI18n()
 const version = __APP_VERSION__
 const hash = __APP_HASH__

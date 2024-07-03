@@ -15,6 +15,7 @@ export enum ClientTypeEnum {
   qBittorrent = 'qbittorrent',
   Transmission = 'transmission',
   BiglyBT = 'biglybt',
+  Deluge = 'deluge',
   Unknown = 'Unknown'
 }
 
@@ -31,7 +32,7 @@ export interface Torrent {
   hash: string
 }
 
-export type downloaderConfig = qBittorrentConfig | transmissionConfig | biglybtConfig
+export type downloaderConfig = qBittorrentConfig | transmissionConfig | biglybtConfig | delugeConfig
 
 export interface qBittorrentConfig {
   type: ClientTypeEnum.qBittorrent
@@ -65,6 +66,16 @@ export interface biglybtConfig {
   token: string
   httpVersion: string
   verifySsl: boolean
+}
+
+export interface delugeConfig {
+  type: ClientTypeEnum.Deluge
+  endpoint: string
+  password: string
+  httpVersion: string
+  incrementBan: boolean
+  verifySsl: boolean
+  rpcUrl: string
 }
 
 export interface CreateDownloadRequest {

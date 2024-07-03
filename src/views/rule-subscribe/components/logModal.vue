@@ -3,6 +3,7 @@
     v-model:visible="showModal"
     :title="t('page.ruleSubscribe.updateLog')"
     unmountOnClose
+    width="auto"
     :modal-style="{ width: '35vw' }"
   >
     <a-table

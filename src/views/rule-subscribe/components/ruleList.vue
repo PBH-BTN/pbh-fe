@@ -124,11 +124,11 @@ import { useRequest } from 'vue-request'
 import { useI18n } from 'vue-i18n'
 import { getColor } from '@/utils/color'
 import { Message } from '@arco-design/web-vue'
-import { ref } from 'vue'
+import { defineAsyncComponent, ref } from 'vue'
 import AsyncMethod from '@/components/asyncMethod.vue'
-import EditRuleModal from './editRuleItemModal.vue'
-import SettingsModal from './settingsModal.vue'
-import UpdateLog from './logModal.vue'
+const EditRuleModal = defineAsyncComponent(() => import('./editRuleItemModal.vue'))
+const SettingsModal = defineAsyncComponent(() => import('./settingsModal.vue'))
+const UpdateLog = defineAsyncComponent(() => import('./logModal.vue'))
 const { t, d } = useI18n()
 const { data, loading, refresh } = useRequest(getRuleList, {})
 const editModal = ref<InstanceType<typeof EditRuleModal>>()

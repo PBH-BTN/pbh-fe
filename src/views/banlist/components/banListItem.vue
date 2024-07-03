@@ -9,13 +9,21 @@
         <a-typography-text bold copyable>
           {{ item.banMetadata.peer.address.ip }}:{{ item.banMetadata.peer.address.port }}
         </a-typography-text>
-        <a-typography-text code>
-          {{
-            item.banMetadata.peer.clientName
-              ? item.banMetadata.peer.clientName
+        <a-tooltip
+          :content="
+            item.banMetadata.peer.id
+              ? item.banMetadata.peer.id
               : t('page.banlist.banlist.listItem.empty')
-          }}
-        </a-typography-text>
+          "
+        >
+          <a-typography-text code>
+            {{
+              item.banMetadata.peer.clientName
+                ? item.banMetadata.peer.clientName
+                : t('page.banlist.banlist.listItem.empty')
+            }}
+          </a-typography-text>
+        </a-tooltip>
       </a-space>
     </template>
     <a-descriptions-item :label="t('page.banlist.banlist.listItem.banTime')" :span="4">
@@ -46,7 +54,7 @@
       :label="t('page.banlist.banlist.listItem.geo')"
       :span="4"
     >
-      <CountryFlag :iso="item.banMetadata.geo?.iso" mode="squared" />
+      <CountryFlag :iso="item.banMetadata.geo?.iso" />
       {{ `${item.banMetadata.geo?.countryRegion} ${item.banMetadata.geo?.city ?? ''}` }}
       <a-link
         :href="`https://uri.amap.com/marker?position=${item.banMetadata.geo?.longitude},${item.banMetadata.geo?.latitude}`"
@@ -111,9 +119,11 @@ const descriptionLayout = useResponsiveState(
 .red {
   color: red;
 }
+
 .green {
   color: green;
 }
+
 a {
   color: var(--color-text-1);
   text-decoration: none;

@@ -17,5 +17,8 @@ export default {
   'page.banlog.charts.options.field': '维度',
   'page.banlog.charts.options.field.peerId': 'Peer ID',
   'page.banlog.charts.options.field.torrentName': '种子名',
-  'page.banlog.charts.options.field.module': '功能模块'
+  'page.banlog.charts.options.field.module': '功能模块',
+  'page.banlog.charts.title.line': '最近 {days} 天封禁',
+  'page.banlog.charts.line.options.field': '计数',
+  'page.banlog.charts.options.days': '展示天数'
 }

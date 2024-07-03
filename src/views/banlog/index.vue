@@ -3,7 +3,7 @@
     <a-typography-text style="font-size: 1.2em">
       {{ $t('page.banlog.description') }}
     </a-typography-text>
-    <a-space class="align-right" fill>
+    <a-space class="align-right" fill style="margin-bottom: 20px">
       <a-typography-text>{{ t('page.banlog.radio.viewMode') }}</a-typography-text>
       <a-radio-group type="button" v-model="viewMode">
         <a-radio value="table">{{ t('page.banlog.radio.table') }}</a-radio>
@@ -24,8 +24,8 @@
 
 <script setup lang="ts">
 import banlogTable from './components/banlogTable.vue'
-import charts from './components/charts.vue'
-import { ref } from 'vue'
+const charts = defineAsyncComponent(() => import('./components/charts.vue'))
+import { defineAsyncComponent, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 const viewMode = ref('table')

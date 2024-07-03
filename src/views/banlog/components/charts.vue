@@ -23,8 +23,13 @@
               </a-select>
             </a-form-item>
 
-            <a-form-item field="enableThreshold" :label="t('page.banlog.charts.options.thresold')">
-              <a-switch v-model="option.enableThreshold" />
+            <a-form-item field="enableThreshold">
+              <a-space>
+                <a-switch v-model="option.enableThreshold" />
+                <a-typography-text>{{
+                  t('page.banlog.charts.options.thresold')
+                }}</a-typography-text>
+              </a-space>
             </a-form-item>
           </a-form>
         </a-collapse-item>
@@ -129,7 +134,7 @@ const { loading, data } = useRequest(getBanlogs, {
 
 <style scoped>
 .chart {
-  height: 50vh;
-  width: 60vh;
+  height: 80vh;
+  width: 80vh;
 }
 </style>

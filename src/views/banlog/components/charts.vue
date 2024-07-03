@@ -6,7 +6,9 @@
           class="chart"
           :option="pieChartOption"
           :loading="loading"
+          autoresize
           :loadingOptions="loadingOptions"
+          :theme="darkStore.isDark ? 'dark' : 'light'"
         >
         </v-chart>
         <template #extra>
@@ -76,12 +78,13 @@ import {
   LegendComponent,
   GridComponent
 } from 'echarts/components'
-import VChart, { THEME_KEY } from 'vue-echarts'
-import { ref, provide, reactive, computed } from 'vue'
+import VChart from 'vue-echarts'
+import { ref, reactive, computed } from 'vue'
 import { useRequest } from 'vue-request'
 import { getBanlogs } from '@/service/banLogs'
 import type { BanLog } from '@/api/model/banlogs'
-import { useDark } from '@vueuse/core'
+import { SVGRenderer } from 'echarts/renderers'
+import { useDarkStore } from '@/stores/dark'
 import dayjs from 'dayjs'
 import { useI18n } from 'vue-i18n'
 const { t, d } = useI18n()
@@ -92,10 +95,11 @@ use([
   TooltipComponent,
   LegendComponent,
   LineChart,
-  GridComponent
+  GridComponent,
+  SVGRenderer
 ])
+const darkStore = useDarkStore()
 
-provide(THEME_KEY, useDark().value ? 'dark' : 'light')
 type StringKeys<T> = {
   [K in keyof T]: T[K] extends string ? K : never
 }[keyof T]
@@ -120,6 +124,7 @@ const pieChartOption = computed(() => {
       left: 'right',
       data: [] as string[]
     },
+    backgroundColor: darkStore.isDark ? 'rgba(0, 0, 0, 0.0)' : undefined,
     series: [
       {
         name: t('page.banlog.charts.options.field.' + option.field),
@@ -233,6 +238,6 @@ const lineOptions = computed(() => {
 <style scoped>
 .chart {
   height: 60vh;
-  width: 100vh;
+  width: 80vh;
 }
 </style>

@@ -75,6 +75,7 @@ import settingsModal from './settingsModal.vue'
 import { useDark, useToggle } from '@vueuse/core'
 import { useAutoUpdate } from '@/stores/autoUpdate'
 import useLocale from '@/stores/locale'
+import { useDarkStore } from '@/stores/dark'
 import { LOCALE_OPTIONS } from '@/locale'
 import { useI18n } from 'vue-i18n'
 import { ref, computed } from 'vue'
@@ -82,6 +83,7 @@ const { t, d, locale } = useI18n()
 const { changeLocale } = useLocale()
 const locales = [...LOCALE_OPTIONS]
 const autoUpdate = useAutoUpdate()
+const darkStore = useDarkStore()
 const isDark = useDark({
   selector: 'body',
   attribute: 'arco-theme',
@@ -89,10 +91,12 @@ const isDark = useDark({
   valueLight: 'light',
   storageKey: null
 })
+darkStore.setDark(isDark.value)
 const settingsModalRef = ref<InstanceType<typeof settingsModal>>()
 const toggleTheme = useToggle(isDark)
 const handleToggleTheme = () => {
   toggleTheme()
+  darkStore.setDark(isDark.value)
 }
 
 const props = defineProps({

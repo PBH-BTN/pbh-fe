@@ -1,21 +1,16 @@
 export interface BanLog {
-  pageIndex: Number
-  pageSize: Number
-  result: {
-    banAt: Number
-    unbanAt: Date
-    peerIp: String
-    peerPort: Number
-    peerId: String
-    peerClientName: String
-    peerUploaded: Number
-    peerDownloaded: Number
-    peerProgress: Number
-    torrentInfoHash: String
-    torrentName: String
-    torrentSize: Number
-    module: String
-    description: String
-  }[]
-  total: Number
+  banAt: number
+  unbanAt: Date
+  peerIp: string
+  peerPort: number
+  peerId: string
+  peerClientName: string
+  peerUploaded: number
+  peerDownloaded: number
+  peerProgress: number
+  torrentInfoHash: string
+  torrentName: string
+  torrentSize: number
+  module: string
+  description: string
 }

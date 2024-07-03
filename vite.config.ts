@@ -51,7 +51,8 @@ export default defineConfig({
             'lodash',
             'url-join'
           ],
-          arcoDesign: ['@arco-design/web-vue']
+          arcoDesign: ['@arco-design/web-vue'],
+          echarts: ['echarts', 'vue-echarts']
         }
       }
     }

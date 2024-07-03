@@ -77,7 +77,6 @@
 
 <script setup lang="ts">
 import { use } from 'echarts/core'
-import { CanvasRenderer } from 'echarts/renderers'
 import { PieChart, LineChart } from 'echarts/charts'
 import {
   TitleComponent,
@@ -96,7 +95,6 @@ import dayjs from 'dayjs'
 import { useI18n } from 'vue-i18n'
 const { t, d } = useI18n()
 use([
-  CanvasRenderer,
   PieChart,
   TitleComponent,
   TooltipComponent,

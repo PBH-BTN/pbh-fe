@@ -9,6 +9,7 @@
           autoresize
           :loadingOptions="loadingOptions"
           :theme="darkStore.isDark ? 'dark' : 'light'"
+          :init-options="{ renderer: 'svg' }"
         >
         </v-chart>
         <template #extra>
@@ -62,7 +63,13 @@
             </template>
           </a-popover>
         </template>
-        <v-chart class="chart" :option="lineOptions" theme="ovilia-green" autoresize />
+        <v-chart
+          class="chart"
+          :option="lineOptions"
+          theme="ovilia-green"
+          autoresize
+          :init-options="{ renderer: 'svg' }"
+        />
       </a-card>
     </a-space>
   </div>

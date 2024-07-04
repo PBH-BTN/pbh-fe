@@ -1,6 +1,14 @@
 <template>
-  <div style="display: flex; align-items: center; flex-flow: column">
-    <a-space direction="vertical">
+  <a-row
+    justify="center"
+    align="stretch"
+    :wrap="true"
+    :gutter="[
+      { xs: 12, sm: 12, md: 12, lg: 12, xl: 24 },
+      { xs: 12, sm: 12, md: 12, lg: 12, xl: 24 }
+    ]"
+  >
+    <a-col :xl="12" :lg="24" :md="24" :sm="24" :xs="24">
       <a-card hoverable :title="t('page.banlog.charts.options.field.' + option.field)">
         <v-chart
           class="chart"
@@ -44,6 +52,8 @@
           </a-popover>
         </template>
       </a-card>
+    </a-col>
+    <a-col :xl="12" :lg="24" :md="24" :sm="24" :xs="24">
       <a-card hoverable :title="t('page.banlog.charts.title.line', { days: lastDays })">
         <template #extra>
           <a-popover>
@@ -71,8 +81,8 @@
           :init-options="{ renderer: 'svg' }"
         />
       </a-card>
-    </a-space>
-  </div>
+    </a-col>
+  </a-row>
 </template>
 
 <script setup lang="ts">
@@ -246,7 +256,6 @@ const lineOptions = computed(() => {
 
 <style scoped>
 .chart {
-  height: 60vh;
-  width: 80vh;
+  height: 50vh;
 }
 </style>

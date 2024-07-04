@@ -1,9 +1,9 @@
 import { useEndpointStore } from '@/stores/endpoint'
-import urlJoin from 'url-join'
+import path from 'path'
 import { getCommonHeader } from './utils'
 
 export class IncorrectTokenError extends Error {
-  static name = "IncorrectTokenError" as const
+  static name = 'IncorrectTokenError' as const
   name = IncorrectTokenError.name
 
   static is(err: unknown): err is IncorrectTokenError {
@@ -16,7 +16,7 @@ export class IncorrectTokenError extends Error {
  */
 export async function login(token: string) {
   const endpointStore = useEndpointStore()
-  const url = new URL(urlJoin(endpointStore.endpoint, '/api/auth/login'), location.href)
+  const url = new URL(path.join(endpointStore.endpoint, '/api/auth/login'), location.href)
   return fetch(url, {
     headers: getCommonHeader(false),
     method: 'POST',

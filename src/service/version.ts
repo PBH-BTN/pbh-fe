@@ -1,5 +1,5 @@
 import { useEndpointStore } from '@/stores/endpoint'
-import urlJoin from 'url-join'
+import path from 'path'
 import { getCommonHeader } from './utils'
 import { Octokit } from '@octokit/core'
 import type { mainfest } from '@/api/model/manifest'
@@ -32,7 +32,7 @@ export function getLatestVersion(token = useEndpointStore().accessToken) {
 }
 
 export function getManifest(endpoint = useEndpointStore().endpoint): Promise<mainfest> {
-  const url = new URL(urlJoin(endpoint, '/api/metadata/manifest'), location.href)
+  const url = new URL(path.join(endpoint, '/api/metadata/manifest'), location.href)
   return (
     fetch(url, { headers: getCommonHeader(false) })
       .catch(() => {

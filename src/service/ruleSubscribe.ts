@@ -1,5 +1,5 @@
 import { useEndpointStore } from '@/stores/endpoint'
-import urlJoin from 'url-join'
+import path from 'path'
 import { getCommonHeader } from './utils'
 import type { CommonResponse, CommonResponseWithoutData, Pagination } from '@/api/model/common'
 import type { ruleBrief, updateLog } from '@/api/model/ruleSubscribe'
@@ -8,7 +8,7 @@ export async function getRuleList(): Promise<CommonResponse<ruleBrief[]>> {
   const endpointStore = useEndpointStore()
   await endpointStore.serverAvailable
 
-  const url = new URL(urlJoin(endpointStore.endpoint, 'api/sub/rules'), location.href)
+  const url = new URL(path.join(endpointStore.endpoint, 'api/sub/rules'), location.href)
 
   return fetch(url, { headers: getCommonHeader() }).then((res) => {
     endpointStore.assertResponseLogin(res)
@@ -23,7 +23,7 @@ export async function ToggleRuleEnable(
   const endpointStore = useEndpointStore()
   await endpointStore.serverAvailable
 
-  const url = new URL(urlJoin(endpointStore.endpoint, `api/sub/rule/${ruleId}`), location.href)
+  const url = new URL(path.join(endpointStore.endpoint, `api/sub/rule/${ruleId}`), location.href)
   return fetch(url, {
     headers: getCommonHeader(),
     method: 'PATCH',
@@ -46,7 +46,7 @@ export async function UpdateRuleItem({
   const endpointStore = useEndpointStore()
   await endpointStore.serverAvailable
 
-  const url = new URL(urlJoin(endpointStore.endpoint, `/api/sub/rule/${ruleId}`), location.href)
+  const url = new URL(path.join(endpointStore.endpoint, `/api/sub/rule/${ruleId}`), location.href)
   return fetch(url, {
     headers: getCommonHeader(),
     method: 'POST',
@@ -69,7 +69,7 @@ export async function AddRuleItem({
   const endpointStore = useEndpointStore()
   await endpointStore.serverAvailable
 
-  const url = new URL(urlJoin(endpointStore.endpoint, `api/sub/rule`), location.href)
+  const url = new URL(path.join(endpointStore.endpoint, `api/sub/rule`), location.href)
   return fetch(url, {
     headers: getCommonHeader(),
     method: 'PUT',
@@ -85,7 +85,7 @@ export async function RefreshRule(ruleId: string): Promise<CommonResponseWithout
   await endpointStore.serverAvailable
 
   const url = new URL(
-    urlJoin(endpointStore.endpoint, `api/sub/rule/${ruleId}/update`),
+    path.join(endpointStore.endpoint, `api/sub/rule/${ruleId}/update`),
     location.href
   )
   return fetch(url, {
@@ -101,7 +101,7 @@ export async function DeleteRule(ruleId: string): Promise<CommonResponseWithoutD
   const endpointStore = useEndpointStore()
   await endpointStore.serverAvailable
 
-  const url = new URL(urlJoin(endpointStore.endpoint, `/api/sub/rule/${ruleId}`), location.href)
+  const url = new URL(path.join(endpointStore.endpoint, `/api/sub/rule/${ruleId}`), location.href)
   return fetch(url, {
     headers: getCommonHeader(),
     method: 'DELETE'
@@ -115,7 +115,7 @@ export async function UpdateAll() {
   const endpointStore = useEndpointStore()
   await endpointStore.serverAvailable
 
-  const url = new URL(urlJoin(endpointStore.endpoint, `/api/sub/rules/update`), location.href)
+  const url = new URL(path.join(endpointStore.endpoint, `/api/sub/rules/update`), location.href)
   return fetch(url, {
     headers: { ...getCommonHeader(), 'X-Audit': 'Rule deletion' },
     method: 'POST'
@@ -129,7 +129,7 @@ export async function GetCheckInvervalSettings(): Promise<CommonResponse<number>
   const endpointStore = useEndpointStore()
   await endpointStore.serverAvailable
 
-  const url = new URL(urlJoin(endpointStore.endpoint, 'api/sub/interval'), location.href)
+  const url = new URL(path.join(endpointStore.endpoint, 'api/sub/interval'), location.href)
 
   return fetch(url, { headers: getCommonHeader() }).then((res) => {
     endpointStore.assertResponseLogin(res)
@@ -141,7 +141,7 @@ export async function SetCheckInterval(interval: number): Promise<CommonResponse
   const endpointStore = useEndpointStore()
   await endpointStore.serverAvailable
 
-  const url = new URL(urlJoin(endpointStore.endpoint, 'api/sub/interval'), location.href)
+  const url = new URL(path.join(endpointStore.endpoint, 'api/sub/interval'), location.href)
 
   return fetch(url, {
     headers: getCommonHeader(),
@@ -160,7 +160,7 @@ export async function GetUpdateLogs(params: {
   const endpointStore = useEndpointStore()
   await endpointStore.serverAvailable
 
-  const url = new URL(urlJoin(endpointStore.endpoint, '/api/sub/logs'), location.href)
+  const url = new URL(path.join(endpointStore.endpoint, '/api/sub/logs'), location.href)
   url.searchParams.set('pageIndex', String(params.pageIndex - 1))
   if (params.pageSize) {
     url.searchParams.set('pageSize', String(params.pageSize))

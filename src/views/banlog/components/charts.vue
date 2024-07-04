@@ -127,6 +127,10 @@ const pieChartOption = computed(() => {
     legend: {
       orient: 'vertical',
       left: 'right',
+      type: 'scroll',
+      right: 10,
+      top: 20,
+      bottom: 20,
       data: [] as string[]
     },
     backgroundColor: darkStore.isDark ? 'rgba(0, 0, 0, 0.0)' : undefined,

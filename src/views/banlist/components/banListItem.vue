@@ -41,9 +41,11 @@
     </a-descriptions-item>
     <a-descriptions-item :label="t('page.banlist.banlist.listItem.location')" :span="12">
       <!-- 这里非常离奇，只要用了a-typography-text就会被下面一行覆盖，怀疑框架有毛病 -->
-      <p style="text-overflow: ellipsis; max-lines: 1">
-        {{ item.banMetadata.torrent.name }}
-      </p>
+      <a-tooltip :content="item.banMetadata.torrent.hash">
+        <a-typography-text style="margin-bottom: 0" :ellipsis="{ showTooltip: true }">
+          {{ item.banMetadata.torrent.name }}
+        </a-typography-text>
+      </a-tooltip>
     </a-descriptions-item>
     <a-descriptions-item :label="t('page.banlist.banlist.listItem.reason')" :span="12">
       <a-typography-text style="margin-bottom: 0" :ellipsis="{ showTooltip: true }">

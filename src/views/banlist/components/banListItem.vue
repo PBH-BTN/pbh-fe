@@ -40,6 +40,7 @@
       - {{ (item.banMetadata.peer.progress * 100).toFixed(2) }}%
     </a-descriptions-item>
     <a-descriptions-item :label="t('page.banlist.banlist.listItem.location')" :span="12">
+      <!-- 这里非常离奇，只要用了a-typography-text就会被下面一行覆盖，怀疑框架有毛病 -->
       <p style="text-overflow: ellipsis; max-lines: 1">
         {{ item.banMetadata.torrent.name }}
       </p>

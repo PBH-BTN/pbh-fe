@@ -40,12 +40,12 @@
       - {{ (item.banMetadata.peer.progress * 100).toFixed(2) }}%
     </a-descriptions-item>
     <a-descriptions-item :label="t('page.banlist.banlist.listItem.location')" :span="12">
-      <a-typography-text style="margin-bottom: 0" :ellipsis="{ showTooltip: true }">
-        {{ item.banMetadata.torrent.name }}</a-typography-text
-      >
+      <p style="text-overflow: ellipsis; max-lines: 1">
+        {{ item.banMetadata.torrent.name }}
+      </p>
     </a-descriptions-item>
     <a-descriptions-item :label="t('page.banlist.banlist.listItem.reason')" :span="12">
-      <a-typography-text style="margin-bottom: 0">
+      <a-typography-text style="margin-bottom: 0" :ellipsis="{ showTooltip: true }">
         {{ item.banMetadata.description }}
       </a-typography-text>
     </a-descriptions-item>

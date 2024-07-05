@@ -114,7 +114,7 @@ import {
   type ClientStatus,
   type Downloader,
   type downloaderConfig
-} from '@/api/model/clientStatus'
+} from '@/api/model/downloader'
 import { useRequest } from 'vue-request'
 import { DeleteDownloader, getClientStatus } from '@/service/downloaders'
 import { computed } from 'vue'

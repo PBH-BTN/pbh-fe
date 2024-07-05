@@ -49,7 +49,7 @@
   </a-form-item>
 </template>
 <script setup lang="ts">
-import type { qBittorrentConfig } from '@/api/model/clientStatus'
+import type { qBittorrentConfig } from '@/api/model/downloader'
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n()

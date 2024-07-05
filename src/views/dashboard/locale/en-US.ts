@@ -27,6 +27,8 @@ export default {
   'page.dashboard.torrentList.column.size': 'Size',
   'page.dashboard.torrentList.column.hash': 'Hash',
   'page.dashboard.torrentList.column.progress': 'Progress',
+  'page.dashboard.torrentList.column.speed': 'Speed',
+  'page.dashboard.torrentList.column.view': 'View',
   'page.dashboard.editModal.title.new': 'New Downloader',
   'page.dashboard.editModal.title.edit': 'Edit Downloader',
   'page.dashboard.editModal.label.type': 'Type',
@@ -43,5 +45,13 @@ export default {
     'Helps to alleviate the downloader pressure when saving the ban list, but may cause the inability to ban Peers on some downloaders',
   'page.dashboard.editModal.label.verifySsl': 'Verify SSL',
   'page.dashboard.editModal.biglybt': 'Please install plugin at {url} first.',
-  'page.dashboard.editModal.biglybt.url': 'here'
+  'page.dashboard.editModal.biglybt.url': 'here',
+  'page.dashboard.peerList.title': 'Active Peer List: ',
+  'page.dashboard.peerList.column.address': 'Address',
+  'page.dashboard.peerList.column.port': 'Port',
+  'page.dashboard.peerList.column.clientName': 'Client Name',
+  'page.dashboard.peerList.column.flag': 'Flags',
+  'page.dashboard.peerList.column.speed': 'Speed',
+  'page.dashboard.peerList.column.uploadedDownloaded': 'Uploaded/Downloaded',
+  'page.dashboard.peerList.column.progress': 'Progress'
 }

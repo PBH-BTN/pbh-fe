@@ -40,7 +40,7 @@
   </a-form-item>
 </template>
 <script setup lang="ts">
-import type { delugeConfig } from '@/api/model/clientStatus'
+import type { delugeConfig } from '@/api/model/downloader'
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 const config = defineModel<delugeConfig>({ required: true })

@@ -25,7 +25,7 @@
   </a-form-item>
 </template>
 <script setup lang="ts">
-import type { biglybtConfig } from '@/api/model/clientStatus'
+import type { biglybtConfig } from '@/api/model/downloader'
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 const config = defineModel<biglybtConfig>({ required: true })

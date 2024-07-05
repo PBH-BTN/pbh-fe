@@ -2,9 +2,10 @@ import type {
   ClientStatus,
   CreateDownloadRequest,
   Downloader,
+  PeerInfo,
   TestDownloaderResponse,
   Torrent
-} from '@/api/model/clientStatus'
+} from '@/api/model/downloader'
 import type { Statistic } from '@/api/model/statistic'
 import { useEndpointStore } from '@/stores/endpoint'
 import urlJoin from 'url-join'
@@ -109,6 +110,19 @@ export async function DeleteDownloader(name: string): Promise<CommonResponseWith
   await endpointStore.serverAvailable
   const url = new URL(urlJoin(endpointStore.endpoint, `/api/downloaders/${name}`), location.href)
   return fetch(url, { method: 'DELETE', headers: getCommonHeader() }).then((res) => {
+    endpointStore.assertResponseLogin(res)
+    return res.json()
+  })
+}
+
+export async function getPeer(downloader: string, torrentId: string): Promise<PeerInfo[]> {
+  const endpointStore = useEndpointStore()
+  await endpointStore.serverAvailable
+  const url = new URL(
+    urlJoin(endpointStore.endpoint, `/api/downloaders/${downloader}/torrent/${torrentId}/peers`),
+    location.href
+  )
+  return fetch(url, { headers: getCommonHeader() }).then((res) => {
     endpointStore.assertResponseLogin(res)
     return res.json()
   })

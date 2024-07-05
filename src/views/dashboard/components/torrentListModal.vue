@@ -1,5 +1,13 @@
 <template>
-  <a-modal hide-cancel closable v-model:visible="visible" @ok="handleOk" draggable width="auto">
+  <a-modal
+    hide-cancel
+    closable
+    v-model:visible="visible"
+    @ok="handleOk"
+    draggable
+    width="auto"
+    @close="cancel()"
+  >
     <template #title> {{ t('page.dashboard.torrentList.title') }} </template>
     <a-table
       :columns="columns"
@@ -26,15 +34,36 @@
           </a-typography-text>
         </a-space>
       </template>
+      <template #speed="{ record }">
+        <a-space fill style="justify-content: space-between">
+          <a-space fill direction="vertical">
+            <a-typography-text
+              ><icon-arrow-up class="green" />
+              {{ formatFileSize(record.rtUploadSpeed) }}/s</a-typography-text
+            >
+            <a-typography-text
+              ><icon-arrow-down class="red" />
+              {{ formatFileSize(record.rtDownloadSpeed) }}/s</a-typography-text
+            >
+          </a-space>
+        </a-space>
+      </template>
+      <template #peer="{ record }">
+        <a-button @click="() => peerList?.showModal(downloader, record.id, record.name)">
+          {{ t('page.dashboard.torrentList.column.view') }}
+        </a-button>
+      </template>
     </a-table>
+    <peerListModal ref="peerList" />
   </a-modal>
 </template>
 <script setup lang="ts">
 import { getTorrents } from '@/service/downloaders'
-import { ref } from 'vue'
+import { defineAsyncComponent, ref } from 'vue'
 import { useRequest } from 'vue-request'
 import { formatFileSize } from '@/utils/file'
 import { useI18n } from 'vue-i18n'
+const peerListModal = defineAsyncComponent(() => import('./peerListModal.vue'))
 const { t } = useI18n()
 const visible = ref(false)
 const downloader = ref('')
@@ -49,13 +78,19 @@ const handleOk = () => {
   visible.value = false
   downloader.value = ''
 }
-const { data, loading, run } = useRequest(getTorrents, {
-  manual: true
+const { data, loading, run, cancel } = useRequest(getTorrents, {
+  manual: true,
+  pollingInterval: 1000
 })
+const peerList = ref<InstanceType<typeof peerListModal>>()
 const columns = [
   {
     title: () => t('page.dashboard.torrentList.column.name'),
     slotName: 'name'
+  },
+  {
+    title: () => t('page.dashboard.torrentList.column.speed'),
+    slotName: 'speed'
   },
   {
     title: () => t('page.dashboard.torrentList.column.size'),
@@ -68,6 +103,19 @@ const columns = [
   {
     title: () => t('page.dashboard.torrentList.column.progress'),
     slotName: 'progress'
+  },
+  {
+    title: 'Peers',
+    slotName: 'peer'
   }
 ]
 </script>
+
+<style scoped>
+.red {
+  color: rgb(var(--red-5));
+}
+.green {
+  color: rgb(var(--green-5));
+}
+</style>

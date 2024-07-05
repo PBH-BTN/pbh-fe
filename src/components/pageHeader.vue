@@ -89,7 +89,7 @@ const isDark = useDark({
   attribute: 'arco-theme',
   valueDark: 'dark',
   valueLight: 'light',
-  storageKey: null
+  storageKey: 'dark-theme-config'
 })
 darkStore.setDark(isDark.value)
 const settingsModalRef = ref<InstanceType<typeof settingsModal>>()

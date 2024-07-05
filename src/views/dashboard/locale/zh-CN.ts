@@ -25,6 +25,8 @@ export default {
   'page.dashboard.torrentList.column.size': '大小',
   'page.dashboard.torrentList.column.hash': 'Hash',
   'page.dashboard.torrentList.column.progress': '进度',
+  'page.dashboard.torrentList.column.speed': '速度',
+  'page.dashboard.torrentList.column.view': '查看',
   'page.dashboard.editModal.title.new': '新建下载器',
   'page.dashboard.editModal.title.edit': '编辑下载器',
   'page.dashboard.editModal.label.type': '类型',
@@ -40,5 +42,13 @@ export default {
     '有助于缓解保存封禁列表时的下载器压力，但在部分下载器上可能会导致无法封禁Peers',
   'page.dashboard.editModal.label.verifySsl': '验证SSL证书',
   'page.dashboard.editModal.biglybt': '请先安装 {url}',
-  'page.dashboard.editModal.biglybt.url': '插件'
+  'page.dashboard.editModal.biglybt.url': '插件',
+  'page.dashboard.peerList.title': '活动 Peer 列表：',
+  'page.dashboard.peerList.column.address': '地址',
+  'page.dashboard.peerList.column.port': '端口',
+  'page.dashboard.peerList.column.clientName': '客户端名称',
+  'page.dashboard.peerList.column.flag': '标志位',
+  'page.dashboard.peerList.column.speed': '速度',
+  'page.dashboard.peerList.column.uploadedDownloaded': '已上传/已下载',
+  'page.dashboard.peerList.column.progress': '进度'
 }

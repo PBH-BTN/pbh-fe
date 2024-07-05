@@ -77,6 +77,9 @@ importers:
       typescript:
         specifier: ~5.5.2
         version: 5.5.2
+      url-join:
+        specifier: ^5.0.0
+        version: 5.0.0
       vite:
         specifier: ^5.3.2
         version: 5.3.2(@types/node@20.14.9)(less@4.2.0)
@@ -2169,6 +2172,10 @@ packages:
 
   uri-js@4.4.1:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
+
+  url-join@5.0.0:
+    resolution: {integrity: sha512-n2huDr9h9yzd6exQVnH/jU5mr+Pfx08LRXXZhkLLetAMESRj+anQsTAh940iMrIetKAmry9coFuZQ2jY8/p3WA==}
+    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
 
   url@0.11.3:
     resolution: {integrity: sha512-6hxOLGfZASQK/cijlZnZJTq8OXAkt/3YGfQX45vvMYXpZoo8NdWZcY73K108Jf759lS1Bv/8wXnHDTSz17dSRw==}
@@ -4556,6 +4563,8 @@ snapshots:
   uri-js@4.4.1:
     dependencies:
       punycode: 2.3.1
+
+  url-join@5.0.0: {}
 
   url@0.11.3:
     dependencies:

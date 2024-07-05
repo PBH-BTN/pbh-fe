@@ -80,7 +80,10 @@
       >
         <a-space>
           <a-typography-text>{{ client.activeTorrents }}</a-typography-text>
-          <a-tooltip :content="t('page.dashboard.torrentList.tips')">
+          <a-tooltip
+            v-if="client.activeTorrents > 0"
+            :content="t('page.dashboard.torrentList.tips')"
+          >
             <a-button
               @click="() => emits('torrent-view-click', downloader.name)"
               shape="circle"

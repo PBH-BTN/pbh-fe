@@ -20,5 +20,6 @@ export default {
   'page.banlog.charts.options.field.module': 'Module',
   'page.banlog.charts.title.line': 'Last {days} days count',
   'page.banlog.charts.line.options.field': 'Count',
-  'page.banlog.charts.options.days': 'Days'
+  'page.banlog.charts.options.days': 'Days',
+  'page.banlog.charts.options.mergeSame': 'Try to merge same type clients'
 }

@@ -38,12 +38,19 @@
                     </a-option>
                   </a-select>
                 </a-form-item>
-
                 <a-form-item field="enableThreshold">
                   <a-space>
                     <a-switch v-model="option.enableThreshold" />
                     <a-typography-text>{{
                       t('page.banlog.charts.options.thresold')
+                    }}</a-typography-text>
+                  </a-space>
+                </a-form-item>
+                <a-form-item field="mergeSameVersion" v-if="option.field === 'peerId'">
+                  <a-space>
+                    <a-switch v-model="option.mergeSameVersion" />
+                    <a-typography-text>{{
+                      t('page.banlog.charts.options.mergeSame')
                     }}</a-typography-text>
                   </a-space>
                 </a-form-item>
@@ -120,7 +127,8 @@ type StringKeys<T> = {
 }[keyof T]
 const option = reactive({
   field: 'peerId' as StringKeys<BanLog>,
-  enableThreshold: true
+  enableThreshold: true,
+  mergeSameVersion: false
 })
 const loadingOptions = {
   text: 'Loading…',
@@ -164,7 +172,14 @@ const pieChartOption = computed(() => {
   if (data.value) {
     const countMap = new Map<string, number>()
     data.value.results.forEach((v) => {
-      const key = v[option.field]
+      let key = v[option.field]
+      if (option.field === 'peerId' && key === '') {
+        key = t('page.banlist.banlist.listItem.empty')
+      }
+      if (option.field === 'peerId' && option.mergeSameVersion) {
+        const match = key.match(/^([-]?[a-zA-z]+)[0-9]+.*/)
+        if (match && match?.length >= 2) key = match[1] + '*'
+      }
       if (countMap.has(key)) {
         countMap.set(key, countMap.get(key)! + 1)
       } else {

@@ -145,7 +145,9 @@ const columns = [
   }
 ]
 const parseFlags = (flags: string) =>
-  flags.split(' ').reduce((flag) => t('page.dashboard.peerList.column.flags.' + flag.trim()) + '\n')
+  flags
+    .split(' ')
+    .reduce((str, flag) => str + '\n' + t('page.dashboard.peerList.column.flags.' + flag.trim()))
 </script>
 
 <style scoped>

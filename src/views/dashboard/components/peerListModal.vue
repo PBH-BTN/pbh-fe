@@ -63,7 +63,12 @@
       <template #flags="{ record }">
         <p>
           {{ record.peer.flags }}
-          <a-tooltip :content="parseFlags(record.peer.flags)">
+          <a-tooltip>
+            <template #content>
+              <p v-for="description in parseFlags(record.peer.flags)" :key="description">
+                {{ description }}
+              </p>
+            </template>
             <icon-info-circle />
           </a-tooltip>
         </p>
@@ -147,7 +152,10 @@ const columns = [
 const parseFlags = (flags: string) =>
   flags
     .split(' ')
-    .reduce((str, flag) => str + '\n' + t('page.dashboard.peerList.column.flags.' + flag.trim()))
+    .reduce(
+      (str, flag) => str + '\n' + t('page.dashboard.peerList.column.flags.' + flag.trim()),
+      ''
+    )
 </script>
 
 <style scoped>

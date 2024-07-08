@@ -99,14 +99,14 @@
     <a-descriptions-item
       v-if="item.banMetadata.geo?.network?.isp"
       :label="t('page.banlist.banlist.listItem.network.isp')"
-      :span="12"
+      :span="6"
     >
     {{ item.banMetadata.geo?.network?.isp }}
     </a-descriptions-item>
     <a-descriptions-item
       v-if="item.banMetadata.geo?.network?.netType"
       :label="t('page.banlist.banlist.listItem.network.netType')"
-      :span="12"
+      :span="6"
     >
     {{ item.banMetadata.geo?.network?.netType }}
     </a-descriptions-item>

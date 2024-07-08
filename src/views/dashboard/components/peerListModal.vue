@@ -60,6 +60,14 @@
           </a-typography-text>
         </a-space>
       </template>
+      <template #flags="{ record }">
+        <p>
+          {{ record.peer.flags }}
+          <a-tooltip :content="parseFlags(record.peer.flags)">
+            <icon-info-circle />
+          </a-tooltip>
+        </p>
+      </template>
     </a-table>
   </a-modal>
 </template>
@@ -107,7 +115,7 @@ const columns = [
   },
   {
     title: () => t('page.dashboard.peerList.column.flag'),
-    dataIndex: 'peer.flags',
+    slotName: 'flags',
     width: 100
   },
   {
@@ -136,6 +144,8 @@ const columns = [
     width: 100
   }
 ]
+const parseFlags = (flags: string) =>
+  flags.split(' ').reduce((flag) => t('page.dashboard.peerList.column.flags.' + flag.trim()) + '\n')
 </script>
 
 <style scoped>

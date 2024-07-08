@@ -12,5 +12,7 @@ export default {
   'page.banlist.banlist.listItem.asn': 'ASN',
   'page.banlist.banlist.listItem.asn.subnet': 'ASN Subnet: ',
   'page.banlist.banlist.listItem.empty': 'Empty',
+  'page.banlist.banlist.listItem.network.isp': 'ISP: ',
+  'page.banlist.banlist.listItem.network.netType': 'Net Type: ',
   'page.banlist.banlist.bottomReached': 'No more data!'
 }

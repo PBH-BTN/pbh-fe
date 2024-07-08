@@ -57,30 +57,30 @@
       :label="t('page.banlist.banlist.listItem.geo')"
       :span="4"
     >
-      <CountryFlag :iso="item.banMetadata.geo?.iso" />
-      {{ `${item.banMetadata.geo?.countryRegion} ${item.banMetadata.geo?.city ?? ''}` }}
+      <CountryFlag :iso="item.banMetadata.geo?.country.iso" />
+      {{ `${item.banMetadata.geo?.country?.name} ${item.banMetadata.geo?.city?.name ?? ''}` }}
       <a-link
-        :href="`https://uri.amap.com/marker?position=${item.banMetadata.geo?.longitude},${item.banMetadata.geo?.latitude}`"
+        :href="`https://uri.amap.com/marker?position=${item.banMetadata.geo?.city?.location?.longitude},${item.banMetadata.geo?.city?.location?.latitude}`"
         :hoverable="false"
       >
         <icon-location />
       </a-link>
     </a-descriptions-item>
     <a-descriptions-item
-      v-if="item.banMetadata.asn"
+      v-if="item.banMetadata.geo?.as"
       :label="t('page.banlist.banlist.listItem.asn')"
       :span="4"
     >
       <a-space>
-        <a-typography-text> {{ item.banMetadata.asn?.asOrganization }}</a-typography-text>
-        <a-tag :color="getColor(item.banMetadata.asn?.asn.toString())">{{
-          item.banMetadata.asn?.asn
+        <a-typography-text> {{ item.banMetadata.geo?.as?.organization }}</a-typography-text>
+        <a-tag :color="getColor(item.banMetadata.geo?.as?.number.toString())">{{
+          item.banMetadata.geo?.as?.number
         }}</a-tag>
         <a-tooltip
-          :content="t('page.banlist.banlist.listItem.asn.subnet') + item.banMetadata.asn?.asNetwork"
+          :content="t('page.banlist.banlist.listItem.asn.subnet') + item.banMetadata.geo?.as?.network?.ipAddress"
         >
           <a-link
-            :href="`https://2ip.io/analytics/asn-list/?asnId=${item.banMetadata.asn?.asn}`"
+            :href="`https://2ip.io/analytics/asn-list/?asnId=${item.banMetadata.geo?.asn?.number}`"
             :hoverable="false"
           >
             <icon-info-circle />
@@ -94,6 +94,21 @@
       :span="4"
     >
       {{ item.banMetadata.reverseLookup }}
+    </a-descriptions-item>
+    
+    <a-descriptions-item
+      v-if="item.banMetadata.geo?.network?.isp"
+      :label="t('page.banlist.banlist.listItem.network.isp')"
+      :span="12"
+    >
+    {{ item.banMetadata.geo?.network?.isp }}
+    </a-descriptions-item>
+    <a-descriptions-item
+      v-if="item.banMetadata.geo?.network?.netType"
+      :label="t('page.banlist.banlist.listItem.network.netType')"
+      :span="12"
+    >
+    {{ item.banMetadata.geo?.network?.netType }}
     </a-descriptions-item>
   </a-descriptions>
 </template>

@@ -26,39 +26,31 @@
         </a-tooltip>
       </a-space>
     </template>
-    <a-descriptions-item :label="t('page.banlist.banlist.listItem.banTime')" :span="4">
+    <a-descriptions-item :label="t('page.banlist.banlist.listItem.banTime')" :span="6">
       {{ d(item.banMetadata.banAt, 'long') }}
     </a-descriptions-item>
-    <a-descriptions-item :label="t('page.banlist.banlist.listItem.expireTime')" :span="4">
+    <a-descriptions-item :label="t('page.banlist.banlist.listItem.expireTime')" :span="6">
       {{ d(item.banMetadata.unbanAt, 'long') }}
     </a-descriptions-item>
-    <a-descriptions-item :label="t('page.banlist.banlist.listItem.snapshot')" :span="4">
+    <a-descriptions-item :label="t('page.banlist.banlist.listItem.snapshot')" :span="6">
       <icon-arrow-up class="green" />
       {{ formatFileSize(item.banMetadata.peer.uploaded) }}
       <icon-arrow-down class="red" />
       {{ formatFileSize(item.banMetadata.peer.downloaded) }}
       - {{ (item.banMetadata.peer.progress * 100).toFixed(2) }}%
     </a-descriptions-item>
-    <a-descriptions-item :label="t('page.banlist.banlist.listItem.location')" :span="12">
-      <!-- 这里非常离奇，只要用了a-typography-text就会被下面一行覆盖，怀疑框架有毛病 -->
-      <a-tooltip :content="item.banMetadata.torrent.hash">
-        <a-typography-text style="margin-bottom: 0" :ellipsis="{ showTooltip: true }">
-          {{ item.banMetadata.torrent.name }}
-        </a-typography-text>
-      </a-tooltip>
-    </a-descriptions-item>
-    <a-descriptions-item :label="t('page.banlist.banlist.listItem.reason')" :span="12">
-      <a-typography-text style="margin-bottom: 0" :ellipsis="{ showTooltip: true }">
-        {{ item.banMetadata.description }}
-      </a-typography-text>
-    </a-descriptions-item>
+
     <a-descriptions-item
       v-if="item.banMetadata.geo"
       :label="t('page.banlist.banlist.listItem.geo')"
       :span="6"
     >
-      <CountryFlag :iso="item.banMetadata.geo?.country?.iso ?? t('page.banlist.banlist.listItem.empty')" />
-      {{ `${item.banMetadata.geo?.country?.name} ${item.banMetadata.geo?.city?.name ?? t('page.banlist.banlist.listItem.empty')}` }}
+      <CountryFlag
+        :iso="item.banMetadata.geo?.country?.iso ?? t('page.banlist.banlist.listItem.empty')"
+      />
+      {{
+        `${item.banMetadata.geo?.country?.name} ${item.banMetadata.geo?.city?.name ?? t('page.banlist.banlist.listItem.empty')}`
+      }}
       <a-link
         :href="`https://uri.amap.com/marker?position=${item.banMetadata.geo?.city?.location?.longitude},${item.banMetadata.geo?.city?.location?.latitude}`"
         :hoverable="false"
@@ -91,11 +83,7 @@
         </a-tooltip>
       </a-space>
     </a-descriptions-item>
-    <a-descriptions-item
-      v-if="item.banMetadata.reverseLookup !== 'N/A'"
-      :label="t('page.banlist.banlist.listItem.reserveDNSLookup')"
-      :span="4"
-    >
+    <a-descriptions-item :label="t('page.banlist.banlist.listItem.reserveDNSLookup')" :span="6">
       {{ item.banMetadata.reverseLookup }}
     </a-descriptions-item>
 
@@ -112,6 +100,19 @@
       :span="6"
     >
       {{ item.banMetadata.geo?.network?.netType }}
+    </a-descriptions-item>
+    <a-descriptions-item :label="t('page.banlist.banlist.listItem.location')" :span="12">
+      <!-- 这里非常离奇，只要用了a-typography-text就会被下面一行覆盖，怀疑框架有毛病 -->
+      <a-tooltip :content="item.banMetadata.torrent.hash">
+        <a-typography-text style="margin-bottom: 0" :ellipsis="{ showTooltip: true }">
+          {{ item.banMetadata.torrent.name }}
+        </a-typography-text>
+      </a-tooltip>
+    </a-descriptions-item>
+    <a-descriptions-item :label="t('page.banlist.banlist.listItem.reason')" :span="12">
+      <a-typography-text style="margin-bottom: 0" :ellipsis="{ showTooltip: true }">
+        {{ item.banMetadata.description }}
+      </a-typography-text>
     </a-descriptions-item>
   </a-descriptions>
 </template>

@@ -149,7 +149,14 @@ const pieChartOption = computed(() => {
       right: 10,
       top: 20,
       bottom: 20,
-      data: [] as string[]
+      data: [] as string[],
+      textStyle: {
+        overflow: 'truncate',
+        width: 100
+      },
+      tooltip: {
+        show: true
+      }
     },
     backgroundColor: darkStore.isDark ? 'rgba(0, 0, 0, 0.0)' : undefined,
     series: [

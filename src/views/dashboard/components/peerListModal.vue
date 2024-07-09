@@ -13,7 +13,8 @@
       :columns="columns"
       :data="data"
       :loading="loading"
-      :pagination="{ showPageSize: true, baseSize: 4, bufferSize: 1, pageSize: 15 }"
+      :virtual-list-props="{ height: 850 }"
+      :pagination="false"
     >
       <template #peerAddress="{ record }">
         <a-typography-text copyable code>
@@ -62,10 +63,10 @@
       </template>
       <template #flags="{ record }">
         <p>
-          {{ record.peer.flags.ltStdString }}
-          <a-tooltip>
+          {{ record.peer.flags }}
+          <a-tooltip v-if="record.peer.flags">
             <template #content>
-              <p v-for="description in parseFlags(record.peer.flags.ltStdString)" :key="description">
+              <p v-for="description in parseFlags(record.peer.flags)" :key="description">
                 {{ description }}
               </p>
             </template>
@@ -152,10 +153,7 @@ const columns = [
 const parseFlags = (flags: string) =>
   flags
     .split(' ')
-    .reduce(
-      (str, flag) => str + '\n' + t('page.dashboard.peerList.column.flags.' + flag.trim()),
-      ''
-    )
+    .map((flag) => flag + ' - ' + t('page.dashboard.peerList.column.flags.' + flag.trim()))
 </script>
 
 <style scoped>

@@ -13,7 +13,8 @@
       :columns="columns"
       :data="data"
       :loading="loading"
-      :pagination="{ showPageSize: true, baseSize: 4, bufferSize: 1, pageSize: 15 }"
+      :virtual-list-props="{ height: 850 }"
+      :pagination="false"
     >
       <template #peerAddress="{ record }">
         <a-typography-text copyable code>
@@ -59,6 +60,19 @@
             {{ (record.peer.progress * 100).toFixed(2) + '%' }}
           </a-typography-text>
         </a-space>
+      </template>
+      <template #flags="{ record }">
+        <p>
+          {{ record.peer.flags }}
+          <a-tooltip v-if="record.peer.flags">
+            <template #content>
+              <p v-for="description in parseFlags(record.peer.flags)" :key="description">
+                {{ description }}
+              </p>
+            </template>
+            <icon-info-circle />
+          </a-tooltip>
+        </p>
       </template>
     </a-table>
   </a-modal>
@@ -107,7 +121,7 @@ const columns = [
   },
   {
     title: () => t('page.dashboard.peerList.column.flag'),
-    dataIndex: 'peer.flags',
+    slotName: 'flags',
     width: 100
   },
   {
@@ -136,6 +150,10 @@ const columns = [
     width: 100
   }
 ]
+const parseFlags = (flags: string) =>
+  flags
+    .split(' ')
+    .map((flag) => flag + ' - ' + t('page.dashboard.peerList.column.flags.' + flag.trim()))
 </script>
 
 <style scoped>

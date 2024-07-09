@@ -50,5 +50,20 @@ export default {
   'page.dashboard.peerList.column.flag': '标志位',
   'page.dashboard.peerList.column.speed': '速度',
   'page.dashboard.peerList.column.uploadedDownloaded': '已上传/已下载',
-  'page.dashboard.peerList.column.progress': '进度'
+  'page.dashboard.peerList.column.progress': '进度',
+  'page.dashboard.peerList.column.flags.P': 'μtp',
+  'page.dashboard.peerList.column.flags.d': '您：期待下载╱他：拒绝上传',
+  'page.dashboard.peerList.column.flags.D': '您：期待下载╱他：同意上传',
+  'page.dashboard.peerList.column.flags.u': '他：期待下载╱您：拒绝上传',
+  'page.dashboard.peerList.column.flags.U': '他：期待下载╱您：同意上传',
+  'page.dashboard.peerList.column.flags.K': '您：不想下载╱他：同意上传',
+  'page.dashboard.peerList.column.flags.?': '他：不想下载╱您：同意上传',
+  'page.dashboard.peerList.column.flags.O': '多传者优先',
+  'page.dashboard.peerList.column.flags.S': '下载者突然停止',
+  'page.dashboard.peerList.column.flags.I': '传入连接',
+  'page.dashboard.peerList.column.flags.H': '来自 DHT 的下载者',
+  'page.dashboard.peerList.column.flags.X': '来自 PEX 的下载者',
+  'page.dashboard.peerList.column.flags.L': '来自 LSD 的下载者',
+  'page.dashboard.peerList.column.flags.E': '加密的流量',
+  'page.dashboard.peerList.column.flags.e': '加密握手'
 }

@@ -53,5 +53,26 @@ export default {
   'page.dashboard.peerList.column.flag': 'Flags',
   'page.dashboard.peerList.column.speed': 'Speed',
   'page.dashboard.peerList.column.uploadedDownloaded': 'Uploaded/Downloaded',
-  'page.dashboard.peerList.column.progress': 'Progress'
+  'page.dashboard.peerList.column.progress': 'Progress',
+  'page.dashboard.peerList.column.flags.P': 'μtp',
+  'page.dashboard.peerList.column.flags.D': 'Currently downloading (interested and not choked)',
+  'page.dashboard.peerList.column.flags.d':
+    "Your client wants to download, but peer doesn't want to send (interested and choked)",
+  'page.dashboard.peerList.column.flags.U': 'Currently uploading (interested and not choked)',
+  'page.dashboard.peerList.column.flags.u':
+    "Peer wants your client to upload, but your client doesn't want to (interested and choked)",
+  'page.dashboard.peerList.column.flags.O': 'Optimistic unchoke',
+  'page.dashboard.peerList.column.flags.S': 'Peer is snubbed',
+  'page.dashboard.peerList.column.flags.I': 'Peer is an incoming connection',
+  'page.dashboard.peerList.column.flags.K':
+    'Peer is unchoking your client, but your client is not interested',
+  'page.dashboard.peerList.column.flags.?':
+    'Your client unchoked the peer but the peer is not interested',
+  'page.dashboard.peerList.column.flags.X':
+    'Peer was included in peerlists obtained through Peer Exchange (PEX)',
+  'page.dashboard.peerList.column.flags.H': 'Peer was obtained through DHT.',
+  'page.dashboard.peerList.column.flags.E': 'Peer is using Protocol Encryption (all traffic)',
+  'page.dashboard.peerList.column.flags.e': 'Peer is using Protocol Encryption (handshake)',
+  'page.dashboard.peerList.column.flags.L':
+    'Peer is local (discovered through network broadcast, or in reserved local IP ranges)'
 }

@@ -57,7 +57,7 @@
       :label="t('page.banlist.banlist.listItem.geo')"
       :span="4"
     >
-      <CountryFlag :iso="item.banMetadata.geo?.country.iso" />
+      <CountryFlag :iso="item.banMetadata.geo?.country?.iso ?? '?'" />
       {{ `${item.banMetadata.geo?.country?.name} ${item.banMetadata.geo?.city?.name ?? ''}` }}
       <a-link
         :href="`https://uri.amap.com/marker?position=${item.banMetadata.geo?.city?.location?.longitude},${item.banMetadata.geo?.city?.location?.latitude}`"
@@ -73,7 +73,7 @@
     >
       <a-space>
         <a-typography-text> {{ item.banMetadata.geo?.as?.organization }}</a-typography-text>
-        <a-tag :color="getColor(item.banMetadata.geo?.as?.number.toString())">{{
+        <a-tag :color="getColor((item.banMetadata.geo?.as?.number ?? 0).toString())">{{
           item.banMetadata.geo?.as?.number
         }}</a-tag>
         <a-tooltip

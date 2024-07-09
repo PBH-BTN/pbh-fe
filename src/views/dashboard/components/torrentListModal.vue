@@ -86,7 +86,8 @@ const peerList = ref<InstanceType<typeof peerListModal>>()
 const columns = [
   {
     title: () => t('page.dashboard.torrentList.column.name'),
-    slotName: 'name'
+    slotName: 'name',
+    width: 400
   },
   {
     title: () => t('page.dashboard.torrentList.column.speed'),

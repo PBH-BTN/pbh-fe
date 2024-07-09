@@ -55,7 +55,7 @@
     <a-descriptions-item
       v-if="item.banMetadata.geo"
       :label="t('page.banlist.banlist.listItem.geo')"
-      :span="4"
+      :span="6"
     >
       <CountryFlag :iso="item.banMetadata.geo?.country?.iso ?? '?'" />
       {{ `${item.banMetadata.geo?.country?.name} ${item.banMetadata.geo?.city?.name ?? ''}` }}
@@ -69,7 +69,7 @@
     <a-descriptions-item
       v-if="item.banMetadata.geo?.as"
       :label="t('page.banlist.banlist.listItem.asn')"
-      :span="4"
+      :span="6"
     >
       <a-space>
         <a-typography-text> {{ item.banMetadata.geo?.as?.organization }}</a-typography-text>
@@ -77,10 +77,13 @@
           item.banMetadata.geo?.as?.number
         }}</a-tag>
         <a-tooltip
-          :content="t('page.banlist.banlist.listItem.asn.subnet') + item.banMetadata.geo?.as?.network?.ipAddress"
+          :content="
+            t('page.banlist.banlist.listItem.asn.subnet') +
+            item.banMetadata.geo?.as?.network?.ipAddress
+          "
         >
           <a-link
-            :href="`https://2ip.io/analytics/asn-list/?asnId=${item.banMetadata.geo?.asn?.number}`"
+            :href="`https://2ip.io/analytics/asn-list/?asnId=${item.banMetadata.geo?.as?.number}`"
             :hoverable="false"
           >
             <icon-info-circle />
@@ -95,20 +98,20 @@
     >
       {{ item.banMetadata.reverseLookup }}
     </a-descriptions-item>
-    
+
     <a-descriptions-item
       v-if="item.banMetadata.geo?.network?.isp"
       :label="t('page.banlist.banlist.listItem.network.isp')"
       :span="6"
     >
-    {{ item.banMetadata.geo?.network?.isp }}
+      {{ item.banMetadata.geo?.network?.isp }}
     </a-descriptions-item>
     <a-descriptions-item
       v-if="item.banMetadata.geo?.network?.netType"
       :label="t('page.banlist.banlist.listItem.network.netType')"
       :span="6"
     >
-    {{ item.banMetadata.geo?.network?.netType }}
+      {{ item.banMetadata.geo?.network?.netType }}
     </a-descriptions-item>
   </a-descriptions>
 </template>

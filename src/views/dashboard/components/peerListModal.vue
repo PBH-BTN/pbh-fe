@@ -12,7 +12,7 @@
     <a-table
       :columns="columns"
       :data="data"
-      :loading="loading"
+      :loading="!loading && !data"
       :virtual-list-props="{ height: 850 }"
       :pagination="false"
     >

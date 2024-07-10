@@ -7,6 +7,7 @@ export default {
   'page.banlist.banlist.listItem.expireTime': 'Unban Time',
   'page.banlist.banlist.listItem.location': 'Torrent',
   'page.banlist.banlist.listItem.snapshot': 'Snapshot',
+  'page.banlist.banlist.listItem.rule': 'Hit Rule',
   'page.banlist.banlist.listItem.reason': 'Ban Reason',
   'page.banlist.banlist.listItem.geo': 'Geo Location',
   'page.banlist.banlist.listItem.asn': 'ASN',

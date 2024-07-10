@@ -10,6 +10,7 @@ export interface BanMetadata {
   unbanAt: number
   torrent: Torrent
   peer: Peer
+  rule: string
   description: string
   reverseLookup: string
   geo?: IPGeoData

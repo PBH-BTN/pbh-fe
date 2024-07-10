@@ -83,10 +83,9 @@
         </a-tooltip>
       </a-space>
     </a-descriptions-item>
-    <a-descriptions-item :label="t('page.banlist.banlist.listItem.reserveDNSLookup')" :span="6">
+    <a-descriptions-item v-if="item.banMetadata.reverseLookup != 'N/A'" :label="t('page.banlist.banlist.listItem.reserveDNSLookup')" :span="6">
       {{ item.banMetadata.reverseLookup }}
     </a-descriptions-item>
-
     <a-descriptions-item
       v-if="item.banMetadata.geo?.network?.isp"
       :label="t('page.banlist.banlist.listItem.network.isp')"
@@ -108,6 +107,11 @@
           {{ item.banMetadata.torrent.name }}
         </a-typography-text>
       </a-tooltip>
+    </a-descriptions-item>
+    <a-descriptions-item :label="t('page.banlist.banlist.listItem.rule')" :span="12">
+      <a-typography-text style="margin-bottom: 0" :ellipsis="{ showTooltip: true }">
+        {{ item.banMetadata.rule }}
+      </a-typography-text>
     </a-descriptions-item>
     <a-descriptions-item :label="t('page.banlist.banlist.listItem.reason')" :span="12">
       <a-typography-text style="margin-bottom: 0" :ellipsis="{ showTooltip: true }">

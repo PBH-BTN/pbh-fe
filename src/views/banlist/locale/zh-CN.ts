@@ -7,6 +7,7 @@ export default {
   'page.banlist.banlist.listItem.expireTime': '预计解封时间',
   'page.banlist.banlist.listItem.location': '发现位置',
   'page.banlist.banlist.listItem.snapshot': '封禁快照',
+  'page.banlist.banlist.listItem.rule': '命中规则',
   'page.banlist.banlist.listItem.reason': '封禁原因',
   'page.banlist.banlist.listItem.geo': '地理位置',
   'page.banlist.banlist.listItem.asn': 'ASN',

@@ -63,10 +63,10 @@
       </template>
       <template #flags="{ record }">
         <p>
-          {{ record.peer.flags }}
-          <a-tooltip v-if="record.peer.flags">
+          {{ record.peer.flags?.ltStdString }}
+          <a-tooltip v-if="record.peer.flags?.ltStdString">
             <template #content>
-              <p v-for="description in parseFlags(record.peer.flags)" :key="description">
+              <p v-for="description in parseFlags(record.peer.flags?.ltStdString)" :key="description">
                 {{ description }}
               </p>
             </template>

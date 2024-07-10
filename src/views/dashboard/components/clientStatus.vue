@@ -47,6 +47,7 @@
     <!-- client 卡片 -->
     <a-col v-else :xs="24" :sm="12" :md="8" :lg="6" v-for="client in data" :key="client.name">
       <ClientStatusCard
+        :disable-remove="data.length === 1"
         :downloader="client"
         @torrent-view-click="() => torrentList?.showModal(client.name)"
         @downloader-deleted="refresh"

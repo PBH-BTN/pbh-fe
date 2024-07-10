@@ -14,6 +14,7 @@ export default {
     'PeerBanHelper may not have communicated with this client yet',
   'page.dashboard.clientStatus.card.status.torrentNumber': 'Active Torrents',
   'page.dashboard.clientStatus.card.status.peerNumber': 'Connected Peers',
+  'page.dashboard.clientStatus.card.lastDelete': 'Last downloader cannot be deleted',
   'page.dashboard.statics.currentStatus': 'Current Status',
   'page.dashboard.statics.checked': 'Total checked',
   'page.dashboard.statics.times': 'times',

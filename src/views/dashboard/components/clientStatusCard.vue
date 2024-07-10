@@ -12,12 +12,29 @@
             <icon-edit />
           </template>
         </a-button>
+        <a-tooltip
+          v-if="props.disableRemove"
+          :content="t('page.dashboard.clientStatus.card.lastDelete')"
+        >
+          <a-button class="edit-btn" status="danger" shape="circle" type="text" disabled>
+            <template #icon>
+              <icon-delete />
+            </template>
+          </a-button>
+        </a-tooltip>
         <a-popconfirm
+          v-else
           :content="t('page.ruleSubscribe.column.deleteConfirm')"
           type="warning"
           @before-ok="handleDelete"
         >
-          <a-button class="edit-btn" status="danger" shape="circle" type="text">
+          <a-button
+            class="edit-btn"
+            status="danger"
+            shape="circle"
+            type="text"
+            :disabled="props.disableRemove"
+          >
             <template #icon>
               <icon-delete />
             </template>
@@ -127,9 +144,13 @@ const statusMap: Record<ClientStatusEnum, [string, string]> = {
   [ClientStatusEnum.ERROR]: ['warning', 'page.dashboard.clientStatus.card.status.error'],
   [ClientStatusEnum.UNKNOWN]: ['danger', 'page.dashboard.clientStatus.card.status.unknown']
 }
-const props = defineProps<{
-  downloader: Downloader
-}>()
+const props = withDefaults(
+  defineProps<{
+    downloader: Downloader
+    disableRemove: boolean
+  }>(),
+  { disableRemove: false }
+)
 
 const emits = defineEmits<{
   (e: 'torrent-view-click', name: string): void

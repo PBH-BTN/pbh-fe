@@ -12,6 +12,7 @@ export default {
   'page.dashboard.clientStatus.card.status.unknown.info': 'PeerBanHelper 可能还没有与此客户端通信',
   'page.dashboard.clientStatus.card.status.torrentNumber': '活动种子数',
   'page.dashboard.clientStatus.card.status.peerNumber': '已连接的Peers',
+  'page.dashboard.clientStatus.card.lastDelete': '最后一个下载器不能被删除',
   'page.dashboard.statics.currentStatus': '当前状态',
   'page.dashboard.statics.checked': '共检查',
   'page.dashboard.statics.times': '次',

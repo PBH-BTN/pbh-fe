@@ -12,7 +12,7 @@
     <a-table
       :columns="columns"
       :data="data"
-      :loading="loading"
+      :loading="!loading && !data"
       :pagination="{ pageSize: 5, baseSize: 4, bufferSize: 1 }"
     >
       <template #name="{ record }">

@@ -34,6 +34,9 @@ export default {
   'page.dashboard.editModal.label.type': 'Type',
   'page.dashboard.editModal.label.name': 'Name',
   'page.dashboard.editModal.label.endpoint': 'Endpoint',
+  'page.dashboard.editModal.label.endpoint.error.invalidSchema':
+    'Must start with http:// or https://',
+  'page.dashboard.editModal.label.endpoint.error.invalidUrl': 'Invalid URL',
   'page.dashboard.editModal.label.username': 'Username',
   'page.dashboard.editModal.label.password': 'Password',
   'page.dashboard.editModal.label.useBasicAuth': 'Use HTTP Basic Auth',

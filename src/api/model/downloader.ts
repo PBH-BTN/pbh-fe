@@ -2,13 +2,15 @@ export interface ClientStatus {
   activePeers: number
   activeTorrents: number
   lastStatus: ClientStatusEnum
+  lastStatusMessage: string
   config: downloaderConfig
 }
 
 export enum ClientStatusEnum {
   HEALTHY = 'HEALTHY',
   ERROR = 'ERROR',
-  UNKNOWN = 'UNKNOWN'
+  UNKNOWN = 'UNKNOWN',
+  NEED_TAKE_ACTION = 'NEED_TAKE_ACTION'
 }
 
 export enum ClientTypeEnum {

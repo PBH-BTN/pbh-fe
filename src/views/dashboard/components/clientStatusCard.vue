@@ -81,11 +81,12 @@
       </a-descriptions-item>
 
       <a-descriptions-item :label="t('page.dashboard.clientStatus.card.status')">
-        <a-tooltip :content="t(getStatusSafe(client)[1] + '.info')">
+        <a-tooltip :content="client.lastStatusMessage">
           <a-typography-text :type="getStatusSafe(client)[0]">
             <icon-check-circle-fill v-if="client.lastStatus == ClientStatusEnum.HEALTHY" />
             <icon-close-circle-fill v-if="client.lastStatus == ClientStatusEnum.ERROR" />
-            <icon-exclamation-circle-fill v-if="client.lastStatus == ClientStatusEnum.UNKNOWN" />
+            <icon-question-circle-fill v-if="client.lastStatus == ClientStatusEnum.UNKNOWN" />
+            <icon-exclamation-polygon-fill v-if="client.lastStatus == ClientStatusEnum.NEED_TAKE_ACTION" />
             {{ t(getStatusSafe(client)[1]) }}
           </a-typography-text>
         </a-tooltip>
@@ -142,7 +143,8 @@ const { t } = useI18n()
 const statusMap: Record<ClientStatusEnum, [string, string]> = {
   [ClientStatusEnum.HEALTHY]: ['success', 'page.dashboard.clientStatus.card.status.normal'],
   [ClientStatusEnum.ERROR]: ['warning', 'page.dashboard.clientStatus.card.status.error'],
-  [ClientStatusEnum.UNKNOWN]: ['danger', 'page.dashboard.clientStatus.card.status.unknown']
+  [ClientStatusEnum.UNKNOWN]: ['info', 'page.dashboard.clientStatus.card.status.unknown'],
+  [ClientStatusEnum.NEED_TAKE_ACTION]: ['danger', 'page.dashboard.clientStatus.card.status.need_take_action']
 }
 const props = withDefaults(
   defineProps<{

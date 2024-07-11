@@ -2,7 +2,7 @@
   <a-form-item
     field="config.endpoint"
     :label="t('page.dashboard.editModal.label.endpoint')"
-    :rules="[{ required: true, type: 'url' }]"
+    :rules="[]"
   >
     <a-input v-model="config.endpoint" allow-clear></a-input>
   </a-form-item>

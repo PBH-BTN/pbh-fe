@@ -49,11 +49,11 @@
         `${item.banMetadata.geo?.country?.name} ${item.banMetadata.geo?.city?.name ??
         t('page.banlist.banlist.listItem.empty')}`
       }}
-      <a-link
+      <!-- <a-link
         :href="`https://uri.amap.com/marker?position=${item.banMetadata.geo?.city?.location?.longitude},${item.banMetadata.geo?.city?.location?.latitude}`"
         :hoverable="false">
         <icon-location />
-      </a-link>
+      </a-link> -->
     </a-descriptions-item>
     <a-descriptions-item v-if="item.banMetadata.geo?.as" :label="t('page.banlist.banlist.listItem.asn')" :span="6">
       <a-space>

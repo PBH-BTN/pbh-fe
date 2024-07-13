@@ -25,7 +25,7 @@ API Doc: https://apifox.com/apidoc/shared-b24f42a4-67f5-402a-900d-9fad3ae9917b
 
 ## How to contribute
 
-This project using Vue 3 + [Arco Design](https://arco.design/vue)
+This project using Vue 3 + [Arco Design](https://arco.design/vue/en-US/docs/start)
 
 ## Project Setup
 

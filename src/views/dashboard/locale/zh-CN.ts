@@ -34,6 +34,8 @@ export default {
   'page.dashboard.editModal.label.type': '类型',
   'page.dashboard.editModal.label.name': '名称',
   'page.dashboard.editModal.label.endpoint': '地址',
+  'page.dashboard.editModal.label.endpoint.error.invalidSchema': "必须以'http://'或'https://'开头",
+  'page.dashboard.editModal.label.endpoint.error.invalidUrl': '无效的URL',
   'page.dashboard.editModal.label.username': '用户名',
   'page.dashboard.editModal.label.password': '密码',
   'page.dashboard.editModal.label.useBasicAuth': '使用 Basic Auth',

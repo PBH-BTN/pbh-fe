@@ -19,11 +19,13 @@
           </a-typography-text>
         </a-tooltip>
         <AsyncMethod once :async-fn="() => handleUnban(item.banMetadata.peer.address.ip)" v-slot="{ run, loading }">
+          <div class="unban-button-container"> <!--这里按钮应该挪到右边去，不过试了 flex 之类的属性，挪不过去，那就先这样了margin-left: auto;-->
           <a-tooltip :content="t('page.banlist.banlist.listItem.unban')">
-            <a-button shape="circle" :disabled="loading" @click.prevent="run">
-              <icon-delete />
+            <a-button shape="circle" :disabled="loading" @click="run">
+              <icon-close />
             </a-button>
           </a-tooltip>
+        </div>
         </AsyncMethod>
       </a-space>
     </template>
@@ -151,4 +153,5 @@ a {
   color: var(--color-text-1);
   text-decoration: none;
 }
+
 </style>

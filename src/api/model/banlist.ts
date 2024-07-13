@@ -169,3 +169,7 @@ export interface IPGeoDataNetwork {
    */
   netType?: string
 }
+
+export interface UnbanCallback {
+  count?: number
+}

@@ -15,5 +15,8 @@ export default {
   'page.banlist.banlist.listItem.empty': 'Empty',
   'page.banlist.banlist.listItem.network.isp': 'ISP',
   'page.banlist.banlist.listItem.network.netType': 'Net',
-  'page.banlist.banlist.bottomReached': 'No more data!'
+  'page.banlist.banlist.bottomReached': 'No more data!',
+  'page.banlist.banlist.listItem.unban': 'Unban',
+  'page.banlist.banlist.listItem.unbanUnexcepted': 'No IP address(s) unbanned',
+  'page.banlist.banlist.listItem.unbanSuccess': 'Unbanned {count} IP address(s)'
 }

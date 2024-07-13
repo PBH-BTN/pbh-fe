@@ -1,5 +1,5 @@
 export function formatFileSize(bytes: number, decimals = 2) {
-  if (bytes === -1) return '?' // 在没有完成元数据拉取之前，部分下载器会返回 -1 值
+  if (bytes === -1) return 'N/A' // 在没有完成元数据拉取之前，部分下载器会返回 -1 值
   if (bytes === 0) return '0 Bytes'
 
   const k = 1024

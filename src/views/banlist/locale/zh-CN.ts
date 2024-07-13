@@ -15,5 +15,8 @@ export default {
   'page.banlist.banlist.listItem.empty': '空',
   'page.banlist.banlist.listItem.network.isp': 'ISP',
   'page.banlist.banlist.listItem.network.netType': '网络类型',
-  'page.banlist.banlist.bottomReached': '已经到底啦！'
+  'page.banlist.banlist.bottomReached': '已经到底啦！',
+  'page.banlist.banlist.listItem.unban': '解除封禁',
+  'page.banlist.banlist.listItem.unbanUnexcepted': '没有 IP 地址被成功解除封禁',
+  'page.banlist.banlist.listItem.unbanSuccess': '成功解封 {count} 个 IP 地址'
 }

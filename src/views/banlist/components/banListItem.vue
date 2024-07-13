@@ -10,13 +10,13 @@
           ? item.banMetadata.peer.id
           : t('page.banlist.banlist.listItem.empty')
           ">
-          <a-typography-text code>
+          <a-tag>
             {{
               item.banMetadata.peer.clientName
                 ? item.banMetadata.peer.clientName
                 : t('page.banlist.banlist.listItem.empty')
             }}
-          </a-typography-text>
+          </a-tag>
         </a-tooltip>
         <AsyncMethod once :async-fn="() => handleUnban(item.banMetadata.peer.address.ip)" v-slot="{ run, loading }">
           <div class="unban-button-container"> <!--这里按钮应该挪到右边去，不过试了 flex 之类的属性，挪不过去，那就先这样了margin-left: auto;-->

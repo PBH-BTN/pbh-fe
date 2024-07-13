@@ -12,12 +12,29 @@
             <icon-edit />
           </template>
         </a-button>
+        <a-tooltip
+          v-if="props.disableRemove"
+          :content="t('page.dashboard.clientStatus.card.lastDelete')"
+        >
+          <a-button class="edit-btn" status="danger" shape="circle" type="text" disabled>
+            <template #icon>
+              <icon-delete />
+            </template>
+          </a-button>
+        </a-tooltip>
         <a-popconfirm
+          v-else
           :content="t('page.ruleSubscribe.column.deleteConfirm')"
           type="warning"
           @before-ok="handleDelete"
         >
-          <a-button class="edit-btn" status="danger" shape="circle" type="text">
+          <a-button
+            class="edit-btn"
+            status="danger"
+            shape="circle"
+            type="text"
+            :disabled="props.disableRemove"
+          >
             <template #icon>
               <icon-delete />
             </template>
@@ -64,11 +81,12 @@
       </a-descriptions-item>
 
       <a-descriptions-item :label="t('page.dashboard.clientStatus.card.status')">
-        <a-tooltip :content="t(getStatusSafe(client)[1] + '.info')">
+        <a-tooltip :content="client.lastStatusMessage">
           <a-typography-text :type="getStatusSafe(client)[0]">
             <icon-check-circle-fill v-if="client.lastStatus == ClientStatusEnum.HEALTHY" />
             <icon-close-circle-fill v-if="client.lastStatus == ClientStatusEnum.ERROR" />
-            <icon-exclamation-circle-fill v-if="client.lastStatus == ClientStatusEnum.UNKNOWN" />
+            <icon-question-circle-fill v-if="client.lastStatus == ClientStatusEnum.UNKNOWN" />
+            <icon-exclamation-polygon-fill v-if="client.lastStatus == ClientStatusEnum.NEED_TAKE_ACTION" />
             {{ t(getStatusSafe(client)[1]) }}
           </a-typography-text>
         </a-tooltip>
@@ -125,11 +143,16 @@ const { t } = useI18n()
 const statusMap: Record<ClientStatusEnum, [string, string]> = {
   [ClientStatusEnum.HEALTHY]: ['success', 'page.dashboard.clientStatus.card.status.normal'],
   [ClientStatusEnum.ERROR]: ['warning', 'page.dashboard.clientStatus.card.status.error'],
-  [ClientStatusEnum.UNKNOWN]: ['danger', 'page.dashboard.clientStatus.card.status.unknown']
+  [ClientStatusEnum.UNKNOWN]: ['info', 'page.dashboard.clientStatus.card.status.unknown'],
+  [ClientStatusEnum.NEED_TAKE_ACTION]: ['danger', 'page.dashboard.clientStatus.card.status.need_take_action']
 }
-const props = defineProps<{
-  downloader: Downloader
-}>()
+const props = withDefaults(
+  defineProps<{
+    downloader: Downloader
+    disableRemove: boolean
+  }>(),
+  { disableRemove: false }
+)
 
 const emits = defineEmits<{
   (e: 'torrent-view-click', name: string): void

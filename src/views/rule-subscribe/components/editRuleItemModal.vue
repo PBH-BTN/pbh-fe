@@ -95,7 +95,7 @@ const handleBeforeOk = async () => {
   if (!newItem.value) {
     // edit
     const result = await UpdateRuleItem(form)
-    if (result.code !== 200) {
+    if (result.code !== 200 && result.code !== 201) {
       Message.error(result.message)
       return true
     }

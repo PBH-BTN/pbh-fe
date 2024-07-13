@@ -29,6 +29,7 @@ export default function useLocale() {
   if (store.localeStore !== '' && i18.availableLocales.includes(store.localeStore)) {
     changeLocale(store.localeStore)
   }
+  document.querySelector('html')?.setAttribute('lang', i18.locale.value)
 
   return {
     changeLocale

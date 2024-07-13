@@ -2,13 +2,15 @@ export interface ClientStatus {
   activePeers: number
   activeTorrents: number
   lastStatus: ClientStatusEnum
+  lastStatusMessage: string
   config: downloaderConfig
 }
 
 export enum ClientStatusEnum {
   HEALTHY = 'HEALTHY',
   ERROR = 'ERROR',
-  UNKNOWN = 'UNKNOWN'
+  UNKNOWN = 'UNKNOWN',
+  NEED_TAKE_ACTION = 'NEED_TAKE_ACTION'
 }
 
 export enum ClientTypeEnum {
@@ -136,7 +138,7 @@ interface Peer {
   /**
    * BitTorrent BEP 标志，https://github.com/PBH-BTN/quick-references/blob/main/utp_flags.md
    */
-  flags: string
+  flags: PeerFlags
   /**
    * BitTorrent BEP PeerID
    */
@@ -153,6 +155,137 @@ interface Peer {
    * 上传速度（单位由下载器决定），单位通常为bytes/s
    */
   uploadSpeed: number
+}
+
+/**
+ * Peer Flags
+ */
+interface PeerFlags{
+  /**
+   * **we** have choked this peer.
+   */
+  choked?: boolean;
+  /**
+   * The connection is in a half-open state (i.e. it is being connected).
+   */
+  connecting?: boolean;
+  /**
+   * This means the last time this peer picket a piece, it could not pick as many as it wanted
+   * because there were not enough free ones. i.e. all pieces this peer has were already
+   * requested from other peers.
+   */
+  endGameMode?: boolean;
+  /**
+   * The peer was received from the kademlia DHT.
+   */
+  fromDHT?: boolean;
+  /**
+   * we received an incoming connection from this peer
+   */
+  fromIncoming?: boolean;
+  /**
+   * The peer was received from the local service discovery (The peer is on the local network).
+   */
+  fromLSD?: boolean;
+  /**
+   * The peer was received from the peer exchange extension.
+   */
+  fromPEX?: boolean;
+  /**
+   * The peer was added from the fast resume data.
+   */
+  fromResumeData?: boolean;
+  /**
+   * The peer was received from the tracker.
+   */
+  fromTracker?: boolean;
+  /**
+   * The connection is opened, and waiting for the handshake. Until the handshake is done, the
+   * peer cannot be identified.
+   */
+  handshake?: boolean;
+  /**
+   * This flag is set if the peer was in holepunch mode when the connection succeeded. This
+   * typically only happens if both peers are behind a NAT and the peers connect via the NAT
+   * holepunch mechanism.
+   */
+  holePunched?: boolean;
+  /**
+   * indicates that this socket is running on top of the I2P transport.
+   */
+  i2pSocket?: boolean;
+  /**
+   * **we** are interested in pieces from this peer.
+   */
+  interesting?: boolean;
+  /**
+   * deprecated synonym for outgoing_connection
+   */
+  localConnection?: boolean;
+  /**
+   * 标准 libTorrent 标志，不管下载器原始 Flags 如何，PBH 总是将其转换为 LT 的 Flags
+   */
+  ltStdString: string;
+  /**
+   * The peer has participated in a piece that failed the hash check, and is now "on parole",
+   * which means we're only requesting whole pieces from this peer until it either fails that
+   * piece or proves that it doesn't send bad data.
+   */
+  onParole?: boolean;
+  /**
+   * This peer is subject to an optimistic unchoke. It has been unchoked for a while to see if
+   * it might unchoke us in return an earn an upload/unchoke slot. If it doesn't within some
+   * period of time, it will be choked and another peer will be optimistically unchoked.
+   */
+  optimisticUnchoke?: boolean;
+  /**
+   * The connection was initiated by us, the peer has a listen port open, and that port is the
+   * same as in the address of this peer. If this flag is not set, this peer connection was
+   * opened by this peer connecting to us.
+   */
+  outgoingConnection?: boolean;
+  /**
+   * the handshake of this connection was obfuscated with a Diffie-Hellman exchange
+   */
+  plainTextEncrypted?: boolean;
+  /**
+   * this connection is obfuscated with RC4
+   */
+  rc4Encrypted?: boolean;
+  /**
+   * the peer has choked **us**.
+   */
+  remoteChoked?: boolean;
+  /**
+   * the peer is interested in **us**
+   */
+  remoteInterested?: boolean;
+  /**
+   * This peer is a seed (it has all the pieces).
+   */
+  seed?: boolean;
+  /**
+   * This peer has recently failed to send a block within the request timeout from when the
+   * request was sent. We're currently picking one block at a time from this peer.
+   */
+  snubbed?: boolean;
+  /**
+   * indicates that this socket is running on top of an SSL (TLS) channel
+   */
+  sslSocket?: boolean;
+  /**
+   * means that this peer supports the extension protocol
+   */
+  supportsExtensions?: boolean;
+  /**
+   * This peer has either explicitly (with an extension) or implicitly (by becoming a seed)
+   * told us that it will not downloading anything more, regardless of which pieces we have.
+   */
+  uploadOnly?: boolean;
+  /**
+   * indicates that this socket is a uTP socket
+   */
+  utpSocket?: boolean;
 }
 
 /**

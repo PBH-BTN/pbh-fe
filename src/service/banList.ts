@@ -20,7 +20,6 @@ export async function getBanList(limit: number, lastBanTime?: number): Promise<B
 export async function unbanIP(arr: Array<string>): Promise<UnbanCallback> {
   const endpointStore = useEndpointStore()
   await endpointStore.serverAvailable
-  console.trace()
   const url = new URL(urlJoin(endpointStore.endpoint, 'api/bans'), location.href)
   return fetch(url, {
     headers: getCommonHeader(),

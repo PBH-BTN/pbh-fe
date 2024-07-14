@@ -25,7 +25,7 @@
         <a-list-item
           :style="{ marginBottom: index === list.length - 1 && loadingMore ? '50px' : undefined }"
         >
-          <banListItem :item="item" />
+          <banListItem :item="item" @unban="refresh()" />
         </a-list-item>
       </template>
       <template #scroll-loading>

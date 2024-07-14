@@ -18,5 +18,5 @@ export default {
   'page.banlist.banlist.bottomReached': 'No more data!',
   'page.banlist.banlist.listItem.unban': 'Unban',
   'page.banlist.banlist.listItem.unbanUnexcepted': 'No IP address(s) unbanned',
-  'page.banlist.banlist.listItem.unbanSuccess': 'Unbanned {count} IP address(s)'
+  'page.banlist.banlist.listItem.unbanSuccess': 'Unbanned {count} IP address'
 }

@@ -1,31 +1,40 @@
 <template>
-  <a-descriptions :column="{ xs: 3, md: 6, xl: 12 }" size="medium"
-    :layout="(['inline-vertical', 'horizontal'] as const)[descriptionLayout]">
+  <a-descriptions
+    :column="{ xs: 3, md: 6, xl: 12 }"
+    size="medium"
+    class="banlist-item"
+    :layout="(['inline-vertical', 'horizontal'] as const)[descriptionLayout]"
+  >
     <template #title>
-      <a-space wrap>
-        <a-typography-text bold copyable>
-          {{ item.banMetadata.peer.address.ip }}:{{ item.banMetadata.peer.address.port }}
-        </a-typography-text>
-        <a-tooltip :content="item.banMetadata.peer.id
-          ? item.banMetadata.peer.id
-          : t('page.banlist.banlist.listItem.empty')
-          ">
-          <a-tag>
-            {{
-              item.banMetadata.peer.clientName
-                ? item.banMetadata.peer.clientName
+      <a-space fill style="display: flex; justify-content: space-between">
+        <a-space wrap>
+          <a-typography-text bold copyable>
+            {{ item.banMetadata.peer.address.ip }}:{{ item.banMetadata.peer.address.port }}
+          </a-typography-text>
+          <a-tooltip
+            :content="
+              item.banMetadata.peer.id
+                ? item.banMetadata.peer.id
                 : t('page.banlist.banlist.listItem.empty')
-            }}
-          </a-tag>
-        </a-tooltip>
-        <AsyncMethod once :async-fn="() => handleUnban(item.banMetadata.peer.address.ip)" v-slot="{ run, loading }">
-          <div class="unban-button-container"> <!--这里按钮应该挪到右边去，不过试了 flex 之类的属性，挪不过去，那就先这样了margin-left: auto;-->
-          <a-tooltip :content="t('page.banlist.banlist.listItem.unban')">
-            <a-button shape="circle" :disabled="loading" @click="run">
-              <icon-close />
-            </a-button>
+            "
+          >
+            <a-tag>
+              {{
+                item.banMetadata.peer.clientName
+                  ? item.banMetadata.peer.clientName
+                  : t('page.banlist.banlist.listItem.empty')
+              }}
+            </a-tag>
           </a-tooltip>
-        </div>
+        </a-space>
+        <AsyncMethod
+          once
+          :async-fn="() => handleUnban(item.banMetadata.peer.address.ip)"
+          v-slot="{ run, loading }"
+        >
+          <a-button class="unban-button" :loading="loading" @click="run">
+            {{ t('page.banlist.banlist.listItem.unban') }}
+          </a-button>
         </AsyncMethod>
       </a-space>
     </template>
@@ -43,11 +52,18 @@
       - {{ (item.banMetadata.peer.progress * 100).toFixed(2) }}%
     </a-descriptions-item>
 
-    <a-descriptions-item v-if="item.banMetadata.geo" :label="t('page.banlist.banlist.listItem.geo')" :span="6">
-      <CountryFlag :iso="item.banMetadata.geo?.country?.iso ?? t('page.banlist.banlist.listItem.empty')" />
+    <a-descriptions-item
+      v-if="item.banMetadata.geo"
+      :label="t('page.banlist.banlist.listItem.geo')"
+      :span="6"
+    >
+      <CountryFlag
+        :iso="item.banMetadata.geo?.country?.iso ?? t('page.banlist.banlist.listItem.empty')"
+      />
       {{
-        `${item.banMetadata.geo?.country?.name} ${item.banMetadata.geo?.city?.name ??
-        t('page.banlist.banlist.listItem.empty')}`
+        `${item.banMetadata.geo?.country?.name} ${
+          item.banMetadata.geo?.city?.name ?? t('page.banlist.banlist.listItem.empty')
+        }`
       }}
       <!-- <a-link
         :href="`https://uri.amap.com/marker?position=${item.banMetadata.geo?.city?.location?.longitude},${item.banMetadata.geo?.city?.location?.latitude}`"
@@ -55,32 +71,50 @@
         <icon-location />
       </a-link> -->
     </a-descriptions-item>
-    <a-descriptions-item v-if="item.banMetadata.geo?.as" :label="t('page.banlist.banlist.listItem.asn')" :span="6">
+    <a-descriptions-item
+      v-if="item.banMetadata.geo?.as"
+      :label="t('page.banlist.banlist.listItem.asn')"
+      :span="6"
+    >
       <a-space>
         <a-typography-text> {{ item.banMetadata.geo?.as?.organization }}</a-typography-text>
         <a-tag :color="getColor((item.banMetadata.geo?.as?.number ?? 0).toString())">{{
           item.banMetadata.geo?.as?.number
         }}</a-tag>
-        <a-tooltip :content="t('page.banlist.banlist.listItem.asn.subnet') +
-          item.banMetadata.geo?.as?.network?.ipAddress
-          ">
-          <a-link :href="`https://2ip.io/analytics/asn-list/?asnId=${item.banMetadata.geo?.as?.number}`"
-            :hoverable="false">
+        <a-tooltip
+          :content="
+            t('page.banlist.banlist.listItem.asn.subnet') +
+            item.banMetadata.geo?.as?.network?.ipAddress
+          "
+        >
+          <a-link
+            :href="`https://2ip.io/analytics/asn-list/?asnId=${item.banMetadata.geo?.as?.number}`"
+            :hoverable="false"
+          >
             <icon-info-circle />
           </a-link>
         </a-tooltip>
       </a-space>
     </a-descriptions-item>
-    <a-descriptions-item v-if="item.banMetadata.reverseLookup != 'N/A'"
-      :label="t('page.banlist.banlist.listItem.reserveDNSLookup')" :span="6">
+    <a-descriptions-item
+      v-if="item.banMetadata.reverseLookup != 'N/A'"
+      :label="t('page.banlist.banlist.listItem.reserveDNSLookup')"
+      :span="6"
+    >
       {{ item.banMetadata.reverseLookup }}
     </a-descriptions-item>
-    <a-descriptions-item v-if="item.banMetadata.geo?.network?.isp"
-      :label="t('page.banlist.banlist.listItem.network.isp')" :span="6">
+    <a-descriptions-item
+      v-if="item.banMetadata.geo?.network?.isp"
+      :label="t('page.banlist.banlist.listItem.network.isp')"
+      :span="6"
+    >
       {{ item.banMetadata.geo?.network?.isp }}
     </a-descriptions-item>
-    <a-descriptions-item v-if="item.banMetadata.geo?.network?.netType"
-      :label="t('page.banlist.banlist.listItem.network.netType')" :span="6">
+    <a-descriptions-item
+      v-if="item.banMetadata.geo?.network?.netType"
+      :label="t('page.banlist.banlist.listItem.network.netType')"
+      :span="6"
+    >
       {{ item.banMetadata.geo?.network?.netType }}
     </a-descriptions-item>
     <a-descriptions-item :label="t('page.banlist.banlist.listItem.location')" :span="12">
@@ -97,9 +131,11 @@
       </a-typography-text>
     </a-descriptions-item>
     <a-descriptions-item :label="t('page.banlist.banlist.listItem.reason')" :span="12">
-      <a-typography-text style="margin-bottom: 0" :ellipsis="{ showTooltip: true }">
-        {{ item.banMetadata.description }}
-      </a-typography-text>
+      <div>
+        <a-typography-text style="margin-bottom: 0" :ellipsis="{ showTooltip: true }">
+          {{ item.banMetadata.description }}
+        </a-typography-text>
+      </div>
     </a-descriptions-item>
   </a-descriptions>
 </template>
@@ -125,18 +161,19 @@ const descriptionLayout = useResponsiveState(
   }),
   0
 )
+const emits = defineEmits<{
+  (e: 'unban', address: string): void
+}>()
 const handleUnban = async (address: string) => {
-  const result = await unbanIP(new Array(address))
-  let count = 0;
-  if (result.count) {
-    count = result.count;
-  }
-  if (count < 1) {
+  const { count } = await unbanIP(address)
+  if (!count || count < 1) {
     Message.error(t('page.banlist.banlist.listItem.unbanUnexcepted'))
+    return false
   } else {
     Message.success(t('page.banlist.banlist.listItem.unbanSuccess', { count: count }))
+    emits('unban', address)
+    return true
   }
-  return true
 }
 </script>
 
@@ -154,4 +191,11 @@ a {
   text-decoration: none;
 }
 
+.unban-button {
+  opacity: 0;
+}
+
+.banlist-item:hover .unban-button {
+  opacity: 1;
+}
 </style>

@@ -1,4 +1,4 @@
-import { type BanList, type UnbanCallback as UnbanResult } from '@/api/model/banlist'
+import { type BanList, type UnbanResult } from '@/api/model/banlist'
 import { useEndpointStore } from '@/stores/endpoint'
 import urlJoin from 'url-join'
 import { getCommonHeader } from './utils'

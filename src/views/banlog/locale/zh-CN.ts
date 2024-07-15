@@ -16,10 +16,20 @@ export default {
   'page.banlog.charts.options.thresold': '只显示1%以上的数据',
   'page.banlog.charts.options.field': '维度',
   'page.banlog.charts.options.field.peerId': 'Peer ID',
+  'page.banlog.charts.options.field.empty': 'N/A',
   'page.banlog.charts.options.field.torrentName': '种子名',
   'page.banlog.charts.options.field.module': '功能模块',
-  'page.banlog.charts.title.line': '最近 {days} 天封禁',
+  'page.banlog.charts.title.line': '封禁统计',
   'page.banlog.charts.line.options.field': '计数',
-  'page.banlog.charts.options.days': '展示天数',
-  'page.banlog.charts.options.mergeSame': '尝试合并同类型客户端'
+  'page.banlog.charts.options.days': '时间范围',
+  'page.banlog.charts.options.mergeSame': '尝试合并同类型客户端',
+  'page.banlog.charts.options.steps': '步长',
+  'page.banlog.charts.options.day': '天',
+  'page.banlog.charts.options.hour': '小时',
+  'page.banlog.charts.options.shortcut.6hours': '6 小时前',
+  'page.banlog.charts.options.shortcut.12hours': '12 小时前',
+  'page.banlog.charts.options.shortcut.24hours': '24 小时前',
+  'page.banlog.charts.options.shortcut.7days': '7 天前',
+  'page.banlog.charts.options.shortcut.14days': '14 天前',
+  'page.banlog.charts.options.shortcut.30days': '30 天前'
 }

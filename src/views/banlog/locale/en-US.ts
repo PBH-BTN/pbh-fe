@@ -16,10 +16,20 @@ export default {
   'page.banlog.charts.options.thresold': 'Only show data above 1%',
   'page.banlog.charts.options.field': 'Field',
   'page.banlog.charts.options.field.peerId': 'Peer ID',
+  'page.banlog.charts.options.field.empty': 'N/A',
   'page.banlog.charts.options.field.torrentName': 'Torrent Name',
   'page.banlog.charts.options.field.module': 'Module',
-  'page.banlog.charts.title.line': 'Last {days} days count',
+  'page.banlog.charts.title.line': 'Ban count',
   'page.banlog.charts.line.options.field': 'Count',
-  'page.banlog.charts.options.days': 'Days',
-  'page.banlog.charts.options.mergeSame': 'Try to merge same type clients'
+  'page.banlog.charts.options.days': 'Time Range',
+  'page.banlog.charts.options.mergeSame': 'Try to merge same type clients',
+  'page.banlog.charts.options.steps': 'Steps',
+  'page.banlog.charts.options.day': 'Days',
+  'page.banlog.charts.options.hour': 'Hours',
+  'page.banlog.charts.options.shortcut.6hours': '6 hours before',
+  'page.banlog.charts.options.shortcut.12hours': '12 hours before',
+  'page.banlog.charts.options.shortcut.24hours': '24 hours before',
+  'page.banlog.charts.options.shortcut.7days': '7 days before',
+  'page.banlog.charts.options.shortcut.14days': '14 days before',
+  'page.banlog.charts.options.shortcut.30days': '30 days before'
 }

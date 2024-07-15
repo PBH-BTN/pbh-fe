@@ -4,3 +4,15 @@ export interface Statistic {
   checkCounter: number
   banlistCounter: number
 }
+
+export interface AnalysisField {
+  data: string
+  count: number
+  percent: number
+}
+
+export interface TimeStatisticItem {
+  timestamp: number
+  count: number
+  percent: number
+}

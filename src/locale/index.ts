@@ -19,7 +19,17 @@ export function getNavigatorLanguage() {
 }
 
 const datetimeFormat = {
+  hour: {
+    month: 'short',
+    day: 'numeric',
+    hour: 'numeric'
+  },
   short: {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric'
+  },
+  day: {
     year: 'numeric',
     month: 'short',
     day: 'numeric'

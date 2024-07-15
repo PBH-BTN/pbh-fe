@@ -3,6 +3,7 @@ import { useEndpointStore } from '@/stores/endpoint'
 import urlJoin from 'url-join'
 import { getCommonHeader } from './utils'
 import type { AnalysisField, TimeStatisticItem } from '@/api/model/statistic'
+import type { CommonResponse } from '@/api/model/common'
 
 export async function getRuleStatic(): Promise<GetRuleMetricsResponse> {
   const endpointStore = useEndpointStore()
@@ -19,7 +20,7 @@ export async function getRuleStatic(): Promise<GetRuleMetricsResponse> {
 export async function getAnalysisDataByField(
   field: 'peerId' | 'torrentName' | 'module',
   filter = false
-): Promise<AnalysisField[]> {
+): Promise<CommonResponse<AnalysisField[]>> {
   const endpointStore = useEndpointStore()
   await endpointStore.serverAvailable
   const query = new URLSearchParams({
@@ -42,7 +43,7 @@ export async function getTimebasedStaticsData(
   startAt: Date,
   endAt: Date,
   type: 'day' | 'hour'
-): Promise<TimeStatisticItem[]> {
+): Promise<CommonResponse<TimeStatisticItem[]>> {
   const endpointStore = useEndpointStore()
   await endpointStore.serverAvailable
   const query = new URLSearchParams({

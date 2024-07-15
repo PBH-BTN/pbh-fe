@@ -257,8 +257,8 @@ watch(pieOption, (v) => {
 const { loading: pieLoading, run: runPie } = useRequest(getAnalysisDataByField, {
   defaultParams: ['peerId', true],
   onSuccess: (data) => {
-    if (data) {
-      const nonEmptyData = data.map((it) => {
+    if (data.data) {
+      const nonEmptyData = data.data.map((it) => {
         if (it.data === '') it.data = t('page.banlog.charts.options.field.empty')
         return it
       })
@@ -326,7 +326,7 @@ watch(lineOption, (v) => {
 const { loading: lineLoading, run: runLine } = useRequest(getTimebasedStaticsData, {
   defaultParams: [dayjs().startOf('day').add(-7, 'day').toDate(), new Date(), 'day'],
   onSuccess: (data) => {
-    if (data) {
+    if (data.data) {
       const map = new Map<number, number>()
       for (
         let cur = dayjs(lineOption.range[0]);
@@ -335,7 +335,7 @@ const { loading: lineLoading, run: runLine } = useRequest(getTimebasedStaticsDat
       ) {
         map.set(cur.valueOf(), 0)
       }
-      data.forEach((it) => {
+      data.data.forEach((it) => {
         map.set(dayjs(it.timestamp).startOf(lineOption.timeStep).valueOf(), it.count)
       })
       lineChartOptions.value.series[0].data = Array.from(map).map(([key, value]) => [

@@ -9,61 +9,6 @@
     ]"
   >
     <a-col :xl="12" :lg="24" :md="24" :sm="24" :xs="24">
-      <a-card hoverable :title="t('page.banlog.charts.options.field.' + pieOption.field)">
-        <v-chart
-          class="chart"
-          :option="pieChartOption"
-          :loading="pieLoading"
-          autoresize
-          :loadingOptions="loadingOptions"
-          :theme="darkStore.isDark ? 'dark' : 'light'"
-          :init-options="{ renderer: 'svg' }"
-        >
-        </v-chart>
-        <template #extra>
-          <a-popover>
-            <a-link>{{ t('page.banlog.charts.options.more') }}</a-link>
-            <template #content>
-              <a-form :model="pieOption" style="width: 25vh">
-                <a-form-item field="field" :label="t('page.banlog.charts.options.field')">
-                  <a-select
-                    v-model="pieOption.field"
-                    :trigger-props="{ autoFitPopupMinWidth: true }"
-                  >
-                    <a-option value="peerId">
-                      {{ t('page.banlog.charts.options.field.peerId') }}
-                    </a-option>
-                    <a-option value="torrentName">
-                      {{ t('page.banlog.charts.options.field.torrentName') }}
-                    </a-option>
-                    <a-option value="module">
-                      {{ t('page.banlog.charts.options.field.module') }}
-                    </a-option>
-                  </a-select>
-                </a-form-item>
-                <a-form-item field="enableThreshold">
-                  <a-space>
-                    <a-switch v-model="pieOption.enableThreshold" />
-                    <a-typography-text>{{
-                      t('page.banlog.charts.options.thresold')
-                    }}</a-typography-text>
-                  </a-space>
-                </a-form-item>
-                <a-form-item field="mergeSameVersion" v-if="pieOption.field === 'peerId'">
-                  <a-space>
-                    <a-switch v-model="pieOption.mergeSameVersion" />
-                    <a-typography-text>{{
-                      t('page.banlog.charts.options.mergeSame')
-                    }}</a-typography-text>
-                  </a-space>
-                </a-form-item>
-              </a-form>
-            </template>
-          </a-popover>
-        </template>
-      </a-card>
-    </a-col>
-    <a-col :xl="12" :lg="24" :md="24" :sm="24" :xs="24">
       <a-card hoverable :title="t('page.banlog.charts.title.line')">
         <template #extra>
           <a-popover>
@@ -158,6 +103,61 @@
         />
       </a-card>
     </a-col>
+    <a-col :xl="12" :lg="24" :md="24" :sm="24" :xs="24">
+      <a-card hoverable :title="t('page.banlog.charts.options.field.' + pieOption.field)">
+        <v-chart
+          class="chart"
+          :option="pieChartOption"
+          :loading="pieLoading"
+          autoresize
+          :loadingOptions="loadingOptions"
+          :theme="darkStore.isDark ? 'dark' : 'light'"
+          :init-options="{ renderer: 'svg' }"
+        >
+        </v-chart>
+        <template #extra>
+          <a-popover>
+            <a-link>{{ t('page.banlog.charts.options.more') }}</a-link>
+            <template #content>
+              <a-form :model="pieOption" style="width: 25vh">
+                <a-form-item field="field" :label="t('page.banlog.charts.options.field')">
+                  <a-select
+                    v-model="pieOption.field"
+                    :trigger-props="{ autoFitPopupMinWidth: true }"
+                  >
+                    <a-option value="peerId">
+                      {{ t('page.banlog.charts.options.field.peerId') }}
+                    </a-option>
+                    <a-option value="torrentName">
+                      {{ t('page.banlog.charts.options.field.torrentName') }}
+                    </a-option>
+                    <a-option value="module">
+                      {{ t('page.banlog.charts.options.field.module') }}
+                    </a-option>
+                  </a-select>
+                </a-form-item>
+                <a-form-item field="enableThreshold">
+                  <a-space>
+                    <a-switch v-model="pieOption.enableThreshold" />
+                    <a-typography-text>{{
+                      t('page.banlog.charts.options.thresold')
+                    }}</a-typography-text>
+                  </a-space>
+                </a-form-item>
+                <a-form-item field="mergeSameVersion" v-if="pieOption.field === 'peerId'">
+                  <a-space>
+                    <a-switch v-model="pieOption.mergeSameVersion" />
+                    <a-typography-text>{{
+                      t('page.banlog.charts.options.mergeSame')
+                    }}</a-typography-text>
+                  </a-space>
+                </a-form-item>
+              </a-form>
+            </template>
+          </a-popover>
+        </template>
+      </a-card>
+    </a-col>
   </a-row>
 </template>
 
@@ -204,7 +204,8 @@ const loadingOptions = {
 const pieChartOption = ref({
   tooltip: {
     trigger: 'item',
-    formatter: '{a} <br/>{b} : {c} ({d}%)'
+    appendToBody: true,
+    formatter: '<p style="word-wrap:break-all"><b>{b}</b></p>  {c} ({d}%)'
   },
   legend: {
     orient: 'vertical',

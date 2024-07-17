@@ -11,30 +11,12 @@ importers:
       '@arco-design/web-vue':
         specifier: ^2.55.3
         version: 2.55.3(vue@3.4.31(typescript@5.5.3))
-      '@arco-plugins/vite-vue':
-        specifier: ^1.4.5
-        version: 1.4.5
       '@dzangolab/flag-icon-css':
         specifier: ^3.4.5
         version: 3.4.5
       '@octokit/core':
         specifier: ^6.1.2
         version: 6.1.2
-      '@rushstack/eslint-patch':
-        specifier: ^1.10.3
-        version: 1.10.3
-      '@vitejs/plugin-vue':
-        specifier: ^5.0.5
-        version: 5.0.5(vite@5.3.3(@types/node@20.14.10)(less@4.2.0))(vue@3.4.31(typescript@5.5.3))
-      '@vue/eslint-config-prettier':
-        specifier: ^9.0.0
-        version: 9.0.0(eslint@8.57.0)(prettier@3.3.2)
-      '@vue/eslint-config-typescript':
-        specifier: ^13.0.0
-        version: 13.0.0(eslint-plugin-vue@9.27.0(eslint@8.57.0))(eslint@8.57.0)(typescript@5.5.3)
-      '@vue/tsconfig':
-        specifier: ^0.5.1
-        version: 0.5.1
       '@vueuse/core':
         specifier: ^10.11.0
         version: 10.11.0(vue@3.4.31(typescript@5.5.3))
@@ -47,45 +29,18 @@ importers:
       echarts:
         specifier: ^5.5.1
         version: 5.5.1
-      eslint:
-        specifier: ^8.57.0
-        version: 8.57.0
-      eslint-plugin-vue:
-        specifier: ^9.26.0
-        version: 9.27.0(eslint@8.57.0)
-      less:
-        specifier: ^4.2.0
-        version: 4.2.0
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
-      mockjs:
-        specifier: ^1.1.0
-        version: 1.1.0
       normalize.css:
         specifier: ^8.0.1
         version: 8.0.1
-      npm-run-all2:
-        specifier: ^6.2.0
-        version: 6.2.2
       pinia:
         specifier: ^2.1.7
         version: 2.1.7(typescript@5.5.3)(vue@3.4.31(typescript@5.5.3))
-      prettier:
-        specifier: ^3.3.2
-        version: 3.3.2
-      typescript:
-        specifier: ~5.5.2
-        version: 5.5.3
       url-join:
         specifier: ^5.0.0
         version: 5.0.0
-      vite:
-        specifier: ^5.3.2
-        version: 5.3.3(@types/node@20.14.10)(less@4.2.0)
-      vite-plugin-vue-devtools:
-        specifier: ^7.3.5
-        version: 7.3.5(rollup@4.18.1)(vite@5.3.3(@types/node@20.14.10)(less@4.2.0))(vue@3.4.31(typescript@5.5.3))
       vue:
         specifier: ^3.4.31
         version: 3.4.31(typescript@5.5.3)
@@ -105,6 +60,12 @@ importers:
         specifier: ^2.0.22
         version: 2.0.26(typescript@5.5.3)
     devDependencies:
+      '@arco-plugins/vite-vue':
+        specifier: ^1.4.5
+        version: 1.4.5
+      '@rushstack/eslint-patch':
+        specifier: ^1.10.3
+        version: 1.10.3
       '@tsconfig/node20':
         specifier: ^20.1.4
         version: 20.1.4
@@ -117,12 +78,51 @@ importers:
       '@types/node':
         specifier: ^20.14.9
         version: 20.14.10
+      '@vitejs/plugin-vue':
+        specifier: ^5.0.5
+        version: 5.0.5(vite@5.3.3(@types/node@20.14.10)(less@4.2.0))(vue@3.4.31(typescript@5.5.3))
+      '@vue/eslint-config-prettier':
+        specifier: ^9.0.0
+        version: 9.0.0(eslint@8.57.0)(prettier@3.3.2)
+      '@vue/eslint-config-typescript':
+        specifier: ^13.0.0
+        version: 13.0.0(eslint-plugin-vue@9.27.0(eslint@8.57.0))(eslint@8.57.0)(typescript@5.5.3)
+      '@vue/tsconfig':
+        specifier: ^0.5.1
+        version: 0.5.1
+      eslint:
+        specifier: ^8.57.0
+        version: 8.57.0
+      eslint-plugin-vue:
+        specifier: ^9.26.0
+        version: 9.27.0(eslint@8.57.0)
+      less:
+        specifier: ^4.2.0
+        version: 4.2.0
+      mockjs:
+        specifier: ^1.1.0
+        version: 1.1.0
+      npm-run-all2:
+        specifier: ^6.2.0
+        version: 6.2.2
+      prettier:
+        specifier: ^3.3.2
+        version: 3.3.2
+      typescript:
+        specifier: ~5.5.2
+        version: 5.5.3
+      vite:
+        specifier: ^5.3.2
+        version: 5.3.3(@types/node@20.14.10)(less@4.2.0)
       vite-bundle-analyzer:
         specifier: ^0.10.3
         version: 0.10.3
       vite-plugin-node-polyfills:
         specifier: ^0.22.0
         version: 0.22.0(rollup@4.18.1)(vite@5.3.3(@types/node@20.14.10)(less@4.2.0))
+      vite-plugin-vue-devtools:
+        specifier: ^7.3.5
+        version: 7.3.5(rollup@4.18.1)(vite@5.3.3(@types/node@20.14.10)(less@4.2.0))(vue@3.4.31(typescript@5.5.3))
 
 packages:
 

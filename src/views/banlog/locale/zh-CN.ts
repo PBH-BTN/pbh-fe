@@ -12,6 +12,7 @@ export default {
   'page.banlog.radio.viewMode': '视图模式',
   'page.banlog.radio.table': '表格',
   'page.banlog.radio.charts': '图表',
+  'page.banlog.charts.loading': '加载中...',
   'page.banlog.charts.options.more': '更多选项',
   'page.banlog.charts.options.thresold': '只显示1%以上的数据',
   'page.banlog.charts.options.field': '维度',

@@ -1,13 +1,8 @@
 <template>
-  <a-row
-    justify="center"
-    align="stretch"
-    :wrap="true"
-    :gutter="[
-      { xs: 12, sm: 12, md: 12, lg: 12, xl: 24 },
-      { xs: 12, sm: 12, md: 12, lg: 12, xl: 24 }
-    ]"
-  >
+  <a-row justify="center" align="stretch" :wrap="true" :gutter="[
+    { xs: 12, sm: 12, md: 12, lg: 12, xl: 24 },
+    { xs: 12, sm: 12, md: 12, lg: 12, xl: 24 }
+  ]">
     <a-col :xl="12" :lg="24" :md="24" :sm="24" :xs="24">
       <a-card hoverable :title="t('page.banlog.charts.title.line')">
         <template #extra>
@@ -15,105 +10,76 @@
             <a-link>{{ t('page.banlog.charts.options.more') }}</a-link>
             <template #content>
               <a-form :model="lineOption">
-                <a-form-item
-                  field="timeStep"
-                  :label="t('page.banlog.charts.options.steps')"
-                  label-col-flex="100px"
-                >
-                  <a-radio-group
-                    v-model="lineOption.timeStep"
-                    @change="(v: string | number | boolean) => changeStep(v as string)"
-                  >
+                <a-form-item field="timeStep" :label="t('page.banlog.charts.options.steps')" label-col-flex="100px">
+                  <a-radio-group v-model="lineOption.timeStep"
+                    @change="(v: string | number | boolean) => changeStep(v as string)">
                     <a-radio value="day">{{ t('page.banlog.charts.options.day') }}</a-radio>
                     <a-radio value="hour">{{ t('page.banlog.charts.options.hour') }}</a-radio>
                   </a-radio-group>
                 </a-form-item>
-                <a-form-item
-                  field="range"
-                  :label="t('page.banlog.charts.options.days')"
-                  label-col-flex="100px"
-                >
-                  <a-range-picker
-                    show-time
-                    v-model="lineOption.range"
-                    value-format="Date"
-                    :shortcuts="
-                      lineOption.timeStep === 'day'
-                        ? [
-                            {
-                              label: t('page.banlog.charts.options.shortcut.7days'),
-                              value: () => [
-                                dayjs().startOf('day').add(-7, 'day').toDate(),
-                                new Date()
-                              ]
-                            },
-                            {
-                              label: t('page.banlog.charts.options.shortcut.14days'),
-                              value: () => [
-                                dayjs().startOf('day').add(-14, 'day').toDate(),
-                                new Date()
-                              ]
-                            },
-                            {
-                              label: t('page.banlog.charts.options.shortcut.30days'),
-                              value: () => [
-                                dayjs().startOf('day').add(-30, 'day').toDate(),
-                                new Date()
-                              ]
-                            }
-                          ]
-                        : [
-                            {
-                              label: t('page.banlog.charts.options.shortcut.6hours'),
-                              value: () => [
-                                dayjs().startOf('hour').add(-6, 'hour').toDate(),
-                                new Date()
-                              ]
-                            },
-                            {
-                              label: t('page.banlog.charts.options.shortcut.12hours'),
-                              value: () => [
-                                dayjs().startOf('hour').add(-12, 'hour').toDate(),
-                                new Date()
-                              ]
-                            },
-                            {
-                              label: t('page.banlog.charts.options.shortcut.24hours'),
-                              value: () => [
-                                dayjs().startOf('hour').add(-24, 'hour').toDate(),
-                                new Date()
-                              ]
-                            }
-                          ]
-                    "
-                  />
+                <a-form-item field="range" :label="t('page.banlog.charts.options.days')" label-col-flex="100px">
+                  <a-range-picker show-time v-model="lineOption.range" value-format="Date" :shortcuts="lineOption.timeStep === 'day'
+                    ? [
+                      {
+                        label: t('page.banlog.charts.options.shortcut.7days'),
+                        value: () => [
+                          dayjs().startOf('day').add(-7, 'day').toDate(),
+                          new Date()
+                        ]
+                      },
+                      {
+                        label: t('page.banlog.charts.options.shortcut.14days'),
+                        value: () => [
+                          dayjs().startOf('day').add(-14, 'day').toDate(),
+                          new Date()
+                        ]
+                      },
+                      {
+                        label: t('page.banlog.charts.options.shortcut.30days'),
+                        value: () => [
+                          dayjs().startOf('day').add(-30, 'day').toDate(),
+                          new Date()
+                        ]
+                      }
+                    ]
+                    : [
+                      {
+                        label: t('page.banlog.charts.options.shortcut.6hours'),
+                        value: () => [
+                          dayjs().startOf('hour').add(-6, 'hour').toDate(),
+                          new Date()
+                        ]
+                      },
+                      {
+                        label: t('page.banlog.charts.options.shortcut.12hours'),
+                        value: () => [
+                          dayjs().startOf('hour').add(-12, 'hour').toDate(),
+                          new Date()
+                        ]
+                      },
+                      {
+                        label: t('page.banlog.charts.options.shortcut.24hours'),
+                        value: () => [
+                          dayjs().startOf('hour').add(-24, 'hour').toDate(),
+                          new Date()
+                        ]
+                      }
+                    ]
+                    " />
                 </a-form-item>
               </a-form>
             </template>
           </a-popover>
         </template>
-        <v-chart
-          class="chart"
-          :option="lineChartOptions"
-          :loading="lineLoading"
-          :loadingOptions="loadingOptions"
-          theme="ovilia-green"
-          autoresize
-          :init-options="{ renderer: 'svg' }"
-        />
+        <v-chart class="chart" :option="lineChartOptions" :loading="lineLoading" :loadingOptions="loadingOptions"
+          theme="ovilia-green" autoresize :init-options="{ renderer: 'svg' }" />
       </a-card>
     </a-col>
     <a-col :xl="12" :lg="24" :md="24" :sm="24" :xs="24">
       <a-card hoverable :title="t('page.banlog.charts.options.field.' + pieOption.field)">
-        <v-chart
-          class="chart"
-          :option="pieChartOption"
-          :loading="pieLoading"
-          autoresize
-          :loadingOptions="loadingOptions"
-          :theme="darkStore.isDark ? 'dark' : 'light'"
-          :init-options="{ renderer: 'svg' }"
-        >
+        <v-chart class="chart" :option="pieChartOption" :loading="pieLoading" autoresize
+          :loadingOptions="loadingOptions" :theme="darkStore.isDark ? 'dark' : 'light'"
+          :init-options="{ renderer: 'svg' }">
         </v-chart>
         <template #extra>
           <a-popover>
@@ -121,10 +87,7 @@
             <template #content>
               <a-form :model="pieOption" style="width: 25vh">
                 <a-form-item field="field" :label="t('page.banlog.charts.options.field')">
-                  <a-select
-                    v-model="pieOption.field"
-                    :trigger-props="{ autoFitPopupMinWidth: true }"
-                  >
+                  <a-select v-model="pieOption.field" :trigger-props="{ autoFitPopupMinWidth: true }">
                     <a-option value="peerId">
                       {{ t('page.banlog.charts.options.field.peerId') }}
                     </a-option>
@@ -141,7 +104,7 @@
                     <a-switch v-model="pieOption.enableThreshold" />
                     <a-typography-text>{{
                       t('page.banlog.charts.options.thresold')
-                    }}</a-typography-text>
+                      }}</a-typography-text>
                   </a-space>
                 </a-form-item>
                 <a-form-item field="mergeSameVersion" v-if="pieOption.field === 'peerId'">
@@ -149,7 +112,7 @@
                     <a-switch v-model="pieOption.mergeSameVersion" />
                     <a-typography-text>{{
                       t('page.banlog.charts.options.mergeSame')
-                    }}</a-typography-text>
+                      }}</a-typography-text>
                   </a-space>
                 </a-form-item>
               </a-form>
@@ -171,7 +134,7 @@ import {
   GridComponent
 } from 'echarts/components'
 import VChart from 'vue-echarts'
-import { ref, reactive, watch } from 'vue'
+import { ref, reactive, watch, computed } from 'vue'
 import { useRequest } from 'vue-request'
 import { SVGRenderer } from 'echarts/renderers'
 import { useDarkStore } from '@/stores/dark'
@@ -195,11 +158,12 @@ const pieOption = reactive({
   enableThreshold: true,
   mergeSameVersion: false
 })
-const loadingOptions = {
-  text: 'Loading…',
-  color: '#4ea397',
-  maskColor: 'rgba(255, 255, 255, 0.4)'
-}
+const loadingOptions = computed(() => ({
+  text: t('page.banlog.charts.loading'),
+  color: darkStore.isDark ? 'rgb(60, 126, 255)' : 'rgb(22, 93, 255)',
+  textColor: darkStore.isDark ? 'rgba(255, 255, 255, 0.9)' : 'rgb(29, 33, 41)',
+  maskColor: darkStore.isDark ? 'rgba(0, 0, 0, 0.4)' : 'rgba(255, 255, 255, 0.4)'
+}))
 
 const pieChartOption = ref({
   tooltip: {

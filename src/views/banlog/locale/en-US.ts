@@ -12,6 +12,7 @@ export default {
   'page.banlog.radio.viewMode': 'View Mode',
   'page.banlog.radio.table': 'Table',
   'page.banlog.radio.charts': 'Charts',
+  'page.banlog.charts.loading': 'Loading...',
   'page.banlog.charts.options.more': 'More Options',
   'page.banlog.charts.options.thresold': 'Only show data above 1%',
   'page.banlog.charts.options.field': 'Field',

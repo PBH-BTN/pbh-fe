@@ -6,6 +6,8 @@ export default {
   'page.oobe.steps.setToken.title': 'Set Token',
   'page.oobe.steps.setToken.description': 'Security comes first',
   'page.oobe.steps.addDownloader.title': 'Add Downloader',
+  'page.oobe.steps.success.title': 'Initialization success',
+  'page.oobe.steps.success.description': 'Start using!',
 
   'page.oobe.welcome': 'Welcome to PeerbanHelper!',
   'page.oobe.welcome.description':
@@ -18,5 +20,12 @@ export default {
 
   'page.oobe.addDownloader.title': 'Add your first downloader',
   'page.oobe.addDownloader.description':
-    'Choose your downloader type first, then fill in the related authentication information.'
+    'Choose your downloader type first, then fill in the related authentication information.',
+  'page.oobe.addDownloader.test': 'Test downloader',
+  'page.oobe.addDownloader.test.success': 'Test success',
+
+  'page.oobe.success.title': 'Initialization success!',
+  'page.oobe.success.description':
+    'You have completed the initialization, now you can start using PeerbanHelper!',
+  'page.oobe.success.goto': 'Start using'
 }

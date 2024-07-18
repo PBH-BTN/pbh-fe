@@ -7,4 +7,5 @@ interface initDownloaderConfig {
 export interface InitConfig {
   token: string
   downloaderConfig: initDownloaderConfig
+  valid: boolean
 }

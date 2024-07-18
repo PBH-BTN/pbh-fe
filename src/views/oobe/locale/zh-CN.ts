@@ -6,6 +6,8 @@ export default {
   'page.oobe.steps.setToken.title': '设置 Token',
   'page.oobe.steps.setToken.description': '信息安全非常重要',
   'page.oobe.steps.addDownloader.title': '添加下载器',
+  'page.oobe.steps.success.title': '初始化完成',
+  'page.oobe.steps.success.description': '开始使用！',
 
   'page.oobe.welcome.title': '欢迎使用 PeerbanHelper!',
   'page.oobe.welcome.description':
@@ -16,5 +18,11 @@ export default {
   'page.oobe.setToken.generate': '随机生成',
 
   'page.oobe.addDownloader.title': '添加你的第一个下载器',
-  'page.oobe.addDownloader.description': '首先选择你的下载器类型，随后填写相关认证信息。'
+  'page.oobe.addDownloader.description': '首先选择你的下载器类型，随后填写相关认证信息。',
+  'page.oobe.addDownloader.test': '测试下载器',
+  'page.oobe.addDownloader.test.success': '测试成功',
+
+  'page.oobe.success.title': '初始化完成！',
+  'page.oobe.success.description': '你已经完成了初始化，现在可以开始使用 PeerbanHelper 了！',
+  'page.oobe.success.goto': '开始使用'
 }

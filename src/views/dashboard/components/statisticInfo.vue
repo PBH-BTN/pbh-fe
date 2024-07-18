@@ -45,9 +45,9 @@
         </a-grid-item>
         <a-grid-item class="panel-col" :span="{ xs: 12, sm: 12, md: 6 }">
           <a-statistic
-            :title="t('page.dashboard.statics.currentBan')"
-            :value="current?.banlistCounter"
-            :value-from="previous.banlistCounter"
+            :title="t('page.dashboard.statics.currentBanIps')"
+            :value="current?.bannedIpCounter"
+            :value-from="previous.bannedIpCounter"
             animation
             show-group-separator
           >

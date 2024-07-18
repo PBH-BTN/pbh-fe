@@ -46,7 +46,7 @@ const steps = computed(() => [
     description: ''
   },
   {
-    title: t('page.oobe.steps.setToken.description'),
+    title: t('page.oobe.steps.setToken.title'),
     description: t('page.oobe.steps.setToken.description')
   },
   {

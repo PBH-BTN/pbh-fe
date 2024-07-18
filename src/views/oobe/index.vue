@@ -5,7 +5,7 @@
                 <a-steps changeable :current="current" @change="setCurrent">
                     <a-step v-for="setp of steps" v-bind:key="setp.title" :description="setp.description">{{
                         setp.title
-                    }}</a-step>
+                        }}</a-step>
                 </a-steps>
                 <div :style="{
                     width: '100%',
@@ -54,7 +54,7 @@ const steps = computed(() => [
     }
 ])
 
-const initConfig = reactive<InitConfig>({
+const initConfig = ref<InitConfig>({
     token: "",
     downloaderConfig: {
         name: '',

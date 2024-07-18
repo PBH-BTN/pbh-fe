@@ -20,6 +20,7 @@ export default {
   'page.dashboard.statics.banPeer': '封禁Peer',
   'page.dashboard.statics.unbanPeer': '解除已到期的封禁',
   'page.dashboard.statics.currentBan': '当前处于封禁状态Peer',
+  'page.dashboard.statics.currentBanIps': '正处于封禁的IP数量',
   'page.dashboard.statics.number': '个',
   'page.dashboard.torrentList.title': '活动种子列表',
   'page.dashboard.torrentList.tips': '点击查看活动种子列表',

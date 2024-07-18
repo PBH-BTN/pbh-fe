@@ -17,6 +17,7 @@ export default {
   'page.dashboard.statics.banPeer': 'Ban Peers',
   'page.dashboard.statics.unbanPeer': 'Unban Peers',
   'page.dashboard.statics.currentBan': 'Currently banned Peers',
+  'page.dashboard.statics.currentBanIps': 'Currently banned IP(s)',
   'page.dashboard.statics.number': '',
   'page.dashboard.torrentList.title': 'Active Torrent List',
   'page.dashboard.torrentList.tips': 'Click to view the active torrent list',

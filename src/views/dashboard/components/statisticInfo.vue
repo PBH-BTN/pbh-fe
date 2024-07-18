@@ -76,7 +76,8 @@ const previous = ref<Statistic>({
   checkCounter: 0,
   peerBanCounter: 0,
   peerUnbanCounter: 0,
-  banlistCounter: 0
+  banlistCounter: 0,
+  bannedIpCounter: 0
 })
 const current = ref<Statistic>(previous.value)
 const { refresh } = useRequest(getStatistic, {

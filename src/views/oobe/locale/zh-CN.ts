@@ -22,7 +22,10 @@ export default {
   'page.oobe.addDownloader.test': '测试下载器',
   'page.oobe.addDownloader.test.success': '测试成功',
 
-  'page.oobe.success.title': '初始化完成！',
-  'page.oobe.success.description': '你已经完成了初始化，现在可以开始使用 PeerbanHelper 了！',
-  'page.oobe.success.goto': '开始使用'
+  'page.oobe.result.title': '初始化完成！',
+  'page.oobe.result.title.error': '初始化失败',
+  'page.oobe.result.description': '你已经完成了初始化，现在可以开始使用 PeerbanHelper 了！',
+  'page.oobe.result.goto': '开始使用',
+  'page.oobe.result.initlizing': '正在初始化，请稍后...',
+  'page.oobe.result.retry': '重试'
 }

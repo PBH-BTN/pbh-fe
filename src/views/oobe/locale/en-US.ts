@@ -24,8 +24,11 @@ export default {
   'page.oobe.addDownloader.test': 'Test downloader',
   'page.oobe.addDownloader.test.success': 'Test success',
 
-  'page.oobe.success.title': 'Initialization success!',
-  'page.oobe.success.description':
+  'page.oobe.result.title': 'Initialization success!',
+  'page.oobe.result.title.error': 'Initialization failed',
+  'page.oobe.result.description':
     'You have completed the initialization, now you can start using PeerbanHelper!',
-  'page.oobe.success.goto': 'Start using'
+  'page.oobe.result.goto': 'Start using',
+  'page.oobe.result.initlizing': 'Initializing, This may take a while...',
+  'page.oobe.result.retry': 'Retry'
 }

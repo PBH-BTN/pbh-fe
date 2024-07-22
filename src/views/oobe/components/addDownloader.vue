@@ -1,5 +1,5 @@
 <template>
-  <a-space direction="vertical">
+  <a-space direction="vertical" style="width: 70%">
     <a-typography style="text-align: left">
       <a-typography-title>
         {{ t('page.oobe.addDownloader.title') }}
@@ -14,7 +14,7 @@
         :label="t('page.dashboard.editModal.label.type')"
         required
       >
-        <a-radio-group v-model="config.downloaderConfig.downloaderConfig.type" style="width: 40vh">
+        <a-radio-group v-model="config.downloaderConfig.downloaderConfig.type" type="button">
           <a-radio :value="ClientTypeEnum.qBittorrent">qBittorrent</a-radio>
           <a-radio :value="ClientTypeEnum.Transmission">Transmission</a-radio>
           <a-radio :value="ClientTypeEnum.BiglyBT">BiglyBT</a-radio>

@@ -33,7 +33,7 @@
 import Welcomle from './components/welcome.vue'
 import SetToken from './components/setToken.vue'
 import AddDownloader from './components/addDownloader.vue'
-import Success from './components/success.vue'
+import Result from './components/result.vue'
 import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { type InitConfig } from '@/api/model/oobe'
@@ -72,7 +72,7 @@ const initConfig = ref<InitConfig>({
   valid: false
 })
 
-const componentList = [Welcomle, SetToken, AddDownloader, Success]
+const componentList = [Welcomle, SetToken, AddDownloader, Result]
 
 const onPrev = () => {
   current.value = Math.max(1, current.value - 1)

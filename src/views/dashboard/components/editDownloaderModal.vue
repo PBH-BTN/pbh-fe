@@ -1,9 +1,17 @@
 <template>
-  <a-modal v-model:visible="showModal" :mask-closable="false" :title="newItem ? t('page.dashboard.editModal.title.new') : t('page.dashboard.editModal.title.edit')
-    " unmountOnClose @cancel="() => resetFields()" @before-ok="handleBeforeOk">
+  <a-modal
+    v-model:visible="showModal"
+    :mask-closable="false"
+    :title="
+      newItem ? t('page.dashboard.editModal.title.new') : t('page.dashboard.editModal.title.edit')
+    "
+    unmountOnClose
+    @cancel="() => resetFields()"
+    @before-ok="handleBeforeOk"
+  >
     <a-form ref="formRef" :model="form" auto-label-width>
       <a-form-item field="config.type" :label="t('page.dashboard.editModal.label.type')" required>
-        <a-radio-group v-model="form.config.type">
+        <a-radio-group v-model="form.config.type" type="button">
           <a-radio :value="ClientTypeEnum.qBittorrent">qBittorrent</a-radio>
           <a-radio :value="ClientTypeEnum.Transmission">Transmission</a-radio>
           <a-radio :value="ClientTypeEnum.BiglyBT">BiglyBT</a-radio>
@@ -14,7 +22,7 @@
             <template v-slot:url>
               <a href="https://github.com/PBH-BTN/PBH-Adapter-BiglyBT">{{
                 t('page.dashboard.editModal.biglybt.url')
-                }}</a>
+              }}</a>
             </template>
           </i18n-t>
         </template>

@@ -30,11 +30,7 @@
   </a-row>
 </template>
 <script lang="ts" setup>
-import Welcomle from './components/welcome.vue'
-import SetToken from './components/setToken.vue'
-import AddDownloader from './components/addDownloader.vue'
-import Result from './components/result.vue'
-import { computed, ref } from 'vue'
+import { computed, ref, defineAsyncComponent } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { type InitConfig } from '@/api/model/oobe'
 import type { downloaderConfig } from '@/api/model/downloader'
@@ -72,7 +68,12 @@ const initConfig = ref<InitConfig>({
   valid: false
 })
 
-const componentList = [Welcomle, SetToken, AddDownloader, Result]
+const componentList = [
+  defineAsyncComponent(() => import('./components/welcome.vue')),
+  defineAsyncComponent(() => import('./components/setToken.vue')),
+  defineAsyncComponent(() => import('./components/addDownloader.vue')),
+  defineAsyncComponent(() => import('./components/result.vue'))
+]
 
 const onPrev = () => {
   current.value = Math.max(1, current.value - 1)

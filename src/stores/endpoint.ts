@@ -36,7 +36,7 @@ export const useEndpointStore = defineStore('endpoint', () => {
     return lock
   }
   const serverManifest = ref<mainfest | null>()
-  const status = ref<'checking' | 'needLogin' | 'pass' | 'fail'>('checking')
+  const status = ref<'checking' | 'needLogin' | 'pass' | 'fail' | 'needInit'>('checking')
   const error = ref<Error | null>(null)
   const checkUpgradeError = ref<Error | null>(null)
 
@@ -130,6 +130,8 @@ export const useEndpointStore = defineStore('endpoint', () => {
       if (res.status === 403) {
         setAuthToken(null)
         throw new IncorrectTokenError()
+      } else if (res.status === 303) {
+        status.value = 'needInit'
       }
     }
   }

@@ -265,7 +265,8 @@ const lineOption = reactive({
 
 const lineChartOptions = ref({
   xAxis: {
-    type: 'time'
+    type: 'time',
+    max: 'dataMax'
   },
   yAxis: {
     type: 'value'
@@ -277,7 +278,7 @@ const lineChartOptions = ref({
     {
       data: [] as [Date, number][],
       type: 'line',
-      smooth: true,
+      // smooth: true,
       name: t('page.banlog.charts.line.options.field')
     }
   ]
@@ -302,7 +303,7 @@ const { loading: lineLoading, run: runLine } = useRequest(getTimebasedStaticsDat
       data.data.forEach((it) => {
         map.set(dayjs(it.timestamp).startOf(lineOption.timeStep).valueOf(), it.count)
       })
-      lineChartOptions.value.series[0].data = Array.from(map).map(([key, value]) => [
+      lineChartOptions.value.series[0].data = Array.from(map).sort(([k1], [k2]) => k1 - k2).map(([key, value]) => [
         new Date(key),
         value
       ])

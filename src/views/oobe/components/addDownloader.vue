@@ -53,7 +53,7 @@ import type { InitConfig } from '@/api/model/oobe'
 import { ClientTypeEnum } from '@/api/model/downloader'
 import { useI18n } from 'vue-i18n'
 import { defineAsyncComponent, ref } from 'vue'
-import { TestDownloaderConfig } from '@/service/downloaders'
+import { TestDownloaderConfig } from '@/service/init'
 import { Message } from '@arco-design/web-vue'
 const qbittorrentForm = defineAsyncComponent(() => import('@/components/forms/qbittorrent.vue'))
 const transmissionForm = defineAsyncComponent(() => import('@/components/forms/transmission.vue'))

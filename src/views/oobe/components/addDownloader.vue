@@ -80,11 +80,11 @@ const handleTest = async () => {
     if (!testResult.valid) throw new Error(testResult.message)
   } catch (e: any) {
     Message.error(e.message)
-    testing.value = false
     return false
+  } finally {
+    testing.value = false
   }
   Message.success(t('page.oobe.addDownloader.test.success'))
-  testing.value = false
   config.value.valid = true
 }
 </script>

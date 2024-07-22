@@ -25,7 +25,7 @@
     "normalize.css": "^8.0.1",
     "pinia": "^2.1.7",
     "url-join": "^5.0.0",
-    "vue": "^3.4.32",
+    "vue": "^3.4.33",
     "vue-echarts": "^6.7.3",
     "vue-i18n": "^9.13.1",
     "vue-request": "^2.0.4",
@@ -53,7 +53,7 @@
     "@types/node": "^20.14.11",
     "vite-bundle-analyzer": "^0.10.3",
     "vite-plugin-node-polyfills": "^0.22.0",
-    "vue-tsc": "^2.0.26"
+    "vue-tsc": "^2.0.28"
   },
   "engines": {
     "node": ">=20.0.0",

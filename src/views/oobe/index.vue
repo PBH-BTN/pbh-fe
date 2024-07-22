@@ -3,8 +3,8 @@
     <a-col :span="12">
       <a-space direction="vertical" style="display: flex; justify-content: center">
         <a-steps :current="current">
-          <a-step v-for="setp of steps" v-bind:key="setp.title" :description="setp.description">{{
-            setp.title
+          <a-step v-for="step of steps" v-bind:key="step.title" :description="step.description">{{
+            step.title
           }}</a-step>
         </a-steps>
         <div

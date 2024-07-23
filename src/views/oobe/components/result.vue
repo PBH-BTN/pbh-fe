@@ -49,7 +49,7 @@ const init = () => {
     }
   })
     .then((res) => {
-      if (res.code === 200) {
+      if (res.code === 200 || res.code === 201) {
         initSuccess.value = true
       } else {
         errorMsg.value = res.message

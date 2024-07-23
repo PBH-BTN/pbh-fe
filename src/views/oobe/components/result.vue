@@ -46,7 +46,7 @@ const init = () => {
     downloader: config.value.downloaderConfig.downloaderConfig
   })
     .then((res) => {
-      if (res.code !== 200) {
+      if (res.code === 200) {
         initSuccess.value = true
       } else {
         errorMsg.value = res.message

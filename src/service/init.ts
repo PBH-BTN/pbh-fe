@@ -20,7 +20,6 @@ export async function TestDownloaderConfig(
   req: CreateDownloadRequest
 ): Promise<TestDownloaderResponse> {
   const endpointStore = useEndpointStore()
-  await endpointStore.serverAvailable
   const url = new URL(urlJoin(endpointStore.endpoint, `/api/oobe/testDownloader`), location.href)
   return fetch(url, { method: 'POST', headers: getCommonHeader(), body: JSON.stringify(req) }).then(
     (res) => {

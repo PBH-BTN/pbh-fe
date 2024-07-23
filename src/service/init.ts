@@ -7,7 +7,6 @@ import type { CreateDownloadRequest, TestDownloaderResponse } from '@/api/model/
 
 export async function InitPBH(req: InitReq): Promise<CommonResponseWithoutData> {
   const endpointStore = useEndpointStore()
-  await endpointStore.serverAvailable
 
   const url = new URL(urlJoin(endpointStore.endpoint, '/api/oobe/init'), location.href)
 

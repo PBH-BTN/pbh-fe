@@ -9,7 +9,7 @@ export default {
   'page.oobe.steps.success.title': 'Initialization success',
   'page.oobe.steps.success.description': 'Start using!',
 
-  'page.oobe.welcome': 'Welcome to PeerbanHelper!',
+  'page.oobe.welcome.title': 'Welcome to PeerbanHelper!',
   'page.oobe.welcome.description':
     "PeerbanHelper is a tool to help you manage your Peerban instance. Before we start, let's do some config first.",
 

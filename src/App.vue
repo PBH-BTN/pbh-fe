@@ -79,7 +79,12 @@ const Login = defineAsyncComponent(() => import('@/views/login/index.vue'))
 const { t, locale } = useI18n()
 const [routers, currentName, goto] = useViewRoute()
 
-const disableAutoUpdate = computed(() => route.meta.disableAutoUpdate as boolean | undefined)
+const disableAutoUpdate = computed(
+  () =>
+    (route.meta.disableAutoUpdate as boolean | undefined) ||
+    status.value === 'needLogin' ||
+    status.value === 'needInit'
+)
 </script>
 
 <style scoped lang="less">

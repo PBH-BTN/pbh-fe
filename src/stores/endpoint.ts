@@ -3,7 +3,7 @@ import { useStorage } from '@vueuse/core'
 import { getLatestVersion, getManifest } from '@/service/version'
 import { computed, readonly, ref, type DeepReadonly } from 'vue'
 import type { release } from '@/api/model/manifest'
-import { IncorrectTokenError, login } from '@/service/login'
+import { IncorrectTokenError, login, NeedInitError } from '@/service/login'
 import { compare } from 'compare-versions'
 import type { mainfest } from '@/api/model/manifest'
 
@@ -54,7 +54,7 @@ export const useEndpointStore = defineStore('endpoint', () => {
       pushLock()
     }
     try {
-      if (token) await login(token)
+      await login(token ?? '')
       if (!isChecking) {
         serverAvailable.value.resolve()
         error.value = null
@@ -65,6 +65,10 @@ export const useEndpointStore = defineStore('endpoint', () => {
         error.value = err as Error
         if (IncorrectTokenError.is(err)) {
           status.value = 'needLogin'
+        }
+        if (NeedInitError.is(err)) {
+          status.value = 'needInit'
+          return
         }
       }
       throw err
@@ -82,6 +86,9 @@ export const useEndpointStore = defineStore('endpoint', () => {
       } catch (err) {
         if (IncorrectTokenError.is(err)) {
           status.value = 'needLogin'
+        }
+        if (NeedInitError.is(err)) {
+          status.value = 'needInit'
         }
         throw err
       }
@@ -131,7 +138,7 @@ export const useEndpointStore = defineStore('endpoint', () => {
         setAuthToken(null)
         throw new IncorrectTokenError()
       } else if (res.status === 303) {
-        status.value = 'needInit'
+        throw new NeedInitError()
       }
     }
   }

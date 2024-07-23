@@ -1,6 +1,6 @@
-import type { downloaderConfig } from './downloader'
+import type { CreateDownloadRequest } from './downloader'
 
 export interface InitReq {
   token: string
-  downloader: downloaderConfig
+  downloader: CreateDownloadRequest
 }

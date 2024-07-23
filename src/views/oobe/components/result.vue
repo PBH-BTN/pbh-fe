@@ -43,7 +43,10 @@ const init = () => {
   loading.value = true
   InitPBH({
     token: config.value.token,
-    downloader: config.value.downloaderConfig.downloaderConfig
+    downloader: {
+      name: config.value.downloaderConfig.name,
+      config: config.value.downloaderConfig.downloaderConfig
+    }
   })
     .then((res) => {
       if (res.code === 200) {

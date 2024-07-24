@@ -7,6 +7,7 @@ import ruleMetricsLocale from '@/views/rule-metrics/locale/zh-CN'
 import serviceLocale from '@/service/locale/zh-CN'
 import loginLocale from '@/views/login/locale/zh-CN'
 import ruleSubscribeLocale from '@/views/rule-subscribe/locale/zh-CN'
+import oobeLocale from '@/views/oobe/locale/zh-CN'
 export default {
   'navbar.action.locale': '切换为中文',
   'navbar.action.autoUpdate': '自动刷新',
@@ -37,5 +38,6 @@ export default {
   ...ruleMetricsLocale,
   ...serviceLocale,
   ...loginLocale,
-  ...ruleSubscribeLocale
+  ...ruleSubscribeLocale,
+  ...oobeLocale
 }

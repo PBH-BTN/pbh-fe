@@ -3,7 +3,7 @@ import { useStorage } from '@vueuse/core'
 import { getLatestVersion, getManifest } from '@/service/version'
 import { computed, readonly, ref, type DeepReadonly } from 'vue'
 import type { release } from '@/api/model/manifest'
-import { IncorrectTokenError, login } from '@/service/login'
+import { IncorrectTokenError, login, NeedInitError } from '@/service/login'
 import { compare } from 'compare-versions'
 import type { mainfest } from '@/api/model/manifest'
 
@@ -36,7 +36,7 @@ export const useEndpointStore = defineStore('endpoint', () => {
     return lock
   }
   const serverManifest = ref<mainfest | null>()
-  const status = ref<'checking' | 'needLogin' | 'pass' | 'fail'>('checking')
+  const status = ref<'checking' | 'needLogin' | 'pass' | 'fail' | 'needInit'>('checking')
   const error = ref<Error | null>(null)
   const checkUpgradeError = ref<Error | null>(null)
 
@@ -54,8 +54,7 @@ export const useEndpointStore = defineStore('endpoint', () => {
       pushLock()
     }
     try {
-      if (token) await login(token)
-      else throw new IncorrectTokenError()
+      await login(token ?? '')
       if (!isChecking) {
         serverAvailable.value.resolve()
         error.value = null
@@ -66,6 +65,10 @@ export const useEndpointStore = defineStore('endpoint', () => {
         error.value = err as Error
         if (IncorrectTokenError.is(err)) {
           status.value = 'needLogin'
+        }
+        if (NeedInitError.is(err)) {
+          status.value = 'needInit'
+          return
         }
       }
       throw err
@@ -83,6 +86,9 @@ export const useEndpointStore = defineStore('endpoint', () => {
       } catch (err) {
         if (IncorrectTokenError.is(err)) {
           status.value = 'needLogin'
+        }
+        if (NeedInitError.is(err)) {
+          status.value = 'needInit'
         }
         throw err
       }
@@ -131,6 +137,8 @@ export const useEndpointStore = defineStore('endpoint', () => {
       if (res.status === 403) {
         setAuthToken(null)
         throw new IncorrectTokenError()
+      } else if (res.status === 303) {
+        throw new NeedInitError()
       }
     }
   }

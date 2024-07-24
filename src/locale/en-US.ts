@@ -7,6 +7,7 @@ import ruleMetricsLocale from '@/views/rule-metrics/locale/en-US'
 import serviceLocale from '@/service/locale/en-US'
 import loginLocale from '@/views/login/locale/en-US'
 import ruleSubscribeLocale from '@/views/rule-subscribe/locale/en-US'
+import oobeLocale from '@/views/oobe/locale/en-US'
 export default {
   'navbar.action.locale': 'Switch to English',
   'navbar.action.autoUpdate': 'Auto Update',
@@ -38,5 +39,6 @@ export default {
   ...ruleMetricsLocale,
   ...serviceLocale,
   ...loginLocale,
-  ...ruleSubscribeLocale
+  ...ruleSubscribeLocale,
+  ...oobeLocale
 }

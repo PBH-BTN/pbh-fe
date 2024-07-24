@@ -11,7 +11,7 @@
   >
     <a-form ref="formRef" :model="form" auto-label-width>
       <a-form-item field="config.type" :label="t('page.dashboard.editModal.label.type')" required>
-        <a-radio-group v-model="form.config.type">
+        <a-radio-group v-model="form.config.type" type="button">
           <a-radio :value="ClientTypeEnum.qBittorrent">qBittorrent</a-radio>
           <a-radio :value="ClientTypeEnum.Transmission">Transmission</a-radio>
           <a-radio :value="ClientTypeEnum.BiglyBT">BiglyBT</a-radio>
@@ -40,10 +40,10 @@ import { defineAsyncComponent, reactive, ref } from 'vue'
 import { Message, type Form } from '@arco-design/web-vue'
 import { ClientTypeEnum, type downloaderConfig } from '@/api/model/downloader'
 import { CreateDownloader, TestDownloaderConfig, UpdateDownloader } from '@/service/downloaders'
-const qbittorrentForm = defineAsyncComponent(() => import('./forms/qbittorrent.vue'))
-const transmissionForm = defineAsyncComponent(() => import('./forms/transmission.vue'))
-const biglybtForm = defineAsyncComponent(() => import('./forms/biglybt.vue'))
-const delugeForm = defineAsyncComponent(() => import('./forms/deluge.vue'))
+const qbittorrentForm = defineAsyncComponent(() => import('@/components/forms/qbittorrent.vue'))
+const transmissionForm = defineAsyncComponent(() => import('@/components/forms/transmission.vue'))
+const biglybtForm = defineAsyncComponent(() => import('@/components/forms/biglybt.vue'))
+const delugeForm = defineAsyncComponent(() => import('@/components/forms/deluge.vue'))
 
 const { t } = useI18n()
 const showModal = ref(false)

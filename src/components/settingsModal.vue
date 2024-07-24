@@ -50,7 +50,7 @@
   </a-modal>
 </template>
 <script setup lang="ts">
-import { IncorrectTokenError } from '@/service/login'
+import { IncorrectTokenError, NeedInitError } from '@/service/login'
 import { GetManifestError } from '@/service/version'
 import { useAutoUpdate } from '@/stores/autoUpdate'
 import { useEndpointStore } from '@/stores/endpoint'
@@ -92,7 +92,7 @@ const handleOk = () => {
 watch(
   () => endPointStore.error,
   (error) => {
-    if (IncorrectTokenError.is(error)) {
+    if (IncorrectTokenError.is(error) || NeedInitError.is(error)) {
       handleCancel()
     } else if (GetManifestError.is(error)) {
       Message.error(t(error.message))

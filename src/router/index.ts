@@ -12,7 +12,6 @@ import BanLog from '@/views/banlog/index.vue'
 import TopBan from '@/views/top-ban/index.vue'
 import RuleMetric from '@/views/rule-metrics/index.vue'
 import RuleSubscribe from '@/views/rule-subscribe/index.vue'
-
 export const routerOptions: RouteRecordRaw[] = [
   {
     path: '/dashboard',
@@ -65,6 +64,15 @@ export const routerOptions: RouteRecordRaw[] = [
         'https://github.com/PBH-BTN/PeerBanHelper/wiki/%E8%A7%84%E5%88%99%E8%AE%A2%E9%98%85%E5%8A%9F%E8%83%BD'
     },
     component: RuleSubscribe
+  },
+  {
+    path: '/init',
+    name: 'init',
+    meta: {
+      hide: true,
+      disableAutoUpdate: true
+    },
+    component: () => import('@/views/oobe/index.vue')
   }
 ]
 

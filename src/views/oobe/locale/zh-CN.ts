@@ -11,10 +11,10 @@ export default {
 
   'page.oobe.welcome.title': '欢迎使用 PeerbanHelper!',
   'page.oobe.welcome.description':
-    'PeerbanHelper 是一个帮助您管理 Peerban 实例的工具。在开始之前，让我们先进行一些配置。',
+    'PeerbanHelper 是一个 BT 反吸血工具。通过连接到您的下载器的 WebUI，PeerBanHelper 便可以使用这些信息检查并封禁恶意吸血者。在一切开始之前，让我们先进行一些简单配置。',
   'page.oobe.setToken.title': '设置 Token',
   'page.oobe.setToken.description':
-    '首先你需要设置一个 Token，这个 Token 可以保护你的GUI不被恶意访问。',
+    '首先你需要设置一个 Token，这个 Token 可以保护你的 WebUI 不被恶意访问，并保护您的因此。务必确保强度够高。一旦您成功登陆过一次 WebUI，后续浏览器就会记住 Token 并自动登录。',
   'page.oobe.setToken.generate': '随机生成',
 
   'page.oobe.addDownloader.title': '添加你的第一个下载器',
@@ -24,7 +24,7 @@ export default {
 
   'page.oobe.result.title': '初始化完成！',
   'page.oobe.result.title.error': '初始化失败',
-  'page.oobe.result.description': '你已经完成了初始化，现在可以开始使用 PeerbanHelper 了！',
+  'page.oobe.result.description': '你已经完成了初始化，现在可以开始使用 PeerBanHelper 了！',
   'page.oobe.result.goto': '开始使用',
   'page.oobe.result.initlizing': '正在初始化，请稍后...',
   'page.oobe.result.retry': '重试'

@@ -24,11 +24,13 @@ import type { InitConfig } from '@/api/model/oobe'
 import { InitPBH } from '@/service/init'
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useEndpointStore } from '@/stores/endpoint'
 const { t } = useI18n()
 const config = defineModel<InitConfig>({ required: true })
 const loading = ref(true)
 const initSuccess = ref(false)
 const errorMsg = ref('')
+const { setAuthToken } = useEndpointStore()
 const init = () => {
   loading.value = true
   InitPBH({
@@ -41,6 +43,7 @@ const init = () => {
     .then((res) => {
       if (res.code === 200 || res.code === 201) {
         initSuccess.value = true
+        setAuthToken(config.value.token)
       } else {
         errorMsg.value = res.message
       }

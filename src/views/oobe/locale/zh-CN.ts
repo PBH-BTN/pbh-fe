@@ -11,10 +11,10 @@ export default {
 
   'page.oobe.welcome.title': '欢迎使用 PeerbanHelper!',
   'page.oobe.welcome.description':
-    'PeerbanHelper 是一个 BT 反吸血工具。通过连接到您的下载器的 WebUI，PeerBanHelper 便可以使用这些信息检查并封禁恶意吸血者。在一切开始之前，让我们先进行一些简单配置。',
+    'PeerbanHelper 是一个 BT 反吸血工具。通过连接到您的下载器的 WebUI，PeerBanHelper 使用这些信息检查并封禁恶意吸血者。在一切开始之前，让我们先进行一些简单配置。',
   'page.oobe.setToken.title': '设置 Token',
   'page.oobe.setToken.description':
-    '首先你需要设置一个 Token，这个 Token 可以保护你的 WebUI 不被恶意访问，并保护您的因此。务必确保强度够高。一旦您成功登陆过一次 WebUI，后续浏览器就会记住 Token 并自动登录。',
+    '首先你需要设置一个 Token，这个 Token 可以保护你的 WebUI 不被恶意访问，并保护您的隐私。务必确保强度够高。一旦您成功登陆过一次 WebUI，后续浏览器就会记住 Token 并自动登录。',
   'page.oobe.setToken.generate': '随机生成',
 
   'page.oobe.addDownloader.title': '添加你的第一个下载器',

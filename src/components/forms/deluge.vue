@@ -1,28 +1,15 @@
 <template>
-  <a-form-item
-    field="config.endpoint"
-    :label="t('page.dashboard.editModal.label.endpoint')"
-    validate-trigger="blur"
-    required
-    :rules="urlRules"
-  >
+  <a-form-item field="config.endpoint" :label="t('page.dashboard.editModal.label.endpoint')" validate-trigger="blur"
+    required :rules="urlRules">
     <a-input v-model="config.endpoint" allow-clear></a-input>
   </a-form-item>
-  <a-form-item
-    field="config.password"
-    :label="t('page.dashboard.editModal.label.password')"
-    required
-  >
+  <a-form-item field="config.password" :label="t('page.dashboard.editModal.label.password')" required>
     <a-input v-model="config.password" allow-clear></a-input>
   </a-form-item>
   <a-form-item field="config.rpcUrl" label="RPC URL" required>
     <a-input v-model="config.rpcUrl" allow-clear placeholder="/json"></a-input>
   </a-form-item>
-  <a-form-item
-    field="config.incrementBan"
-    default-checked
-    :label="t('page.dashboard.editModal.label.incrementBan')"
-  >
+  <a-form-item field="config.incrementBan" default-checked :label="t('page.dashboard.editModal.label.incrementBan')">
     <a-switch v-model="config.incrementBan" />
     <template #extra> {{ t('page.dashboard.editModal.label.incrementBan.description') }}</template>
   </a-form-item>
@@ -33,11 +20,7 @@
     </a-radio-group>
     <template #extra>{{ t('page.dashboard.editModal.label.httpVersion.description') }} </template>
   </a-form-item>
-  <a-form-item
-    field="config.verifySsl"
-    default-checked
-    :label="t('page.dashboard.editModal.label.verifySsl')"
-  >
+  <a-form-item field="config.verifySsl" default-checked :label="t('page.dashboard.editModal.label.verifySsl')">
     <a-switch v-model="config.verifySsl" />
   </a-form-item>
 </template>
@@ -51,6 +34,7 @@ const urlRules: FieldRule<string> = {
   type: 'string',
   required: true,
   validator: (value, callback) => {
+    value = config.value.endpoint
     if (!value) return callback('Please input URL')
     if (!value.startsWith('http://') && !value.startsWith('https://')) {
       callback(t('page.dashboard.editModal.label.endpoint.error.invalidSchema'))

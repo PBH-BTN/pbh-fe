@@ -24,7 +24,7 @@
                 <template #subtitle>
                   <a-typography-text style="font-size: 0.8rem">{{
                     t('router.moduleNotEnable.tips')
-                  }}</a-typography-text>
+                    }}</a-typography-text>
                 </template>
 
                 <template #extra>
@@ -54,11 +54,11 @@ import pageHeader from './components/pageHeader.vue'
 import { useI18n } from 'vue-i18n'
 import { ArcoI18nMessages } from './locale'
 import { useEndpointStore, isModuleEnable } from './stores/endpoint'
-import { computed, defineAsyncComponent, ref } from 'vue'
+import { computed, defineAsyncComponent } from 'vue'
 import { useRoute } from 'vue-router'
 
 const endPointStore = useEndpointStore()
-const status = ref("needInit")
+const status = computed(() => endPointStore.status)
 const route = useRoute()
 
 const OOBE = defineAsyncComponent(() => import('@/views/oobe/index.vue'))

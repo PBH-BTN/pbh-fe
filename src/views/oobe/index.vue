@@ -5,15 +5,13 @@
         <a-steps :current="current">
           <a-step v-for="step of steps" v-bind:key="step.title" :description="step.description">{{
             step.title
-          }}</a-step>
+            }}</a-step>
         </a-steps>
-        <div
-          :style="{
-            width: '100%',
-            minHeight: '50vh',
-            textAlign: 'center'
-          }"
-        >
+        <div :style="{
+          width: '100%',
+          minHeight: '50vh',
+          textAlign: 'center'
+        }">
           <component :is="componentList[current - 1]" v-model="initConfig" />
         </div>
         <a-space size="large" style="display: flex; justify-content: center">
@@ -30,7 +28,7 @@
   </a-row>
 </template>
 <script lang="ts" setup>
-import { computed, ref, defineAsyncComponent } from 'vue'
+import { computed, ref, defineAsyncComponent, reactive } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { type InitConfig } from '@/api/model/oobe'
 import type { downloaderConfig } from '@/api/model/downloader'
@@ -55,11 +53,11 @@ const steps = computed(() => [
   }
 ])
 
-const initConfig = ref<InitConfig>({
+const initConfig = reactive<InitConfig>({
   token: '',
   downloaderConfig: {
     name: '',
-    downloaderConfig: {
+    config: {
       basicAuth: {},
       verifySsl: true,
       httpVersion: 'HTTP_1_1'
@@ -84,9 +82,9 @@ const canNext = () => {
     case 1:
       return true
     case 2:
-      return initConfig.value.token.length > 0
+      return initConfig.token.length > 0
     case 3:
-      return initConfig.value.valid
+      return initConfig.valid
     case 4:
       return false
   }

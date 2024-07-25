@@ -8,27 +8,20 @@
         {{ t('page.oobe.addDownloader.description') }}
       </a-typography-paragraph>
     </a-typography>
-    <a-form ref="formRef" :model="config.downloaderConfig" auto-label-width>
-      <a-form-item
-        field="downloaderConfig.type"
-        :label="t('page.dashboard.editModal.label.type')"
-        required
-      >
-        <a-radio-group v-model="config.downloaderConfig.downloaderConfig.type" type="button">
+    <a-form :model="config.downloaderConfig" auto-label-width>
+      <a-form-item field="config.type" :label="t('page.dashboard.editModal.label.type')" required>
+        <a-radio-group v-model="config.downloaderConfig.config.type" type="button">
           <a-radio :value="ClientTypeEnum.qBittorrent">qBittorrent</a-radio>
           <a-radio :value="ClientTypeEnum.Transmission">Transmission</a-radio>
           <a-radio :value="ClientTypeEnum.BiglyBT">BiglyBT</a-radio>
           <a-radio :value="ClientTypeEnum.Deluge">Deluge</a-radio>
         </a-radio-group>
-        <template
-          #extra
-          v-if="config.downloaderConfig.downloaderConfig.type === ClientTypeEnum.BiglyBT"
-        >
+        <template #extra v-if="config.downloaderConfig.config.type === ClientTypeEnum.BiglyBT">
           <i18n-t keypath="page.dashboard.editModal.biglybt">
             <template v-slot:url>
               <a href="https://github.com/PBH-BTN/PBH-Adapter-BiglyBT">{{
                 t('page.dashboard.editModal.biglybt.url')
-              }}</a>
+                }}</a>
             </template>
           </i18n-t>
         </template>
@@ -36,14 +29,11 @@
       <a-form-item field="name" :label="t('page.dashboard.editModal.label.name')" required>
         <a-input v-model="config.downloaderConfig.name" allow-clear />
       </a-form-item>
-      <component
-        :is="formMap[config.downloaderConfig.downloaderConfig.type] as any"
-        v-model="config.downloaderConfig.downloaderConfig"
-      />
-      <a-form-item v-if="config.downloaderConfig.downloaderConfig.type">
+      <component :is="formMap[config.downloaderConfig.config.type] as any" v-model="config.downloaderConfig.config" />
+      <a-form-item v-if="config.downloaderConfig.config.type">
         <a-button :loading="testing" @click="handleTest">{{
           t('page.oobe.addDownloader.test')
-        }}</a-button>
+          }}</a-button>
       </a-form-item>
     </a-form>
   </a-space>
@@ -75,7 +65,7 @@ const handleTest = async () => {
   try {
     const testResult = await TestDownloaderConfig({
       name: config.value.downloaderConfig.name,
-      config: config.value.downloaderConfig.downloaderConfig
+      config: config.value.downloaderConfig.config
     })
     if (!testResult.valid) throw new Error(testResult.message)
   } catch (e: any) {

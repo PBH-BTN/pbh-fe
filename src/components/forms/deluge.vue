@@ -4,7 +4,7 @@
     <a-input v-model="config.endpoint" allow-clear></a-input>
   </a-form-item>
   <a-form-item field="config.password" :label="t('page.dashboard.editModal.label.password')" required>
-    <a-input v-model="config.password" allow-clear></a-input>
+    <a-input-password v-model="config.password" allow-clear></a-input-password>
   </a-form-item>
   <a-form-item field="config.rpcUrl" label="RPC URL" required>
     <a-input v-model="config.rpcUrl" allow-clear placeholder="/json"></a-input>

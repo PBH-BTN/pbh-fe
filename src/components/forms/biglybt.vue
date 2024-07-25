@@ -27,7 +27,6 @@ const urlRules: FieldRule<string> = {
   type: 'string',
   required: true,
   validator: (value, callback) => {
-    value = config.value.endpoint
     if (!value) return callback('Please input URL')
     if (!value.startsWith('http://') && !value.startsWith('https://')) {
       callback(t('page.dashboard.editModal.label.endpoint.error.invalidSchema'))

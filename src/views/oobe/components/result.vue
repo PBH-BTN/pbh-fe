@@ -1,12 +1,7 @@
 <template>
   <a-spin v-if="loading" style="margin-top: 200px" :tip="t('page.oobe.result.initlizing')" />
   <div v-else>
-    <a-result
-      v-if="initSuccess"
-      status="success"
-      :title="t('page.oobe.result.title')"
-      style="margin-top: 200px"
-    >
+    <a-result v-if="initSuccess" status="success" :title="t('page.oobe.result.title')" style="margin-top: 200px">
       <template #subtitle> {{ t('page.oobe.result.description') }} </template>
       <template #extra>
         <a-space>
@@ -14,12 +9,7 @@
         </a-space>
       </template>
     </a-result>
-    <a-result
-      v-else
-      status="error"
-      :title="t('page.oobe.result.title.error')"
-      style="margin-top: 200px"
-    >
+    <a-result v-else status="error" :title="t('page.oobe.result.title.error')" style="margin-top: 200px">
       <template #subtitle> {{ errorMsg }} </template>
       <template #extra>
         <a-space>
@@ -45,7 +35,7 @@ const init = () => {
     token: config.value.token,
     downloader: {
       name: config.value.downloaderConfig.name,
-      config: config.value.downloaderConfig.downloaderConfig
+      config: config.value.downloaderConfig.config
     }
   })
     .then((res) => {

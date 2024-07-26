@@ -10,7 +10,7 @@ importers:
     dependencies:
       '@arco-design/web-vue':
         specifier: ^2.55.3
-        version: 2.55.3(vue@3.4.34(typescript@5.5.3))
+        version: 2.56.0(vue@3.4.34(typescript@5.5.3))
       '@dzangolab/flag-icon-css':
         specifier: ^3.4.5
         version: 3.4.5
@@ -140,8 +140,8 @@ packages:
   '@arco-design/color@0.4.0':
     resolution: {integrity: sha512-s7p9MSwJgHeL8DwcATaXvWT3m2SigKpxx4JA1BGPHL4gfvaQsmQfrLBDpjOJFJuJ2jG2dMt3R3P8Pm9E65q18g==}
 
-  '@arco-design/web-vue@2.55.3':
-    resolution: {integrity: sha512-gOyEPD0XdaeGIOD7+dypY7+vCE18Y2cG+6R1e56oNGPTk3q+Wj1X6iMpBXVAGiKykvH3BpsCEBFxMtJmKXCR5A==}
+  '@arco-design/web-vue@2.56.0':
+    resolution: {integrity: sha512-LsrTE1vL54a/DVQCZ4c2F5LDA1r2mcWF2AHrM+fKEi5hzE63/awZVIOQ6P8yGaYRAP9eqUNj60uNI1Jz0UvGlA==}
     peerDependencies:
       vue: ^3.1.0
 
@@ -2259,6 +2259,17 @@ packages:
       '@vue/composition-api':
         optional: true
 
+  vue-demi@0.14.10:
+    resolution: {integrity: sha512-nMZBOwuzabUO0nLgIcc6rycZEebF6eeUfaiQx9+WSk8e29IbLvPU9feI6tqW4kTo3hvoYAJkMh8n8D0fuISphg==}
+    engines: {node: '>=12'}
+    hasBin: true
+    peerDependencies:
+      '@vue/composition-api': ^1.0.0-rc.1
+      vue: ^3.0.0-0 || ^2.6.0
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
+
   vue-demi@0.14.7:
     resolution: {integrity: sha512-EOG8KXDQNwkJILkx/gPcoL/7vH+hORoBaKgGe+6W7VFMvCYJfmF2dGbvgDroVnI8LU7/kTu8mbjRZGBU1z9NTA==}
     engines: {node: '>=12'}
@@ -2272,17 +2283,6 @@ packages:
 
   vue-demi@0.14.8:
     resolution: {integrity: sha512-Uuqnk9YE9SsWeReYqK2alDI5YzciATE0r2SkA6iMAtuXvNTMNACJLJEXNXaEy94ECuBe4Sk6RzRU80kjdbIo1Q==}
-    engines: {node: '>=12'}
-    hasBin: true
-    peerDependencies:
-      '@vue/composition-api': ^1.0.0-rc.1
-      vue: ^3.0.0-0 || ^2.6.0
-    peerDependenciesMeta:
-      '@vue/composition-api':
-        optional: true
-
-  vue-demi@0.14.9:
-    resolution: {integrity: sha512-dC1TJMODGM8lxhP6wLToncaDPPNB3biVxxRDuNCYpuXwi70ou7NsGd97KVTJ2omepGId429JZt8oaZKeXbqxwg==}
     engines: {node: '>=12'}
     hasBin: true
     peerDependencies:
@@ -2400,7 +2400,7 @@ snapshots:
     dependencies:
       color: 3.2.1
 
-  '@arco-design/web-vue@2.55.3(vue@3.4.34(typescript@5.5.3))':
+  '@arco-design/web-vue@2.56.0(vue@3.4.34(typescript@5.5.3))':
     dependencies:
       '@arco-design/color': 0.4.0
       b-tween: 0.3.3
@@ -4651,15 +4651,15 @@ snapshots:
     dependencies:
       vue: 3.4.34(typescript@5.5.3)
 
+  vue-demi@0.14.10(vue@3.4.34(typescript@5.5.3)):
+    dependencies:
+      vue: 3.4.34(typescript@5.5.3)
+
   vue-demi@0.14.7(vue@3.4.34(typescript@5.5.3)):
     dependencies:
       vue: 3.4.34(typescript@5.5.3)
 
   vue-demi@0.14.8(vue@3.4.34(typescript@5.5.3)):
-    dependencies:
-      vue: 3.4.34(typescript@5.5.3)
-
-  vue-demi@0.14.9(vue@3.4.34(typescript@5.5.3)):
     dependencies:
       vue: 3.4.34(typescript@5.5.3)
 
@@ -4708,7 +4708,7 @@ snapshots:
   vue-request@2.0.4(vue@3.4.34(typescript@5.5.3)):
     dependencies:
       vue: 3.4.34(typescript@5.5.3)
-      vue-demi: 0.14.9(vue@3.4.34(typescript@5.5.3))
+      vue-demi: 0.14.10(vue@3.4.34(typescript@5.5.3))
 
   vue-router@4.4.0(vue@3.4.34(typescript@5.5.3)):
     dependencies:

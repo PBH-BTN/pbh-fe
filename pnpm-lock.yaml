@@ -62,7 +62,7 @@ importers:
         version: 1.4.5
       '@rushstack/eslint-patch':
         specifier: ^1.10.3
-        version: 1.10.3
+        version: 1.10.4
       '@tsconfig/node20':
         specifier: ^20.1.4
         version: 20.1.4
@@ -666,8 +666,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@rushstack/eslint-patch@1.10.3':
-    resolution: {integrity: sha512-qC/xYId4NMebE6w/V33Fh9gWxLgURiNYgVNObbJl2LZv0GUUItCcCqC5axQSwRaAgaxl2mELq1rMzlswaQ0Zxg==}
+  '@rushstack/eslint-patch@1.10.4':
+    resolution: {integrity: sha512-WJgX9nzTqknM393q1QJDJmoW28kUfEnybeTfVNcNAPnIx210RXm2DiXiHzfNPJNIUUb1tJnz/l4QGtJ30PgWmA==}
 
   '@tsconfig/node20@20.1.4':
     resolution: {integrity: sha512-sqgsT69YFeLWf5NtJ4Xq/xAF8p4ZQHlmGW74Nu2tD4+g5fAsposc4ZfaaPixVu4y01BEiDCWLRDCvDM5JOsRxg==}
@@ -2259,6 +2259,17 @@ packages:
       '@vue/composition-api':
         optional: true
 
+  vue-demi@0.14.10:
+    resolution: {integrity: sha512-nMZBOwuzabUO0nLgIcc6rycZEebF6eeUfaiQx9+WSk8e29IbLvPU9feI6tqW4kTo3hvoYAJkMh8n8D0fuISphg==}
+    engines: {node: '>=12'}
+    hasBin: true
+    peerDependencies:
+      '@vue/composition-api': ^1.0.0-rc.1
+      vue: ^3.0.0-0 || ^2.6.0
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
+
   vue-demi@0.14.7:
     resolution: {integrity: sha512-EOG8KXDQNwkJILkx/gPcoL/7vH+hORoBaKgGe+6W7VFMvCYJfmF2dGbvgDroVnI8LU7/kTu8mbjRZGBU1z9NTA==}
     engines: {node: '>=12'}
@@ -2272,17 +2283,6 @@ packages:
 
   vue-demi@0.14.8:
     resolution: {integrity: sha512-Uuqnk9YE9SsWeReYqK2alDI5YzciATE0r2SkA6iMAtuXvNTMNACJLJEXNXaEy94ECuBe4Sk6RzRU80kjdbIo1Q==}
-    engines: {node: '>=12'}
-    hasBin: true
-    peerDependencies:
-      '@vue/composition-api': ^1.0.0-rc.1
-      vue: ^3.0.0-0 || ^2.6.0
-    peerDependenciesMeta:
-      '@vue/composition-api':
-        optional: true
-
-  vue-demi@0.14.9:
-    resolution: {integrity: sha512-dC1TJMODGM8lxhP6wLToncaDPPNB3biVxxRDuNCYpuXwi70ou7NsGd97KVTJ2omepGId429JZt8oaZKeXbqxwg==}
     engines: {node: '>=12'}
     hasBin: true
     peerDependencies:
@@ -2890,7 +2890,7 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.18.1':
     optional: true
 
-  '@rushstack/eslint-patch@1.10.3': {}
+  '@rushstack/eslint-patch@1.10.4': {}
 
   '@tsconfig/node20@20.1.4': {}
 
@@ -4651,15 +4651,15 @@ snapshots:
     dependencies:
       vue: 3.4.34(typescript@5.5.3)
 
+  vue-demi@0.14.10(vue@3.4.34(typescript@5.5.3)):
+    dependencies:
+      vue: 3.4.34(typescript@5.5.3)
+
   vue-demi@0.14.7(vue@3.4.34(typescript@5.5.3)):
     dependencies:
       vue: 3.4.34(typescript@5.5.3)
 
   vue-demi@0.14.8(vue@3.4.34(typescript@5.5.3)):
-    dependencies:
-      vue: 3.4.34(typescript@5.5.3)
-
-  vue-demi@0.14.9(vue@3.4.34(typescript@5.5.3)):
     dependencies:
       vue: 3.4.34(typescript@5.5.3)
 
@@ -4708,7 +4708,7 @@ snapshots:
   vue-request@2.0.4(vue@3.4.34(typescript@5.5.3)):
     dependencies:
       vue: 3.4.34(typescript@5.5.3)
-      vue-demi: 0.14.9(vue@3.4.34(typescript@5.5.3))
+      vue-demi: 0.14.10(vue@3.4.34(typescript@5.5.3))
 
   vue-router@4.4.0(vue@3.4.34(typescript@5.5.3)):
     dependencies:

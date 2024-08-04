@@ -5,13 +5,15 @@
         <a-steps :current="current">
           <a-step v-for="step of steps" v-bind:key="step.title" :description="step.description">{{
             step.title
-            }}</a-step>
+          }}</a-step>
         </a-steps>
-        <div :style="{
-          width: '100%',
-          minHeight: '50vh',
-          textAlign: 'center'
-        }">
+        <div
+          :style="{
+            width: '100%',
+            minHeight: '50vh',
+            textAlign: 'center'
+          }"
+        >
           <component :is="componentList[current - 1]" v-model="initConfig" />
         </div>
         <a-space size="large" style="display: flex; justify-content: center">
@@ -60,7 +62,8 @@ const initConfig = reactive<InitConfig>({
     config: {
       basicAuth: {},
       verifySsl: true,
-      httpVersion: 'HTTP_1_1'
+      httpVersion: 'HTTP_1_1',
+      incrementBan: true
     } as downloaderConfig
   },
   valid: false

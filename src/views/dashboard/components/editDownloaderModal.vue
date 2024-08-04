@@ -58,7 +58,12 @@ const formMap = {
 
 const form = reactive({
   name: '',
-  config: { basicAuth: {}, verifySsl: true, httpVersion: 'HTTP_1_1' } as downloaderConfig
+  config: {
+    basicAuth: {},
+    verifySsl: true,
+    httpVersion: 'HTTP_1_1',
+    incrementBan: true
+  } as downloaderConfig
 })
 const oldName = ref('')
 defineExpose({
@@ -70,7 +75,12 @@ defineExpose({
       form.config = currentConfig.config
     } else {
       form.name = ''
-      form.config = { basicAuth: {}, verifySsl: true, httpVersion: 'HTTP_1_1' } as downloaderConfig
+      form.config = {
+        basicAuth: {},
+        verifySsl: true,
+        httpVersion: 'HTTP_1_1',
+        incrementBan: true
+      } as downloaderConfig
     }
     showModal.value = true
   }

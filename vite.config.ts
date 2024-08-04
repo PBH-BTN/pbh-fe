@@ -43,7 +43,8 @@ export default defineConfig({
         manualChunks: {
           libs: ['pinia', 'vue-request', 'vue-i18n', 'vue-router', 'vue', '@vueuse/core', 'lodash'],
           arcoDesign: ['@arco-design/web-vue'],
-          echarts: ['echarts', 'vue-echarts']
+          echarts: ['echarts', 'vue-echarts'],
+          uuid: ['uuid']
         }
       }
     }

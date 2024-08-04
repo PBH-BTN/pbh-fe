@@ -112,6 +112,7 @@ const handleSearch = (value: string) => {
 const loadMore = async () => {
   if (!data.value) return
   limit.value = data.value.length + step
+  if(loadingMore.value) return
   loadingMore.value = true
   bottom.value = false
   if (data.value.length <= limit.value) {

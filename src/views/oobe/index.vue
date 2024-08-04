@@ -1,16 +1,17 @@
 <template>
-  <a-row justify="center" style="margin-top: 2%">
-    <a-col :span="12">
+  <a-row justify="center" style="margin: 2% auto 0; max-width: 1200px;">
+    <a-col :xl="16" :md="18" :sm="24">
       <a-space direction="vertical" style="display: flex; justify-content: center">
         <a-steps :current="current">
           <a-step v-for="step of steps" v-bind:key="step.title" :description="step.description">{{
             step.title
-            }}</a-step>
+          }}</a-step>
         </a-steps>
         <div :style="{
           width: '100%',
           minHeight: '50vh',
-          textAlign: 'center'
+          textAlign: 'center',
+          position: 'relative',
         }">
           <component :is="componentList[current - 1]" v-model="initConfig" />
         </div>
@@ -27,6 +28,7 @@
     </a-col>
   </a-row>
 </template>
+
 <script lang="ts" setup>
 import { computed, ref, defineAsyncComponent, reactive } from 'vue'
 import { useI18n } from 'vue-i18n'
@@ -60,7 +62,8 @@ const initConfig = reactive<InitConfig>({
     config: {
       basicAuth: {},
       verifySsl: true,
-      httpVersion: 'HTTP_1_1'
+      httpVersion: 'HTTP_1_1',
+      incrementBan: true
     } as downloaderConfig
   },
   valid: false

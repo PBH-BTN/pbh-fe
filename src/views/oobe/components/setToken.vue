@@ -42,8 +42,9 @@ import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 const config = defineModel<InitConfig>({ required: true })
 const generateToken = () => {
-  config.value.token = crypto.randomUUID()
+  config.value.token = uuidFunc()
 }
+const uuidFunc: () => string = crypto.randomUUID ?? (await import('uuid')).v4
 </script>
 <style scoped>
 .generate-btn {

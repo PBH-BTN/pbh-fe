@@ -8,6 +8,7 @@ export default {
   'page.rule_management.ruleSubscribe.column.lastUpdated': '最后更新',
   'page.rule_management.ruleSubscribe.column.notUpdated': '无',
   'page.rule_management.ruleSubscribe.column.status': '启用状态',
+  'page.rule_management.ruleSubscribe.column.clickToCopy': '点击复制',
   'page.rule_management.ruleSubscribe.column.actions': '操作',
   'page.rule_management.ruleSubscribe.column.actions.edit': '编辑',
   'page.rule_management.ruleSubscribe.column.actions.update': '更新',
@@ -26,5 +27,6 @@ export default {
   'page.rule_management.ruleSubscribe.updateLog.updateType': '更新类型',
   'page.rule_management.ruleSubscribe.updateLog.updateType.auto': '自动更新',
   'page.rule_management.ruleSubscribe.updateLog.updateType.manual': '手动更新',
-  'page.rule_management.ruleSubscribe.updateLog.updateType.unknown': '未知'
+  'page.rule_management.ruleSubscribe.updateLog.updateType.unknown': '未知',
+  'page.rule_management.ruleSubscribe.copySuccess': '已复制'
 }

@@ -10,6 +10,7 @@ export default {
   'page.rule_management.ruleSubscribe.column.lastUpdated': 'Last Updated',
   'page.rule_management.ruleSubscribe.column.notUpdated': 'Never',
   'page.rule_management.ruleSubscribe.column.status': 'Enabled',
+  'page.rule_management.ruleSubscribe.column.clickToCopy': 'Copy',
   'page.rule_management.ruleSubscribe.column.actions': 'Actions',
   'page.rule_management.ruleSubscribe.column.actions.edit': 'Edit',
   'page.rule_management.ruleSubscribe.column.actions.update': 'Update',
@@ -27,5 +28,6 @@ export default {
   'page.rule_management.ruleSubscribe.updateLog.updateType': 'Type',
   'page.rule_management.ruleSubscribe.updateLog.updateType.auto': 'Auto',
   'page.rule_management.ruleSubscribe.updateLog.updateType.manual': 'Manual',
-  'page.rule_management.ruleSubscribe.updateLog.updateType.unknown': 'Unknown'
+  'page.rule_management.ruleSubscribe.updateLog.updateType.unknown': 'Unknown',
+  'page.rule_management.ruleSubscribe.copySuccess': 'Copied'
 }

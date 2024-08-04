@@ -33,14 +33,9 @@
         <a-tag :color="getColor(record.ruleId)">{{ record.ruleId }}</a-tag>
       </template>
       <template #url="{ record }">
-        <a-typography-text
-          copyable
-          :ellipsis="{
-            showTooltip: true
-          }"
-        >
-          {{ record.subUrl }}
-        </a-typography-text>
+        <a-button @click="handleCopy(record.subUrl)">{{
+          t('page.rule_management.ruleSubscribe.column.clickToCopy')
+        }}</a-button>
       </template>
       <template #status="{ record }">
         <a-space>
@@ -134,6 +129,7 @@ import { getColor } from '@/utils/color'
 import { Message } from '@arco-design/web-vue'
 import { defineAsyncComponent, ref } from 'vue'
 import AsyncMethod from '@/components/asyncMethod.vue'
+import copy from 'copy-to-clipboard'
 const EditRuleModal = defineAsyncComponent(() => import('./editRuleItemModal.vue'))
 const SettingsModal = defineAsyncComponent(() => import('./settingsModal.vue'))
 const UpdateLog = defineAsyncComponent(() => import('./logModal.vue'))
@@ -210,6 +206,11 @@ const handleUpdateAll = async () => {
   }
   refresh()
   updateAllLoading.value = false
+}
+
+const handleCopy = (text: string) => {
+  copy(text)
+  Message.success(t('page.rule_management.ruleSubscribe.copySuccess'))
 }
 </script>
 <style scoped>

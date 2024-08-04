@@ -11,7 +11,7 @@ import BanList from '@/views/banlist/index.vue'
 import BanLog from '@/views/banlog/index.vue'
 import TopBan from '@/views/top-ban/index.vue'
 import RuleMetric from '@/views/rule-metrics/index.vue'
-import RuleSubscribe from '@/views/rule-subscribe/index.vue'
+import RuleManageMent from '@/views/rule-management/index.vue'
 export const routerOptions: RouteRecordRaw[] = [
   {
     path: '/dashboard',
@@ -38,6 +38,15 @@ export const routerOptions: RouteRecordRaw[] = [
     component: BanLog
   },
   {
+    path: '/rule',
+    name: 'rule_management',
+    meta: {
+      label: 'router.rule_management',
+      disableAutoUpdate: true
+    },
+    component: RuleManageMent
+  },
+  {
     path: '/top',
     name: 'top',
     meta: {
@@ -45,6 +54,7 @@ export const routerOptions: RouteRecordRaw[] = [
     },
     component: TopBan
   },
+
   {
     path: '/metrics',
     name: 'rule_metrics',
@@ -53,18 +63,19 @@ export const routerOptions: RouteRecordRaw[] = [
     },
     component: RuleMetric
   },
-  {
-    path: '/subscribe',
-    name: 'rule_subscribe',
-    meta: {
-      label: 'router.ruleSubscribe',
-      disableAutoUpdate: true,
-      moduleRequire: 'com.ghostchu.peerbanhelper.module.impl.webapi.RuleSubController',
-      documentation:
-        'https://github.com/PBH-BTN/PeerBanHelper/wiki/%E8%A7%84%E5%88%99%E8%AE%A2%E9%98%85%E5%8A%9F%E8%83%BD'
-    },
-    component: RuleSubscribe
-  },
+
+  // {
+  //   path: '/subscribe',
+  //   name: 'rule_subscribe',
+  //   meta: {
+  //     label: 'router.ruleSubscribe',
+  //     disableAutoUpdate: true,
+  //     moduleRequire: 'com.ghostchu.peerbanhelper.module.impl.webapi.RuleSubController',
+  //     documentation:
+  //       'https://github.com/PBH-BTN/PeerBanHelper/wiki/%E8%A7%84%E5%88%99%E8%AE%A2%E9%98%85%E5%8A%9F%E8%83%BD'
+  //   },
+  //   component: RuleSubscribe
+  // },
   {
     path: '/init',
     name: 'init',

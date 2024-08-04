@@ -5,21 +5,21 @@
         <template #icon>
           <icon-plus-circle />
         </template>
-        {{ $t('page.ruleSubscribe.addRule') }}
+        {{ $t('page.rule_management.ruleSubscribe.addRule') }}
       </a-button>
       <a-button-group>
         <a-button :loading="updateAllLoading" @click="handleUpdateAll">
           <template #icon> <icon-refresh /> </template>
-          {{ t('page.ruleSubscribe.updateAll') }}
+          {{ t('page.rule_management.ruleSubscribe.updateAll') }}
         </a-button>
-        <a-tooltip :content="t('page.ruleSubscribe.settingsTips')">
+        <a-tooltip :content="t('page.rule_management.ruleSubscribe.settingsTips')">
           <a-button @click="settingsModal?.showModal">
             <template #icon>
               <icon-settings />
             </template>
           </a-button>
         </a-tooltip>
-        <a-tooltip :content="t('page.ruleSubscribe.updateLog')">
+        <a-tooltip :content="t('page.rule_management.ruleSubscribe.updateLog')">
           <a-button @click="updateLog?.showModal">
             <template #icon>
               <icon-history />
@@ -64,7 +64,7 @@
         <a-typography-text>{{
           record.lastUpdate > 0
             ? d(record.lastUpdate, 'long')
-            : t('page.ruleSubscribe.column.notUpdated')
+            : t('page.rule_management.ruleSubscribe.column.notUpdated')
         }}</a-typography-text>
       </template>
       <template #rulesCount="{ record }">
@@ -72,7 +72,11 @@
       </template>
       <template #action="{ record }">
         <a-space warp>
-          <a-tooltip :content="t('page.ruleSubscribe.column.actions.edit')" position="top" mini>
+          <a-tooltip
+            :content="t('page.rule_management.ruleSubscribe.column.actions.edit')"
+            position="top"
+            mini
+          >
             <a-button class="edit-btn" shape="circle" type="text" @click="() => handleEdit(record)">
               <template #icon>
                 <icon-edit />
@@ -84,7 +88,11 @@
             :async-fn="() => handleRefresh(record.ruleId)"
             v-slot="{ run, loading }"
           >
-            <a-tooltip :content="t('page.ruleSubscribe.column.actions.update')" position="top" mini>
+            <a-tooltip
+              :content="t('page.rule_management.ruleSubscribe.column.actions.update')"
+              position="top"
+              mini
+            >
               <a-button class="edit-btn" shape="circle" type="text" @click="run">
                 <template #icon>
                   <icon-refresh :spin="loading" />
@@ -93,7 +101,7 @@
             </a-tooltip>
           </AsyncMethod>
           <a-popconfirm
-            :content="t('page.ruleSubscribe.column.deleteConfirm')"
+            :content="t('page.rule_management.ruleSubscribe.column.deleteConfirm')"
             type="warning"
             @before-ok="() => handleDelete(record.ruleId)"
           >
@@ -136,7 +144,7 @@ const settingsModal = ref<InstanceType<typeof SettingsModal>>()
 const updateLog = ref<InstanceType<typeof UpdateLog>>()
 const columns = [
   {
-    title: () => t('page.ruleSubscribe.column.status'),
+    title: () => t('page.rule_management.ruleSubscribe.column.status'),
     slotName: 'status'
   },
   {
@@ -144,7 +152,7 @@ const columns = [
     slotName: 'ruleId'
   },
   {
-    title: () => t('page.ruleSubscribe.column.ruleName'),
+    title: () => t('page.rule_management.ruleSubscribe.column.ruleName'),
     dataIndex: 'ruleName'
   },
   {
@@ -153,15 +161,15 @@ const columns = [
   },
 
   {
-    title: () => t('page.ruleSubscribe.column.lastUpdated'),
+    title: () => t('page.rule_management.ruleSubscribe.column.lastUpdated'),
     slotName: 'lastUpdated'
   },
   {
-    title: () => t('page.ruleSubscribe.column.rulesCount'),
+    title: () => t('page.rule_management.ruleSubscribe.column.rulesCount'),
     slotName: 'rulesCount'
   },
   {
-    title: () => t('page.ruleSubscribe.column.actions'),
+    title: () => t('page.rule_management.ruleSubscribe.column.actions'),
     slotName: 'action'
   }
 ]

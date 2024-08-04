@@ -1,7 +1,7 @@
 <template>
   <a-modal
     v-model:visible="showModal"
-    :title="t('page.ruleSubscribe.settingsModal.title')"
+    :title="t('page.rule_management.ruleSubscribe.settingsModal.title')"
     unmountOnClose
     :modal-style="{ width: '35vw' }"
     @before-ok="handleBeforeOk"
@@ -9,7 +9,7 @@
     <a-form :model="form">
       <a-form-item
         field="checkInterval"
-        :label="t('page.ruleSubscribe.settingsModal.checkInterval')"
+        :label="t('page.rule_management.ruleSubscribe.settingsModal.checkInterval')"
       >
         <a-input-number
           v-model="form.checkInterval"

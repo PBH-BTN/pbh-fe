@@ -24,7 +24,7 @@
         </a-tooltip>
         <a-popconfirm
           v-else
-          :content="t('page.ruleSubscribe.column.deleteConfirm')"
+          :content="t('page.rule_management.ruleSubscribe.column.deleteConfirm')"
           type="warning"
           @before-ok="handleDelete"
         >
@@ -86,7 +86,9 @@
             <icon-check-circle-fill v-if="client.lastStatus == ClientStatusEnum.HEALTHY" />
             <icon-close-circle-fill v-if="client.lastStatus == ClientStatusEnum.ERROR" />
             <icon-question-circle-fill v-if="client.lastStatus == ClientStatusEnum.UNKNOWN" />
-            <icon-exclamation-polygon-fill v-if="client.lastStatus == ClientStatusEnum.NEED_TAKE_ACTION" />
+            <icon-exclamation-polygon-fill
+              v-if="client.lastStatus == ClientStatusEnum.NEED_TAKE_ACTION"
+            />
             {{ t(getStatusSafe(client)[1]) }}
           </a-typography-text>
         </a-tooltip>
@@ -144,7 +146,10 @@ const statusMap: Record<ClientStatusEnum, [string, string]> = {
   [ClientStatusEnum.HEALTHY]: ['success', 'page.dashboard.clientStatus.card.status.normal'],
   [ClientStatusEnum.ERROR]: ['warning', 'page.dashboard.clientStatus.card.status.error'],
   [ClientStatusEnum.UNKNOWN]: ['info', 'page.dashboard.clientStatus.card.status.unknown'],
-  [ClientStatusEnum.NEED_TAKE_ACTION]: ['danger', 'page.dashboard.clientStatus.card.status.need_take_action']
+  [ClientStatusEnum.NEED_TAKE_ACTION]: [
+    'danger',
+    'page.dashboard.clientStatus.card.status.need_take_action'
+  ]
 }
 const props = withDefaults(
   defineProps<{

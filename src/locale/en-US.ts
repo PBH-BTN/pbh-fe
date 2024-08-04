@@ -6,8 +6,8 @@ import topBanPageLocale from '@/views/top-ban/locale/en-US'
 import ruleMetricsLocale from '@/views/rule-metrics/locale/en-US'
 import serviceLocale from '@/service/locale/en-US'
 import loginLocale from '@/views/login/locale/en-US'
-import ruleSubscribeLocale from '@/views/rule-subscribe/locale/en-US'
 import oobeLocale from '@/views/oobe/locale/en-US'
+import ruleManageMentLocale from '@/views/rule-management/locale/en-US'
 export default {
   'navbar.action.locale': 'Switch to English',
   'navbar.action.autoUpdate': 'Auto Update',
@@ -25,7 +25,7 @@ export default {
   'router.banlogs': 'Ban Logs',
   'router.topban': 'Top Bans',
   'router.ruleMetrics': 'Rule Metrics',
-  'router.ruleSubscribe': 'Rule Subscription',
+  'router.rule_management': 'Rule Management',
 
   'router.moduleNotEnable': '{moduleName} is not enabled',
   'router.moduleNotEnable.tips': 'Please enable the feature in the configuration file',
@@ -39,6 +39,6 @@ export default {
   ...ruleMetricsLocale,
   ...serviceLocale,
   ...loginLocale,
-  ...ruleSubscribeLocale,
-  ...oobeLocale
+  ...oobeLocale,
+  ...ruleManageMentLocale
 }

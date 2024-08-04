@@ -6,8 +6,8 @@ import topBanPageLocale from '@/views/top-ban/locale/zh-CN'
 import ruleMetricsLocale from '@/views/rule-metrics/locale/zh-CN'
 import serviceLocale from '@/service/locale/zh-CN'
 import loginLocale from '@/views/login/locale/zh-CN'
-import ruleSubscribeLocale from '@/views/rule-subscribe/locale/zh-CN'
 import oobeLocale from '@/views/oobe/locale/zh-CN'
+import ruleManageMentLocale from '@/views/rule-management/locale/zh-CN'
 export default {
   'navbar.action.locale': '切换为中文',
   'navbar.action.autoUpdate': '自动刷新',
@@ -24,7 +24,7 @@ export default {
   'router.banlogs': '封禁日志',
   'router.topban': '最多封禁',
   'router.ruleMetrics': '规则统计',
-  'router.ruleSubscribe': '规则订阅',
+  'router.rule_management': '规则管理',
 
   'router.moduleNotEnable': '{moduleName}功能未启用',
   'router.moduleNotEnable.tips': '请在配置文件中开启相关功能',
@@ -38,6 +38,6 @@ export default {
   ...ruleMetricsLocale,
   ...serviceLocale,
   ...loginLocale,
-  ...ruleSubscribeLocale,
-  ...oobeLocale
+  ...oobeLocale,
+  ...ruleManageMentLocale
 }

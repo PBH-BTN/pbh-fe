@@ -1,7 +1,7 @@
 <template>
   <a-modal
     v-model:visible="showModal"
-    :title="t('page.ruleSubscribe.updateLog')"
+    :title="t('page.rule_management.ruleSubscribe.updateLog')"
     unmountOnClose
     width="auto"
     :modal-style="{ width: '35vw' }"
@@ -34,7 +34,7 @@
           {{
             t(
               updateTypeMap[record.updateType as updateType] ??
-                'page.ruleSubscribe.updateLog.updateType.unknown'
+                'page.rule_management.ruleSubscribe.updateLog.updateType.unknown'
             )
           }}
         </a-tag>
@@ -63,23 +63,23 @@ const columns = [
     slotName: 'ruleId'
   },
   {
-    title: () => t('page.ruleSubscribe.updateLog.updateTime'),
+    title: () => t('page.rule_management.ruleSubscribe.updateLog.updateTime'),
     slotName: 'updateTime'
   },
   {
-    title: () => t('page.ruleSubscribe.updateLog.ruleCount'),
+    title: () => t('page.rule_management.ruleSubscribe.updateLog.ruleCount'),
     dataIndex: 'count'
   },
   {
-    title: () => t('page.ruleSubscribe.updateLog.updateType'),
+    title: () => t('page.rule_management.ruleSubscribe.updateLog.updateType'),
     slotName: 'updateType'
   }
 ]
 const forceLoading = ref(true)
 
 const updateTypeMap = {
-  [updateType.MANUAL]: 'page.ruleSubscribe.updateLog.updateType.manual',
-  [updateType.AUTO]: 'page.ruleSubscribe.updateLog.updateType.auto'
+  [updateType.MANUAL]: 'page.rule_management.ruleSubscribe.updateLog.updateType.manual',
+  [updateType.AUTO]: 'page.rule_management.ruleSubscribe.updateLog.updateType.auto'
 }
 
 const tableLoading = computed(() => {

@@ -1,7 +1,12 @@
 <template>
-  <a-spin v-if="loading" style="margin-top: 200px" :tip="t('page.oobe.result.initlizing')" />
+  <a-spin v-if="loading" class="center" :tip="t('page.oobe.result.initlizing')" />
   <div v-else>
-    <a-result v-if="initSuccess" status="success" :title="t('page.oobe.result.title')" style="margin-top: 200px">
+    <a-result
+      v-if="initSuccess"
+      status="success"
+      :title="t('page.oobe.result.title')"
+      class="center"
+    >
       <template #subtitle> {{ t('page.oobe.result.description') }} </template>
       <template #extra>
         <a-space>
@@ -9,7 +14,7 @@
         </a-space>
       </template>
     </a-result>
-    <a-result v-else status="error" :title="t('page.oobe.result.title.error')" style="margin-top: 200px">
+    <a-result v-else status="error" :title="t('page.oobe.result.title.error')" class="center">
       <template #subtitle> {{ errorMsg }} </template>
       <template #extra>
         <a-space>
@@ -56,3 +61,12 @@ const init = () => {
 }
 init()
 </script>
+
+<style lang="less" scoped>
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+</style>

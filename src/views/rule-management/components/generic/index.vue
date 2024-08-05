@@ -7,13 +7,112 @@
         })
       }}
     </a-typography-text>
+    <a-space class="align-right" fill>
+      <a-button type="primary" @click="handleAddOne">
+        <template #icon>
+          <icon-plus-circle />
+        </template>
+        {{ $t('page.rule_management.generic.addOne') }}
+      </a-button>
+    </a-space>
+    <a-table :columns="columns" :data="dataSource" :loading="loading">
+      <template #data="{ record, rowIndex }">
+        <a-space v-if="!record.editing" style="display: flex;justify-content: space-between;" fill>
+          <a-typography-text>{{ record.data }}</a-typography-text>
+          <a-space>
+            <a-button class="edit-btn" shape="circle" type="text" @click="record.editing = !record.editing">
+              <template #icon>
+                <icon-edit />
+              </template>
+            </a-button>
+            <a-button class="edit-btn" shape="circle" status="danger" type="text" @click="record.editing = false">
+              <template #icon>
+                <icon-delete />
+              </template>
+            </a-button>
+          </a-space>
+        </a-space>
+        <a-space v-else style="display: flex;justify-content: space-between;" fill>
+          <a-input style="max-width: 100px;" v-model="record.data" />
+          <a-space>
+            <a-button class="edit-btn" shape="circle" type="text" status="success" @click="handleSubmit(rowIndex)">
+              <template #icon>
+                <icon-check />
+              </template>
+            </a-button>
+            <a-button class="edit-btn" shape="circle" status="danger" type="text"
+              @click="dataSource.splice(rowIndex, 1)">
+              <template #icon>
+                <icon-close />
+              </template>
+            </a-button>
+          </a-space>
+        </a-space>
+      </template>
+    </a-table>
   </a-space>
 </template>
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n'
 import { type ruleType } from '@/api/model/blacklist'
+import { useRequest } from 'vue-request';
+import { getBlackList } from '@/service/blacklist';
+import { reactive, type Reactive } from 'vue';
 const { t } = useI18n()
 const { type } = defineProps<{
   type: ruleType
 }>()
+type dataSourceItem<T extends ruleType> = {
+  data: T extends 'port' | 'asn' ? number : string;
+  editing: boolean;
+}
+const dataSource = reactive([
+  {
+    data: "1.2.3.4",
+    editing: false
+  },
+  {
+    data: "1.2.3.4",
+    editing: false
+  },
+  {
+    data: "1.2.3.4",
+    editing: false
+  }
+]) as Reactive<dataSourceItem<typeof type>[]>
+const columns = [
+  {
+    title: () => t('page.rule_management.' + type),
+    slotName: 'data',
+  }
+]
+const { loading } = useRequest(getBlackList, {
+  defaultParams: [type],
+  onSuccess: (data) => {
+    dataSource.push(...data[type].map((item) => ({
+      data: item,
+      editing: false,
+    })))
+  }
+})
+const handleAddOne = () => {
+  dataSource.unshift({
+    data: '',
+    editing: true,
+  })
+}
+const handleSubmit = (index: number) => {
+
+}
 </script>
+<style scoped>
+.edit-btn {
+  color: rgb(var(--gray-8));
+  font-size: 16px;
+}
+
+.align-right {
+  display: flex;
+  justify-content: flex-end;
+}
+</style>

@@ -41,7 +41,7 @@
               </template>
             </a-button>
             <a-button class="edit-btn" shape="circle" status="danger" type="text"
-              @click="dataSource.splice(rowIndex, 1)">
+              @click="record.isNew ? dataSource.splice(rowIndex, 1) : (record.data = record.oldData, record.editing = false)">
               <template #icon>
                 <icon-close />
               </template>
@@ -64,21 +64,29 @@ const { type } = defineProps<{
 }>()
 type dataSourceItem<T extends ruleType> = {
   data: T extends 'port' | 'asn' ? number : string;
+  oldData: T extends 'port' | 'asn' ? number : string;
   editing: boolean;
+  isNew: boolean;
 }
 const dataSource = reactive([
   {
     data: "1.2.3.4",
-    editing: false
+    oldData: "1.2.3.4",
+    editing: false,
+    isNew: false
   },
   {
     data: "1.2.3.4",
-    editing: false
+    oldData: "1.2.3.4",
+    editing: false,
+    isNew: false
   },
   {
     data: "1.2.3.4",
-    editing: false
-  }
+    oldData: "1.2.3.4",
+    editing: false,
+    isNew: false
+  },
 ]) as Reactive<dataSourceItem<typeof type>[]>
 const columns = [
   {
@@ -91,14 +99,18 @@ const { loading } = useRequest(getBlackList, {
   onSuccess: (data) => {
     dataSource.push(...data[type].map((item) => ({
       data: item,
+      oldData: item,
       editing: false,
+      isNew: false
     })))
   }
 })
 const handleAddOne = () => {
   dataSource.unshift({
     data: '',
+    oldData: '',
     editing: true,
+    isNew: true
   })
 }
 const handleSubmit = (index: number) => {

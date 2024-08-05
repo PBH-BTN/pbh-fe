@@ -35,17 +35,20 @@
         <a-space v-else style="display: flex;justify-content: space-between;" fill>
           <a-input style="max-width: 100px;" v-model="record.data" />
           <a-space>
-            <a-button class="edit-btn" shape="circle" type="text" status="success" @click="handleSubmit(rowIndex)">
-              <template #icon>
-                <icon-check />
-              </template>
-            </a-button>
-            <a-button class="edit-btn" shape="circle" status="danger" type="text"
-              @click="record.isNew ? dataSource.splice(rowIndex, 1) : (record.data = record.oldData, record.editing = false)">
-              <template #icon>
-                <icon-close />
-              </template>
-            </a-button>
+            <AsyncMethod once :async-fn="() => handleSubmit(rowIndex)" v-slot="{ run, loading }">
+              <a-button class="edit-btn" shape="circle" type="text" status="success" @click="run">
+                <template #icon>
+                  <icon-refresh v-if="loading" :spin="loading" />
+                  <icon-check v-else />
+                </template>
+              </a-button>
+              <a-button class="edit-btn" shape="circle" status="danger" type="text" :disabled="loading"
+                @click="record.isNew ? dataSource.splice(rowIndex, 1) : (record.data = record.oldData, record.editing = false)">
+                <template #icon>
+                  <icon-close />
+                </template>
+              </a-button>
+            </AsyncMethod>
           </a-space>
         </a-space>
       </template>
@@ -57,6 +60,7 @@ import { useI18n } from 'vue-i18n'
 import { type ruleType } from '@/api/model/blacklist'
 import { useRequest } from 'vue-request';
 import { getBlackList } from '@/service/blacklist';
+import AsyncMethod from '@/components/asyncMethod.vue'
 import { reactive, type Reactive } from 'vue';
 const { t } = useI18n()
 const { type } = defineProps<{
@@ -113,8 +117,7 @@ const handleAddOne = () => {
     isNew: true
   })
 }
-const handleSubmit = (index: number) => {
-
+const handleSubmit = async (index: number) => {
   dataSource[index].editing = false
   dataSource[index].isNew = false
 }

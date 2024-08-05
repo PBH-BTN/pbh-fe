@@ -115,6 +115,8 @@ const handleAddOne = () => {
 }
 const handleSubmit = (index: number) => {
 
+  dataSource[index].editing = false
+  dataSource[index].isNew = false
 }
 </script>
 <style scoped>

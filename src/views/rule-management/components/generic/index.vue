@@ -11,8 +11,9 @@
 </template>
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n'
+import { type ruleType } from '@/api/model/blacklist'
 const { t } = useI18n()
 const { type } = defineProps<{
-  type: 'asn' | 'ip' | 'port' | 'region'
+  type: ruleType
 }>()
 </script>

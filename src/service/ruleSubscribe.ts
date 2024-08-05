@@ -116,8 +116,10 @@ export async function UpdateAll() {
   await endpointStore.serverAvailable
 
   const url = new URL(urlJoin(endpointStore.endpoint, `/api/sub/rules/update`), location.href)
+  const header = getCommonHeader()
+  header.set('X-Audit', 'Rule deletion')
   return fetch(url, {
-    headers: { ...getCommonHeader(), 'X-Audit': 'Rule deletion' },
+    headers: header,
     method: 'POST'
   }).then((res) => {
     endpointStore.assertResponseLogin(res)

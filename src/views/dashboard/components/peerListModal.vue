@@ -1,27 +1,11 @@
 <template>
-  <a-modal
-    hide-cancel
-    closable
-    v-model:visible="visible"
-    @ok="handleOk"
-    fullscreen
-    width="auto"
-    @close="cancel()"
-  >
+  <a-modal hide-cancel closable v-model:visible="visible" @ok="handleOk" fullscreen width="auto" @close="cancel()">
     <template #title> {{ t('page.dashboard.peerList.title') + tname }} </template>
-    <a-table
-      :columns="columns"
-      :data="data"
-      :loading="!loading && !data"
-      :virtual-list-props="{ height: 850 }"
-      :pagination="false"
-    >
+    <a-table :columns="columns" :data="data?.data" :loading="!loading && !data" :virtual-list-props="{ height: 850 }"
+      :pagination="false">
       <template #peerAddress="{ record }">
         <a-typography-text copyable code>
-          <countryFlag
-            v-if="record.geo && record.geo.countryRegion"
-            :iso="record.geo.countryRegion"
-          />
+          <countryFlag v-if="record.geo && record.geo.countryRegion" :iso="record.geo.countryRegion" />
           {{ record.peer.address.ip }}
         </a-typography-text>
       </template>
@@ -42,14 +26,10 @@
       <template #uploadDownload="{ record }">
         <a-space fill style="justify-content: space-between">
           <a-space fill direction="vertical">
-            <a-typography-text
-              ><icon-arrow-up class="green" />
-              {{ formatFileSize(record.peer.uploaded) }}</a-typography-text
-            >
-            <a-typography-text
-              ><icon-arrow-down class="red" />
-              {{ formatFileSize(record.peer.downloaded) }}</a-typography-text
-            >
+            <a-typography-text><icon-arrow-up class="green" />
+              {{ formatFileSize(record.peer.uploaded) }}</a-typography-text>
+            <a-typography-text><icon-arrow-down class="red" />
+              {{ formatFileSize(record.peer.downloaded) }}</a-typography-text>
           </a-space>
         </a-space>
       </template>
@@ -160,6 +140,7 @@ const parseFlags = (flags: string) =>
 .red {
   color: rgb(var(--red-5));
 }
+
 .green {
   color: rgb(var(--green-5));
 }

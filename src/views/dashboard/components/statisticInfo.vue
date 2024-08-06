@@ -3,54 +3,31 @@
     <a-card :title="t('page.dashboard.statics.currentStatus')" hoverable>
       <a-grid :cols="24" :row-gap="16" class="panel">
         <a-grid-item class="panel-col" :span="{ xs: 12, sm: 12, md: 6 }">
-          <a-statistic
-            :title="t('page.dashboard.statics.checked')"
-            :value="current?.checkCounter"
-            :value-from="previous.checkCounter"
-            animation
-            show-group-separator
-          >
+          <a-statistic :title="t('page.dashboard.statics.checked')" :value="current?.checkCounter"
+            :value-from="previous.checkCounter" animation show-group-separator>
             <template #suffix>
-              <a-typography-text
-                >&nbsp;{{ t('page.dashboard.statics.times') }}
-              </a-typography-text></template
-            >
+              <a-typography-text>&nbsp;{{ t('page.dashboard.statics.times') }}
+              </a-typography-text></template>
           </a-statistic>
         </a-grid-item>
         <a-grid-item class="panel-col" :span="{ xs: 12, sm: 12, md: 6 }">
-          <a-statistic
-            :title="t('page.dashboard.statics.banPeer')"
-            :value="current?.peerBanCounter"
-            :value-from="previous.peerBanCounter"
-            animation
-            show-group-separator
-          >
-            <template #suffix
-              ><a-typography-text>&nbsp;{{ t('page.dashboard.statics.times') }} </a-typography-text>
+          <a-statistic :title="t('page.dashboard.statics.banPeer')" :value="current?.peerBanCounter"
+            :value-from="previous.peerBanCounter" animation show-group-separator>
+            <template #suffix><a-typography-text>&nbsp;{{ t('page.dashboard.statics.times') }} </a-typography-text>
             </template>
           </a-statistic>
         </a-grid-item>
         <a-grid-item class="panel-col" :span="{ xs: 12, sm: 12, md: 6 }">
-          <a-statistic
-            :title="t('page.dashboard.statics.unbanPeer')"
-            :value="current?.peerUnbanCounter"
-            :value-from="previous.peerUnbanCounter"
-            animation
-            show-group-separator
-          >
+          <a-statistic :title="t('page.dashboard.statics.unbanPeer')" :value="current?.peerUnbanCounter"
+            :value-from="previous.peerUnbanCounter" animation show-group-separator>
             <template #suffix>
               <a-typography-text>&nbsp;{{ t('page.dashboard.statics.times') }} </a-typography-text>
             </template>
           </a-statistic>
         </a-grid-item>
         <a-grid-item class="panel-col" :span="{ xs: 12, sm: 12, md: 6 }">
-          <a-statistic
-            :title="t('page.dashboard.statics.currentBanIps')"
-            :value="current?.bannedIpCounter"
-            :value-from="previous.bannedIpCounter"
-            animation
-            show-group-separator
-          >
+          <a-statistic :title="t('page.dashboard.statics.currentBanIps')" :value="current?.bannedIpCounter"
+            :value-from="previous.bannedIpCounter" animation show-group-separator>
             <template #suffix>
               <a-typography-text>&nbsp;{{ t('page.dashboard.statics.number') }} </a-typography-text>
             </template>
@@ -84,7 +61,7 @@ const { refresh } = useRequest(getStatistic, {
   pollingInterval: computed(() => autoUpdateState.pollingInterval),
   onSuccess: (data) => {
     const tempPrevious = current.value
-    current.value = data // 先刷新
+    current.value = data.data // 先刷新
     if (!isEqual(data, tempPrevious)) previous.value = tempPrevious
     autoUpdateState.renewLastUpdate()
   },

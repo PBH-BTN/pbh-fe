@@ -3,6 +3,7 @@ import urlJoin from 'url-join'
 import { getCommonHeader } from './utils'
 import { Octokit } from '@octokit/core'
 import type { mainfest } from '@/api/model/manifest'
+import type { CommonResponse } from '@/api/model/common'
 export class GetManifestError extends Error {
   static name = 'GetManifestError' as const
   name = GetManifestError.name
@@ -43,6 +44,7 @@ export function getManifest(endpoint = useEndpointStore().endpoint): Promise<mai
           throw new GetManifestError('service.manifest.parseError')
         })
       )
+      .then((res: CommonResponse<mainfest>) => res.data)
       // 后续可以添加后端版本的校验和提醒
       .then((res: mainfest) => {
         if (!Array.isArray(res.modules) || typeof res.version !== 'object') {

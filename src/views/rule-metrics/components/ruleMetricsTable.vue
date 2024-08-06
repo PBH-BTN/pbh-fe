@@ -1,16 +1,9 @@
 <template>
-  <a-table
-    :columns="columns"
-    :data="data?.data"
-    size="large"
-    :loading="loading"
-    column-resizable
-    filter-icon-align-left
-    :pagination="{ showPageSize: true, baseSize: 4, bufferSize: 1 }"
-  >
+  <a-table :columns="columns" :data="data?.data.data" size="large" :loading="loading" column-resizable
+    filter-icon-align-left :pagination="{ showPageSize: true, baseSize: 4, bufferSize: 1 }">
     <template #empty> <a-empty /> </template>
     <template #type="{ record }">
-      <a-tag :color="getTagColor(record.type)">{{ data?.dict[record.type] ?? record.type }}</a-tag>
+      <a-tag :color="getTagColor(record.type)">{{ data?.data.dict[record.type] ?? record.type }}</a-tag>
     </template>
     <template #ruleName="{ record }">
       <a-typography-text code>
@@ -20,15 +13,9 @@
     <template #hit-filter="{ filterValue, handleFilterConfirm, handleFilterReset }">
       <div class="search-box">
         <a-space>
-          <a-switch
-            v-model="filterValue[0]"
-            checked-value="yes"
-            unchecked-value="no"
-            @change="
-              (value: string | number | boolean) =>
-                value === 'yes' ? handleFilterConfirm() : handleFilterReset()
-            "
-          />
+          <a-switch v-model="filterValue[0]" checked-value="yes" unchecked-value="no" @change="(value: string | number | boolean) =>
+              value === 'yes' ? handleFilterConfirm() : handleFilterReset()
+            " />
           <a-typography-text>{{ t('page.ruleMetrices.metricsTable.filter') }}</a-typography-text>
         </a-space>
       </div>
@@ -55,7 +42,7 @@ const { data, refresh, loading } = useRequest(getRuleStatic, {
 })
 
 const getTagColor = (value: string): string => {
-  if (!data.value?.dict[value]) {
+  if (!data.value?.data.dict[value]) {
     return 'gray'
   }
   return getColor(value)

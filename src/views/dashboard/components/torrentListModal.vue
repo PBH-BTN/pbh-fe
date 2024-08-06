@@ -1,20 +1,8 @@
 <template>
-  <a-modal
-    hide-cancel
-    closable
-    v-model:visible="visible"
-    @ok="handleOk"
-    draggable
-    width="auto"
-    @close="cancel()"
-  >
+  <a-modal hide-cancel closable v-model:visible="visible" @ok="handleOk" draggable width="auto" @close="cancel()">
     <template #title> {{ t('page.dashboard.torrentList.title') }} </template>
-    <a-table
-      :columns="columns"
-      :data="data"
-      :loading="!loading && !data"
-      :pagination="{ pageSize: 5, baseSize: 4, bufferSize: 1 }"
-    >
+    <a-table :columns="columns" :data="data?.data" :loading="!loading && !data"
+      :pagination="{ pageSize: 5, baseSize: 4, bufferSize: 1 }">
       <template #name="{ record }">
         <a-typography-text bold style="margin-bottom: 0" :ellipsis="{ showTooltip: true }">
           {{ record.name }}
@@ -37,14 +25,10 @@
       <template #speed="{ record }">
         <a-space fill style="justify-content: space-between">
           <a-space fill direction="vertical">
-            <a-typography-text
-              ><icon-arrow-up class="green" />
-              {{ formatFileSize(record.rtUploadSpeed) }}/s</a-typography-text
-            >
-            <a-typography-text
-              ><icon-arrow-down class="red" />
-              {{ formatFileSize(record.rtDownloadSpeed) }}/s</a-typography-text
-            >
+            <a-typography-text><icon-arrow-up class="green" />
+              {{ formatFileSize(record.rtUploadSpeed) }}/s</a-typography-text>
+            <a-typography-text><icon-arrow-down class="red" />
+              {{ formatFileSize(record.rtDownloadSpeed) }}/s</a-typography-text>
           </a-space>
         </a-space>
       </template>
@@ -116,6 +100,7 @@ const columns = [
 .red {
   color: rgb(var(--red-5));
 }
+
 .green {
   color: rgb(var(--green-5));
 }

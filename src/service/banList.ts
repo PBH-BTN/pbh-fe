@@ -1,9 +1,13 @@
 import { type BanList, type UnbanResult } from '@/api/model/banlist'
 import { useEndpointStore } from '@/stores/endpoint'
+import { type CommonResponse } from '@/api/model/common'
 import urlJoin from 'url-join'
 import { getCommonHeader } from './utils'
 
-export async function getBanList(limit: number, lastBanTime?: number): Promise<BanList[]> {
+export async function getBanList(
+  limit: number,
+  lastBanTime?: number
+): Promise<CommonResponse<BanList[]>> {
   const endpointStore = useEndpointStore()
   await endpointStore.serverAvailable
 
@@ -20,7 +24,7 @@ export async function getBanList(limit: number, lastBanTime?: number): Promise<B
   })
 }
 
-export async function unbanIP(ip: string): Promise<UnbanResult> {
+export async function unbanIP(ip: string): Promise<CommonResponse<UnbanResult>> {
   const endpointStore = useEndpointStore()
   await endpointStore.serverAvailable
   const url = new URL(urlJoin(endpointStore.endpoint, 'api/bans'), location.href)

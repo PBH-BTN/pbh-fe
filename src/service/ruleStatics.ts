@@ -5,7 +5,7 @@ import { getCommonHeader } from './utils'
 import type { AnalysisField, TimeStatisticItem } from '@/api/model/statistic'
 import type { CommonResponse } from '@/api/model/common'
 
-export async function getRuleStatic(): Promise<GetRuleMetricsResponse> {
+export async function getRuleStatic(): Promise<CommonResponse<GetRuleMetricsResponse>> {
   const endpointStore = useEndpointStore()
   await endpointStore.serverAvailable
 

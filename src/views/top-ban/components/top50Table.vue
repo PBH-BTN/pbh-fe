@@ -1,25 +1,12 @@
 <template>
-  <a-table
-    stripe
-    sticky-header
-    :columns="columns"
-    :data="data"
-    column-resizable
-    :loading="loading"
-    :pagination="{ showPageSize: true, baseSize: 4, bufferSize: 1 }"
-    filter-icon-align-left
-  >
+  <a-table stripe sticky-header :columns="columns" :data="data?.data" column-resizable :loading="loading"
+    :pagination="{ showPageSize: true, baseSize: 4, bufferSize: 1 }" filter-icon-align-left>
     <template #ip-filter="{ filterValue, setFilterValue, handleFilterConfirm, handleFilterReset }">
       <div class="search-box">
         <a-space direction="vertical">
-          <a-input-search
-            :model-value="filterValue[0]"
-            :placeholder="t('page.topban.top50Table.searchPlaceholder')"
-            allow-clear
-            @search="handleFilterConfirm"
-            @clear="handleFilterReset"
-            @input="(value: string) => setFilterValue([value])"
-          />
+          <a-input-search :model-value="filterValue[0]" :placeholder="t('page.topban.top50Table.searchPlaceholder')"
+            allow-clear @search="handleFilterConfirm" @clear="handleFilterReset"
+            @input="(value: string) => setFilterValue([value])" />
         </a-space>
       </div>
     </template>

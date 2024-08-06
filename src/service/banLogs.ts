@@ -23,7 +23,7 @@ export async function getBanlogs(params: { pageIndex: number; pageSize?: number 
     .then((res) => {
       endpointStore.assertResponseLogin(res)
       return {
-        ...res,
+        ...res.data,
         pageIndex: res.pageIndex + 1
       }
     })

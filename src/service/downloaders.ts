@@ -10,9 +10,9 @@ import type { Statistic } from '@/api/model/statistic'
 import { useEndpointStore } from '@/stores/endpoint'
 import urlJoin from 'url-join'
 import { getCommonHeader } from './utils'
-import type { CommonResponseWithoutData } from '@/api/model/common'
+import type { CommonResponse, CommonResponseWithoutData } from '@/api/model/common'
 
-export async function getClientStatus(name: string): Promise<ClientStatus> {
+export async function getClientStatus(name: string): Promise<CommonResponse<ClientStatus>> {
   const endpointStore = useEndpointStore()
   await endpointStore.serverAvailable
   const url = new URL(
@@ -25,7 +25,7 @@ export async function getClientStatus(name: string): Promise<ClientStatus> {
   })
 }
 
-export async function getStatistic(): Promise<Statistic> {
+export async function getStatistic(): Promise<CommonResponse<Statistic>> {
   const endpointStore = useEndpointStore()
   await endpointStore.serverAvailable
 
@@ -36,7 +36,7 @@ export async function getStatistic(): Promise<Statistic> {
   })
 }
 
-export async function getDownloaders(): Promise<Downloader[]> {
+export async function getDownloaders(): Promise<CommonResponse<Downloader[]>> {
   const endpointStore = useEndpointStore()
   await endpointStore.serverAvailable
 
@@ -47,7 +47,7 @@ export async function getDownloaders(): Promise<Downloader[]> {
   })
 }
 
-export async function getTorrents(downloader: string): Promise<Torrent[]> {
+export async function getTorrents(downloader: string): Promise<CommonResponse<Torrent[]>> {
   const endpointStore = useEndpointStore()
   await endpointStore.serverAvailable
   const url = new URL(
@@ -115,7 +115,10 @@ export async function DeleteDownloader(name: string): Promise<CommonResponseWith
   })
 }
 
-export async function getPeer(downloader: string, torrentId: string): Promise<PeerInfo[]> {
+export async function getPeer(
+  downloader: string,
+  torrentId: string
+): Promise<CommonResponse<PeerInfo[]>> {
   const endpointStore = useEndpointStore()
   await endpointStore.serverAvailable
   const url = new URL(

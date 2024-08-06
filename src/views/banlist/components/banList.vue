@@ -4,27 +4,14 @@
     <br />
     <a-space class="list-header" wrap>
       <a-typography-text>{{ t('page.banlist.banlist.description') }}</a-typography-text>
-      <a-input-search
-        :style="{ width: '250px' }"
-        :placeholder="t('page.banlist.banlist.searchPlaceHolder')"
-        @search="handleSearch"
-        allow-clear
-        search-button
-      />
+      <a-input-search :style="{ width: '250px' }" :placeholder="t('page.banlist.banlist.searchPlaceHolder')"
+        @search="handleSearch" allow-clear search-button />
     </a-space>
-    <a-list
-      :virtualListProps="{
-        height: virtualListHeight
-      }"
-      ref="banlist"
-      @reach-bottom="loadMore"
-      :scrollbar="false"
-      :data="list"
-    >
+    <a-list :virtualListProps="{
+      height: virtualListHeight
+    }" ref="banlist" @reach-bottom="loadMore" :scrollbar="false" :data="list">
       <template #item="{ item, index }">
-        <a-list-item
-          :style="{ marginBottom: index === list.length - 1 && loadingMore ? '50px' : undefined }"
-        >
+        <a-list-item :style="{ marginBottom: index === list.length - 1 && loadingMore ? '50px' : undefined }">
           <banListItem :item="item" @unban="refresh()" />
         </a-list-item>
       </template>
@@ -33,7 +20,7 @@
         <div style="position: absolute; transform: translateY(-50%)" v-if="loadingMore">
           <a-typography-text v-if="bottom">{{
             t('page.banlist.banlist.bottomReached')
-          }}</a-typography-text>
+            }}</a-typography-text>
           <a-spin v-else />
         </div>
       </template>
@@ -67,7 +54,7 @@ let firstGet = true
 async function getMoreBanList(): Promise<BanList[]> {
   if (firstGet || !data.value) {
     firstGet = false
-    return getBanList(step)
+    return (await getBanList(step)).data
   }
   if (data.value.length > limit.value - step) {
     // refresh the new data
@@ -75,7 +62,7 @@ async function getMoreBanList(): Promise<BanList[]> {
     let match = false
     // load more data until the limit or get the same data with the top one
     while (newData.length < limit.value && !match) {
-      const moreData = await getBanList(step, newData[newData.length - 1]?.banMetadata.banAt)
+      const moreData = await (await getBanList(step, newData[newData.length - 1]?.banMetadata.banAt)).data
       for (const item of moreData) {
         if (item.banMetadata.randomId !== data.value[0].banMetadata.randomId) {
           newData.push(item)
@@ -112,16 +99,16 @@ const handleSearch = (value: string) => {
 const loadMore = async () => {
   if (!data.value) return
   limit.value = data.value.length + step
-  if(loadingMore.value) return
+  if (loadingMore.value) return
   loadingMore.value = true
   bottom.value = false
   if (data.value.length <= limit.value) {
     const newData: BanList[] = []
     while (newData.length + data.value.length < limit.value && !bottom.value) {
-      const moreData = await getBanList(
+      const moreData = (await getBanList(
         step,
         (newData[newData.length - 1] || data.value[data.value.length - 1])?.banMetadata.banAt
-      )
+      )).data
       if (moreData.length < step) {
         bottom.value = true
       }
@@ -166,6 +153,7 @@ const virtualListHeight = computed(() => Math.min(virtualListMaxHeight.value, he
   display: flex;
   justify-content: space-between;
 }
+
 a {
   color: var(--color-text-1);
   text-decoration: none;

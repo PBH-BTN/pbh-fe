@@ -3,7 +3,6 @@ import type {
   CreateDownloadRequest,
   Downloader,
   PeerInfo,
-  TestDownloaderResponse,
   Torrent
 } from '@/api/model/downloader'
 import type { Statistic } from '@/api/model/statistic'
@@ -93,7 +92,7 @@ export async function UpdateDownloader(
 
 export async function TestDownloaderConfig(
   req: CreateDownloadRequest
-): Promise<TestDownloaderResponse> {
+): Promise<CommonResponseWithoutData> {
   const endpointStore = useEndpointStore()
   await endpointStore.serverAvailable
   const url = new URL(urlJoin(endpointStore.endpoint, `/api/downloaders/test`), location.href)

@@ -21,7 +21,7 @@
             <template v-slot:url>
               <a href="https://github.com/PBH-BTN/PBH-Adapter-BiglyBT">{{
                 t('page.dashboard.editModal.biglybt.url')
-                }}</a>
+              }}</a>
             </template>
           </i18n-t>
         </template>
@@ -33,7 +33,7 @@
       <a-form-item v-if="config.downloaderConfig.config.type">
         <a-button :loading="testing" @click="handleTest">{{
           t('page.oobe.addDownloader.test')
-          }}</a-button>
+        }}</a-button>
       </a-form-item>
     </a-form>
   </a-space>
@@ -67,7 +67,7 @@ const handleTest = async () => {
       name: config.value.downloaderConfig.name,
       config: config.value.downloaderConfig.config
     })
-    if (!testResult.valid) throw new Error(testResult.message)
+    if (!testResult.success) throw new Error(testResult.message)
   } catch (e: any) {
     Message.error(e.message)
     return false

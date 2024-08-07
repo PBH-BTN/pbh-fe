@@ -160,13 +160,12 @@ interface Peer {
 /**
  * Peer Flags
  */
-interface PeerFlags{
-  bitset: number; 
+interface PeerFlags {
+  bitset: number
   /**
    * 标准 libTorrent 标志，不管下载器原始 Flags 如何，PBH 总是将其转换为 LT 的 Flags
    */
-  ltStdString: string;
-
+  ltStdString: string
 }
 
 /**
@@ -264,9 +263,4 @@ export interface delugeConfig {
 export interface CreateDownloadRequest {
   name: string
   config: downloaderConfig
-}
-
-export interface TestDownloaderResponse {
-  valid: boolean
-  message: string
 }

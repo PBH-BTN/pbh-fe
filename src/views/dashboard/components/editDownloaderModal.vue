@@ -14,7 +14,7 @@
             <template v-slot:url>
               <a href="https://github.com/PBH-BTN/PBH-Adapter-BiglyBT">{{
                 t('page.dashboard.editModal.biglybt.url')
-              }}</a>
+                }}</a>
             </template>
           </i18n-t>
         </template>
@@ -90,7 +90,7 @@ const handleBeforeOk = async () => {
   }
   try {
     const testResult = await TestDownloaderConfig(form)
-    if (!testResult.valid) throw new Error(testResult.message)
+    if (!testResult.success) throw new Error(testResult.message)
     const result = newItem.value
       ? await CreateDownloader(form)
       : await UpdateDownloader(oldName.value, form)

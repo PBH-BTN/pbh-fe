@@ -5,7 +5,7 @@
         <a-steps :current="current">
           <a-step v-for="step of steps" v-bind:key="step.title" :description="step.description">{{
             step.title
-          }}</a-step>
+            }}</a-step>
         </a-steps>
         <div :style="{
           width: '100%',
@@ -13,7 +13,9 @@
           textAlign: 'center',
           position: 'relative',
         }">
-          <component :is="componentList[current - 1]" v-model="initConfig" />
+          <Suspense>
+            <component :is="componentList[current - 1]" v-model="initConfig" />
+          </Suspense>
         </div>
         <a-space size="large" style="display: flex; justify-content: center">
           <a-button type="secondary" v-if="current > 1" @click="onPrev">

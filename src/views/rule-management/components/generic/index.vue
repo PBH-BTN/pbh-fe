@@ -101,7 +101,7 @@ const columns = [
 const { loading } = useRequest(getBlackList, {
   defaultParams: [type],
   onSuccess: (data) => {
-    dataSource.push(...data[type].map((item) => ({
+    dataSource.push(...data.data[type].map((item) => ({
       data: item,
       oldData: item,
       editing: false,

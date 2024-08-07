@@ -26,7 +26,8 @@ import { defineComponent, h } from 'vue';
 
 
 const { t } = useI18n()
-const blackListTypes: ruleType[] = ['ip', 'port', 'asn', 'region', 'city', 'netType']
+const blackListTypes: ruleType[] = ['ip', 'port', 'asn', 'region', 'city']
+//const blackListTypes: ruleType[] = ['ip', 'port', 'asn', 'region', 'city', 'netType']
 const IconFont = Icon.addFromIconFontCn({ src: 'https://at.alicdn.com/t/c/font_4646549_f3kbb5m24hq.js' });
 
 

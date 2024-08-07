@@ -148,7 +148,7 @@ const { data: client } = useRequest(getClientStatus, {
 const handleDelete = async () => {
   try {
     const result = await DeleteDownloader(downloader.value.name)
-    if (result.code !== 200) {
+    if (!result.success) {
       throw new Error(result.message)
     } else {
       Message.success(result.message)

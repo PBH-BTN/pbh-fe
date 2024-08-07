@@ -1,14 +1,6 @@
 <template>
-  <a-modal
-    v-model:visible="showModal"
-    :mask-closable="false"
-    :title="
-      newItem ? t('page.dashboard.editModal.title.new') : t('page.dashboard.editModal.title.edit')
-    "
-    unmountOnClose
-    @cancel="() => resetFields()"
-    @before-ok="handleBeforeOk"
-  >
+  <a-modal v-model:visible="showModal" :mask-closable="false" :title="newItem ? t('page.dashboard.editModal.title.new') : t('page.dashboard.editModal.title.edit')
+    " unmountOnClose @cancel="() => resetFields()" @before-ok="handleBeforeOk">
     <a-form ref="formRef" :model="form" auto-label-width>
       <a-form-item field="config.type" :label="t('page.dashboard.editModal.label.type')" required>
         <a-radio-group v-model="form.config.type" type="button">
@@ -102,7 +94,7 @@ const handleBeforeOk = async () => {
     const result = newItem.value
       ? await CreateDownloader(form)
       : await UpdateDownloader(oldName.value, form)
-    if (result.code === 201 || result.code === 200) {
+    if (result.success) {
       Message.success(result.message)
       emits('changed')
       return true

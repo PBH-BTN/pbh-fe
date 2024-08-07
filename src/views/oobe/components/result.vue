@@ -1,12 +1,7 @@
 <template>
   <a-spin v-if="loading" class="center" :tip="t('page.oobe.result.initlizing')" />
   <div v-else>
-    <a-result
-      v-if="initSuccess"
-      status="success"
-      :title="t('page.oobe.result.title')"
-      class="center"
-    >
+    <a-result v-if="initSuccess" status="success" :title="t('page.oobe.result.title')" class="center">
       <template #subtitle> {{ t('page.oobe.result.description') }} </template>
       <template #extra>
         <a-space>
@@ -46,7 +41,7 @@ const init = () => {
     }
   })
     .then((res) => {
-      if (res.code === 200 || res.code === 201) {
+      if (res.success) {
         initSuccess.value = true
         setAuthToken(config.value.token)
       } else {

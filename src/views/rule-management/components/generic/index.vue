@@ -25,11 +25,14 @@
                 <icon-edit />
               </template>
             </a-button>
-            <a-button class="edit-btn" shape="circle" status="danger" type="text" @click="record.editing = false">
-              <template #icon>
-                <icon-delete />
-              </template>
-            </a-button>
+            <a-popconfirm :content="t('page.rule_management.ruleSubscribe.column.deleteConfirm')" type="warning"
+              @before-ok="() => handleDelete(record.data)">
+              <a-button class="edit-btn" shape="circle" status="danger" type="text">
+                <template #icon>
+                  <icon-delete />
+                </template>
+              </a-button>
+            </a-popconfirm>
           </a-space>
         </a-space>
         <a-space v-else style="display: flex;justify-content: space-between;" fill>
@@ -59,9 +62,10 @@
 import { useI18n } from 'vue-i18n'
 import { type ruleType } from '@/api/model/blacklist'
 import { useRequest } from 'vue-request';
-import { getBlackList } from '@/service/blacklist';
+import { addBlackList, deleteBlackList, getBlackList } from '@/service/blacklist';
 import AsyncMethod from '@/components/asyncMethod.vue'
 import { reactive, type Reactive } from 'vue';
+import { Message } from '@arco-design/web-vue';
 const { t } = useI18n()
 const { type } = defineProps<{
   type: ruleType
@@ -72,35 +76,17 @@ type dataSourceItem<T extends ruleType> = {
   editing: boolean;
   isNew: boolean;
 }
-const dataSource = reactive([
-  {
-    data: "1.2.3.4",
-    oldData: "1.2.3.4",
-    editing: false,
-    isNew: false
-  },
-  {
-    data: "1.2.3.4",
-    oldData: "1.2.3.4",
-    editing: false,
-    isNew: false
-  },
-  {
-    data: "1.2.3.4",
-    oldData: "1.2.3.4",
-    editing: false,
-    isNew: false
-  },
-]) as Reactive<dataSourceItem<typeof type>[]>
+const dataSource = reactive([]) as Reactive<dataSourceItem<typeof type>[]>
 const columns = [
   {
     title: () => t('page.rule_management.' + type),
     slotName: 'data',
   }
 ]
-const { loading } = useRequest(getBlackList, {
+const { loading, refresh } = useRequest(getBlackList, {
   defaultParams: [type],
   onSuccess: (data) => {
+    dataSource.splice(0, dataSource.length)
     dataSource.push(...data.data[type].map((item) => ({
       data: item,
       oldData: item,
@@ -118,8 +104,49 @@ const handleAddOne = () => {
   })
 }
 const handleSubmit = async (index: number) => {
-  dataSource[index].editing = false
-  dataSource[index].isNew = false
+  try {
+    if (dataSource[index].isNew) {
+      // add new item
+      const resp = await addBlackList(dataSource[index].data, type)
+      if (!resp.success) {
+        throw new Error(resp.message)
+      }
+      Message.success(resp.message)
+      dataSource[index].editing = false
+      dataSource[index].isNew = false
+    } else {
+      // update item 先添加，再删除，避免添加失败
+      let resp = await addBlackList(dataSource[index].data, type)
+      if (!resp.success) {
+        throw new Error(resp.message)
+      }
+      resp = await deleteBlackList(dataSource[index].oldData, type)
+      if (!resp.success) {
+        throw new Error(resp.message)
+      }
+      Message.success(resp.message)
+      dataSource[index].editing = false
+      dataSource[index].isNew = false
+      dataSource[index].data = dataSource[index].oldData
+    }
+  } catch (e: any) {
+    Message.error(e.message)
+  }
+}
+
+const handleDelete = async (target: number | string) => {
+  try {
+    const resp = await deleteBlackList(target, type)
+    if (!resp.success) {
+      throw new Error(resp.message)
+    }
+    Message.success(resp.message)
+    refresh()
+    return true
+  } catch (e: any) {
+    Message.error(e.message)
+    return false
+  }
 }
 </script>
 <style scoped>

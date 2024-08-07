@@ -26,8 +26,8 @@ import { defineComponent, h } from 'vue';
 
 
 const { t } = useI18n()
-const blackListTypes: ruleType[] = ['ip', 'port', 'asn', 'region', 'netType']
-const IconFont = Icon.addFromIconFontCn({ src: 'https:////at.alicdn.com/t/c/font_4646549_z3jqnpcw1dq.js' });
+const blackListTypes: ruleType[] = ['ip', 'port', 'asn', 'region', 'city', 'netType']
+const IconFont = Icon.addFromIconFontCn({ src: 'https://at.alicdn.com/t/c/font_4646549_f3kbb5m24hq.js' });
 
 
 
@@ -42,6 +42,7 @@ const iconList = defineComponent({
         case 'port': return h(IconFont, { type: "icon-dituleiduankou" })
         case 'asn': return h(IconStorage)
         case 'region': return h(IconLocation)
+        case 'city': return h(IconFont, { type: "icon-chengshi" })
         case 'netType': return h(IconFont, { type: "icon-kuandai" })
       }
     }

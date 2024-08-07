@@ -36,7 +36,8 @@
           </a-space>
         </a-space>
         <a-space v-else style="display: flex;justify-content: space-between;" fill>
-          <a-input style="max-width: 100px;" v-model="record.data" />
+          <a-input :placeholder="t(`page.rule_management.${type}.placeholder`)" style="max-width: 150px;"
+            v-model="record.data" />
           <a-space>
             <AsyncMethod once :async-fn="() => handleSubmit(rowIndex)" v-slot="{ run, loading }">
               <a-button class="edit-btn" shape="circle" type="text" status="success" @click="run">

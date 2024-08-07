@@ -4,7 +4,6 @@
       <genericBlackList :type="type" />
     </a-tab-pane>
     <a-tab-pane key="subscribe">
-      <!-- todo 这里需要根据开启情况进行禁用，删掉router里面的判断代码-->
       <template #title>
         <a-space><icon-cloud />{{ t('page.rule_management.ruleSubscribe.title') }}</a-space>
       </template>

@@ -63,19 +63,6 @@ export const routerOptions: RouteRecordRaw[] = [
     },
     component: RuleMetric
   },
-
-  // {
-  //   path: '/subscribe',
-  //   name: 'rule_subscribe',
-  //   meta: {
-  //     label: 'router.ruleSubscribe',
-  //     disableAutoUpdate: true,
-  //     moduleRequire: 'com.ghostchu.peerbanhelper.module.impl.webapi.RuleSubController',
-  //     documentation:
-  //       'https://github.com/PBH-BTN/PeerBanHelper/wiki/%E8%A7%84%E5%88%99%E8%AE%A2%E9%98%85%E5%8A%9F%E8%83%BD'
-  //   },
-  //   component: RuleSubscribe
-  // },
   {
     path: '/init',
     name: 'init',

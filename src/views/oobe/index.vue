@@ -32,7 +32,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref, defineAsyncComponent, reactive } from 'vue'
+import { computed, ref, defineAsyncComponent } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { type InitConfig } from '@/api/model/oobe'
 import type { downloaderConfig } from '@/api/model/downloader'
@@ -57,7 +57,7 @@ const steps = computed(() => [
   }
 ])
 
-const initConfig = reactive<InitConfig>({
+const initConfig = ref<InitConfig>({
   token: '',
   downloaderConfig: {
     name: '',
@@ -87,9 +87,9 @@ const canNext = () => {
     case 1:
       return true
     case 2:
-      return initConfig.token.length > 0
+      return initConfig.value.token.length > 0
     case 3:
-      return initConfig.valid
+      return initConfig.value.valid
     case 4:
       return false
   }

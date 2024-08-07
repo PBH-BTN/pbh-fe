@@ -35,10 +35,17 @@ import type { InitConfig } from '@/api/model/oobe'
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 const config = defineModel<InitConfig>({ required: true })
-const generateToken = () => {
-  config.value.token = uuidFunc()
+const generateToken = async () => {
+  config.value.token = await uuidFunc()
 }
-const uuidFunc: () => string = crypto.randomUUID ?? (await import('uuid')).v4
+const uuidFunc = async () => {
+  if (crypto.randomUUID) {
+    return crypto.randomUUID()
+  } else {
+    const uuid = await import('uuid')
+    return uuid.v4()
+  }
+}
 </script>
 <style scoped>
 .generate-btn {

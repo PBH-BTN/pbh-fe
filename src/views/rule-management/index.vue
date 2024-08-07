@@ -1,5 +1,5 @@
 <template>
-  <a-tabs default-active-key="ip">
+  <a-tabs default-active-key="ip" lazy-load>
     <a-tab-pane v-for="type in blackListTypes" :key="type" :title="t('page.rule_management.' + type)">
       <genericBlackList :type="type" />
     </a-tab-pane>

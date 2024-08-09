@@ -57,7 +57,7 @@
         <a-dropdown
           v-if="mobileLayout === 0"
           position="bl"
-          @select="(router) => goto(String((router as (typeof routers)[number]).name))"
+          @select="(router: unknown) => goto(String((router as (typeof routers)[number]).name))"
           :popup-max-height="false"
         >
           <a-button style="flex-grow: 1; gap: 12px">

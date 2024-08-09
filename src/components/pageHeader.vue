@@ -1,7 +1,7 @@
 <template>
-  <a-page-header :show-back="false">
+  <a-page-header class="header" :class="mobileLayout === 0 ? 'mobile' : ''" :show-back="false">
     <template #title>
-      <a href="https://github.com/PBH-BTN/PeerBanHelper">
+      <a v-if="mobileLayout === 0" href="https://github.com/PBH-BTN/PeerBanHelper">
         <a-space size="mini">
           <img v-if="isDark" src="@/assets/logo-dark.png" alt="logo" class="logo" />
           <img v-else src="@/assets/logo.png" alt="logo" class="logo" />
@@ -10,79 +10,121 @@
           >
         </a-space>
       </a>
+      <a-menu
+        v-else
+        class="header-menu"
+        mode="horizontal"
+        :selected-keys="selectedKeys"
+        @menu-item-click="goto"
+      >
+        <a-menu-item :style="{ padding: 0, marginLeft: 0 }" disabled>
+          <a href="https://github.com/PBH-BTN/PeerBanHelper">
+            <a-space size="mini">
+              <img v-if="isDark" src="@/assets/logo-dark.png" alt="logo" class="logo" />
+              <img v-else src="@/assets/logo.png" alt="logo" class="logo" />
+              <a-typography-title style="margin-top: 0%; margin-bottom: 0%"
+                >PeerBanHelper</a-typography-title
+              >
+            </a-space>
+          </a>
+        </a-menu-item>
+        <template v-if="!disableMenu">
+          <a-menu-item v-for="router in routers.filter((r) => !r!.meta?.hide)" :key="router.name"
+            >{{ t(String(router.meta?.label)) }}
+          </a-menu-item>
+        </template>
+      </a-menu>
     </template>
     <template #extra>
-      <a-space class="right-side" wrap>
-        <template v-if="!disableAutoUpdate">
-          <a-typography-text
-            ><icon-clock-circle /> {{ t('navbar.action.autoUpdate.lastUpdate')
-            }}{{ d(autoUpdate.lastUpdate, 'longlong') }}</a-typography-text
-          >
-          <a-switch v-model="autoUpdate.autoUpdate" />
-          <a-typography-text>{{ t('navbar.action.autoUpdate') }}</a-typography-text>
-        </template>
-        <div class="lang-selector">
-          <a-dropdown
-            trigger="click"
-            @select="
-              (lang: string | number | Record<string, any> | undefined) =>
-                changeLocale(lang as string)
+      <div style="display: flex; gap: 12px">
+        <a-dropdown
+          v-if="mobileLayout === 0"
+          @select="(router) => goto(String((router as (typeof routers)[number]).name))"
+          :popup-max-height="false"
+        >
+          <a-button style="flex-grow: 1; gap: 12px"
+            >{{ t(String(route.meta?.label)) }} <icon-down
+          /></a-button>
+          <template #content>
+            <a-doption
+              v-for="router in routers.filter((r) => !r!.meta?.hide)"
+              :key="router.name"
+              :value="router"
+              >{{ t(String(router.meta?.label)) }}
+            </a-doption>
+          </template>
+        </a-dropdown>
+        <a-space class="right-side" wrap>
+          <template v-if="!disableAutoUpdate">
+            <auto-update-btn :tigger="mobileLayout === 0 ? 'switch' : 'click'" />
+          </template>
+          <div class="lang-selector">
+            <a-dropdown
+              trigger="click"
+              @select="
+                (lang: string | number | Record<string, any> | undefined) =>
+                  changeLocale(lang as string)
+              "
+            >
+              <a-tooltip :content="t('settings.language')">
+                <a-button class="nav-btn" type="outline" :shape="'circle'">
+                  <template #icon>
+                    <icon-language />
+                  </template>
+                </a-button>
+              </a-tooltip>
+              <template #content>
+                <a-doption v-for="item in locales" :key="item.value" :value="item.value">
+                  <template #icon>
+                    <icon-check v-show="item.value === locale" />
+                  </template>
+                  {{ item.label }}
+                </a-doption>
+              </template>
+            </a-dropdown>
+          </div>
+          <a-tooltip
+            :content="
+              isDark ? t('settings.navbar.theme.toLight') : t('settings.navbar.theme.toDark')
             "
           >
-            <a-tooltip :content="t('settings.language')">
-              <a-button class="nav-btn" type="outline" :shape="'circle'">
-                <template #icon>
-                  <icon-language />
-                </template>
-              </a-button>
-            </a-tooltip>
-            <template #content>
-              <a-doption v-for="item in locales" :key="item.value" :value="item.value">
-                <template #icon>
-                  <icon-check v-show="item.value === locale" />
-                </template>
-                {{ item.label }}
-              </a-doption>
-            </template>
-          </a-dropdown>
-        </div>
-        <a-tooltip
-          :content="isDark ? t('settings.navbar.theme.toLight') : t('settings.navbar.theme.toDark')"
-        >
-          <a-button class="nav-btn" type="outline" :shape="'circle'" @click="handleToggleTheme">
-            <template #icon>
-              <icon-moon-fill v-if="isDark" />
-              <icon-sun-fill v-else />
-            </template>
+            <a-button class="nav-btn" type="outline" :shape="'circle'" @click="handleToggleTheme">
+              <template #icon>
+                <icon-moon-fill v-if="isDark" />
+                <icon-sun-fill v-else />
+              </template>
+            </a-button>
+          </a-tooltip>
+          <a-button
+            class="nav-btn"
+            type="outline"
+            shape="circle"
+            status="normal"
+            @click="settingsModalRef?.showModal"
+          >
+            <template #icon><icon-settings /></template>
           </a-button>
-        </a-tooltip>
-        <a-button
-          class="nav-btn"
-          type="outline"
-          shape="circle"
-          status="normal"
-          @click="settingsModalRef?.showModal"
-        >
-          <template #icon><icon-settings /></template>
-        </a-button>
-      </a-space>
+        </a-space>
+      </div>
     </template>
   </a-page-header>
   <settings-modal ref="settingsModalRef" />
 </template>
 <script setup lang="ts">
 import settingsModal from './settingsModal.vue'
+import autoUpdateBtn from './autoUpdateBtn.vue'
 import { useDark, useToggle } from '@vueuse/core'
-import { useAutoUpdate } from '@/stores/autoUpdate'
 import useLocale from '@/stores/locale'
 import { useDarkStore } from '@/stores/dark'
 import { LOCALE_OPTIONS } from '@/locale'
 import { useI18n } from 'vue-i18n'
 import { ref, computed } from 'vue'
-const { t, d, locale } = useI18n()
+import { useViewRoute } from '@/router'
+import { useRoute } from 'vue-router'
+import { useResponsiveState } from '@arco-design/web-vue/es/grid/hook/use-responsive-state'
+const { t, locale } = useI18n()
 const { changeLocale } = useLocale()
 const locales = [...LOCALE_OPTIONS]
-const autoUpdate = useAutoUpdate()
 const darkStore = useDarkStore()
 const isDark = useDark({
   selector: 'body',
@@ -99,28 +141,31 @@ const handleToggleTheme = () => {
   darkStore.setDark(isDark.value)
 }
 
-const props = defineProps({
-  disableAutoUpdate: {
-    type: Boolean,
-    default: false
+const props = withDefaults(
+  defineProps<{
+    disableAutoUpdate?: boolean
+    disableMenu?: boolean
+  }>(),
+  {
+    disableAutoUpdate: false,
+    disableMenu: false
   }
-})
+)
 
-const disableAutoUpdate = computed(() => props.disableAutoUpdate)
+const [routers, currentName, goto] = useViewRoute()
+const route = useRoute()
+const disableAutoUpdate = computed(() => props.disableAutoUpdate || !!route.meta.disableAutoUpdate)
+const disableMenu = computed(() => props.disableMenu || !!route.meta.disableMenu)
+const selectedKeys = computed(() => [currentName.value])
+
+const mobileLayout = useResponsiveState(
+  ref({
+    md: 1
+  }),
+  0
+)
 </script>
 <style scoped lang="less">
-.arco-layout {
-  padding: 0 24px;
-  .arco-page-header {
-    max-width: 1200px;
-    margin: auto;
-  }
-  .arco-layout-header {
-    :deep(.arco-page-header-wrapper) {
-      padding: 0;
-    }
-  }
-}
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -176,6 +221,48 @@ const disableAutoUpdate = computed(() => props.disableAutoUpdate)
 .message-popover {
   .arco-popover-content {
     margin-top: 0;
+  }
+}
+.arco-layout {
+  padding: 0 24px;
+  .arco-page-header {
+    max-width: 1200px;
+    margin: auto;
+    &.mobile {
+      .arco-page-header-main {
+        width: 100%;
+      }
+      .arco-page-header-extra {
+        width: 100%;
+      }
+      .arco-page-header-header {
+        flex-wrap: wrap;
+      }
+    }
+  }
+  .arco-layout-header {
+    .arco-page-header-header {
+      flex-wrap: nowrap;
+    }
+    .arco-menu-inner {
+      padding-left: 0;
+      padding-right: 0;
+    }
+    .arco-page-header-main {
+      flex-grow: 1;
+      .arco-page-header-title {
+        flex-grow: 1;
+      }
+    }
+    .arco-page-header-wrapper {
+      padding: 0;
+    }
+    .arco-menu-light {
+      background-color: unset;
+      .arco-menu-item {
+        background-color: unset;
+      }
+    }
   }
 }
 </style>

@@ -12,12 +12,14 @@ import BanLog from '@/views/banlog/index.vue'
 import TopBan from '@/views/top-ban/index.vue'
 import RuleMetric from '@/views/rule-metrics/index.vue'
 import RuleManageMent from '@/views/rule-management/index.vue'
+import { useEndpointStore } from '@/stores/endpoint'
 export const routerOptions: RouteRecordRaw[] = [
   {
     path: '/dashboard',
     name: 'dashboard',
     meta: {
-      label: 'router.dashboard'
+      label: 'router.dashboard',
+      needLogin: true
     },
     component: Dashboard
   },
@@ -25,7 +27,8 @@ export const routerOptions: RouteRecordRaw[] = [
     path: '/list',
     name: 'banlist',
     meta: {
-      label: 'router.banlist'
+      label: 'router.banlist',
+      needLogin: true
     },
     component: BanList
   },
@@ -33,7 +36,8 @@ export const routerOptions: RouteRecordRaw[] = [
     path: '/log',
     name: 'banlogs',
     meta: {
-      label: 'router.banlogs'
+      label: 'router.banlogs',
+      needLogin: true
     },
     component: BanLog
   },
@@ -42,7 +46,8 @@ export const routerOptions: RouteRecordRaw[] = [
     name: 'rule_management',
     meta: {
       label: 'router.rule_management',
-      disableAutoUpdate: true
+      disableAutoUpdate: true,
+      needLogin: true
     },
     component: RuleManageMent
   },
@@ -50,7 +55,8 @@ export const routerOptions: RouteRecordRaw[] = [
     path: '/top',
     name: 'top',
     meta: {
-      label: 'router.topban'
+      label: 'router.topban',
+      needLogin: true
     },
     component: TopBan
   },
@@ -59,7 +65,8 @@ export const routerOptions: RouteRecordRaw[] = [
     path: '/metrics',
     name: 'rule_metrics',
     meta: {
-      label: 'router.ruleMetrics'
+      label: 'router.ruleMetrics',
+      needLogin: true
     },
     component: RuleMetric
   },
@@ -71,20 +78,51 @@ export const routerOptions: RouteRecordRaw[] = [
       disableAutoUpdate: true
     },
     component: () => import('@/views/oobe/index.vue')
+  },
+  {
+    path: '/login',
+    name: 'login',
+    meta: {
+      hide: true,
+      disableAutoUpdate: true
+    },
+    component: () => import('@/views/login/index.vue')
   }
 ]
 
 let basePath = location.pathname
 for (const item of routerOptions) {
-  if (!item.meta?.hidden && basePath.endsWith(item.path)) {
+  if (basePath.endsWith(item.path)) {
     basePath = basePath.slice(0, -item.path.length)
     break
   }
 }
 
+routerOptions.push(
+  ...[
+    // default home page
+    {
+      path: '/',
+      redirect: '/dashboard',
+      meta: {
+        hide: true
+      }
+    }
+  ]
+)
+
 const router = createRouter({
   history: createWebHistory(basePath),
   routes: routerOptions
+})
+router.afterEach((to, from) => {
+  if (!from.name) {
+    to.meta.transition = 'normal'
+  } else {
+    const toDepth = routerOptions.findIndex((item) => item.name === to.name)
+    const fromDepth = routerOptions.findIndex((item) => item.name === from.name)
+    to.meta.transition = toDepth > fromDepth ? 'route-right' : 'route-left'
+  }
 })
 
 export default router

@@ -29,29 +29,69 @@
           </a>
         </a-menu-item>
         <template v-if="!disableMenu">
-          <a-menu-item v-for="router in routers.filter((r) => !r!.meta?.hide)" :key="router.name"
-            >{{ t(String(router.meta?.label)) }}
-          </a-menu-item>
+          <template v-for="router in routers.filter((r) => !r!.meta?.hide)" :key="router.name">
+            <a-sub-menu v-if="router.children">
+              <template v-if="router.meta?.icon" #icon>
+                <component :is="router.meta?.icon" />
+              </template>
+              <template #title>{{ t(String(router.meta?.label)) }}</template>
+              <a-menu-item v-for="child in router.children" :key="child.name">
+                <template v-if="child.meta?.icon" #icon>
+                  <component :is="child.meta?.icon" />
+                </template>
+                {{ t(String(child.meta?.label)) }}
+              </a-menu-item>
+            </a-sub-menu>
+            <a-menu-item v-else :key="router.name">
+              <template v-if="router.meta?.icon" #icon>
+                <component :is="router.meta?.icon" />
+              </template>
+              {{ t(String(router.meta?.label)) }}
+            </a-menu-item>
+          </template>
         </template>
       </a-menu>
     </template>
     <template #extra>
-      <div style="display: flex; gap: 12px">
+      <div style="display: flex; gap: 12px" v-if="!disableMenu">
         <a-dropdown
           v-if="mobileLayout === 0"
+          position="bl"
           @select="(router) => goto(String((router as (typeof routers)[number]).name))"
           :popup-max-height="false"
         >
-          <a-button style="flex-grow: 1; gap: 12px"
-            >{{ t(String(route.meta?.label)) }} <icon-down
-          /></a-button>
+          <a-button style="flex-grow: 1; gap: 12px">
+            <template v-if="route.meta?.icon" #icon>
+              <component :is="route.meta?.icon" />
+            </template>
+            {{ t(String(route.meta?.label)) }}
+            <icon-down />
+          </a-button>
           <template #content>
-            <a-doption
-              v-for="router in routers.filter((r) => !r!.meta?.hide)"
-              :key="router.name"
-              :value="router"
-              >{{ t(String(router.meta?.label)) }}
-            </a-doption>
+            <template v-for="router in routers.filter((r) => !r.meta?.hide)" :key="router.name">
+              <a-dsubmenu v-if="router.children">
+                <template v-if="router.meta?.icon" #icon>
+                  <component :is="router.meta?.icon" />
+                </template>
+                {{ t(String(router.meta?.label)) }}
+                <template #content>
+                  <template v-for="child in router.children" :key="child.name">
+                    <a-doption :value="child">
+                      <template v-if="child.meta?.icon" #icon>
+                        <component :is="child.meta?.icon" />
+                      </template>
+                      {{ t(String(child.meta?.label)) }}
+                    </a-doption>
+                  </template>
+                </template>
+              </a-dsubmenu>
+              <a-doption v-else :value="router">
+                <template v-if="router.meta?.icon" #icon>
+                  <component :is="router.meta?.icon" />
+                </template>
+                {{ t(String(router.meta?.label)) }}
+              </a-doption>
+            </template>
           </template>
         </a-dropdown>
         <a-space class="right-side" wrap>
@@ -257,11 +297,10 @@ const mobileLayout = useResponsiveState(
     .arco-page-header-wrapper {
       padding: 0;
     }
-    .arco-menu-light {
+    .arco-menu-light,
+    .arco-menu-pop,
+    .arco-menu-item {
       background-color: unset;
-      .arco-menu-item {
-        background-color: unset;
-      }
     }
   }
 }

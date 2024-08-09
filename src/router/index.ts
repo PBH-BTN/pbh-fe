@@ -6,13 +6,15 @@ import {
   type RouteRecordRaw
 } from 'vue-router'
 import Dashboard from '../views/dashboard/index.vue'
-import { computed } from 'vue'
+import { computed, h } from 'vue'
 import BanList from '@/views/banlist/index.vue'
 import BanLog from '@/views/banlog/index.vue'
 import TopBan from '@/views/top-ban/index.vue'
 import RuleMetric from '@/views/rule-metrics/index.vue'
-import RuleManageMent from '@/views/rule-management/index.vue'
-import { useEndpointStore } from '@/stores/endpoint'
+import GenericBlackList from '@/views/rule-management/components/generic/index.vue'
+import SubscribeManagement from '@/views/rule-management/components/subscribe/index.vue'
+import { genIconComponent } from '@/components/iconFont'
+import { IconCloud, IconLocation, IconStorage } from '@arco-design/web-vue/es/icon'
 export const routerOptions: RouteRecordRaw[] = [
   {
     path: '/dashboard',
@@ -49,7 +51,78 @@ export const routerOptions: RouteRecordRaw[] = [
       disableAutoUpdate: true,
       needLogin: true
     },
-    component: RuleManageMent
+    children: [
+      {
+        path: '/rule/subscribe',
+        name: 'rule_management_subscribe',
+        meta: {
+          label: 'page.rule_management.ruleSubscribe.title',
+          icon: () => h(IconCloud),
+          needLogin: true
+        },
+        component: SubscribeManagement
+      },
+      {
+        path: '/rule/ip',
+        name: 'rule_management_ip',
+        meta: {
+          label: 'page.rule_management.ip',
+          icon: genIconComponent('icon-IP'),
+          needLogin: true
+        },
+        component: () => h(GenericBlackList, { type: 'ip' })
+      },
+      {
+        path: '/rule/port',
+        name: 'rule_management_port',
+        meta: {
+          label: 'page.rule_management.port',
+          icon: genIconComponent('icon-dituleiduankou'),
+          needLogin: true
+        },
+        component: () => h(GenericBlackList, { type: 'port' })
+      },
+      {
+        path: '/rule/asn',
+        name: 'rule_management_asn',
+        meta: {
+          label: 'page.rule_management.asn',
+          icon: () => h(IconStorage),
+          needLogin: true
+        },
+        component: () => h(GenericBlackList, { type: 'asn' })
+      },
+      {
+        path: '/rule/region',
+        name: 'rule_management_region',
+        meta: {
+          label: 'page.rule_management.region',
+          icon: () => h(IconLocation),
+          needLogin: true
+        },
+        component: () => h(GenericBlackList, { type: 'region' })
+      },
+      {
+        path: '/rule/city',
+        name: 'rule_management_city',
+        meta: {
+          label: 'page.rule_management.city',
+          icon: genIconComponent('icon-chengshi'),
+          needLogin: true
+        },
+        component: () => h(GenericBlackList, { type: 'city' })
+      },
+      {
+        path: '/rule/netType',
+        name: 'rule_management_netType',
+        meta: {
+          label: 'page.rule_management.netType',
+          icon: genIconComponent('icon-kuandai'),
+          needLogin: true
+        },
+        component: () => h(GenericBlackList, { type: 'netType' })
+      }
+    ]
   },
   {
     path: '/top',
@@ -91,7 +164,8 @@ export const routerOptions: RouteRecordRaw[] = [
 ]
 
 let basePath = location.pathname
-for (const item of routerOptions) {
+const flatedRouter = routerOptions.flatMap((item) => (item.children ? item.children : [item]))
+for (const item of flatedRouter) {
   if (basePath.endsWith(item.path)) {
     basePath = basePath.slice(0, -item.path.length)
     break
@@ -119,8 +193,8 @@ router.afterEach((to, from) => {
   if (!from.name) {
     to.meta.transition = 'normal'
   } else {
-    const toDepth = routerOptions.findIndex((item) => item.name === to.name)
-    const fromDepth = routerOptions.findIndex((item) => item.name === from.name)
+    const toDepth = flatedRouter.findIndex((item) => item.name === to.name)
+    const fromDepth = flatedRouter.findIndex((item) => item.name === from.name)
     to.meta.transition = toDepth > fromDepth ? 'route-right' : 'route-left'
   }
 })

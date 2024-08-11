@@ -6,6 +6,7 @@ import type { release } from '@/api/model/manifest'
 import { IncorrectTokenError, login, NeedInitError } from '@/service/login'
 import { compare } from 'compare-versions'
 import type { mainfest } from '@/api/model/manifest'
+import { basePath } from '@/router'
 
 function newPromiseLock<T>() {
   let resolve!: (value: T | PromiseLike<T>) => void
@@ -120,7 +121,12 @@ export const useEndpointStore = defineStore('endpoint', () => {
 
   setTimeout(async () => setAccessToken(accessToken.value), 3000)
   return {
-    endpoint: readonly(endpoint),
+    endpointSaved: readonly(endpoint),
+    endpoint: computed(() => {
+      if (endpoint.value) return endpoint.value
+      const baseUrl = new URL(basePath + '/', location.href)
+      return baseUrl.href
+    }),
     serverAvailable: readonly(serverAvailable),
     serverManifest: readonly(serverManifest),
     loading: computed(() => status.value === 'checking'),

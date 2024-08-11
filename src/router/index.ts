@@ -70,7 +70,8 @@ export const routerOptions: RouteRecordRaw[] = [
           icon: genIconComponent('icon-IP'),
           needLogin: true
         },
-        component: () => h(GenericBlackList, { type: 'ip' })
+        component: GenericBlackList,
+        props: { type: 'ip' }
       },
       {
         path: '/rule/port',
@@ -80,7 +81,8 @@ export const routerOptions: RouteRecordRaw[] = [
           icon: genIconComponent('icon-dituleiduankou'),
           needLogin: true
         },
-        component: () => h(GenericBlackList, { type: 'port' })
+        component: GenericBlackList,
+        props: { type: 'port' }
       },
       {
         path: '/rule/asn',
@@ -90,7 +92,8 @@ export const routerOptions: RouteRecordRaw[] = [
           icon: () => h(IconStorage),
           needLogin: true
         },
-        component: () => h(GenericBlackList, { type: 'asn' })
+        component: GenericBlackList,
+        props: { type: 'asn' }
       },
       {
         path: '/rule/region',
@@ -100,7 +103,8 @@ export const routerOptions: RouteRecordRaw[] = [
           icon: () => h(IconLocation),
           needLogin: true
         },
-        component: () => h(GenericBlackList, { type: 'region' })
+        component: GenericBlackList,
+        props: { type: 'region' }
       },
       {
         path: '/rule/city',
@@ -110,38 +114,57 @@ export const routerOptions: RouteRecordRaw[] = [
           icon: genIconComponent('icon-chengshi'),
           needLogin: true
         },
-        component: () => h(GenericBlackList, { type: 'city' })
-      },
-      {
-        path: '/rule/netType',
-        name: 'rule_management_netType',
-        meta: {
-          label: 'page.rule_management.netType',
-          icon: genIconComponent('icon-kuandai'),
-          needLogin: true
-        },
-        component: () => h(GenericBlackList, { type: 'netType' })
+        component: GenericBlackList,
+        props: { type: 'city' }
       }
+      // {
+      //   path: '/rule/netType',
+      //   name: 'rule_management_netType',
+      //   meta: {
+      //     label: 'page.rule_management.netType',
+      //     icon: genIconComponent('icon-kuandai'),
+      //     needLogin: true
+      //   },
+      //   component: GenericBlackList, props: { type: 'netType' }
+      // }
     ]
   },
   {
-    path: '/top',
-    name: 'top',
-    meta: {
-      label: 'router.topban',
-      needLogin: true
-    },
-    component: TopBan
-  },
-
-  {
     path: '/metrics',
-    name: 'rule_metrics',
+    name: 'metrics',
     meta: {
-      label: 'router.ruleMetrics',
+      label: 'router.metrics',
       needLogin: true
     },
-    component: RuleMetric
+    children: [
+      {
+        path: '/metrics/rule',
+        name: 'rule_metrics',
+        meta: {
+          label: 'router.metrics.ruleMetrics',
+          needLogin: true
+        },
+        component: RuleMetric
+      },
+      {
+        path: '/metrics/charts',
+        name: 'charts',
+        meta: {
+          label: 'router.metrics.charts',
+          needLogin: true
+        },
+        component: () => import('@/views/charts/index.vue')
+      },
+      {
+        path: '/metrics/top',
+        name: 'top',
+        meta: {
+          label: 'router.topban',
+          needLogin: true
+        },
+        component: TopBan
+      }
+    ]
   },
   {
     path: '/init',
@@ -163,7 +186,7 @@ export const routerOptions: RouteRecordRaw[] = [
   }
 ]
 
-let basePath = location.pathname
+export let basePath = location.pathname
 const flatedRouter = routerOptions.flatMap((item) => (item.children ? item.children : [item]))
 for (const item of flatedRouter) {
   if (basePath.endsWith(item.path)) {

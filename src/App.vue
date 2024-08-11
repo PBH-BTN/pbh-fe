@@ -19,7 +19,7 @@
               @after-enter="onAfterEnter"
             >
               <a-result
-                status="error"
+                status="403"
                 :title="t('router.moduleNotEnable', { moduleName: t(String(route.meta?.label)) })"
                 v-if="
                   route.meta?.moduleRequire &&
@@ -40,7 +40,7 @@
                   </a-space>
                 </template>
               </a-result>
-              <component v-else :is="Component" />
+              <component v-else :is="Component" :key="route.fullPath" />
             </transition>
           </router-view>
           <a-divider />

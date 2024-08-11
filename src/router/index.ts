@@ -111,17 +111,17 @@ export const routerOptions: RouteRecordRaw[] = [
           needLogin: true
         },
         component: () => h(GenericBlackList, { type: 'city' })
-      },
-      {
-        path: '/rule/netType',
-        name: 'rule_management_netType',
-        meta: {
-          label: 'page.rule_management.netType',
-          icon: genIconComponent('icon-kuandai'),
-          needLogin: true
-        },
-        component: () => h(GenericBlackList, { type: 'netType' })
       }
+      // {
+      //   path: '/rule/netType',
+      //   name: 'rule_management_netType',
+      //   meta: {
+      //     label: 'page.rule_management.netType',
+      //     icon: genIconComponent('icon-kuandai'),
+      //     needLogin: true
+      //   },
+      //   component: () => h(GenericBlackList, { type: 'netType' })
+      // }
     ]
   },
   {

@@ -1,6 +1,14 @@
 <template>
-  <a-modal v-model:visible="showModal" :mask-closable="false" :title="newItem ? t('page.dashboard.editModal.title.new') : t('page.dashboard.editModal.title.edit')
-    " unmountOnClose @cancel="() => resetFields()" @before-ok="handleBeforeOk">
+  <a-modal
+    v-model:visible="showModal"
+    :mask-closable="false"
+    :title="
+      newItem ? t('page.dashboard.editModal.title.new') : t('page.dashboard.editModal.title.edit')
+    "
+    unmountOnClose
+    @cancel="() => resetFields()"
+    @before-ok="handleBeforeOk"
+  >
     <a-form ref="formRef" :model="form" auto-label-width>
       <a-form-item field="config.type" :label="t('page.dashboard.editModal.label.type')" required>
         <a-radio-group v-model="form.config.type" type="button">
@@ -12,14 +20,19 @@
         <template #extra v-if="form.config.type === ClientTypeEnum.BiglyBT">
           <i18n-t keypath="page.dashboard.editModal.biglybt">
             <template v-slot:url>
-              <a href="https://github.com/PBH-BTN/PBH-Adapter-BiglyBT">{{
-                t('page.dashboard.editModal.biglybt.url')
-                }}</a>
+              <a href="https://github.com/PBH-BTN/PBH-Adapter-BiglyBT">
+                {{ t('page.dashboard.editModal.biglybt.url') }}
+              </a>
             </template>
           </i18n-t>
         </template>
       </a-form-item>
-      <a-form-item field="name" :label="t('page.dashboard.editModal.label.name')" required>
+      <a-form-item
+        field="name"
+        :label="t('page.dashboard.editModal.label.name')"
+        required
+        :rules="[{ match: /^[^.\t\n/]+$/ }]"
+      >
         <a-input v-model="form.name" allow-clear />
       </a-form-item>
       <component :is="formMap[form.config.type] as any" v-model="form.config" />

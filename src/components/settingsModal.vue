@@ -65,14 +65,14 @@ const loading = computed(() => endPointStore.loading)
 const forceModal = computed(() => endPointStore.status === 'fail')
 
 const form = ref({
-  endpoint: endPointStore.endpoint,
+  endpoint: endPointStore.endpointSaved,
   interval: autoUpdateState.interval,
   accessToken: endPointStore.accessToken
 })
 
 const { t } = useI18n()
 function initForm() {
-  form.value.endpoint = endPointStore.endpoint
+  form.value.endpoint = endPointStore.endpointSaved
   form.value.interval = autoUpdateState.interval
 }
 

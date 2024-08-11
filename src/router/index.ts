@@ -181,7 +181,7 @@ export const routerOptions: RouteRecordRaw[] = [
   }
 ]
 
-let basePath = location.pathname
+export let basePath = location.pathname
 const flatedRouter = routerOptions.flatMap((item) => (item.children ? item.children : [item]))
 for (const item of flatedRouter) {
   if (basePath.endsWith(item.path)) {

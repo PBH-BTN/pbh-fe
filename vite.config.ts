@@ -48,5 +48,13 @@ export default defineConfig({
         }
       }
     }
+  },
+  server: {
+    proxy: {
+      '/api': {
+        target: process.env.PBH_ENDPOINT || 'http://127.0.0.1:9898',
+        changeOrigin: true
+      }
+    }
   }
 })

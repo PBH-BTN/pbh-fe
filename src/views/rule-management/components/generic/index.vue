@@ -140,8 +140,6 @@ const handleSubmit = async (index: number) => {
         throw new Error(resp.message)
       }
       Message.success(resp.message)
-      dataSource[index].editing = false
-      dataSource[index].isNew = false
     } else {
       // update item 先添加，再删除，避免添加失败
       let resp = await addBlackList(dataSource[index].data, type.value)
@@ -153,10 +151,8 @@ const handleSubmit = async (index: number) => {
         throw new Error(resp.message)
       }
       Message.success(resp.message)
-      dataSource[index].editing = false
-      dataSource[index].isNew = false
-      dataSource[index].data = dataSource[index].oldData
     }
+    refresh()
   } catch (e: any) {
     Message.error(e.message)
   }

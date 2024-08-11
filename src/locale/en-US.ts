@@ -8,6 +8,7 @@ import serviceLocale from '@/service/locale/en-US'
 import loginLocale from '@/views/login/locale/en-US'
 import oobeLocale from '@/views/oobe/locale/en-US'
 import ruleManageMentLocale from '@/views/rule-management/locale/en-US'
+import chartsLocale from '@/views/charts/locale/en-US'
 export default {
   'navbar.action.locale': 'Switch to English',
   'navbar.action.autoUpdate': 'Auto Update',
@@ -24,7 +25,9 @@ export default {
   'router.banlist': 'Ban List',
   'router.banlogs': 'Ban Logs',
   'router.topban': 'Top Bans',
-  'router.ruleMetrics': 'Rule Metrics',
+  'router.metrics': 'Metrics',
+  'router.metrics.ruleMetrics': 'Rule Metrics',
+  'router.metrics.charts': 'Charts',
   'router.rule_management': 'Rule Management',
 
   'router.moduleNotEnable': '{moduleName} is not enabled',
@@ -40,5 +43,6 @@ export default {
   ...serviceLocale,
   ...loginLocale,
   ...oobeLocale,
-  ...ruleManageMentLocale
+  ...ruleManageMentLocale,
+  ...chartsLocale
 }

@@ -1,0 +1,23 @@
+export default {
+  'page.charts.loading': '加载中...',
+  'page.charts.options.more': '更多选项',
+  'page.charts.options.thresold': '只显示1%以上的数据',
+  'page.charts.options.field': '维度',
+  'page.charts.options.field.peerId': 'Peer ID',
+  'page.charts.options.field.empty': 'N/A',
+  'page.charts.options.field.torrentName': '种子名',
+  'page.charts.options.field.module': '功能模块',
+  'page.charts.title.line': '封禁统计',
+  'page.charts.line.options.field': '计数',
+  'page.charts.options.days': '时间范围',
+  'page.charts.options.mergeSame': '尝试合并同类型客户端',
+  'page.charts.options.steps': '步长',
+  'page.charts.options.day': '天',
+  'page.charts.options.hour': '小时',
+  'page.charts.options.shortcut.6hours': '6 小时前',
+  'page.charts.options.shortcut.12hours': '12 小时前',
+  'page.charts.options.shortcut.24hours': '24 小时前',
+  'page.charts.options.shortcut.7days': '7 天前',
+  'page.charts.options.shortcut.14days': '14 天前',
+  'page.charts.options.shortcut.30days': '30 天前'
+}

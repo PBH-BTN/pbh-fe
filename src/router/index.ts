@@ -125,23 +125,41 @@ export const routerOptions: RouteRecordRaw[] = [
     ]
   },
   {
-    path: '/top',
-    name: 'top',
-    meta: {
-      label: 'router.topban',
-      needLogin: true
-    },
-    component: TopBan
-  },
-
-  {
     path: '/metrics',
-    name: 'rule_metrics',
+    name: 'metrics',
     meta: {
-      label: 'router.ruleMetrics',
+      label: 'router.metrics',
       needLogin: true
     },
-    component: RuleMetric
+    children: [
+      {
+        path: '/metrics/rule',
+        name: 'rule_metrics',
+        meta: {
+          label: 'router.metrics.ruleMetrics',
+          needLogin: true
+        },
+        component: RuleMetric
+      },
+      {
+        path: '/metrics/charts',
+        name: 'charts',
+        meta: {
+          label: 'router.metrics.charts',
+          needLogin: true
+        },
+        component: () => import('@/views/charts/index.vue')
+      },
+      {
+        path: '/metrics/top',
+        name: 'top',
+        meta: {
+          label: 'router.topban',
+          needLogin: true
+        },
+        component: TopBan
+      }
+    ]
   },
   {
     path: '/init',

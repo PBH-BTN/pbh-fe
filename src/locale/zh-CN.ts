@@ -8,6 +8,7 @@ import serviceLocale from '@/service/locale/zh-CN'
 import loginLocale from '@/views/login/locale/zh-CN'
 import oobeLocale from '@/views/oobe/locale/zh-CN'
 import ruleManageMentLocale from '@/views/rule-management/locale/zh-CN'
+import chartsLocale from '@/views/charts/locale/zh-CN'
 export default {
   'navbar.action.locale': '切换为中文',
   'navbar.action.autoUpdate': '自动刷新',
@@ -23,7 +24,9 @@ export default {
   'router.banlist': '封禁名单',
   'router.banlogs': '封禁日志',
   'router.topban': '最多封禁',
-  'router.ruleMetrics': '规则统计',
+  'router.metrics': '统计',
+  'router.metrics.ruleMetrics': '规则统计',
+  'router.metrics.charts': '图表',
   'router.rule_management': '规则管理',
 
   'router.moduleNotEnable': '{moduleName}功能未启用',
@@ -39,5 +42,6 @@ export default {
   ...serviceLocale,
   ...loginLocale,
   ...oobeLocale,
-  ...ruleManageMentLocale
+  ...ruleManageMentLocale,
+  ...chartsLocale
 }

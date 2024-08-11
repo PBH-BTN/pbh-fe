@@ -1,0 +1,23 @@
+export default {
+  'page.charts.loading': 'Loading...',
+  'page.charts.options.more': 'More Options',
+  'page.charts.options.thresold': 'Only show data above 1%',
+  'page.charts.options.field': 'Field',
+  'page.charts.options.field.peerId': 'Peer ID',
+  'page.charts.options.field.empty': 'N/A',
+  'page.charts.options.field.torrentName': 'Torrent Name',
+  'page.charts.options.field.module': 'Module',
+  'page.charts.title.line': 'Ban count',
+  'page.charts.line.options.field': 'Count',
+  'page.charts.options.days': 'Time Range',
+  'page.charts.options.mergeSame': 'Try to merge same type clients',
+  'page.charts.options.steps': 'Steps',
+  'page.charts.options.day': 'Days',
+  'page.charts.options.hour': 'Hours',
+  'page.charts.options.shortcut.6hours': '6 hours before',
+  'page.charts.options.shortcut.12hours': '12 hours before',
+  'page.charts.options.shortcut.24hours': '24 hours before',
+  'page.charts.options.shortcut.7days': '7 days before',
+  'page.charts.options.shortcut.14days': '14 days before',
+  'page.charts.options.shortcut.30days': '30 days before'
+}

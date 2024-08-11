@@ -19,7 +19,7 @@
               @after-enter="onAfterEnter"
             >
               <a-result
-                status="error"
+                status="403"
                 :title="t('router.moduleNotEnable', { moduleName: t(String(route.meta?.label)) })"
                 v-if="
                   route.meta?.moduleRequire &&

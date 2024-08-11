@@ -124,7 +124,7 @@ export const useEndpointStore = defineStore('endpoint', () => {
     endpointSaved: readonly(endpoint),
     endpoint: computed(() => {
       if (endpoint.value) return endpoint.value
-      const baseUrl = new URL(basePath + '/', location.href)
+      const baseUrl = new URL(basePath || '/', location.href)
       return baseUrl.href
     }),
     serverAvailable: readonly(serverAvailable),

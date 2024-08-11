@@ -53,7 +53,7 @@ export const routerOptions: RouteRecordRaw[] = [
     },
     children: [
       {
-        path: '/rule/subscribe',
+        path: '/ruleSubscribe',
         name: 'rule_management_subscribe',
         meta: {
           label: 'page.rule_management.ruleSubscribe.title',
@@ -63,7 +63,7 @@ export const routerOptions: RouteRecordRaw[] = [
         component: SubscribeManagement
       },
       {
-        path: '/rule/ip',
+        path: '/ruleIp',
         name: 'rule_management_ip',
         meta: {
           label: 'page.rule_management.ip',
@@ -74,7 +74,7 @@ export const routerOptions: RouteRecordRaw[] = [
         props: { type: 'ip' }
       },
       {
-        path: '/rule/port',
+        path: '/rulePort',
         name: 'rule_management_port',
         meta: {
           label: 'page.rule_management.port',
@@ -85,7 +85,7 @@ export const routerOptions: RouteRecordRaw[] = [
         props: { type: 'port' }
       },
       {
-        path: '/rule/asn',
+        path: '/ruleAsn',
         name: 'rule_management_asn',
         meta: {
           label: 'page.rule_management.asn',
@@ -96,7 +96,7 @@ export const routerOptions: RouteRecordRaw[] = [
         props: { type: 'asn' }
       },
       {
-        path: '/rule/region',
+        path: '/ruleRegion',
         name: 'rule_management_region',
         meta: {
           label: 'page.rule_management.region',
@@ -107,7 +107,7 @@ export const routerOptions: RouteRecordRaw[] = [
         props: { type: 'region' }
       },
       {
-        path: '/rule/city',
+        path: '/ruleCity',
         name: 'rule_management_city',
         meta: {
           label: 'page.rule_management.city',
@@ -118,7 +118,7 @@ export const routerOptions: RouteRecordRaw[] = [
         props: { type: 'city' }
       }
       // {
-      //   path: '/rule/netType',
+      //   path: '/ruleNetType',
       //   name: 'rule_management_netType',
       //   meta: {
       //     label: 'page.rule_management.netType',
@@ -138,7 +138,7 @@ export const routerOptions: RouteRecordRaw[] = [
     },
     children: [
       {
-        path: '/metrics/rule',
+        path: '/metricsRule',
         name: 'rule_metrics',
         meta: {
           label: 'router.metrics.ruleMetrics',
@@ -147,7 +147,7 @@ export const routerOptions: RouteRecordRaw[] = [
         component: RuleMetric
       },
       {
-        path: '/metrics/charts',
+        path: '/metricsCharts',
         name: 'charts',
         meta: {
           label: 'router.metrics.charts',
@@ -156,7 +156,7 @@ export const routerOptions: RouteRecordRaw[] = [
         component: () => import('@/views/charts/index.vue')
       },
       {
-        path: '/metrics/top',
+        path: '/metricsTop',
         name: 'top',
         meta: {
           label: 'router.topban',

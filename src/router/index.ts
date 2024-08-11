@@ -70,7 +70,8 @@ export const routerOptions: RouteRecordRaw[] = [
           icon: genIconComponent('icon-IP'),
           needLogin: true
         },
-        component: () => h(GenericBlackList, { type: 'ip' })
+        component: GenericBlackList,
+        props: { type: 'ip' }
       },
       {
         path: '/rule/port',
@@ -80,7 +81,8 @@ export const routerOptions: RouteRecordRaw[] = [
           icon: genIconComponent('icon-dituleiduankou'),
           needLogin: true
         },
-        component: () => h(GenericBlackList, { type: 'port' })
+        component: GenericBlackList,
+        props: { type: 'port' }
       },
       {
         path: '/rule/asn',
@@ -90,7 +92,8 @@ export const routerOptions: RouteRecordRaw[] = [
           icon: () => h(IconStorage),
           needLogin: true
         },
-        component: () => h(GenericBlackList, { type: 'asn' })
+        component: GenericBlackList,
+        props: { type: 'asn' }
       },
       {
         path: '/rule/region',
@@ -100,7 +103,8 @@ export const routerOptions: RouteRecordRaw[] = [
           icon: () => h(IconLocation),
           needLogin: true
         },
-        component: () => h(GenericBlackList, { type: 'region' })
+        component: GenericBlackList,
+        props: { type: 'region' }
       },
       {
         path: '/rule/city',
@@ -110,7 +114,8 @@ export const routerOptions: RouteRecordRaw[] = [
           icon: genIconComponent('icon-chengshi'),
           needLogin: true
         },
-        component: () => h(GenericBlackList, { type: 'city' })
+        component: GenericBlackList,
+        props: { type: 'city' }
       }
       // {
       //   path: '/rule/netType',
@@ -120,7 +125,7 @@ export const routerOptions: RouteRecordRaw[] = [
       //     icon: genIconComponent('icon-kuandai'),
       //     needLogin: true
       //   },
-      //   component: () => h(GenericBlackList, { type: 'netType' })
+      //   component: GenericBlackList, props: { type: 'netType' }
       // }
     ]
   },

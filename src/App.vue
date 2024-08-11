@@ -40,7 +40,7 @@
                   </a-space>
                 </template>
               </a-result>
-              <component v-else :is="Component" />
+              <component v-else :is="Component" :key="route.fullPath" />
             </transition>
           </router-view>
           <a-divider />

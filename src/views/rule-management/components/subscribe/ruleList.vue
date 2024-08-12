@@ -39,20 +39,16 @@
       </template>
       <template #status="{ record }">
         <a-space>
-          <a-switch
-            v-model="record.enabled"
-            :beforeChange="
-              async (newStatus: string | number | boolean) => {
-                const result = await ToggleRuleEnable(record.ruleId, newStatus as boolean)
-                if (!result.success) {
-                  Message.error(result.message)
-                  return false
-                }
-                refresh()
-                return true
-              }
-            "
-          />
+          <a-switch v-model="record.enabled" :beforeChange="async (newStatus: string | number | boolean) => {
+            const result = await ToggleRuleEnable(record.ruleId, newStatus as boolean)
+            if (!result.success) {
+              Message.error(result.message)
+              return false
+            }
+            refresh()
+            return true
+          }
+            " />
         </a-space>
       </template>
       <template #lastUpdated="{ record }">
@@ -63,31 +59,19 @@
         }}</a-typography-text>
       </template>
       <template #rulesCount="{ record }">
-        <a-typography-text>{{ record.enabled ? record.entCount : 'NaN' }}</a-typography-text>
+        <a-typography-text>{{ record.enabled ? record.entCount : 'N/A' }}</a-typography-text>
       </template>
       <template #action="{ record }">
         <a-space warp>
-          <a-tooltip
-            :content="t('page.rule_management.ruleSubscribe.column.actions.edit')"
-            position="top"
-            mini
-          >
+          <a-tooltip :content="t('page.rule_management.ruleSubscribe.column.actions.edit')" position="top" mini>
             <a-button class="edit-btn" shape="circle" type="text" @click="() => handleEdit(record)">
               <template #icon>
                 <icon-edit />
               </template>
             </a-button>
           </a-tooltip>
-          <AsyncMethod
-            once
-            :async-fn="() => handleRefresh(record.ruleId)"
-            v-slot="{ run, loading }"
-          >
-            <a-tooltip
-              :content="t('page.rule_management.ruleSubscribe.column.actions.update')"
-              position="top"
-              mini
-            >
+          <AsyncMethod once :async-fn="() => handleRefresh(record.ruleId)" v-slot="{ run, loading }">
+            <a-tooltip :content="t('page.rule_management.ruleSubscribe.column.actions.update')" position="top" mini>
               <a-button class="edit-btn" shape="circle" type="text" @click="run">
                 <template #icon>
                   <icon-refresh :spin="loading" />
@@ -95,11 +79,8 @@
               </a-button>
             </a-tooltip>
           </AsyncMethod>
-          <a-popconfirm
-            :content="t('page.rule_management.ruleSubscribe.column.deleteConfirm')"
-            type="warning"
-            @before-ok="() => handleDelete(record.ruleId)"
-          >
+          <a-popconfirm :content="t('page.rule_management.ruleSubscribe.column.deleteConfirm')" type="warning"
+            @before-ok="() => handleDelete(record.ruleId)">
             <a-button class="edit-btn" status="danger" shape="circle" type="text">
               <template #icon>
                 <icon-delete />

@@ -105,5 +105,5 @@ const { data, total, current, loading, pageSize, changeCurrent } = usePagination
 watch([pageSize, current], () => {
   forceLoading.value = true
 })
-const list = computed(() => data.value?.results)
+const list = computed(() => data.value?.data.results)
 </script>

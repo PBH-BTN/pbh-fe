@@ -1,7 +1,11 @@
 import { useEndpointStore } from '@/stores/endpoint'
 import urlJoin from 'url-join'
 import { getCommonHeader } from './utils'
-import type { CommonResponse, CommonResponseWithoutData, Pagination } from '@/api/model/common'
+import type {
+  CommonResponse,
+  CommonResponseWithoutData,
+  CommonResponseWithPage
+} from '@/api/model/common'
 import type { ruleBrief, updateLog } from '@/api/model/ruleSubscribe'
 
 export async function getRuleList(): Promise<CommonResponse<ruleBrief[]>> {
@@ -158,23 +162,18 @@ export async function SetCheckInterval(interval: number): Promise<CommonResponse
 export async function GetUpdateLogs(params: {
   pageIndex: number
   pageSize?: number
-}): Promise<Pagination<updateLog>> {
+}): Promise<CommonResponseWithPage<updateLog>> {
   const endpointStore = useEndpointStore()
   await endpointStore.serverAvailable
 
-  const url = new URL(urlJoin(endpointStore.endpoint, '/api/sub/logs'), location.href)
-  url.searchParams.set('pageIndex', String(params.pageIndex - 1))
+  const url = new URL(urlJoin(endpointStore.endpoint, 'api/sub/logs'), location.href)
+  url.searchParams.set('pageIndex', String(params.pageIndex))
   if (params.pageSize) {
     url.searchParams.set('pageSize', String(params.pageSize))
   }
 
-  return fetch(url, { headers: getCommonHeader() })
-    .then((res) => res.json())
-    .then((res) => {
-      endpointStore.assertResponseLogin(res)
-      return {
-        ...res.data,
-        pageIndex: res.pageIndex + 1
-      }
-    })
+  return fetch(url, { headers: getCommonHeader() }).then((res) => {
+    endpointStore.assertResponseLogin(res)
+    return res.json()
+  })
 }

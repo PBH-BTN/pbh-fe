@@ -2,7 +2,7 @@ import settingsLocale from './en-US/settings'
 import dashboardPageLocale from '@/views/dashboard/locale/en-US'
 import banListPageLocale from '@/views/banlist/locale/en-US'
 import banLogPageLocale from '@/views/banlog/locale/en-US'
-import topBanPageLocale from '@/views/top-ban/locale/en-US'
+import topBanPageLocale from '@/views/ranks/locale/en-US'
 import ruleMetricsLocale from '@/views/rule-metrics/locale/en-US'
 import serviceLocale from '@/service/locale/en-US'
 import loginLocale from '@/views/login/locale/en-US'
@@ -24,7 +24,7 @@ export default {
   'router.dashboard': 'Status',
   'router.banlist': 'Ban List',
   'router.banlogs': 'Ban Logs',
-  'router.topban': 'Top Bans',
+  'router.rank': 'Ranks',
   'router.metrics': 'Metrics',
   'router.metrics.ruleMetrics': 'Rule Metrics',
   'router.metrics.charts': 'Charts',

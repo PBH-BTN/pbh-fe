@@ -1,29 +1,49 @@
 <template>
-  <a-table stripe sticky-header :columns="columns" :data="data?.data" column-resizable :loading="loading"
-    :pagination="{ showPageSize: true, baseSize: 4, bufferSize: 1 }" filter-icon-align-left>
+  <a-table
+    stripe
+    sticky-header
+    :columns="columns"
+    :data="data?.data.results"
+    column-resizable
+    :loading="loading"
+    :pagination="{
+      total,
+      current,
+      pageSize,
+      showPageSize: true,
+      baseSize: 4,
+      bufferSize: 1
+    }"
+    filter-icon-align-left
+    @page-change="changeCurrent"
+    @page-size-change="changePageSize"
+  >
     <template #ip-filter="{ filterValue, setFilterValue, handleFilterConfirm, handleFilterReset }">
       <div class="search-box">
         <a-space direction="vertical">
-          <a-input-search :model-value="filterValue[0]" :placeholder="t('page.topban.top50Table.searchPlaceholder')"
-            allow-clear @search="handleFilterConfirm" @clear="handleFilterReset"
-            @input="(value: string) => setFilterValue([value])" />
+          <a-input-search
+            :model-value="filterValue[0]"
+            :placeholder="t('page.topban.top50Table.searchPlaceholder')"
+            allow-clear
+            @search="handleFilterConfirm"
+            @clear="handleFilterReset"
+            @input="(value: string) => setFilterValue([value])"
+          />
         </a-space>
       </div>
     </template>
   </a-table>
 </template>
 <script setup lang="ts">
-import { getTopBan } from '@/service/topBan'
-import { computed, watch, h } from 'vue'
-import { useRequest } from 'vue-request'
+import { getRanks } from '@/service/ranks'
+import { computed, h } from 'vue'
+import { usePagination } from 'vue-request'
 import { IconSearch } from '@arco-design/web-vue/es/icon'
 import type { topBanItem } from '@/api/model/topban'
 import { useAutoUpdate } from '@/stores/autoUpdate'
-import { useEndpointStore } from '@/stores/endpoint'
 import { useI18n } from 'vue-i18n'
 import type { TableColumnData } from '@arco-design/web-vue'
 const autoUpdateState = useAutoUpdate()
-const endpointState = useEndpointStore()
 const { t } = useI18n()
 const columns: TableColumnData[] = [
   {
@@ -41,24 +61,24 @@ const columns: TableColumnData[] = [
   }
 ]
 
-const props = defineProps({
-  topNumber: {
-    type: Number,
-    required: true
+const { data, total, current, loading, pageSize, changeCurrent, changePageSize } = usePagination(
+  getRanks,
+  {
+    defaultParams: [
+      {
+        pageIndex: 1,
+        pageSize: 10
+      }
+    ],
+    pagination: {
+      currentKey: 'data.pageIndex',
+      pageSizeKey: 'data.pageSize',
+      totalKey: 'data.total'
+    },
+    pollingInterval: computed(() => autoUpdateState.pollingInterval),
+    onSuccess: autoUpdateState.renewLastUpdate
   }
-})
-
-const topNumber = computed(() => props.topNumber)
-
-const { data, loading, refresh } = useRequest(() => getTopBan(topNumber.value), {
-  pollingInterval: computed(() => autoUpdateState.pollingInterval),
-  onSuccess: autoUpdateState.renewLastUpdate,
-  cacheKey: () => `${endpointState.endpoint}-topban-${topNumber.value}`
-})
-
-watch([topNumber, () => endpointState.endpoint], () => {
-  refresh()
-})
+)
 </script>
 
 <style scoped>

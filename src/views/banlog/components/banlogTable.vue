@@ -91,9 +91,9 @@ const { data, total, current, loading, pageSize, changeCurrent, changePageSize, 
       }
     ],
     pagination: {
-      currentKey: 'pageIndex',
-      pageSizeKey: 'pageSize',
-      totalKey: 'total'
+      currentKey: 'data.pageIndex',
+      pageSizeKey: 'data.pageSize',
+      totalKey: 'data.total'
     },
     pollingInterval: computed(() => autoUpdateState.pollingInterval),
     cacheKey: (params) =>
@@ -156,7 +156,7 @@ const columns = [
     tooltip: true
   }
 ]
-const list = computed(() => data.value?.results)
+const list = computed(() => data.value?.data.results)
 </script>
 
 <style scoped>

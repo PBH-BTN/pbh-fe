@@ -9,7 +9,7 @@ import Dashboard from '../views/dashboard/index.vue'
 import { computed, h } from 'vue'
 import BanList from '@/views/banlist/index.vue'
 import BanLog from '@/views/banlog/index.vue'
-import TopBan from '@/views/top-ban/index.vue'
+import Ranks from '@/views/ranks/index.vue'
 import RuleMetric from '@/views/rule-metrics/index.vue'
 import GenericBlackList from '@/views/rule-management/components/generic/index.vue'
 import SubscribeManagement from '@/views/rule-management/components/subscribe/index.vue'
@@ -156,13 +156,13 @@ export const routerOptions: RouteRecordRaw[] = [
         component: () => import('@/views/charts/index.vue')
       },
       {
-        path: '/metricsTop',
-        name: 'top',
+        path: '/metricsRank',
+        name: 'rank',
         meta: {
-          label: 'router.topban',
+          label: 'router.rank',
           needLogin: true
         },
-        component: TopBan
+        component: Ranks
       }
     ]
   },

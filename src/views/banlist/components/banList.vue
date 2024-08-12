@@ -1,7 +1,5 @@
 <template>
   <a-space direction="vertical" fill>
-    <a-typography-title :heading="3">{{ t('page.banlist.banlist') }}</a-typography-title>
-    <br />
     <a-space class="list-header" wrap>
       <a-typography-text>{{ t('page.banlist.banlist.description') }}</a-typography-text>
       <a-input-search :style="{ width: '250px' }" :placeholder="t('page.banlist.banlist.searchPlaceHolder')"
@@ -20,7 +18,7 @@
         <div style="position: absolute; transform: translateY(-50%)" v-if="loadingMore">
           <a-typography-text v-if="bottom">{{
             t('page.banlist.banlist.bottomReached')
-            }}</a-typography-text>
+          }}</a-typography-text>
           <a-spin v-else />
         </div>
       </template>

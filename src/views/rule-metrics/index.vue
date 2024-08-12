@@ -1,7 +1,6 @@
 <template>
   <div>
     <a-typography>
-      <a-typography-title :heading="3">{{ $t('page.ruleMetrices.title') }}</a-typography-title>
       <a-typography-paragraph>
         {{ $t('page.ruleMetrices.description') }}
       </a-typography-paragraph>

@@ -66,5 +66,10 @@
   "engines": {
     "node": ">=20.0.0",
     "pnpm": ">=9.0.0"
+  },
+  "pnpm": {
+    "patchedDependencies": {
+      "vue-request@2.0.4": "patches/vue-request@2.0.4.patch"
+    }
   }
 }

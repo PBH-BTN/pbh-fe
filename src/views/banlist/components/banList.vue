@@ -2,14 +2,27 @@
   <a-space direction="vertical" fill>
     <a-space class="list-header" wrap>
       <a-typography-text>{{ t('page.banlist.banlist.description') }}</a-typography-text>
-      <a-input-search :style="{ width: '250px' }" :placeholder="t('page.banlist.banlist.searchPlaceHolder')"
-        @search="handleSearch" allow-clear search-button />
+      <a-input-search
+        :style="{ width: '250px' }"
+        :placeholder="t('page.banlist.banlist.searchPlaceHolder')"
+        @search="handleSearch"
+        allow-clear
+        search-button
+      />
     </a-space>
-    <a-list :virtualListProps="{
-      height: virtualListHeight
-    }" ref="banlist" @reach-bottom="loadMore" :scrollbar="false" :data="list">
+    <a-list
+      :virtualListProps="{
+        height: virtualListHeight
+      }"
+      ref="banlist"
+      @reach-bottom="loadMore"
+      :scrollbar="false"
+      :data="list"
+    >
       <template #item="{ item, index }">
-        <a-list-item :style="{ marginBottom: index === list.length - 1 && loadingMore ? '50px' : undefined }">
+        <a-list-item
+          :style="{ marginBottom: index === list.length - 1 && loadingMore ? '50px' : undefined }"
+        >
           <banListItem :item="item" @unban="refresh()" />
         </a-list-item>
       </template>
@@ -29,7 +42,7 @@
 <script setup lang="ts">
 import { useRequest } from 'vue-request'
 import { computed, onMounted, ref, watch } from 'vue'
-import { useAutoUpdate } from '@/stores/autoUpdate'
+import { useAutoUpdatePlugin } from '@/stores/autoUpdate'
 import { useEndpointStore } from '@/stores/endpoint'
 import { getBanList } from '@/service/banList'
 import type { BanList } from '@/api/model/banlist'
@@ -40,7 +53,6 @@ import banListItem from './banListItem.vue'
 
 const { height } = useWindowSize()
 const banlist = ref()
-const autoUpdateState = useAutoUpdate()
 const endpointState = useEndpointStore()
 const bottom = ref(false)
 const limit = ref(5)
@@ -60,7 +72,9 @@ async function getMoreBanList(): Promise<BanList[]> {
     let match = false
     // load more data until the limit or get the same data with the top one
     while (newData.length < limit.value && !match) {
-      const moreData = await (await getBanList(step, newData[newData.length - 1]?.banMetadata.banAt)).data
+      const moreData = await (
+        await getBanList(step, newData[newData.length - 1]?.banMetadata.banAt)
+      ).data
       for (const item of moreData) {
         if (item.banMetadata.randomId !== data.value[0].banMetadata.randomId) {
           newData.push(item)
@@ -80,11 +94,13 @@ async function getMoreBanList(): Promise<BanList[]> {
   return data.value
 }
 
-const { data, refresh, run } = useRequest(getMoreBanList, {
-  pollingInterval: computed(() => autoUpdateState.pollingInterval),
-  onSuccess: autoUpdateState.renewLastUpdate,
-  manual: true
-})
+const { data, refresh, run } = useRequest(
+  getMoreBanList,
+  {
+    manual: true
+  },
+  [useAutoUpdatePlugin]
+)
 const handleSearch = (value: string) => {
   if (value) {
     const index = data.value?.map((item) => item.address).findIndex((item) => item.includes(value))
@@ -103,10 +119,12 @@ const loadMore = async () => {
   if (data.value.length <= limit.value) {
     const newData: BanList[] = []
     while (newData.length + data.value.length < limit.value && !bottom.value) {
-      const moreData = (await getBanList(
-        step,
-        (newData[newData.length - 1] || data.value[data.value.length - 1])?.banMetadata.banAt
-      )).data
+      const moreData = (
+        await getBanList(
+          step,
+          (newData[newData.length - 1] || data.value[data.value.length - 1])?.banMetadata.banAt
+        )
+      ).data
       if (moreData.length < step) {
         bottom.value = true
       }

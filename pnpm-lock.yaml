@@ -4,6 +4,11 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+patchedDependencies:
+  vue-request@2.0.4:
+    hash: imva7qnbqmkxs76or73cwn5jom
+    path: patches/vue-request@2.0.4.patch
+
 importers:
 
   .:
@@ -64,7 +69,7 @@ importers:
         version: 9.13.1(vue@3.4.37(typescript@5.5.4))
       vue-request:
         specifier: ^2.0.4
-        version: 2.0.4(vue@3.4.37(typescript@5.5.4))
+        version: 2.0.4(patch_hash=imva7qnbqmkxs76or73cwn5jom)(vue@3.4.37(typescript@5.5.4))
       vue-router:
         specifier: ^4.4.3
         version: 4.4.3(vue@3.4.37(typescript@5.5.4))
@@ -5174,7 +5179,7 @@ snapshots:
       '@vue/devtools-api': 6.6.1
       vue: 3.4.37(typescript@5.5.4)
 
-  vue-request@2.0.4(vue@3.4.37(typescript@5.5.4)):
+  vue-request@2.0.4(patch_hash=imva7qnbqmkxs76or73cwn5jom)(vue@3.4.37(typescript@5.5.4)):
     dependencies:
       vue: 3.4.37(typescript@5.5.4)
       vue-demi: 0.14.10(vue@3.4.37(typescript@5.5.4))

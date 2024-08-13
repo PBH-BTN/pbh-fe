@@ -5,14 +5,14 @@ import urlJoin from 'url-join'
 import { getCommonHeader } from './utils'
 
 export async function getBanlogs(params: {
-  pageIndex: number
+  page: number
   pageSize?: number
 }): Promise<CommonResponseWithPage<BanLog[]>> {
   const endpointStore = useEndpointStore()
   await endpointStore.serverAvailable
 
   const url = new URL(urlJoin(endpointStore.endpoint, 'api/bans/logs'), location.href)
-  url.searchParams.set('pageIndex', String(params.pageIndex))
+  url.searchParams.set('page', String(params.page))
   if (params.pageSize) {
     url.searchParams.set('pageSize', String(params.pageSize))
   }

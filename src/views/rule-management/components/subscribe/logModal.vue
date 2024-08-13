@@ -21,6 +21,7 @@
       }"
       size="medium"
       @page-change="changeCurrent"
+      @page-size-change="changePageSize"
       class="banlog-table"
     >
       <template #ruleId="{ record }">
@@ -86,22 +87,25 @@ const tableLoading = computed(() => {
   return forceLoading.value || loading.value || !list.value
 })
 
-const { data, total, current, loading, pageSize, changeCurrent } = usePagination(GetUpdateLogs, {
-  defaultParams: [
-    {
-      pageIndex: 1,
-      pageSize: 5
+const { data, total, current, loading, pageSize, changeCurrent, changePageSize } = usePagination(
+  GetUpdateLogs,
+  {
+    defaultParams: [
+      {
+        page: 1,
+        pageSize: 5
+      }
+    ],
+    pagination: {
+      currentKey: 'page',
+      pageSizeKey: 'pageSize',
+      totalKey: 'data.total'
+    },
+    onAfter: () => {
+      forceLoading.value = false
     }
-  ],
-  pagination: {
-    currentKey: 'pageIndex',
-    pageSizeKey: 'pageSize',
-    totalKey: 'total'
-  },
-  onAfter: () => {
-    forceLoading.value = false
   }
-})
+)
 watch([pageSize, current], () => {
   forceLoading.value = true
 })

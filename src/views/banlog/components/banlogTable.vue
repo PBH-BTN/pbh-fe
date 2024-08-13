@@ -86,18 +86,18 @@ const { data, total, current, loading, pageSize, changeCurrent, changePageSize, 
   usePagination(getBanlogs, {
     defaultParams: [
       {
-        pageIndex: 1,
+        page: 1,
         pageSize: 10
       }
     ],
     pagination: {
-      currentKey: 'data.pageIndex',
-      pageSizeKey: 'data.pageSize',
+      currentKey: 'page',
+      pageSizeKey: 'pageSize',
       totalKey: 'data.total'
     },
     pollingInterval: computed(() => autoUpdateState.pollingInterval),
     cacheKey: (params) =>
-      `${endpointState.endpoint}-banlogs-${params?.[0].pageIndex || 1}-${params?.[0].pageSize || 10}`,
+      `${endpointState.endpoint}-banlogs-${params?.[0].page || 1}-${params?.[0].pageSize || 10}`,
     onSuccess: autoUpdateState.renewLastUpdate,
     onAfter: () => {
       forceLoading.value = false

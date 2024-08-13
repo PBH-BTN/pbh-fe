@@ -160,14 +160,14 @@ export async function SetCheckInterval(interval: number): Promise<CommonResponse
 }
 
 export async function GetUpdateLogs(params: {
-  pageIndex: number
+  page: number
   pageSize?: number
 }): Promise<CommonResponseWithPage<updateLog>> {
   const endpointStore = useEndpointStore()
   await endpointStore.serverAvailable
 
   const url = new URL(urlJoin(endpointStore.endpoint, 'api/sub/logs'), location.href)
-  url.searchParams.set('pageIndex', String(params.pageIndex))
+  url.searchParams.set('page', String(params.page))
   if (params.pageSize) {
     url.searchParams.set('pageSize', String(params.pageSize))
   }

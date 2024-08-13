@@ -111,7 +111,7 @@ export const routerOptions: RouteRecordRaw[] = [
         name: 'rule_management_city',
         meta: {
           label: 'page.rule_management.city',
-          icon: genIconComponent('icon-chengshi'),
+          icon: genIconComponent('icon-city'),
           needLogin: true
         },
         component: GenericBlackList,

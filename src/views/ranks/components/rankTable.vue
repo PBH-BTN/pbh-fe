@@ -39,7 +39,7 @@ import { getRanks } from '@/service/ranks'
 import { computed, h } from 'vue'
 import { usePagination } from 'vue-request'
 import { IconSearch } from '@arco-design/web-vue/es/icon'
-import type { topBanItem } from '@/api/model/topban'
+import type { rankItem } from '@/api/model/topban'
 import { useAutoUpdate } from '@/stores/autoUpdate'
 import { useI18n } from 'vue-i18n'
 import type { TableColumnData } from '@arco-design/web-vue'
@@ -48,9 +48,9 @@ const { t } = useI18n()
 const columns: TableColumnData[] = [
   {
     title: () => t('page.topban.top50Table.column.ipaddress'),
-    dataIndex: 'address',
+    dataIndex: 'peerIp',
     filterable: {
-      filter: (value, record) => (record as topBanItem).address.includes(value[0]),
+      filter: (value, record) => (record as rankItem).address.includes(value[0]),
       slotName: 'ip-filter',
       icon: () => h(IconSearch)
     }
@@ -66,13 +66,13 @@ const { data, total, current, loading, pageSize, changeCurrent, changePageSize }
   {
     defaultParams: [
       {
-        pageIndex: 1,
-        pageSize: 10
+        page: 1,
+        pageSize: 20
       }
     ],
     pagination: {
-      currentKey: 'data.pageIndex',
-      pageSizeKey: 'data.pageSize',
+      currentKey: 'page',
+      pageSizeKey: 'pageSize',
       totalKey: 'data.total'
     },
     pollingInterval: computed(() => autoUpdateState.pollingInterval),

@@ -5,8 +5,8 @@ export interface CommonResponse<T> {
 }
 
 export interface Pagination<T> {
-  pageIndex: number
-  pageSize: number
+  page: number
+  size: number
   results: T[]
   total: number
 }

@@ -1,4 +1,4 @@
-export interface topBanItem {
-    address:string,
-    count:number
+export interface rankItem {
+  address: string
+  count: number
 }

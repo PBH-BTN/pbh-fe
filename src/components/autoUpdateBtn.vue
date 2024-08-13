@@ -1,7 +1,13 @@
 <template>
   <a-popover :trigger="tigger === 'switch' ? 'click' : 'hover'">
-    <a-button class="nav-btn" :class="ticktock ? 'ticktock' : ''" :type="autoUpdate.autoUpdate ? 'primary' : 'outline'"
-      :shape="'circle'" @click="() => tigger !== 'switch' && switchAutoUpdate()" ref="autoUpdateBtn">
+    <a-button
+      class="auto-update-btn"
+      :class="ticktock ? 'ticktock' : ''"
+      :type="autoUpdate.autoUpdate ? 'primary' : 'outline'"
+      :shape="'circle'"
+      @click="() => tigger !== 'switch' && switchAutoUpdate()"
+      ref="autoUpdateBtn"
+    >
       <icon-sync />
     </a-button>
     <template #title>
@@ -56,21 +62,20 @@ const switchAutoUpdate = () => {
 </script>
 
 <style lang="less" scoped>
-.nav-btn,
-.nav-btn:hover {
-  border-color: rgb(var(--gray-2));
-  color: rgb(var(--gray-8));
+.auto-update-btn,
+.auto-update-btn:hover {
   font-size: 16px;
+  &.ticktock {
+    animation: whirl 0.3s ease-in-out 1;
+  }
+}
 
-  &.arco-btn-primary {
-    background-color: rgb(var(--gray-8));
-    color: rgb(var(--gray-1));
-    transition-duration: 0.2s;
-
-    &.ticktock {
-      background-color: rgb(var(--gray-1));
-      color: rgb(var(--gray-8));
-    }
+@keyframes whirl {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }
 </style>

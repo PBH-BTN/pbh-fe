@@ -16,3 +16,8 @@ export interface CommonResponseWithoutData {
   message: string
   success: boolean
 }
+
+export interface KV<T, U> {
+  key: T
+  value: U
+}

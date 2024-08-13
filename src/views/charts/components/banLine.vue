@@ -96,7 +96,7 @@ import { SVGRenderer } from 'echarts/renderers'
 import { useDarkStore } from '@/stores/dark'
 import dayjs from 'dayjs'
 import { useI18n } from 'vue-i18n'
-import { getTimebasedStaticsData } from '@/service/ruleStatics'
+import { getTimebasedStaticsData } from '@/service/charts'
 const { t } = useI18n()
 const loadingOptions = computed(() => ({
   text: t('page.charts.loading'),
@@ -134,7 +134,6 @@ const chartOptions = ref({
     {
       data: [] as [Date, number][],
       type: 'line',
-      // smooth: true,
       name: t('page.charts.line.options.field')
     }
   ]

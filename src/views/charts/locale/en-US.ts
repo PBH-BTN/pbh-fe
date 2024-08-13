@@ -8,6 +8,7 @@ export default {
   'page.charts.options.field.torrentName': 'Torrent Name',
   'page.charts.options.field.module': 'Module',
   'page.charts.title.line': 'Ban count',
+  'page.charts.title.trends': 'Trends',
   'page.charts.line.options.field': 'Count',
   'page.charts.options.days': 'Time Range',
   'page.charts.options.mergeSame': 'Try to merge same type clients',
@@ -19,5 +20,7 @@ export default {
   'page.charts.options.shortcut.24hours': '24 hours before',
   'page.charts.options.shortcut.7days': '7 days before',
   'page.charts.options.shortcut.14days': '14 days before',
-  'page.charts.options.shortcut.30days': '30 days before'
+  'page.charts.options.shortcut.30days': '30 days before',
+  'page.charts.trends.options.peers': 'Connected Peers',
+  'page.charts.trends.options.bans': 'Banned Peers'
 }

@@ -9,6 +9,7 @@ export default {
   'page.charts.options.field.module': '功能模块',
   'page.charts.title.line': '封禁统计',
   'page.charts.line.options.field': '计数',
+  'page.charts.title.trends': '趋势',
   'page.charts.options.days': '时间范围',
   'page.charts.options.mergeSame': '尝试合并同类型客户端',
   'page.charts.options.steps': '步长',
@@ -19,5 +20,7 @@ export default {
   'page.charts.options.shortcut.24hours': '24 小时前',
   'page.charts.options.shortcut.7days': '7 天前',
   'page.charts.options.shortcut.14days': '14 天前',
-  'page.charts.options.shortcut.30days': '30 天前'
+  'page.charts.options.shortcut.30days': '30 天前',
+  'page.charts.trends.options.peers': '连接的 Peer 数',
+  'page.charts.trends.options.bans': '封禁数'
 }

@@ -1,3 +1,5 @@
+import type { KV } from './common'
+
 export interface Statistic {
   peerUnbanCounter: number
   peerBanCounter: number
@@ -16,4 +18,9 @@ export interface TimeStatisticItem {
   timestamp: number
   count: number
   percent: number
+}
+
+export interface Trends {
+  connectedPeersTrend: KV<number, number>[]
+  bannedPeersTrend: KV<number, number>[]
 }

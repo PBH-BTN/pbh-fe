@@ -1,4 +1,4 @@
-import { onMounted, onUnmounted, readonly, ref, watch } from 'vue'
+import { onUnmounted, readonly, ref, watch } from 'vue'
 import { defineStore } from 'pinia'
 import { useStorage } from '@vueuse/core'
 import { type PluginImplementType } from 'vue-request'
@@ -109,25 +109,14 @@ export const useAutoUpdate = defineStore('autoUpdate', () => {
   watch(autoUpdate, () => {
     if (pollingTimer.value) {
       pollingTimer.value()
+    }
+    if (autoUpdate.value) {
       pollingTimer.value = polling(() => channel.doRefresh())
     }
   })
 
-  let eventAbortController: AbortController
-
-  onMounted(() => {
-    eventAbortController = new AbortController()
-    window.addEventListener('visibilitychange', () => isDocumentVisibility() && rePolling(), {
-      signal: eventAbortController.signal
-    })
-    window.addEventListener('online', rePolling, {
-      signal: eventAbortController.signal
-    })
-  })
-
-  onUnmounted(() => {
-    eventAbortController?.abort()
-  })
+  window.addEventListener('visibilitychange', () => isDocumentVisibility() && rePolling(), false)
+  window.addEventListener('online', rePolling, false)
 
   return {
     lastUpdate,
@@ -148,9 +137,7 @@ export const useAutoUpdatePlugin = <R, P extends any[]>(
   const autoupdateStore = useAutoUpdate()
   const callbackRef = ref<ReturnType<AutoUpdateMessageChannel['polling']>>()
 
-  onMounted(() => {
-    callbackRef.value = autoupdateStore.polling(() => queryInstance.context.refresh())
-  })
+  callbackRef.value = autoupdateStore.polling(() => queryInstance.context.refresh())
 
   onUnmounted(() => {
     callbackRef.value?.('unmont')

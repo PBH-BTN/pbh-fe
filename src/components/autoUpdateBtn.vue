@@ -72,7 +72,7 @@ const loadingStatus = computed(() => autoUpdate.status)
 .auto-update-btn:hover {
   font-size: 16px;
   &.loading {
-    animation: whirl 0.5s linear infinite;
+    animation: whirl 0.25s linear infinite;
     &.loading-holding {
       animation-iteration-count: 1;
     }
@@ -84,7 +84,7 @@ const loadingStatus = computed(() => autoUpdate.status)
     transform: rotate(0deg);
   }
   100% {
-    transform: rotate(360deg);
+    transform: rotate(180deg);
   }
 }
 </style>

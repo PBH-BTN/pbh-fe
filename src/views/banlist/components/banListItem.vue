@@ -172,10 +172,12 @@ a {
 }
 
 .hover-display-btn {
+  transition: opacity 0.15s ease-in-out;
   opacity: 0;
 }
 
 .banlist-item:hover .hover-display-btn {
+  transition: opacity 0.3s ease-in-out;
   opacity: 1;
 }
 

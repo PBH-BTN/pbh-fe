@@ -15,10 +15,12 @@
       <fieldPie />
     </a-col>
     <a-col :xl="12" :lg="24" :md="24" :sm="24" :xs="24">
-      <trends />
+      <plusWarpper :title="t('page.charts.title.trends')"> <trends /></plusWarpper>
     </a-col>
     <a-col :xl="12" :lg="24" :md="24" :sm="24" :xs="24">
-      <traffic />
+      <plusWarpper :title="t('page.charts.title.traffic')">
+        <traffic />
+      </plusWarpper>
     </a-col>
   </a-row>
 </template>
@@ -28,6 +30,9 @@ import banLine from './components/banLine.vue'
 import fieldPie from './components/fieldPie.vue'
 import trends from './components/trends.vue'
 import traffic from './components/traffic.vue'
+import plusWarpper from './components/plusWarpper.vue'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 </script>
 
 <style>

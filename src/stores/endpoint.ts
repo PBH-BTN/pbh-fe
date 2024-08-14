@@ -1,8 +1,8 @@
 import { defineStore } from 'pinia'
 import { useStorage } from '@vueuse/core'
-import { getLatestVersion, getManifest } from '@/service/version'
+import { getLatestVersion, getManifest, getPBHPlusStatus } from '@/service/version'
 import { computed, readonly, ref, type DeepReadonly } from 'vue'
-import type { release } from '@/api/model/manifest'
+import type { donateStatus, release } from '@/api/model/manifest'
 import { IncorrectTokenError, login, NeedInitError } from '@/service/login'
 import { compare } from 'compare-versions'
 import type { mainfest } from '@/api/model/manifest'
@@ -116,9 +116,24 @@ export const useEndpointStore = defineStore('endpoint', () => {
       console.error('Failed to get version:', err)
     }
   }
+
+  const plusStatus = ref<donateStatus | null>()
+  const getPlusStatus = async () => {
+    const result = await getPBHPlusStatus()
+    plusStatus.value = result.data
+    if (result.data.activated) {
+      console.log('PBH Plus Activated! Thanks for your support ❤️')
+    }
+  }
+  const setPlusKey = () => {
+    if (plusStatus.value) {
+      plusStatus.value.activated = true
+    }
+  }
   // init
   setEndpoint(endpoint.value)
 
+  setTimeout(async () => getPlusStatus(), 3000)
   setTimeout(async () => setAccessToken(accessToken.value), 3000)
   return {
     endpointSaved: readonly(endpoint),
@@ -139,6 +154,8 @@ export const useEndpointStore = defineStore('endpoint', () => {
     setAccessToken,
     authToken: readonly(authToken),
     setAuthToken,
+    plusStatus,
+    setPlusKey,
     assertResponseLogin: (res: Response) => {
       if (res.status === 403) {
         setAuthToken(null)

@@ -25,5 +25,8 @@ export default {
   'page.charts.trends.options.peers': 'Connected Peers',
   'page.charts.trends.options.bans': 'Banned Peers',
   'page.charts.traffic.options.download': 'Download',
-  'page.charts.traffic.options.upload': 'Upload'
+  'page.charts.traffic.options.upload': 'Upload',
+  'page.charts.locked': 'This chart requires PeerbanHelper+ subscription',
+  'page.charts.locked.tips': 'Already donated? Click here to activate your subscription',
+  'page.charts.locked.active': 'Active'
 }

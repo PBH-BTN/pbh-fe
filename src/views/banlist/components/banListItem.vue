@@ -177,7 +177,7 @@ a {
 }
 
 .banlist-item:hover .hover-display-btn {
-  transition: opacity 0.3s ease-in-out;
+  transition: opacity 0.15s ease-in-out;
   opacity: 1;
 }
 

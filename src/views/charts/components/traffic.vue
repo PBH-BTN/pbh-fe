@@ -111,9 +111,14 @@ const chartOptions = ref({
   ],
   yAxis: [
     {
-      type: 'value',
+      type: 'log',
+      logBase: 10,
+      min: 1,
       axisLabel: {
         formatter: (value: number) => {
+          if (value === 1) {
+            return '0'
+          }
           return formatFileSize(value)
         }
       }

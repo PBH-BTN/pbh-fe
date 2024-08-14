@@ -14,10 +14,10 @@
     <a-col :xl="12" :lg="24" :md="24" :sm="24" :xs="24">
       <fieldPie />
     </a-col>
-    <a-col :xl="24" :lg="24" :md="24" :sm="24" :xs="24">
+    <a-col :xl="12" :lg="24" :md="24" :sm="24" :xs="24">
       <trends />
     </a-col>
-    <a-col :xl="24" :lg="24" :md="24" :sm="24" :xs="24">
+    <a-col :xl="12" :lg="24" :md="24" :sm="24" :xs="24">
       <traffic />
     </a-col>
   </a-row>

@@ -47,10 +47,8 @@
 </template>
 <script setup lang="ts">
 import { getRanks } from '@/service/ranks'
-import { computed, h } from 'vue'
+import { computed } from 'vue'
 import { usePagination } from 'vue-request'
-import { IconSearch } from '@arco-design/web-vue/es/icon'
-import type { rankItem } from '@/api/model/topban'
 import { useAutoUpdate } from '@/stores/autoUpdate'
 import { useI18n } from 'vue-i18n'
 import type { TableColumnData } from '@arco-design/web-vue'

@@ -19,6 +19,7 @@ export default {
   'page.banlist.banlist.listItem.unban': 'Unban',
   'page.banlist.banlist.listItem.unbanUnexcepted': 'No IP address(s) unbanned',
   'page.banlist.banlist.listItem.unbanSuccess': 'Unbanned {count} IP address',
-  'page.banlist.banlist.listItem.threatCensysSearch': 'Censys',
-  'page.banlist.banlist.listItem.threatThreatBook': 'ThreatBook'
+  'page.banlist.banlist.listItem.threatAnalyse': 'Threat Analyse',
+  'page.banlist.banlist.listItem.threatAnalyse.censysSearch': 'Censys Search',
+  'page.banlist.banlist.listItem.threatAnalyse.threatBook': 'ThreatBookX',
 }

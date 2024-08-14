@@ -24,3 +24,13 @@ export interface Trends {
   connectedPeersTrend: KV<number, number>[]
   bannedPeersTrend: KV<number, number>[]
 }
+
+export interface Traffic {
+  allTimeUploaded: number
+  allTimeDownloaded: number
+  journal: {
+    timestamp: number
+    uploaded: number
+    downloaded: number
+  }[]
+}

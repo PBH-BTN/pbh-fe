@@ -17,6 +17,9 @@
     <a-col :xl="24" :lg="24" :md="24" :sm="24" :xs="24">
       <trends />
     </a-col>
+    <a-col :xl="24" :lg="24" :md="24" :sm="24" :xs="24">
+      <traffic />
+    </a-col>
   </a-row>
 </template>
 
@@ -24,6 +27,7 @@
 import banLine from './components/banLine.vue'
 import fieldPie from './components/fieldPie.vue'
 import trends from './components/trends.vue'
+import traffic from './components/traffic.vue'
 </script>
 
 <style>

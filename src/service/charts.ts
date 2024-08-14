@@ -1,5 +1,5 @@
 import type { CommonResponse } from '@/api/model/common'
-import type { AnalysisField, TimeStatisticItem, Trends } from '@/api/model/statistic'
+import type { AnalysisField, TimeStatisticItem, Traffic, Trends } from '@/api/model/statistic'
 import { useEndpointStore } from '@/stores/endpoint'
 import urlJoin from 'url-join'
 import { getCommonHeader } from './utils'
@@ -59,6 +59,24 @@ export async function getTrends(startAt: Date, endAt: Date): Promise<CommonRespo
   })
   const url = new URL(
     urlJoin(endpointStore.endpoint, `api/chart/trend?` + query.toString()),
+    location.href
+  )
+
+  return fetch(url, { headers: getCommonHeader() }).then((res) => {
+    endpointStore.assertResponseLogin(res)
+    return res.json()
+  })
+}
+
+export async function getTraffic(startAt: Date, endAt: Date): Promise<CommonResponse<Traffic>> {
+  const endpointStore = useEndpointStore()
+  await endpointStore.serverAvailable
+  const query = new URLSearchParams({
+    startAt: startAt.getTime().toString(),
+    endAt: endAt.getTime().toString()
+  })
+  const url = new URL(
+    urlJoin(endpointStore.endpoint, `api/chart/traffic?` + query.toString()),
     location.href
   )
 

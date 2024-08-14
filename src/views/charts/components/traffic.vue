@@ -112,7 +112,7 @@ const chartOptions = ref({
   yAxis: [
     {
       type: 'log',
-      logBase: 10,
+      logBase: 11,
       min: 1,
       axisLabel: {
         formatter: (value: number) => {

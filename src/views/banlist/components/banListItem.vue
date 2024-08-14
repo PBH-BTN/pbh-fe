@@ -21,15 +21,20 @@
           </a-tooltip>
         </a-space>
         <div>
-          <a-button-group>
-            <a-button class="hover-display-btn" :href="`https://search.censys.io/hosts/${item.banMetadata.peer.address.ip}`" target="_blank">
-              {{ t('page.banlist.banlist.listItem.threatCensysSearch') }}
-            </a-button>
-            <a-button class="hover-display-btn" :href="`https://x.threatbook.com/v5/ip/${item.banMetadata.peer.address.ip}`" target="_blank">
-              {{ t('page.banlist.banlist.listItem.threatThreatBook') }}
-            </a-button>
+          <a-button-group class="hover-display-btn" >
+            <a-dropdown>
+              <a-button>{{ t('page.banlist.banlist.listItem.threatAnalyse') }}<icon-down/></a-button>
+              <template #content>
+                <a-doption @click="openUrl(`https://search.censys.io/hosts/${item.banMetadata.peer.address.ip}`)">
+                  {{ t('page.banlist.banlist.listItem.threatAnalyse.censysSearch') }}
+                </a-doption>
+                <a-doption @click="openUrl(`https://x.threatbook.com/v5/ip/${item.banMetadata.peer.address.ip}`)">
+                  {{ t('page.banlist.banlist.listItem.threatAnalyse.threatBook') }}
+                </a-doption>
+              </template>
+            </a-dropdown>
             <AsyncMethod once :async-fn="() => handleUnban(item.banMetadata.peer.address.ip)" v-slot="{ run, loading }">
-              <a-button  type="outline" class="hover-display-btn" :loading="loading" @click="run">
+              <a-button type="outline" :loading="loading" @click="run">
                 {{ t('page.banlist.banlist.listItem.unban') }}
               </a-button>
             </AsyncMethod>
@@ -149,6 +154,7 @@ const handleUnban = async (address: string) => {
     return true
   }
 }
+const openUrl = (address: string) => {window.open(address, '_blank')}
 </script>
 
 <style scoped>

@@ -18,5 +18,7 @@ export default {
   'page.banlist.banlist.bottomReached': '已经到底啦！',
   'page.banlist.banlist.listItem.unban': '解除封禁',
   'page.banlist.banlist.listItem.unbanUnexcepted': '没有 IP 地址被成功解除封禁',
-  'page.banlist.banlist.listItem.unbanSuccess': '成功解封 {count} 个 IP 地址'
+  'page.banlist.banlist.listItem.unbanSuccess': '成功解封 {count} 个 IP 地址',
+  'page.banlist.banlist.listItem.threatCensysSearch': 'Censys',
+  'page.banlist.banlist.listItem.threatThreatBook': '微步在线'
 }

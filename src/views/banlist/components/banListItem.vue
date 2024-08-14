@@ -20,11 +20,21 @@
             </a-tag>
           </a-tooltip>
         </a-space>
-        <AsyncMethod once :async-fn="() => handleUnban(item.banMetadata.peer.address.ip)" v-slot="{ run, loading }">
-          <a-button class="unban-button" :loading="loading" @click="run">
-            {{ t('page.banlist.banlist.listItem.unban') }}
-          </a-button>
-        </AsyncMethod>
+        <div>
+          <a-button-group>
+            <a-button class="hover-display-btn" :href="`https://search.censys.io/hosts/${item.banMetadata.peer.address.ip}`" target="_blank">
+              {{ t('page.banlist.banlist.listItem.threatCensysSearch') }}
+            </a-button>
+            <a-button class="hover-display-btn" :href="`https://x.threatbook.com/v5/ip/${item.banMetadata.peer.address.ip}`" target="_blank">
+              {{ t('page.banlist.banlist.listItem.threatThreatBook') }}
+            </a-button>
+            <AsyncMethod once :async-fn="() => handleUnban(item.banMetadata.peer.address.ip)" v-slot="{ run, loading }">
+              <a-button  type="outline" class="hover-display-btn" :loading="loading" @click="run">
+                {{ t('page.banlist.banlist.listItem.unban') }}
+              </a-button>
+            </AsyncMethod>
+          </a-button-group>
+        </div>
       </a-space>
     </template>
     <a-descriptions-item :label="t('page.banlist.banlist.listItem.banTime')" :span="6">
@@ -155,11 +165,12 @@ a {
   text-decoration: none;
 }
 
-.unban-button {
+.hover-display-btn {
   opacity: 0;
 }
 
-.banlist-item:hover .unban-button {
+.banlist-item:hover .hover-display-btn {
   opacity: 1;
 }
+
 </style>

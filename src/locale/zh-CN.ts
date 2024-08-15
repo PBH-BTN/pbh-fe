@@ -1,4 +1,5 @@
 import settingsLocale from './zh-CN/settings'
+import plusLocale from './zh-CN/plus'
 import dashboardPageLocale from '@/views/dashboard/locale/zh-CN'
 import banListPageLocale from '@/views/banlist/locale/zh-CN'
 import banLogPageLocale from '@/views/banlog/locale/zh-CN'
@@ -34,6 +35,7 @@ export default {
   'router.moduleNotEnable.viewDoc': '查看文档',
 
   ...settingsLocale,
+  ...plusLocale,
   ...dashboardPageLocale,
   ...banListPageLocale,
   ...banLogPageLocale,

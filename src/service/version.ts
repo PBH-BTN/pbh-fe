@@ -3,7 +3,7 @@ import urlJoin from 'url-join'
 import { getCommonHeader } from './utils'
 import { Octokit } from '@octokit/core'
 import type { donateStatus, mainfest } from '@/api/model/manifest'
-import type { CommonResponse } from '@/api/model/common'
+import type { CommonResponse, CommonResponseWithoutData } from '@/api/model/common'
 export class GetManifestError extends Error {
   static name = 'GetManifestError' as const
   name = GetManifestError.name
@@ -35,6 +35,18 @@ export function getLatestVersion(token = useEndpointStore().accessToken) {
 export function getPBHPlusStatus(): Promise<CommonResponse<donateStatus>> {
   const url = new URL(urlJoin(useEndpointStore().endpoint, '/api/pbhplus/status'), location.href)
   return fetch(url, { headers: getCommonHeader() }).then((res) => {
+    useEndpointStore().assertResponseLogin(res)
+    return res.json()
+  })
+}
+
+export function setPHBPlusKey(key: string): Promise<CommonResponseWithoutData> {
+  const url = new URL(urlJoin(useEndpointStore().endpoint, '/api/pbhplus/key'), location.href)
+  return fetch(url, {
+    method: 'PUT',
+    headers: getCommonHeader(),
+    body: JSON.stringify({ key })
+  }).then((res) => {
     useEndpointStore().assertResponseLogin(res)
     return res.json()
   })

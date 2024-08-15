@@ -1,12 +1,13 @@
 import { defineStore } from 'pinia'
 import { useStorage } from '@vueuse/core'
-import { getLatestVersion, getManifest, getPBHPlusStatus } from '@/service/version'
+import { getLatestVersion, getManifest, getPBHPlusStatus, setPHBPlusKey } from '@/service/version'
 import { computed, readonly, ref, type DeepReadonly } from 'vue'
 import type { donateStatus, release } from '@/api/model/manifest'
 import { IncorrectTokenError, login, NeedInitError } from '@/service/login'
 import { compare } from 'compare-versions'
 import type { mainfest } from '@/api/model/manifest'
 import { basePath } from '@/router'
+import mitt from 'mitt'
 
 function newPromiseLock<T>() {
   let resolve!: (value: T | PromiseLike<T>) => void
@@ -40,6 +41,7 @@ export const useEndpointStore = defineStore('endpoint', () => {
   const status = ref<'checking' | 'needLogin' | 'pass' | 'fail' | 'needInit'>('checking')
   const error = ref<Error | null>(null)
   const checkUpgradeError = ref<Error | null>(null)
+  const emmitter = ref(mitt())
 
   const setAuthToken = async (token: string | null, rememberPassword = false) => {
     if (serverManifest.value && compare(serverManifest.value.version.version, '4.0.0', '<')) {
@@ -125,9 +127,12 @@ export const useEndpointStore = defineStore('endpoint', () => {
       console.log('PBH Plus Activated! Thanks for your support ❤️')
     }
   }
-  const setPlusKey = () => {
-    if (plusStatus.value) {
-      plusStatus.value.activated = true
+  const setPlusKey = async (key: string) => {
+    const result = await setPHBPlusKey(key)
+    if (result.success) {
+      await getPlusStatus()
+    } else {
+      throw new Error(result.message)
     }
   }
   // init
@@ -156,6 +161,7 @@ export const useEndpointStore = defineStore('endpoint', () => {
     setAuthToken,
     plusStatus,
     setPlusKey,
+    emmitter,
     assertResponseLogin: (res: Response) => {
       if (res.status === 403) {
         setAuthToken(null)

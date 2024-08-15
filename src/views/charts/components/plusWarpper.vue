@@ -28,7 +28,7 @@ const { title } = defineProps<{
   title: string
 }>()
 const activeSubscription = () => {
-  endpointStore.setPlusKey()
+  endpointStore.emmitter.emit('open-plus-modal')
 }
 </script>
 <style scoped>

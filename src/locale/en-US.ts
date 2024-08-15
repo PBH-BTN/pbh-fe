@@ -1,4 +1,5 @@
 import settingsLocale from './en-US/settings'
+import plusLocale from './en-US/plus'
 import dashboardPageLocale from '@/views/dashboard/locale/en-US'
 import banListPageLocale from '@/views/banlist/locale/en-US'
 import banLogPageLocale from '@/views/banlog/locale/en-US'
@@ -35,6 +36,7 @@ export default {
   'router.moduleNotEnable.viewDoc': 'View Documentation',
 
   ...settingsLocale,
+  ...plusLocale,
   ...dashboardPageLocale,
   ...banListPageLocale,
   ...banLogPageLocale,

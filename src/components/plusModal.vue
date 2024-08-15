@@ -10,7 +10,7 @@
       <a-descriptions :title="t('plus.subscription')" :column="1">
         <a-descriptions-item :label="t('plus.status')">
           <a-typography-text :type="status?.activated ? 'success' : ''">
-            {{ t(status?.activated ? 'plus.status.actived' : 'plus.status.inactivied') }}
+            {{ t(status?.activated ? 'plus.status.activated' : 'plus.status.inactive') }}
           </a-typography-text>
         </a-descriptions-item>
         <a-descriptions-item v-if="status?.activated" :label="t('plus.key')">

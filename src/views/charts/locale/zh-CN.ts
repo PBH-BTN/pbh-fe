@@ -36,5 +36,6 @@ export default {
   'page.charts.options.field.city': '城市',
   'page.charts.options.field.region': '国家/地区',
   'page.charts.data.province.na': '海外或无数据',
-  'page.charts.options.bannedOnly': '仅显示封禁数据'
+  'page.charts.options.bannedOnly': '仅显示封禁数据',
+  'page.charts.tooltip.traffic': '数据由 PeerBanHelper 自行统计。由于 API 限制，数据可能存在较大误差，结果仅供参考。'
 }

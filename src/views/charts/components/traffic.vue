@@ -32,6 +32,9 @@
             </a-form-item>
           </a-form>
         </template>
+        <a-tooltip :content="t('page.charts.tooltip.traffic')">
+          <icon-question-circle />
+        </a-tooltip>
       </a-popover>
     </template>
     <v-chart

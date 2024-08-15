@@ -38,14 +38,18 @@
                 {{ t('page.banlist.banlist.listItem.unban') }}
               </a-button>
             </AsyncMethod>
-            <a-button
-              type="outline"
-              target="_blank"
-              :href="
-                t('page.banlist.banlist.listItem.threatAnalyse') + item.banMetadata.peer.address.ip
-              "
-              ><template #icon><icon-search /></template
-            ></a-button>
+            <a-tooltip :content="t('page.banlist.banlist.listItem.threatAnalyse')">
+              <a-button
+                type="outline"
+                target="_blank"
+                :href="
+                  t('page.banlist.banlist.listItem.threatAnalyse.link') +
+                  item.banMetadata.peer.address.ip
+                "
+              >
+                <template #icon><icon-search /></template>
+              </a-button>
+            </a-tooltip>
           </a-button-group>
         </div>
       </a-space>

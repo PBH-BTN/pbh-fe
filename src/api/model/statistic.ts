@@ -34,3 +34,24 @@ export interface Traffic {
     downloaded: number
   }[]
 }
+
+export interface GeoIP {
+  city: City[];
+  isp: Isp[];
+  province: Province[];
+}
+
+export interface City {
+  key: string;
+  value: number;
+}
+
+export interface Isp {
+  key: string;
+  value: number;
+}
+
+export interface Province {
+  key: string;
+  value: number;
+}

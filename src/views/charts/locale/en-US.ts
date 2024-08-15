@@ -28,5 +28,13 @@ export default {
   'page.charts.traffic.options.upload': 'Upload',
   'page.charts.locked': 'This chart requires PeerbanHelper+ subscription',
   'page.charts.locked.tips': 'Already donated? Click here to activate your subscription',
-  'page.charts.locked.active': 'Active'
+  'page.charts.locked.active': 'Active',
+  'page.charts.title.geoip': 'Geo Location and ISP',
+  'page.charts.subtitle.bannedOnly': '(Banned Only)',
+  'page.charts.options.field.isp': 'ISP/ASN',
+  'page.charts.options.field.province': 'Province (CN only)',
+  'page.charts.options.field.city': 'City',
+  'page.charts.options.field.region': 'Country/Region',
+  'page.charts.data.province.na': 'Out of China/No data',
+  'page.charts.options.bannedOnly': 'Show banned records only'
 }

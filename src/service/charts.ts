@@ -1,5 +1,5 @@
 import type { CommonResponse } from '@/api/model/common'
-import type { AnalysisField, TimeStatisticItem, Traffic, Trends } from '@/api/model/statistic'
+import type { AnalysisField, GeoIP, TimeStatisticItem, Traffic, Trends } from '@/api/model/statistic'
 import { useEndpointStore } from '@/stores/endpoint'
 import urlJoin from 'url-join'
 import { getCommonHeader } from './utils'
@@ -20,6 +20,28 @@ export async function getAnalysisDataByField(
     location.href
   )
 
+  return fetch(url, { headers: getCommonHeader() }).then((res) => {
+    endpointStore.assertResponseLogin(res)
+    return res.json()
+  })
+}
+
+export async function getGeoIPData(startAt: Date, endAt: Date, bannedOnly: boolean): Promise<CommonResponse<GeoIP>> {
+  const endpointStore = useEndpointStore()
+  await endpointStore.serverAvailable
+  const url = new URL(
+    urlJoin(endpointStore.endpoint, `api/chart/geoip`),
+    location.href
+  )
+
+  // Convert dates to Unix timestamp in milliseconds
+  const startAtTimestamp = startAt.getTime()
+  const endAtTimestamp = endAt.getTime()
+
+  // Add query parameters for startAt and endAt
+  url.searchParams.append('startAt', startAtTimestamp.toString())
+  url.searchParams.append('endAt', endAtTimestamp.toString())
+  url.searchParams.append('bannedOnly', String(bannedOnly))
   return fetch(url, { headers: getCommonHeader() }).then((res) => {
     endpointStore.assertResponseLogin(res)
     return res.json()

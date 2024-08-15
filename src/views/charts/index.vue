@@ -22,6 +22,11 @@
         <traffic />
       </plusWarpper>
     </a-col>
+    <a-col :xl="12" :lg="24" :md="24" :sm="24" :xs="24">
+      <plusWarpper :title="t('page.charts.title.geoip')">
+        <ispPie />
+      </plusWarpper>
+    </a-col>
   </a-row>
 </template>
 
@@ -32,6 +37,8 @@ import trends from './components/trends.vue'
 import traffic from './components/traffic.vue'
 import plusWarpper from './components/plusWarpper.vue'
 import { useI18n } from 'vue-i18n'
+import ispPie from '@/views/charts/components/ispPie.vue'
+
 const { t } = useI18n()
 </script>
 

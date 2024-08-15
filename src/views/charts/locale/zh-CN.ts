@@ -28,5 +28,13 @@ export default {
   'page.charts.traffic.options.upload': '上传',
   'page.charts.locked': '此图表需要订阅 PeerbanHelper+ 才能查看',
   'page.charts.locked.tips': '已经捐赠？点击立即激活订阅',
-  'page.charts.locked.active': '立即激活'
+  'page.charts.locked.active': '立即激活',
+  'page.charts.title.geoip': '位置与运营商',
+  'page.charts.subtitle.bannedOnly': '(仅封禁数据)',
+  'page.charts.options.field.isp': '运营商/ASN',
+  'page.charts.options.field.province': '省',
+  'page.charts.options.field.city': '城市',
+  'page.charts.options.field.region': '国家/地区',
+  'page.charts.data.province.na': '海外或无数据',
+  'page.charts.options.bannedOnly': '仅显示封禁数据'
 }

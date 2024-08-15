@@ -19,7 +19,5 @@ export default {
   'page.banlist.banlist.listItem.unban': '解除封禁',
   'page.banlist.banlist.listItem.unbanUnexcepted': '没有 IP 地址被成功解除封禁',
   'page.banlist.banlist.listItem.unbanSuccess': '成功解封 {count} 个 IP 地址',
-  'page.banlist.banlist.listItem.threatAnalyse': '威胁分析',
-  'page.banlist.banlist.listItem.threatAnalyse.censysSearch': 'Censys Search',
-  'page.banlist.banlist.listItem.threatAnalyse.threatBook': '微步威胁情报社区',
+  'page.banlist.banlist.listItem.threatAnalyse': 'https://x.threatbook.com/v5/ip/'
 }

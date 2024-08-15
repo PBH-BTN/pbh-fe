@@ -1,16 +1,23 @@
 <template>
-  <a-descriptions :column="{ xs: 3, md: 6, xl: 12 }" size="medium" class="banlist-item"
-    :layout="(['inline-vertical', 'horizontal'] as const)[descriptionLayout]">
+  <a-descriptions
+    :column="{ xs: 3, md: 6, xl: 12 }"
+    size="medium"
+    class="banlist-item"
+    :layout="(['inline-vertical', 'horizontal'] as const)[descriptionLayout]"
+  >
     <template #title>
       <a-space fill style="display: flex; justify-content: space-between">
         <a-space wrap>
           <a-typography-text bold copyable>
             {{ item.banMetadata.peer.address.ip }}:{{ item.banMetadata.peer.address.port }}
           </a-typography-text>
-          <a-tooltip :content="item.banMetadata.peer.id
-              ? item.banMetadata.peer.id
-              : t('page.banlist.banlist.listItem.empty')
-            ">
+          <a-tooltip
+            :content="
+              item.banMetadata.peer.id
+                ? item.banMetadata.peer.id
+                : t('page.banlist.banlist.listItem.empty')
+            "
+          >
             <a-tag>
               {{
                 item.banMetadata.peer.clientName
@@ -21,23 +28,24 @@
           </a-tooltip>
         </a-space>
         <div>
-          <a-button-group class="hover-display-btn" >
-            <a-dropdown>
-              <a-button>{{ t('page.banlist.banlist.listItem.threatAnalyse') }}<icon-down/></a-button>
-              <template #content>
-                <a-doption @click="openUrl(`https://search.censys.io/hosts/${item.banMetadata.peer.address.ip}`)">
-                  {{ t('page.banlist.banlist.listItem.threatAnalyse.censysSearch') }}
-                </a-doption>
-                <a-doption @click="openUrl(`https://x.threatbook.com/v5/ip/${item.banMetadata.peer.address.ip}`)">
-                  {{ t('page.banlist.banlist.listItem.threatAnalyse.threatBook') }}
-                </a-doption>
-              </template>
-            </a-dropdown>
-            <AsyncMethod once :async-fn="() => handleUnban(item.banMetadata.peer.address.ip)" v-slot="{ run, loading }">
+          <a-button-group class="hover-display-btn">
+            <AsyncMethod
+              once
+              :async-fn="() => handleUnban(item.banMetadata.peer.address.ip)"
+              v-slot="{ run, loading }"
+            >
               <a-button type="outline" :loading="loading" @click="run">
                 {{ t('page.banlist.banlist.listItem.unban') }}
               </a-button>
             </AsyncMethod>
+            <a-button
+              type="outline"
+              target="_blank"
+              :href="
+                t('page.banlist.banlist.listItem.threatAnalyse') + item.banMetadata.peer.address.ip
+              "
+              ><template #icon><icon-search /></template
+            ></a-button>
           </a-button-group>
         </div>
       </a-space>
@@ -56,10 +64,17 @@
       - {{ (item.banMetadata.peer.progress * 100).toFixed(2) }}%
     </a-descriptions-item>
 
-    <a-descriptions-item v-if="item.banMetadata.geo" :label="t('page.banlist.banlist.listItem.geo')" :span="6">
-      <CountryFlag :iso="item.banMetadata.geo?.country?.iso ?? t('page.banlist.banlist.listItem.empty')" />
+    <a-descriptions-item
+      v-if="item.banMetadata.geo"
+      :label="t('page.banlist.banlist.listItem.geo')"
+      :span="6"
+    >
+      <CountryFlag
+        :iso="item.banMetadata.geo?.country?.iso ?? t('page.banlist.banlist.listItem.empty')"
+      />
       {{
-        `${item.banMetadata.geo?.country?.name} ${item.banMetadata.geo?.city?.name ?? t('page.banlist.banlist.listItem.empty')
+        `${item.banMetadata.geo?.country?.name} ${
+          item.banMetadata.geo?.city?.name ?? t('page.banlist.banlist.listItem.empty')
         }`
       }}
       <!-- <a-link
@@ -68,32 +83,50 @@
         <icon-location />
       </a-link> -->
     </a-descriptions-item>
-    <a-descriptions-item v-if="item.banMetadata.geo?.as" :label="t('page.banlist.banlist.listItem.asn')" :span="6">
+    <a-descriptions-item
+      v-if="item.banMetadata.geo?.as"
+      :label="t('page.banlist.banlist.listItem.asn')"
+      :span="6"
+    >
       <a-space>
         <a-typography-text> {{ item.banMetadata.geo?.as?.organization }}</a-typography-text>
         <a-tag :color="getColor((item.banMetadata.geo?.as?.number ?? 0).toString())">{{
           item.banMetadata.geo?.as?.number
-          }}</a-tag>
-        <a-tooltip :content="t('page.banlist.banlist.listItem.asn.subnet') +
-          item.banMetadata.geo?.as?.network?.ipAddress
-          ">
-          <a-link :href="`https://2ip.io/analytics/asn-list/?asnId=${item.banMetadata.geo?.as?.number}`"
-            :hoverable="false">
+        }}</a-tag>
+        <a-tooltip
+          :content="
+            t('page.banlist.banlist.listItem.asn.subnet') +
+            item.banMetadata.geo?.as?.network?.ipAddress
+          "
+        >
+          <a-link
+            :href="`https://2ip.io/analytics/asn-list/?asnId=${item.banMetadata.geo?.as?.number}`"
+            :hoverable="false"
+          >
             <icon-info-circle />
           </a-link>
         </a-tooltip>
       </a-space>
     </a-descriptions-item>
-    <a-descriptions-item v-if="item.banMetadata.reverseLookup != 'N/A'"
-      :label="t('page.banlist.banlist.listItem.reserveDNSLookup')" :span="6">
+    <a-descriptions-item
+      v-if="item.banMetadata.reverseLookup != 'N/A'"
+      :label="t('page.banlist.banlist.listItem.reserveDNSLookup')"
+      :span="6"
+    >
       {{ item.banMetadata.reverseLookup }}
     </a-descriptions-item>
-    <a-descriptions-item v-if="item.banMetadata.geo?.network?.isp"
-      :label="t('page.banlist.banlist.listItem.network.isp')" :span="6">
+    <a-descriptions-item
+      v-if="item.banMetadata.geo?.network?.isp"
+      :label="t('page.banlist.banlist.listItem.network.isp')"
+      :span="6"
+    >
       {{ item.banMetadata.geo?.network?.isp }}
     </a-descriptions-item>
-    <a-descriptions-item v-if="item.banMetadata.geo?.network?.netType"
-      :label="t('page.banlist.banlist.listItem.network.netType')" :span="6">
+    <a-descriptions-item
+      v-if="item.banMetadata.geo?.network?.netType"
+      :label="t('page.banlist.banlist.listItem.network.netType')"
+      :span="6"
+    >
       {{ item.banMetadata.geo?.network?.netType }}
     </a-descriptions-item>
     <a-descriptions-item :label="t('page.banlist.banlist.listItem.location')" :span="12">
@@ -154,7 +187,6 @@ const handleUnban = async (address: string) => {
     return true
   }
 }
-const openUrl = (address: string) => {window.open(address, '_blank')}
 </script>
 
 <style scoped>
@@ -180,5 +212,4 @@ a {
   transition: opacity 0.15s ease-in-out;
   opacity: 1;
 }
-
 </style>

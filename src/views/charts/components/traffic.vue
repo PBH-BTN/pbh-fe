@@ -54,12 +54,7 @@ import { computed, reactive, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { use } from 'echarts/core'
 import { BarChart } from 'echarts/charts'
-import {
-  TooltipComponent,
-  LegendComponent,
-  ToolboxComponent,
-  GridComponent
-} from 'echarts/components'
+import { GridComponent, LegendComponent, ToolboxComponent, TooltipComponent } from 'echarts/components'
 import { SVGRenderer } from 'echarts/renderers'
 import { useDarkStore } from '@/stores/dark'
 import { getTraffic } from '@/service/charts'
@@ -115,7 +110,7 @@ const chartOptions = ref({
   yAxis: [
     {
       type: 'log',
-      logBase: 11,
+      logBase: 10,
       min: 1,
       axisLabel: {
         formatter: (value: number) => {

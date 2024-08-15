@@ -17,7 +17,7 @@
     "@arco-design/web-vue": "^2.56.0",
     "@dzangolab/flag-icon-css": "^3.4.5",
     "@octokit/core": "^6.1.2",
-    "@vueuse/core": "^10.11.1",
+    "@vueuse/core": "^11.0.0",
     "compare-versions": "^6.1.1",
     "copy-to-clipboard": "^3.3.3",
     "dayjs": "^1.11.12",

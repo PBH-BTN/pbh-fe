@@ -1,6 +1,10 @@
 <template>
-  <a-card hoverable
-          :title="t('page.charts.title.geoip') + (option.bannedOnly ? t('page.charts.subtitle.bannedOnly') : '')">
+  <a-card
+    hoverable
+    :title="
+      t('page.charts.title.geoip') + (option.bannedOnly ? t('page.charts.subtitle.bannedOnly') : '')
+    "
+  >
     <v-chart
       class="chart"
       :option="chartOption"
@@ -26,9 +30,6 @@
                 </a-option>
                 <a-option value="city">
                   {{ t('page.charts.options.field.city') }}
-                </a-option>
-                <a-option value="region">
-                  {{ t('page.charts.options.field.region') }}
                 </a-option>
               </a-select>
             </a-form-item>
@@ -95,7 +96,7 @@ use([TooltipComponent, LegendComponent, PieChart, SVGRenderer])
 const darkStore = useDarkStore()
 
 const option = reactive({
-  field: 'isp' as 'isp' | 'province' | 'city' | 'region',
+  field: 'isp' as 'isp' | 'province' | 'city',
   enableThreshold: true,
   bannedOnly: true,
   range: [dayjs().startOf('day').add(-7, 'day').toDate(), new Date()]
@@ -153,20 +154,6 @@ watch(option, (v) => {
   run(v.range[0], v.range[1], option.bannedOnly)
 })
 
-// const { loading, run } = useRequest(getGeoIPData, {
-//   defaultParams: [dayjs().startOf('day').add(-7, 'day').toDate(), new Date()],
-//   onSuccess: (data) => {
-//     if (data.data) {
-//       const fieldData = data.data[option.field]
-//       chartOption.value.legend.data = fieldData.map((it) => it.key)
-//       chartOption.value.series[0].data = fieldData.map((it) => ({
-//         name: it.key,
-//         value: it.value
-//       }))
-//       chartOption.value.series[0].name = t('page.charts.options.field.' + option.field)
-//     }
-//   }
-// })
 const { loading, run } = useRequest(getGeoIPData, {
   defaultParams: [dayjs().startOf('day').add(-7, 'day').toDate(), new Date(), option.bannedOnly],
   onSuccess: (data) => {
@@ -186,7 +173,10 @@ const { loading, run } = useRequest(getGeoIPData, {
       }
       chartOption.value.legend.data = processedData.map((it) => it.key)
       chartOption.value.series[0].data = processedData.map((it) => ({
-        name: it.key === 'N/A' && option.field === 'province' ? t('page.charts.data.province.na') : it.key,
+        name:
+          it.key === 'N/A' && option.field === 'province'
+            ? t('page.charts.data.province.na')
+            : it.key,
         value: it.value
       }))
       chartOption.value.series[0].name = t('page.charts.options.field.' + option.field)

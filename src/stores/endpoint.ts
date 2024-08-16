@@ -138,7 +138,7 @@ export const useEndpointStore = defineStore('endpoint', () => {
   // init
   setEndpoint(endpoint.value)
 
-  setTimeout(async () => getPlusStatus(), 3000)
+  setTimeout(async () => getPlusStatus(), 1000)
   setTimeout(async () => setAccessToken(accessToken.value), 3000)
   return {
     endpointSaved: readonly(endpoint),

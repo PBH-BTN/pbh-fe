@@ -27,6 +27,9 @@
         <ispPie />
       </plusWarpper>
     </a-col>
+    <a-col :xl="12" :lg="24" :md="24" :sm="24" :xs="24">
+      <game2048 />
+    </a-col>
   </a-row>
 </template>
 
@@ -38,6 +41,7 @@ import traffic from './components/traffic.vue'
 import plusWarpper from './components/plusWarpper.vue'
 import { useI18n } from 'vue-i18n'
 import ispPie from '@/views/charts/components/ispPie.vue'
+import game2048 from './components/2048/index.vue'
 
 const { t } = useI18n()
 </script>

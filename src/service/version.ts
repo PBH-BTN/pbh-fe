@@ -9,7 +9,8 @@ export class GetManifestError extends Error {
   name = GetManifestError.name
   constructor(
     message: string,
-    public isApiWrong = true
+    public isApiWrong = true,
+    public isManual = false
   ) {
     super(message)
   }

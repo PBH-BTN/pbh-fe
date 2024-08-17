@@ -5,13 +5,13 @@
         <pageHeader :disable-auto-update="specialStatus" :disable-menu="specialStatus" />
       </a-layout-header>
       <a-layout-content v-if="status === 'needLogin'" class="login-page">
-        <Login style="width: 100%; max-width: 1200px; margin: auto" />
+        <Login style="width: 100%;" />
       </a-layout-content>
       <a-layout-content v-else-if="status === 'needInit'">
         <OOBE />
       </a-layout-content>
       <a-layout-content v-else>
-        <div style="width: 100%; max-width: 1200px; margin: auto; position: relative">
+        <div style="width: 100%; position: relative">
           <router-view v-slot="{ Component, route }">
             <transition
               :name="String(route.meta.transition)"

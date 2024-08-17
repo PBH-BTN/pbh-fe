@@ -5,7 +5,7 @@
         <pageHeader :disable-auto-update="specialStatus" :disable-menu="specialStatus" />
       </a-layout-header>
       <a-layout-content v-if="status === 'needLogin'" class="login-page">
-        <Login style="width: 100%;" />
+        <Login style="width: 100%" />
       </a-layout-content>
       <a-layout-content v-else-if="status === 'needInit'">
         <OOBE />
@@ -58,7 +58,7 @@ import pageHeader from './components/pageHeader.vue'
 import { useI18n } from 'vue-i18n'
 import { ArcoI18nMessages } from './locale'
 import { useEndpointStore, isModuleEnable } from './stores/endpoint'
-import { computed, defineAsyncComponent, watch } from 'vue'
+import { computed, defineAsyncComponent } from 'vue'
 import './transition.less'
 
 const endPointStore = useEndpointStore()

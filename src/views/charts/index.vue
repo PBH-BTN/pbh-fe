@@ -48,6 +48,6 @@ const { t } = useI18n()
 
 <style>
 .chart {
-  height: 50vh;
+  height: 440px;
 }
 </style>

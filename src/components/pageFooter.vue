@@ -15,11 +15,17 @@
             </a>
             <div v-else>{{ serverVersion?.version }}</div>
             <div
-              v-if="endpointStore.plusStatus?.activated"
+              v-if="endpointStore.plusStatus?.activated && false"
               class="gold"
               @click="plusInfo?.showModal()"
             >
               <span>PLUS</span>
+            </div>
+            <div v-if="endpointStore.plusStatus?.activated" @click="plusInfo?.showModal()">
+              <a-button class="plus-button" type="outline" size="mini">
+                <icon-heart-fill />
+                PBH Plus
+              </a-button>
             </div>
             <div>
               (<a-link
@@ -52,6 +58,7 @@ import { computed, h, ref, watch } from 'vue'
 import { compare } from 'compare-versions'
 import { useI18n } from 'vue-i18n'
 import plusModal from './plusModal.vue'
+
 const { t } = useI18n()
 const version = __APP_VERSION__
 const hash = __APP_HASH__
@@ -97,6 +104,17 @@ endpointStore.emmitter.on('open-plus-modal', () => {
 .footer {
   display: flex;
   justify-content: center;
+}
+
+.plus-button {
+  color: #d9659b;
+  border: #d9659b solid 1px;
+}
+
+.plus-button:hover {
+  color: #d9659b;
+  border: #d9659b solid 1px;
+  box-shadow: 0 0 10px #d9659b;
 }
 .gold {
   background: linear-gradient(

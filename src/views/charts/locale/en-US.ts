@@ -31,7 +31,7 @@ export default {
   'page.charts.locked.active': 'Active',
   'page.charts.title.geoip': 'Geo Location and ISP',
   'page.charts.subtitle.bannedOnly': '(Banned Only)',
-  'page.charts.options.field.isp': 'ISP/ASN',
+  'page.charts.options.field.isp': 'ISP/AS',
   'page.charts.options.field.province': 'Province (CN only)',
   'page.charts.options.field.city': 'City',
   'page.charts.options.field.region': 'Country/Region',

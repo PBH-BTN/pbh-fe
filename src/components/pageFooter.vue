@@ -14,19 +14,16 @@
               </a-badge>
             </a>
             <div v-else>{{ serverVersion?.version }}</div>
-            <div
-              v-if="endpointStore.plusStatus?.activated && false"
-              class="gold"
+            <a-button
+              v-if="endpointStore.plusStatus?.activated"
               @click="plusInfo?.showModal()"
+              class="plus-button"
+              type="outline"
+              size="mini"
             >
-              <span>PLUS</span>
-            </div>
-            <div v-if="endpointStore.plusStatus?.activated" @click="plusInfo?.showModal()">
-              <a-button class="plus-button" type="outline" size="mini">
-                <icon-heart-fill />
-                PBH Plus
-              </a-button>
-            </div>
+              <icon-heart-fill />
+              PBH Plus
+            </a-button>
             <div>
               (<a-link
                 :href="`https://github.com/Ghost-chu/PeerBanHelper/commit/${serverVersion?.commit}`"
@@ -116,30 +113,13 @@ endpointStore.emmitter.on('open-plus-modal', () => {
   border: #d9659b solid 1px;
   box-shadow: 0 0 10px #d9659b;
 }
-.gold {
-  background: linear-gradient(
-    135deg,
-    #c7aa68,
-    #ce9f4f,
-    #d0b15e,
-    #fff6c5,
-    #d0b15e,
-    #ce9f4f,
-    #c7aa68
-  );
-  background-size: 100%;
-  background-position: 50% 50%;
-  border-radius: 6px;
-  padding-left: 5px;
-  padding-right: 6px;
-  cursor: pointer;
+body[arco-theme='dark'] .plus-button {
+  color: #d0b15e;
+  border: #c7aa68 solid 1px;
 }
-.gold > span {
-  font-size: 13px;
-  text-align: center;
-  color: black;
-  font-weight: bold;
-  font-style: italic;
-  font-family: 'Impact';
+body[arco-theme='dark'] .plus-button:hover {
+  color: #d0b15e;
+  border: #c7aa68 solid 1px;
+  box-shadow: 0 0 10px #c7aa68;
 }
 </style>

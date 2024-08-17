@@ -22,7 +22,7 @@
               size="mini"
             >
               <icon-heart-fill />
-              PBH Plus
+              &nbsp;PBH Plus
             </a-button>
             <div>
               (<a-link

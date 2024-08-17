@@ -39,9 +39,9 @@ import fieldPie from './components/fieldPie.vue'
 import trends from './components/trends.vue'
 import traffic from './components/traffic.vue'
 import plusWarpper from './components/plusWarpper.vue'
+import game2048 from './components/2048/index.vue'
 import { useI18n } from 'vue-i18n'
 import ispPie from '@/views/charts/components/ispPie.vue'
-import game2048 from './components/2048/index.vue'
 
 const { t } = useI18n()
 </script>

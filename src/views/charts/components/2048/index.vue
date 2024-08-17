@@ -10,8 +10,8 @@
 </template>
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n'
-import './assets/scss/style.scss'
-import './assets/scss/main.scss'
+import BoardView from 'vue-2048/App.vue'
+// import 'vue-2048/dist/style.css'
+
 const { t } = useI18n()
-import BoardView from './components/BoardView.vue'
 </script>

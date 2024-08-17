@@ -2,7 +2,7 @@
   <a-row justify="center">
     <a-col :xs="24" :sm="20" :md="16" :lg="12" :xl="8">
       <a-space direction="vertical" fill>
-        <a-typography-title :heading="3">{{ $t('login.form.title') }}</a-typography-title>
+        <a-typography-title :heading="3">{{ t('login.form.title') }}</a-typography-title>
         <a-form
           ref="loginForm"
           :model="loginConfig"
@@ -12,13 +12,13 @@
         >
           <a-form-item
             field="token"
-            :rules="[{ required: true, message: $t('login.form.password.errMsg') }]"
+            :rules="[{ required: true, message: t('login.form.password.errMsg') }]"
             :validate-trigger="['change', 'input']"
             hide-label
           >
             <a-input-password
               v-model="loginConfig.token"
-              :placeholder="$t('login.form.password.placeholder')"
+              :placeholder="t('login.form.password.placeholder')"
               allow-clear
             >
               <template #prefix>
@@ -28,17 +28,17 @@
           </a-form-item>
           <a-form-item field="rememberPassword" class="login-form-password-actions">
             <a-checkbox checked="rememberPassword" :model-value="loginConfig.rememberPassword">
-              {{ $t('login.form.rememberPassword') }}
+              {{ t('login.form.rememberPassword') }}
             </a-checkbox>
             <a-link
               :style="{ marginLeft: 'auto' }"
               href="https://github.com/PBH-BTN/PeerBanHelper/wiki/%E5%A6%82%E4%BD%95%E9%87%8D%E7%BD%AEToken"
             >
-              {{ $t('login.form.forgetPassword') }}
+              {{ t('login.form.forgetPassword') }}
             </a-link>
           </a-form-item>
           <a-button type="primary" html-type="submit" long :loading="loading">
-            {{ $t('login.form.login') }}
+            {{ t('login.form.login') }}
           </a-button>
         </a-form>
       </a-space>

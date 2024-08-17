@@ -44,6 +44,12 @@ const activeSubscription = () => {
   font-size: 1.5em;
   font-weight: bold;
   z-index: 1;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 body[arco-theme='dark'] .overlay {
   background: rgba(0, 0, 0, 0.5); /* 深色模式下的半透明背景 */

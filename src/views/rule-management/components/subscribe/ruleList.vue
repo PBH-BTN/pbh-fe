@@ -5,7 +5,7 @@
         <template #icon>
           <icon-plus-circle />
         </template>
-        {{ $t('page.rule_management.ruleSubscribe.addRule') }}
+        {{ t('page.rule_management.ruleSubscribe.addRule') }}
       </a-button>
       <a-button-group>
         <a-button :loading="updateAllLoading" @click="handleUpdateAll">

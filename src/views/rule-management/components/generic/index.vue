@@ -12,7 +12,7 @@
         <template #icon>
           <icon-plus-circle />
         </template>
-        {{ $t('page.rule_management.generic.addOne') }}
+        {{ t('page.rule_management.generic.addOne') }}
       </a-button>
     </a-space>
     <a-table :columns="columns" :data="dataSource" :loading="loading">

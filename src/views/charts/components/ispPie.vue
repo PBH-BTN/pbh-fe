@@ -31,6 +31,9 @@
                 <a-option value="city">
                   {{ t('page.charts.options.field.city') }}
                 </a-option>
+                <a-option value="region">
+                  {{ t('page.charts.options.field.region') }}
+                </a-option>
               </a-select>
             </a-form-item>
             <a-form-item
@@ -96,7 +99,7 @@ use([TooltipComponent, LegendComponent, PieChart, SVGRenderer])
 const darkStore = useDarkStore()
 
 const option = reactive({
-  field: 'isp' as 'isp' | 'province' | 'city',
+  field: 'isp' as 'isp' | 'province' | 'city' | 'region',
   enableThreshold: true,
   bannedOnly: true,
   range: [dayjs().startOf('day').add(-7, 'day').toDate(), new Date()]
@@ -175,7 +178,7 @@ const { loading, run } = useRequest(getGeoIPData, {
       chartOption.value.series[0].data = processedData.map((it) => ({
         name:
           it.key === 'N/A' && option.field === 'province'
-            ? t('page.charts.data.province.na')
+            ? t('page.charts.data.province.na') // 因为省份数据是中国大陆地区才有的，N/A我们就认为它们是海外或者没有收录的数据吧
             : it.key,
         value: it.value
       }))

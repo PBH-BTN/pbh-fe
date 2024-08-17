@@ -39,4 +39,5 @@ export interface GeoIP {
   city: KV<string, number>[]
   isp: KV<string, number>[]
   province: KV<string, number>[]
+  region: KV<string, number>[]
 }

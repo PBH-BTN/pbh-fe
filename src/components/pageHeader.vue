@@ -266,8 +266,6 @@ const mobileLayout = useResponsiveState(
 .arco-layout {
   padding: 0 24px;
   .arco-page-header {
-    max-width: 1200px;
-    margin: auto;
     &.mobile {
       .arco-page-header-main {
         width: 100%;

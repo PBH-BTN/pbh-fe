@@ -1,5 +1,5 @@
 <template>
-  <a-row justify="center" style="margin: 2% auto 0; max-width: 1200px;">
+  <a-row justify="center" style="margin: 2% auto 0; width: 100%;">
     <a-col :xl="16" :md="18" :sm="24">
       <a-space direction="vertical" style="display: flex; justify-content: center">
         <a-steps :current="current">

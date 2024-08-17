@@ -59,8 +59,8 @@ importers:
         specifier: ^3.4.38
         version: 3.4.38(typescript@5.5.4)
       vue-2048:
-        specifier: ^3.0.3
-        version: 3.0.3(typescript@5.5.4)(vite@5.4.1(@types/node@22.4.0)(less@4.2.0)(sass@1.77.8))
+        specifier: ^3.0.4
+        version: 3.0.4(typescript@5.5.4)(vite@5.4.1(@types/node@22.4.0)(less@4.2.0)(sass@1.77.8))
       vue-echarts:
         specifier: ^7.0.2
         version: 7.0.2(@vue/runtime-core@3.4.38)(echarts@5.5.1)(vue@3.4.38(typescript@5.5.4))
@@ -2320,8 +2320,8 @@ packages:
   vscode-uri@3.0.8:
     resolution: {integrity: sha512-AyFQ0EVmsOZOlAnxoFOGOq1SQDWAB7C6aqMGS23svWAllfOaxbuFvcT8D1i8z3Gyn8fraVeZNNmN6e9bxxXkKw==}
 
-  vue-2048@3.0.3:
-    resolution: {integrity: sha512-SUmj/kiMQpNkDzhOJi4aiKGVk/yuDBrLtneKjh8XGvINmSb4HzsieHsYvYwD29N1wJqPmvS2++KBUr/ZrGVOVg==}
+  vue-2048@3.0.4:
+    resolution: {integrity: sha512-rh/d6xaGNbf4W7wLCBRLt2pjdN7XEPyqA1a/KDO3CSkcdA0EsKgWKOSzxw1yuEWX1qgIYP4z8j9UZwM2Ct/3Nw==}
 
   vue-demi@0.13.11:
     resolution: {integrity: sha512-IR8HoEEGM65YY3ZJYAjMlKygDQn25D5ajNFNoKh9RSDMQtlzCxtfQjdQgv9jjK+m3377SsJXY8ysq8kLCZL25A==}
@@ -4757,7 +4757,7 @@ snapshots:
 
   vscode-uri@3.0.8: {}
 
-  vue-2048@3.0.3(typescript@5.5.4)(vite@5.4.1(@types/node@22.4.0)(less@4.2.0)(sass@1.77.8)):
+  vue-2048@3.0.4(typescript@5.5.4)(vite@5.4.1(@types/node@22.4.0)(less@4.2.0)(sass@1.77.8)):
     dependencies:
       '@vitejs/plugin-vue': 5.1.2(vite@5.4.1(@types/node@22.4.0)(less@4.2.0)(sass@1.77.8))(vue@3.4.38(typescript@5.5.4))
       vue: 3.4.38(typescript@5.5.4)

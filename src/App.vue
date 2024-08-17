@@ -58,7 +58,7 @@ import pageHeader from './components/pageHeader.vue'
 import { useI18n } from 'vue-i18n'
 import { ArcoI18nMessages } from './locale'
 import { useEndpointStore, isModuleEnable } from './stores/endpoint'
-import { computed, defineAsyncComponent } from 'vue'
+import { computed, defineAsyncComponent, watch } from 'vue'
 import './transition.less'
 
 const endPointStore = useEndpointStore()

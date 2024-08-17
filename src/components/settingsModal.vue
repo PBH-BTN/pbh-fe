@@ -95,7 +95,7 @@ watch(
     if (IncorrectTokenError.is(error) || NeedInitError.is(error)) {
       handleCancel()
     } else if (GetManifestError.is(error)) {
-      Message.error(t(error.message))
+      !error.isManual && Message.error(t(error.message))
       if (!showModal.value && error.isApiWrong) {
         showModal.value = true
         initForm()

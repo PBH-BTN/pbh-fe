@@ -1,9 +1,18 @@
 <template>
-  <a-table :columns="columns" :data="data?.data.data" size="large" :loading="loading" column-resizable
-    filter-icon-align-left :pagination="{ showPageSize: true, baseSize: 4, bufferSize: 1 }">
+  <a-table
+    :columns="columns"
+    :data="data?.data.data"
+    size="large"
+    :loading="loading"
+    column-resizable
+    filter-icon-align-left
+    :pagination="{ showPageSize: true, baseSize: 4, bufferSize: 1 }"
+  >
     <template #empty> <a-empty /> </template>
     <template #type="{ record }">
-      <a-tag :color="getTagColor(record.type)">{{ data?.data.dict[record.type] ?? record.type }}</a-tag>
+      <a-tag :color="getTagColor(record.type)">{{
+        data?.data.dict[record.type] ?? record.type
+      }}</a-tag>
     </template>
     <template #ruleName="{ record }">
       <a-typography-text code>
@@ -13,9 +22,15 @@
     <template #hit-filter="{ filterValue, handleFilterConfirm, handleFilterReset }">
       <div class="search-box">
         <a-space>
-          <a-switch v-model="filterValue[0]" checked-value="yes" unchecked-value="no" @change="(value: string | number | boolean) =>
-              value === 'yes' ? handleFilterConfirm() : handleFilterReset()
-            " />
+          <a-switch
+            v-model="filterValue[0]"
+            checked-value="yes"
+            unchecked-value="no"
+            @change="
+              (value: string | number | boolean) =>
+                value === 'yes' ? handleFilterConfirm() : handleFilterReset()
+            "
+          />
           <a-typography-text>{{ t('page.ruleMetrices.metricsTable.filter') }}</a-typography-text>
         </a-space>
       </div>
@@ -24,22 +39,23 @@
 </template>
 <script setup lang="ts">
 import { useRequest } from 'vue-request'
-import { useAutoUpdate } from '@/stores/autoUpdate'
+import { useAutoUpdatePlugin } from '@/stores/autoUpdate'
 import { useEndpointStore } from '@/stores/endpoint'
-import { computed, watch } from 'vue'
+import { watch } from 'vue'
 import { getRuleStatic } from '@/service/ruleStatics'
 import type { RuleMetric } from '@/api/model/ruleStatics'
 import { useI18n } from 'vue-i18n'
 import type { TableColumnData } from '@arco-design/web-vue'
 import { getColor } from '@/utils/color'
-const autoUpdateState = useAutoUpdate()
 const { t } = useI18n()
 const endpointStore = useEndpointStore()
-const { data, refresh, loading } = useRequest(getRuleStatic, {
-  pollingInterval: computed(() => autoUpdateState.pollingInterval),
-  onSuccess: autoUpdateState.renewLastUpdate,
-  cacheKey: () => `${endpointStore.endpoint}-ruleStatic`
-})
+const { data, refresh, loading } = useRequest(
+  getRuleStatic,
+  {
+    cacheKey: () => `${endpointStore.endpoint}-ruleStatic`
+  },
+  [useAutoUpdatePlugin]
+)
 
 const getTagColor = (value: string): string => {
   if (!data.value?.data.dict[value]) {

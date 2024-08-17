@@ -1,6 +1,12 @@
 import { defineStore } from 'pinia'
 import { useStorage } from '@vueuse/core'
-import { getLatestVersion, getManifest, getPBHPlusStatus, setPHBPlusKey } from '@/service/version'
+import {
+  getLatestVersion,
+  getManifest,
+  getPBHPlusStatus,
+  setPHBPlusKey,
+  GetManifestError
+} from '@/service/version'
 import { computed, readonly, ref, type DeepReadonly } from 'vue'
 import type { donateStatus, release } from '@/api/model/manifest'
 import { IncorrectTokenError, login, NeedInitError } from '@/service/login'
@@ -8,6 +14,7 @@ import { compare } from 'compare-versions'
 import type { mainfest } from '@/api/model/manifest'
 import { basePath } from '@/router'
 import mitt from 'mitt'
+import networkFailRetryNotication from '@/utils/networkRetry'
 
 function newPromiseLock<T>() {
   let resolve!: (value: T | PromiseLike<T>) => void
@@ -78,12 +85,28 @@ export const useEndpointStore = defineStore('endpoint', () => {
     }
   }
 
-  const setEndpoint = async (value: string) => {
+  const setEndpoint = async (
+    value: string,
+    options?: {
+      retryOnNetWorkFail?: boolean
+    }
+  ) => {
     status.value = 'checking'
     endpoint.value = value
     pushLock()
     try {
-      serverManifest.value = await getManifest(value)
+      serverManifest.value = await (options?.retryOnNetWorkFail
+        ? networkFailRetryNotication(
+            () =>
+              getManifest(value)
+                .then((res) => [false, res] as const)
+                .catch((err) => {
+                  if (GetManifestError.is(err) && !err.isApiWrong) return [true, null]
+                  else throw err
+                }),
+            () => new GetManifestError('Manual Cancel', true, true)
+          )
+        : getManifest(value))
       try {
         await setAuthToken(authToken.value)
       } catch (err) {
@@ -136,7 +159,7 @@ export const useEndpointStore = defineStore('endpoint', () => {
     }
   }
   // init
-  setEndpoint(endpoint.value)
+  setEndpoint(endpoint.value, { retryOnNetWorkFail: true })
 
   setTimeout(async () => getPlusStatus(), 1000)
   setTimeout(async () => setAccessToken(accessToken.value), 3000)

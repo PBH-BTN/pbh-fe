@@ -72,37 +72,38 @@
 </template>
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
-import { useAutoUpdate } from '@/stores/autoUpdate'
+import { useAutoUpdatePlugin } from '@/stores/autoUpdate'
 import { useEndpointStore } from '@/stores/endpoint'
 import { usePagination } from 'vue-request'
 import { getBanlogs } from '@/service/banLogs'
 import { formatFileSize } from '@/utils/file'
 import { useI18n } from 'vue-i18n'
 const forceLoading = ref(true)
-const autoUpdateState = useAutoUpdate()
 const endpointState = useEndpointStore()
 const { t, d } = useI18n()
 const { data, total, current, loading, pageSize, changeCurrent, changePageSize, refresh } =
-  usePagination(getBanlogs, {
-    defaultParams: [
-      {
-        page: 1,
-        pageSize: 10
+  usePagination(
+    getBanlogs,
+    {
+      defaultParams: [
+        {
+          page: 1,
+          pageSize: 10
+        }
+      ],
+      pagination: {
+        currentKey: 'page',
+        pageSizeKey: 'pageSize',
+        totalKey: 'data.total'
+      },
+      cacheKey: (params) =>
+        `${endpointState.endpoint}-banlogs-${params?.[0].page || 1}-${params?.[0].pageSize || 10}`,
+      onAfter: () => {
+        forceLoading.value = false
       }
-    ],
-    pagination: {
-      currentKey: 'page',
-      pageSizeKey: 'pageSize',
-      totalKey: 'data.total'
     },
-    pollingInterval: computed(() => autoUpdateState.pollingInterval),
-    cacheKey: (params) =>
-      `${endpointState.endpoint}-banlogs-${params?.[0].page || 1}-${params?.[0].pageSize || 10}`,
-    onSuccess: autoUpdateState.renewLastUpdate,
-    onAfter: () => {
-      forceLoading.value = false
-    }
-  })
+    [useAutoUpdatePlugin]
+  )
 
 watch([pageSize, current], () => {
   forceLoading.value = true

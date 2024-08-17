@@ -40,27 +40,28 @@
 </template>
 <script setup lang="ts">
 import { useEndpointStore } from '@/stores/endpoint'
-import { computed, ref, watch } from 'vue'
+import { ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import TorrentListModal from './torrentListModal.vue'
 import ClientStatusCard from './clientStatusCard.vue'
 import EditDownloaderModal from './editDownloaderModal.vue'
-import { useAutoUpdate } from '@/stores/autoUpdate'
+import { useAutoUpdatePlugin } from '@/stores/autoUpdate'
 import { useRequest } from 'vue-request'
 import { getDownloaders } from '@/service/downloaders'
 import { type Downloader } from '@/api/model/downloader'
 const { t } = useI18n()
 const endpointState = useEndpointStore()
-const autoUpdateState = useAutoUpdate()
 const data = ref<Downloader[]>()
-const { refresh, loading } = useRequest(getDownloaders, {
-  pollingInterval: computed(() => autoUpdateState.pollingInterval),
-  cacheKey: () => `${endpointState.endpoint}-downloader`,
-  onSuccess: (res) => {
-    data.value = res.data
-  }
-})
-
+const { refresh, loading } = useRequest(
+  getDownloaders,
+  {
+    cacheKey: () => `${endpointState.endpoint}-downloader`,
+    onSuccess: (res) => {
+      data.value = res.data
+    }
+  },
+  [useAutoUpdatePlugin]
+)
 watch(() => endpointState.endpoint, refresh)
 
 const torrentList = ref<InstanceType<typeof TorrentListModal>>()

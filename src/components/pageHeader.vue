@@ -96,7 +96,7 @@
         </a-dropdown>
         <a-space class="right-side" wrap>
           <template v-if="!disableAutoUpdate">
-            <auto-update-btn :tigger="mobileLayout === 0 ? 'switch' : 'click'" />
+            <auto-update-btn />
           </template>
           <div class="lang-selector">
             <a-dropdown

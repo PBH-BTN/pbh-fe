@@ -78,9 +78,9 @@ watch(hasNewVersion, () => {
       title: t('footer.newVersion'),
       content: t('footer.newVersion.body', { version: latestVersion.value?.tagName }),
       footer: () =>
-        h(Button, { href: latestVersion.value?.url, type: 'primary' }, [
+        h(Button, { href: latestVersion.value?.url, type: 'primary' }, () =>
           t('footer.newVersion.updateNow')
-        ]),
+        ),
       duration: 5000,
       closable: true
     })

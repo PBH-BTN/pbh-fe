@@ -1,11 +1,14 @@
 <template>
-  <a-popover :trigger="tigger === 'switch' ? 'click' : 'hover'">
+  <a-popover>
     <a-button
       class="auto-update-btn"
-      :class="ticktock ? 'ticktock' : ''"
+      :class="{
+        loading: loadingStatus === 'loading' || loadingHolding,
+        'loading-holding': loadingStatus === 'idle' && loadingHolding
+      }"
       :type="autoUpdate.autoUpdate ? 'primary' : 'outline'"
       :shape="'circle'"
-      @click="() => tigger !== 'switch' && switchAutoUpdate()"
+      @click="() => autoUpdate.refresh()"
       ref="autoUpdateBtn"
     >
       <icon-sync />
@@ -13,7 +16,7 @@
     <template #title>
       <a-space>
         <div>{{ t('navbar.action.autoUpdate') }}</div>
-        <a-switch v-if="tigger === 'switch'" v-model="autoUpdate.autoUpdate" />
+        <a-switch v-model="autoUpdate.autoUpdate" />
       </a-space>
     </template>
     <template #content>
@@ -26,47 +29,53 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
 import { useAutoUpdate } from '@/stores/autoUpdate'
-import { computed, ref, watch } from 'vue'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 const { t, d } = useI18n()
 const autoUpdate = useAutoUpdate()
-const ticktock = ref(false)
 const autoUpdateBtn = ref()
+const loadingHolding = ref(false)
 
-const props = defineProps<{
-  tigger: 'click' | 'switch'
-}>()
+let eventAbortController: AbortController
 
-const tigger = computed(() => props.tigger)
+onMounted(() => {
+  eventAbortController = new AbortController()
+  autoUpdateBtn.value.$el.addEventListener(
+    'animationstart',
+    () => {
+      loadingHolding.value = true
+    },
+    { signal: eventAbortController.signal }
+  )
+  autoUpdateBtn.value.$el.addEventListener(
+    'animationend',
+    () => {
+      loadingHolding.value = false
+    },
+    { signal: eventAbortController.signal }
+  )
+})
 
-watch(
-  () => autoUpdate.lastUpdate,
-  () => {
-    ticktock.value = true
-    const timmer = setTimeout(() => {
-      ticktock.value = false
-    }, 300)
-    autoUpdateBtn.value?.$el?.addEventListener(
-      'transitionend',
-      () => {
-        clearTimeout(timmer)
-        ticktock.value = false
-      },
-      { once: true }
-    )
-  }
-)
+onUnmounted(() => {
+  eventAbortController.abort()
+})
 
-const switchAutoUpdate = () => {
-  autoUpdate.autoUpdate = !autoUpdate.autoUpdate
-}
+const loadingStatus = computed(() => autoUpdate.status)
 </script>
 
 <style lang="less" scoped>
+.auto-update-btn:not(.arco-btn-primary) {
+  border-color: rgb(var(--gray-2));
+  color: rgb(var(--gray-8));
+}
+
 .auto-update-btn,
 .auto-update-btn:hover {
   font-size: 16px;
-  &.ticktock {
-    animation: whirl 0.3s ease-in-out 1;
+  &.loading {
+    animation: whirl 0.25s linear infinite;
+    &.loading-holding {
+      animation-iteration-count: 1;
+    }
   }
 }
 
@@ -75,7 +84,7 @@ const switchAutoUpdate = () => {
     transform: rotate(0deg);
   }
   100% {
-    transform: rotate(360deg);
+    transform: rotate(180deg);
   }
 }
 </style>

@@ -47,12 +47,10 @@
 </template>
 <script setup lang="ts">
 import { getRanks } from '@/service/ranks'
-import { computed } from 'vue'
 import { usePagination } from 'vue-request'
-import { useAutoUpdate } from '@/stores/autoUpdate'
+import { useAutoUpdatePlugin } from '@/stores/autoUpdate'
 import { useI18n } from 'vue-i18n'
 import type { TableColumnData } from '@arco-design/web-vue'
-const autoUpdateState = useAutoUpdate()
 const { t } = useI18n()
 const columns: TableColumnData[] = [
   {
@@ -66,21 +64,24 @@ const columns: TableColumnData[] = [
 ]
 
 const { data, total, current, loading, pageSize, changeCurrent, changePageSize, run } =
-  usePagination(getRanks, {
-    defaultParams: [
-      {
-        page: 1,
-        pageSize: 20
+  usePagination(
+    getRanks,
+    {
+      defaultParams: [
+        {
+          page: 1,
+          pageSize: 20
+        }
+      ],
+      pagination: {
+        currentKey: 'page',
+        pageSizeKey: 'pageSize',
+        totalKey: 'data.total'
       }
-    ],
-    pagination: {
-      currentKey: 'page',
-      pageSizeKey: 'pageSize',
-      totalKey: 'data.total'
     },
-    pollingInterval: computed(() => autoUpdateState.pollingInterval),
-    onSuccess: autoUpdateState.renewLastUpdate
-  })
+    [useAutoUpdatePlugin]
+  )
+
 const handleSearch = (filter: string) => {
   run({
     page: 1,

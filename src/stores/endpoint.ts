@@ -1,12 +1,20 @@
 import { defineStore } from 'pinia'
 import { useStorage } from '@vueuse/core'
-import { getLatestVersion, getManifest } from '@/service/version'
+import {
+  getLatestVersion,
+  getManifest,
+  getPBHPlusStatus,
+  setPHBPlusKey,
+  GetManifestError
+} from '@/service/version'
 import { computed, readonly, ref, type DeepReadonly } from 'vue'
-import type { release } from '@/api/model/manifest'
+import type { donateStatus, release } from '@/api/model/manifest'
 import { IncorrectTokenError, login, NeedInitError } from '@/service/login'
 import { compare } from 'compare-versions'
 import type { mainfest } from '@/api/model/manifest'
 import { basePath } from '@/router'
+import mitt from 'mitt'
+import networkFailRetryNotication from '@/utils/networkRetry'
 
 function newPromiseLock<T>() {
   let resolve!: (value: T | PromiseLike<T>) => void
@@ -40,6 +48,7 @@ export const useEndpointStore = defineStore('endpoint', () => {
   const status = ref<'checking' | 'needLogin' | 'pass' | 'fail' | 'needInit'>('checking')
   const error = ref<Error | null>(null)
   const checkUpgradeError = ref<Error | null>(null)
+  const emmitter = ref(mitt())
 
   const setAuthToken = async (token: string | null, rememberPassword = false) => {
     if (serverManifest.value && compare(serverManifest.value.version.version, '4.0.0', '<')) {
@@ -76,12 +85,28 @@ export const useEndpointStore = defineStore('endpoint', () => {
     }
   }
 
-  const setEndpoint = async (value: string) => {
+  const setEndpoint = async (
+    value: string,
+    options?: {
+      retryOnNetWorkFail?: boolean
+    }
+  ) => {
     status.value = 'checking'
     endpoint.value = value
     pushLock()
     try {
-      serverManifest.value = await getManifest(value)
+      serverManifest.value = await (options?.retryOnNetWorkFail
+        ? networkFailRetryNotication(
+            () =>
+              getManifest(value)
+                .then((res) => [false, res] as const)
+                .catch((err) => {
+                  if (GetManifestError.is(err) && !err.isApiWrong) return [true, null]
+                  else throw err
+                }),
+            () => new GetManifestError('Manual Cancel', true, true)
+          )
+        : getManifest(value))
       try {
         await setAuthToken(authToken.value)
       } catch (err) {
@@ -116,9 +141,27 @@ export const useEndpointStore = defineStore('endpoint', () => {
       console.error('Failed to get version:', err)
     }
   }
-  // init
-  setEndpoint(endpoint.value)
 
+  const plusStatus = ref<donateStatus | null>()
+  const getPlusStatus = async () => {
+    const result = await getPBHPlusStatus()
+    plusStatus.value = result.data
+    if (result.data.activated) {
+      console.log('PBH Plus Activated! Thanks for your support ❤️')
+    }
+  }
+  const setPlusKey = async (key: string) => {
+    const result = await setPHBPlusKey(key)
+    if (result.success) {
+      await getPlusStatus()
+    } else {
+      throw new Error(result.message)
+    }
+  }
+  // init
+  setEndpoint(endpoint.value, { retryOnNetWorkFail: true })
+
+  setTimeout(async () => getPlusStatus(), 1000)
   setTimeout(async () => setAccessToken(accessToken.value), 3000)
   return {
     endpointSaved: readonly(endpoint),
@@ -139,6 +182,9 @@ export const useEndpointStore = defineStore('endpoint', () => {
     setAccessToken,
     authToken: readonly(authToken),
     setAuthToken,
+    plusStatus,
+    setPlusKey,
+    emmitter,
     assertResponseLogin: (res: Response) => {
       if (res.status === 403) {
         setAuthToken(null)

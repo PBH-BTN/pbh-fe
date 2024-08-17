@@ -48,6 +48,11 @@ const datetimeFormat = {
     hour: 'numeric',
     minute: 'numeric',
     second: 'numeric'
+  },
+  // 用于秒级倒计时的显示
+  'short-second': {
+    minute: 'numeric',
+    second: 'numeric'
   }
 } as const
 

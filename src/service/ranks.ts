@@ -7,6 +7,7 @@ import type { CommonResponseWithPage } from '@/api/model/common'
 export async function getRanks(params: {
   page: number
   pageSize?: number
+  filter?: string
 }): Promise<CommonResponseWithPage<rankItem[]>> {
   const endpointStore = useEndpointStore()
   await endpointStore.serverAvailable
@@ -15,6 +16,9 @@ export async function getRanks(params: {
   url.searchParams.set('page', String(params.page))
   if (params.pageSize) {
     url.searchParams.set('pageSize', String(params.pageSize))
+  }
+  if (params.filter) {
+    url.searchParams.set('filter', params.filter)
   }
   return fetch(url, { headers: getCommonHeader() }).then((res) => {
     endpointStore.assertResponseLogin(res)

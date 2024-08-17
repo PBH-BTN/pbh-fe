@@ -1,59 +1,61 @@
 <template>
-  <a-table
-    stripe
-    sticky-header
-    :columns="columns"
-    :data="data?.data.results"
-    column-resizable
-    :loading="loading"
-    :pagination="{
-      total,
-      current,
-      pageSize,
-      showPageSize: true,
-      baseSize: 4,
-      bufferSize: 1
-    }"
-    filter-icon-align-left
-    @page-change="changeCurrent"
-    @page-size-change="changePageSize"
-  >
-    <template #ip-filter="{ filterValue, setFilterValue, handleFilterConfirm, handleFilterReset }">
-      <div class="search-box">
-        <a-space direction="vertical">
-          <a-input-search
-            :model-value="filterValue[0]"
-            :placeholder="t('page.topban.top50Table.searchPlaceholder')"
-            allow-clear
-            @search="handleFilterConfirm"
-            @clear="handleFilterReset"
-            @input="(value: string) => setFilterValue([value])"
-          />
-        </a-space>
-      </div>
-    </template>
-  </a-table>
+  <a-space direction="vertical" size="small">
+    <a-input-search
+      :style="{ width: '250px' }"
+      :placeholder="t('page.banlist.banlist.searchPlaceHolder')"
+      @change="handleSearch"
+      allow-clear
+      search-button
+    />
+    <a-table
+      stripe
+      sticky-header
+      :columns="columns"
+      :data="data?.data.results"
+      column-resizable
+      :loading="loading"
+      :pagination="{
+        total,
+        current,
+        pageSize,
+        showPageSize: true,
+        baseSize: 4,
+        bufferSize: 1
+      }"
+      filter-icon-align-left
+      @page-change="changeCurrent"
+      @page-size-change="changePageSize"
+    >
+      <template
+        #ip-filter="{ filterValue, setFilterValue, handleFilterConfirm, handleFilterReset }"
+      >
+        <div class="search-box">
+          <a-space direction="vertical">
+            <a-input-search
+              :model-value="filterValue[0]"
+              :placeholder="t('page.topban.top50Table.searchPlaceholder')"
+              allow-clear
+              @search="handleFilterConfirm"
+              @clear="handleFilterReset"
+              @input="(value: string) => setFilterValue([value])"
+            />
+          </a-space>
+        </div>
+      </template>
+    </a-table>
+  </a-space>
 </template>
 <script setup lang="ts">
 import { getRanks } from '@/service/ranks'
-import { computed, h } from 'vue'
 import { usePagination } from 'vue-request'
-import { IconSearch } from '@arco-design/web-vue/es/icon'
-import type { rankItem } from '@/api/model/topban'
-import { useAutoUpdate } from '@/stores/autoUpdate'
+import { useAutoUpdatePlugin } from '@/stores/autoUpdate'
 import { useI18n } from 'vue-i18n'
 import type { TableColumnData } from '@arco-design/web-vue'
-const autoUpdateState = useAutoUpdate()
 const { t } = useI18n()
 const columns: TableColumnData[] = [
   {
     title: () => t('page.topban.top50Table.column.ipaddress'),
-    dataIndex: 'peerIp',
-    filterable: {
-      filter: (value, record) => (record as rankItem).address.includes(value[0]),
-      slotName: 'ip-filter',
-      icon: () => h(IconSearch)
-    }
+    dataIndex: 'peerIp'
   },
   {
     title: () => t('page.topban.top50Table.column.historyCount'),
@@ -61,24 +63,32 @@ const columns: TableColumnData[] = [
   }
 ]
 
-const { data, total, current, loading, pageSize, changeCurrent, changePageSize } = usePagination(
-  getRanks,
-  {
-    defaultParams: [
-      {
-        page: 1,
-        pageSize: 20
+const { data, total, current, loading, pageSize, changeCurrent, changePageSize, run } =
+  usePagination(
+    getRanks,
+    {
+      defaultParams: [
+        {
+          page: 1,
+          pageSize: 20
+        }
+      ],
+      pagination: {
+        currentKey: 'page',
+        pageSizeKey: 'pageSize',
+        totalKey: 'data.total'
       }
-    ],
-    pagination: {
-      currentKey: 'page',
-      pageSizeKey: 'pageSize',
-      totalKey: 'data.total'
     },
-    pollingInterval: computed(() => autoUpdateState.pollingInterval),
-    onSuccess: autoUpdateState.renewLastUpdate
-  }
-)
+    [useAutoUpdatePlugin]
+  )
+
+const handleSearch = (filter: string) => {
+  run({
+    page: 1,
+    pageSize: 20,
+    filter
+  })
+}
 </script>
 
 <style scoped>

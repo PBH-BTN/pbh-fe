@@ -94,7 +94,7 @@ import {
 import { useRequest } from 'vue-request'
 import { DeleteDownloader, getClientStatus } from '@/service/downloaders'
 import { computed } from 'vue'
-import { useAutoUpdate } from '@/stores/autoUpdate'
+import { useAutoUpdatePlugin } from '@/stores/autoUpdate'
 import { useEndpointStore } from '@/stores/endpoint'
 import { Message } from '@arco-design/web-vue'
 const { t } = useI18n()
@@ -128,22 +128,20 @@ const emits = defineEmits<{
 }>()
 
 const downloader = computed(() => props.downloader)
-const autoUpdateState = useAutoUpdate()
 const endpointState = useEndpointStore()
 
 const getStatusSafe = (status: ClientStatus | undefined): string[] =>
   statusMap[status?.lastStatus ?? ClientStatusEnum.UNKNOWN] ?? statusMap[ClientStatusEnum.UNKNOWN]
 
-const { data: client } = useRequest(getClientStatus, {
-  pollingInterval: computed(() => autoUpdateState.pollingInterval),
-  onSuccess: autoUpdateState.renewLastUpdate,
-  cacheKey: () => `${endpointState.endpoint}-clientStatus-${downloader.value.name}`,
-  defaultParams: [downloader.value.name],
-  refreshDeps: [() => downloader.value.name],
-  refreshDepsAction: () => {
-    autoUpdateState.renewLastUpdate()
-  }
-})
+const { data: client } = useRequest(
+  getClientStatus,
+  {
+    cacheKey: () => `${endpointState.endpoint}-clientStatus-${downloader.value.name}`,
+    defaultParams: [downloader.value.name],
+    refreshDeps: [() => downloader.value.name]
+  },
+  [useAutoUpdatePlugin]
+)
 
 const handleDelete = async () => {
   try {

@@ -1,4 +1,5 @@
 import settingsLocale from './en-US/settings'
+import plusLocale from './en-US/plus'
 import dashboardPageLocale from '@/views/dashboard/locale/en-US'
 import banListPageLocale from '@/views/banlist/locale/en-US'
 import banLogPageLocale from '@/views/banlog/locale/en-US'
@@ -34,7 +35,14 @@ export default {
   'router.moduleNotEnable.tips': 'Please enable the feature in the configuration file',
   'router.moduleNotEnable.viewDoc': 'View Documentation',
 
+  'service.networkErrorRetry': 'Network failure, will retry in {time}.',
+  'service.networkErrorRetry.loading': 'Network failure, try to reloading...',
+  'service.networkErrorRetry.second': '1 second | {count} seconds',
+  'service.networkErrorRetry.cancel': 'Cancel Retry',
+  'service.networkErrorRetry.retry': 'Retry',
+
   ...settingsLocale,
+  ...plusLocale,
   ...dashboardPageLocale,
   ...banListPageLocale,
   ...banLogPageLocale,

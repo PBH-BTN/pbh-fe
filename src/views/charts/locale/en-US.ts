@@ -26,7 +26,7 @@ export default {
   'page.charts.trends.options.bans': 'Banned Peers',
   'page.charts.traffic.options.download': 'Download',
   'page.charts.traffic.options.upload': 'Upload',
-  'page.charts.locked': 'This chart requires PeerbanHelper+ subscription',
+  'page.charts.locked': 'This chart requires PeerBanHelper+ subscription',
   'page.charts.locked.tips': 'Already donated? Click here to activate your subscription',
   'page.charts.locked.active': 'Active',
   'page.charts.title.geoip': 'Geo Location and ISP',

@@ -4,7 +4,7 @@
       <div class="shape">
         <div class="shape_in">
           <div class="top_star"><span>★</span><span>★</span><span>★</span></div>
-          <div class="shape_text">PBH Plus</div>
+          <div class="shape_text">{{ text }}</div>
           <div class="under_star"><span>★</span><span>★</span><span>★</span></div>
         </div>
       </div>
@@ -27,6 +27,11 @@
     </div>
   </div>
 </template>
+<script lang="ts" setup>
+const { text } = defineProps<{
+  text: string
+}>()
+</script>
 <style scoped>
 .shape_box {
   position: relative;

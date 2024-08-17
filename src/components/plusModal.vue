@@ -59,7 +59,11 @@
           ></a-input-search>
         </a-space>
       </a-space>
-      <medal v-if="status?.activated" style="margin-right: 40px; margin-left: 40px" />
+      <medal
+        :text="status?.keyData?.licenseTo ?? 'Plus'"
+        v-if="status?.activated"
+        style="margin-right: 40px; margin-left: 40px"
+      />
     </a-space>
   </a-modal>
 </template>

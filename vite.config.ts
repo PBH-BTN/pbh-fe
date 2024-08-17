@@ -34,8 +34,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url)),
-      'vue-2048': fileURLToPath(new URL('./node_modules/vue-2048/src', import.meta.url))
+      '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   },
   build: {

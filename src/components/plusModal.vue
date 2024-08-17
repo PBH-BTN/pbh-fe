@@ -60,7 +60,13 @@
         </a-space>
       </a-space>
       <medal
-        :text="status?.keyData?.licenseTo ?? 'Plus'"
+        :text="
+          status?.keyData?.licenseTo
+            ? status.keyData.licenseTo.length > 13
+              ? 'PBH Plus'
+              : status.keyData.licenseTo
+            : 'PBH Plus'
+        "
         v-if="status?.activated"
         style="margin-right: 40px; margin-left: 40px"
       />

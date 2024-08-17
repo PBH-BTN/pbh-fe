@@ -302,4 +302,7 @@ const mobileLayout = useResponsiveState(
     }
   }
 }
+.arco-trigger-menu {
+  max-height: unset;
+}
 </style>

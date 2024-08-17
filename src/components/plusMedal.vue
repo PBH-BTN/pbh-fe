@@ -1,15 +1,18 @@
 <template>
   <div class="shape_box">
+    <div class="shape_black"><span></span><span></span><span></span></div>
     <div class="shape_out">
       <div class="shape">
         <div class="shape_in">
+          <div class="shape_backend"></div>
           <div class="top_star"><span>★</span><span>★</span><span>★</span></div>
+          <div class="shape_text_backend_A"></div>
+          <div class="shape_text_backend_B"></div>
           <div class="shape_text">{{ text }}</div>
           <div class="under_star"><span>★</span><span>★</span><span>★</span></div>
         </div>
       </div>
     </div>
-    <div class="shape_black"><span></span><span></span><span></span></div>
     <div class="scroll_star">
       <span class="sc_star_x"></span>
       <span class="sc_star_y"></span>
@@ -93,8 +96,8 @@ const { text } = defineProps<{
   box-shadow: inset 0 0 0 1px rgba(206, 159, 72, 1);
 }
 
-.shape_in::before,
-.shape_in::after {
+.shape_backend::before,
+.shape_backend::after {
   position: absolute;
   content: '';
   width: 91px;
@@ -107,7 +110,7 @@ const { text } = defineProps<{
   box-shadow: none;
 }
 
-.shape_in::after {
+.shape_backend::after {
   width: 87px;
   height: 87px;
   top: 19px;
@@ -125,10 +128,16 @@ const { text } = defineProps<{
   );
 }
 
+.shape_text_backend_A,
+.shape_text_backend_B,
 .shape_text {
   position: absolute;
   width: 130px;
   height: 22px;
+  top: 45px;
+  left: -14px;
+}
+.shape_text {
   line-height: 22px;
   padding: 6px 12px;
   text-align: center;
@@ -136,33 +145,29 @@ const { text } = defineProps<{
   color: #fff;
   font-weight: 700;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
-  top: 45px;
-  left: -14px;
   text-transform: uppercase;
   background: linear-gradient(45deg, #c10000, #e50000, #c10000);
-  z-index: 3;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
-.shape_out::before,
-.shape_out::after {
+.shape_text_backend_A::before,
+.shape_text_backend_A::after {
   content: '';
   position: absolute;
   background: linear-gradient(270deg, #740000, #e50000);
   height: 34px;
   width: 30px;
-  top: 60px;
-  left: -30px;
+  top: 7px;
+  left: -24px;
 }
 
-.shape_out::after {
-  left: 140px;
+.shape_text_backend_A::after {
+  left: 147px;
   background: linear-gradient(90deg, #740000, #e50000);
-  z-index: 1;
 }
 
-.shape_text::before,
-.shape_text::after {
+.shape_text_backend_B::before,
+.shape_text_backend_B::after {
   content: '';
   position: absolute;
   border-width: 17px;
@@ -172,7 +177,7 @@ const { text } = defineProps<{
   left: -24px;
 }
 
-.shape_text::after {
+.shape_text_backend_B::after {
   left: 144px;
   border-color: transparent var(--color-bg-3) transparent transparent;
 }
@@ -183,7 +188,6 @@ const { text } = defineProps<{
   width: 60px;
   top: 24px;
   left: 37px;
-  z-index: 3;
 }
 
 .under_star {
@@ -221,6 +225,48 @@ const { text } = defineProps<{
   transform: rotate(-20deg);
 }
 
+.shape_black {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  span {
+    position: absolute;
+    display: inline-block;
+    width: 120px;
+    height: 120px;
+    border-radius: 5px;
+    background: linear-gradient(
+      45deg,
+      #c7aa68,
+      #ce9f4f,
+      #d0b15e,
+      #fff6c5,
+      #d0b15e,
+      #ce9f4f,
+      #c7aa68
+    );
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+
+    &:nth-child(1) {
+      transform: rotateZ(30deg);
+    }
+
+    &:nth-child(2) {
+      transform: rotateZ(60deg);
+    }
+
+    &:nth-child(3) {
+      transform: rotateZ(90deg);
+    }
+  }
+}
+
 .scroll_star {
   position: absolute;
   width: 13px;
@@ -228,7 +274,6 @@ const { text } = defineProps<{
   top: 17px;
   left: 110px;
   animation: zoomInOut 2s infinite;
-  z-index: 99;
 }
 .scroll_star2 {
   position: absolute;
@@ -236,7 +281,6 @@ const { text } = defineProps<{
   height: 13px;
   top: 45px;
   left: 27px;
-  z-index: 99;
   transform: scale(2);
   animation: zoomInOut 2s infinite;
 }
@@ -246,7 +290,6 @@ const { text } = defineProps<{
   height: 13px;
   top: 95px;
   left: 93px;
-  z-index: 99;
   animation: zoomInOut 2s infinite;
   transform: scale(0.7);
 }

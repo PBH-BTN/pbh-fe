@@ -27,7 +27,11 @@
         </a-list-item>
       </template>
       <template #scroll-loading>
-        <a-empty v-if="list.length === 0" :style="{ height: `${virtualListHeight}px` }" />
+        <a-spin
+          v-if="loading"
+          :style="{ height: `${virtualListHeight}px`, display: 'flex', alignItems: 'center' }"
+        />
+        <a-empty v-else-if="list.length === 0" :style="{ height: `${virtualListHeight}px` }" />
         <div style="position: absolute; transform: translateY(-50%)" v-if="loadingMore">
           <a-typography-text v-if="bottom">{{
             t('page.banlist.banlist.bottomReached')
@@ -94,7 +98,7 @@ async function getMoreBanList(): Promise<BanList[]> {
   return data.value
 }
 
-const { data, refresh, run } = useRequest(
+const { data, refresh, run, loading } = useRequest(
   getMoreBanList,
   {
     manual: true

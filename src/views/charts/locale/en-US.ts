@@ -36,7 +36,7 @@ export default {
   'page.charts.options.field.city': 'City',
   'page.charts.options.field.region': 'Country/Region',
   'page.charts.data.province.na': 'Out of China/No data',
-  'page.charts.options.bannedOnly': 'Show banned records only',
+  'page.charts.options.bannedOnly': 'Filter: Show banned records only',
   'page.charts.tooltip.traffic':
     'Data collected by PeerBanHelper. Due the API limitation, The data may be subject to large errors and the results are for reference only.',
   'page.charts.tooltip.2048':

@@ -30,7 +30,7 @@ export default {
   'page.charts.locked.tips': 'Already donated? Click here to activate your subscription',
   'page.charts.locked.active': 'Active',
   'page.charts.title.geoip': 'Geo Location and ISP',
-  'page.charts.subtitle.bannedOnly': '(Banned Only)',
+  'page.charts.subtitle.bannedOnly': '(Filter: Banned Only)',
   'page.charts.options.field.isp': 'ISP/AS',
   'page.charts.options.field.province': 'Province (CN only)',
   'page.charts.options.field.city': 'City',

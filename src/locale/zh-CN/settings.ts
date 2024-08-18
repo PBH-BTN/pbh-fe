@@ -8,5 +8,5 @@ export default {
   'settings.endpoint.error': '无法连接到后端，请检查Endpoint设置',
   'settings.modal.accessTokenTips': '你可以在{here}填写 Github Access Token',
   'settings.modal.accessTokenTips.here': '这里',
-  'settings.accessToken.error': '无法获取版本信息，请检查网络或尝试在设置中设置访问令牌'
+  'settings.accessToken.error': '连接到 Github 检查 PBH 版本更新出错，可能当前 IP 地址已达到速率限制（此提示可安全忽略）'
 }

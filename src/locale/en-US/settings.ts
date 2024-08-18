@@ -10,5 +10,5 @@ export default {
   'settings.modal.pollInterval': 'Polling interval:',
   'settings.endpoint.error': 'Cannot connect to the backend, please check the Endpoint settings',
   'settings.accessToken.error':
-    'Failed to get version, please check your network or try to set the access token in settings.'
+    'Failed to get version from Github server, Your IP address may reached the rate-limit (This message can safely ignored).'
 }

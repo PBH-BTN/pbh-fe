@@ -1,3 +1,6 @@
+# Deprected
+This project has been migrated to the main repo: https://github.com/PBH-BTN/PeerBanHelper
+
 # pbh-fe
 
 This is a ~alternative~ WebUI of the [PeerBanHelper](https://github.com/Ghost-chu/PeerBanHelper), based on modern front-end stacks.
